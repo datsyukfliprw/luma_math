@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap');
+@import "tailwindcss";
+
 @import "tailwindcss";
 
 :root {
-  font-family: Inter, system-ui, sans-serif;
+  font-family: Nunito, system-ui, sans-serif;
   color: #284034;
   background: #fefdf6;
   font-synthesis: none;

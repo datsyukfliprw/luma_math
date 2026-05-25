@@ -24,20 +24,12 @@ function Sidebar() {
   return (
     <aside className="hidden w-[260px] shrink-0 overflow-hidden rounded-[2rem] bg-[#073B5A] text-white shadow-2xl lg:flex lg:flex-col">
       <div className="relative flex-1 bg-[radial-gradient(circle_at_top,#0081A7_0%,#073B5A_45%,#052A40_100%)] p-6">
-        <div className="mb-10 text-center">
-          <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-[#00AFB9]/20 text-[#FDFCDC] shadow-[0_0_35px_rgba(0,175,185,0.6)]">
-            <Layers size={44} strokeWidth={2.8} />
-          </div>
-
-          <h1 className="text-4xl font-black tracking-tight">LumaMath</h1>
-
-          <p className="mt-2 text-xs font-bold uppercase tracking-[0.28em] text-[#FDFCDC]/80">
-            Bright minds.
-          </p>
-
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#FDFCDC]/80">
-            Stronger futures.
-          </p>
+        <div className="mb-2 flex justify-center">
+          <img
+            src="/lumamath_logo.png"
+            alt="LumaMath"
+            className="h-46 w-auto drop-shadow-[0_0_28px_rgba(0,175,185,0.55)]"
+          />
         </div>
 
         <nav className="space-y-3">
@@ -49,7 +41,7 @@ function Sidebar() {
                 key={item.label}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex w-full items-center gap-3 rounded-2xl px-4 py-4 text-left text-base font-extrabold transition ${
+                  `flex w-full items-center gap-3 rounded-2xl px-4 py-4 text-left text-sm font-extrabold transition ${
                     isActive
                       ? 'bg-[#00AFB9] text-white shadow-[0_0_24px_rgba(0,175,185,0.65)]'
                       : 'text-white/85 hover:bg-white/10'
@@ -58,10 +50,14 @@ function Sidebar() {
               >
                 {({ isActive }) => (
                   <>
-                    <Icon size={22} strokeWidth={2.7} />
-                    <span>{item.label}</span>
+                    <Icon size={21} strokeWidth={2.7} className="shrink-0" />
+
+                    <span className="min-w-0 flex-1 whitespace-nowrap">
+                      {item.label}
+                    </span>
+
                     {isActive && (
-                      <span className="ml-auto text-[#FDFCDC]">✦</span>
+                      <span className="shrink-0 text-[#FDFCDC]">✦</span>
                     )}
                   </>
                 )}

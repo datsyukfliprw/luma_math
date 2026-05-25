@@ -6,10 +6,11 @@ import LessonHero from '../components/lesson/LessonHero'
 import PracticeTimeCard from '../components/lesson/PracticeTimeCard'
 import TryItCard from '../components/lesson/TryItCard'
 import WarmUpCard from '../components/lesson/WarmUpCard'
+import PageLayout from '../components/layout/PageLayout'
 
 function LessonScreen() {
   return (
-    <section className="flex-1 px-4 py-5 lg:px-0">
+    <PageLayout>
       <TopBar />
       <LessonHero />
 
@@ -25,7 +26,7 @@ function LessonScreen() {
       </section>
 
       <LessonFooter />
-    </section>
+    </PageLayout>
   )
 }
 
