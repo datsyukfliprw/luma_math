@@ -8,15 +8,16 @@ import {
   Trophy,
   Users,
 } from 'lucide-react'
+import { NavLink } from 'react-router-dom'
 
 const navItems = [
-  { icon: House, label: 'Home', active: true },
-  { icon: Map, label: 'Learning Path' },
-  { icon: BookOpen, label: 'Lesson' },
-  { icon: Layers, label: 'Flashcards' },
-  { icon: Pencil, label: 'Practice' },
-  { icon: ChartNoAxesColumnIncreasing, label: 'Progress' },
-  { icon: Users, label: 'Parent Area' },
+  { icon: House, label: 'Home', to: '/' },
+  { icon: Map, label: 'Learning Path', to: '/learning-path' },
+  { icon: BookOpen, label: 'Lesson', to: '/lesson' },
+  { icon: Layers, label: 'Flashcards', to: '/flashcards' },
+  { icon: Pencil, label: 'Practice', to: '/practice' },
+  { icon: ChartNoAxesColumnIncreasing, label: 'Progress', to: '/progress' },
+  { icon: Users, label: 'Parent Area', to: '/parent-area' },
 ]
 
 function Sidebar() {
@@ -44,22 +45,27 @@ function Sidebar() {
             const Icon = item.icon
 
             return (
-              <button
+              <NavLink
                 key={item.label}
-                className={`flex w-full items-center gap-4 rounded-2xl px-5 py-4 text-left text-base font-extrabold transition ${
-                  item.active
-                    ? 'bg-[#00AFB9] text-white shadow-[0_0_24px_rgba(0,175,185,0.65)]'
-                    : 'text-white/85 hover:bg-white/10'
-                }`}
+                to={item.to}
+                className={({ isActive }) =>
+                  `flex w-full items-center gap-3 rounded-2xl px-4 py-4 text-left text-base font-extrabold transition ${
+                    isActive
+                      ? 'bg-[#00AFB9] text-white shadow-[0_0_24px_rgba(0,175,185,0.65)]'
+                      : 'text-white/85 hover:bg-white/10'
+                  }`
+                }
               >
-                <Icon size={22} strokeWidth={2.7} />
-
-                <span>{item.label}</span>
-
-                {item.active && (
-                  <span className="ml-auto text-[#FDFCDC]">✦</span>
+                {({ isActive }) => (
+                  <>
+                    <Icon size={22} strokeWidth={2.7} />
+                    <span>{item.label}</span>
+                    {isActive && (
+                      <span className="ml-auto text-[#FDFCDC]">✦</span>
+                    )}
+                  </>
                 )}
-              </button>
+              </NavLink>
             )
           })}
         </nav>
@@ -87,10 +93,7 @@ function Sidebar() {
 
             <div>
               <p className="font-black">Keep going!</p>
-
-              <p className="text-sm text-white/80">
-                You’re on a 7-day streak!
-              </p>
+              <p className="text-sm text-white/80">You’re on a 7-day streak!</p>
             </div>
           </div>
         </div>
