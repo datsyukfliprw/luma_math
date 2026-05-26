@@ -1,4 +1,5 @@
 import LumaAvatar from '../luma/LumaAvatar'
+import { useDelightAnimation } from '../animations/DelightAnimationProvider'
 import type { LessonProgress } from '../../lib/lessonProgress'
 
 type LessonHeroProps = {
@@ -75,6 +76,7 @@ function LessonHero({
   progress,
   starName,
 }: LessonHeroProps) {
+  const { registerStarTarget } = useDelightAnimation()
   const isEvaluation = lessonType === 'evaluation'
 
   const completedCount = isEvaluation
@@ -182,7 +184,10 @@ function LessonHero({
           </div>
         </div>
 
-        <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden border-t border-[#F4D589] bg-[#FEF3D9] px-6 py-5 xl:border-l xl:border-t-0">
+        <div
+          ref={registerStarTarget}
+          className="relative flex min-h-[280px] items-center justify-center overflow-hidden border-t border-[#F4D589] bg-[#FEF3D9] px-6 py-5 xl:border-l xl:border-t-0"
+        >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.35)_34%,rgba(254,243,217,0)_68%)]" />
 
           <div className="pointer-events-none absolute left-8 top-8 text-3xl text-white">

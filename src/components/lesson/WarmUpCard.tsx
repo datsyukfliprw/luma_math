@@ -1,4 +1,5 @@
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
+import { useDelightAnimation } from '../animations/DelightAnimationProvider'
 import { updateLessonProgress } from '../../lib/lessonProgress'
 
 type WarmUpCardProps = {
@@ -22,6 +23,9 @@ function WarmUpCard({
   isComplete,
   onComplete,
 }: WarmUpCardProps) {
+  const checkButtonRef = useRef<HTMLButtonElement | null>(null)
+  const { sendSparkleToStar } = useDelightAnimation()
+
   const [answer, setAnswer] = useState('')
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(
     isComplete ? 'correct' : null,
@@ -31,6 +35,10 @@ function WarmUpCard({
     const normalizedAnswer = answer.trim()
 
     if (normalizedAnswer === '12') {
+      sendSparkleToStar({
+        fromElement: checkButtonRef.current,
+      })
+
       updateLessonProgress(lessonId, {
         warmupComplete: true,
       })
@@ -62,7 +70,12 @@ function WarmUpCard({
               {isComplete ? '✓' : '1'}
             </span>
 
-            <h3 className="text-xl font-black text-[#073B5A]">Warm-Up</h3>
+            <div>
+              <h3 className="text-xl font-black text-[#073B5A]">Warm-Up</h3>
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0081A7]">
+                Luma Charge
+              </p>
+            </div>
           </div>
 
           <p className="shrink-0 text-sm font-bold text-[#073B5A]/70">
@@ -117,6 +130,7 @@ function WarmUpCard({
         </div>
 
         <button
+          ref={checkButtonRef}
           type="button"
           onClick={checkAnswer}
           className="mt-3 w-fit rounded-lg bg-[#00AFB9] px-5 py-2 text-sm font-black text-white shadow-sm"

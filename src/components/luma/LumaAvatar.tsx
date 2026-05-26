@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useState } from 'react'
 
 export type LumaState =
@@ -22,12 +23,132 @@ type LumaAvatarProps = {
 const lumaImageByState: Record<LumaState, string> = {
   idle: '/images/luma/star_idle.png',
   sleepy: '/images/luma/star_sleepy.png',
-  happy: '/images/luma/star_happy.png',
+
+  // You do not have star_happy.png yet, so this safely reuses proud.
+  happy: '/images/luma/star_proud.png',
+
   thinking: '/images/luma/star_thinking.png',
   charging: '/images/luma/star_charging.png',
   charged: '/images/luma/star_charged.png',
   celebrate: '/images/luma/star_celebrate.png',
   proud: '/images/luma/star_proud.png',
+}
+
+const motionByState: Record<
+  LumaState,
+  {
+    animate: Record<string, unknown>
+    transition: Record<string, unknown>
+  }
+> = {
+  idle: {
+    animate: {
+      y: [0, -5, 0],
+      scale: [1, 1.015, 1],
+    },
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
+
+  sleepy: {
+    animate: {
+      y: [0, 3, 0],
+      scale: [0.98, 1, 0.98],
+      opacity: [0.82, 0.92, 0.82],
+    },
+    transition: {
+      duration: 3.5,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
+
+  happy: {
+    animate: {
+      y: [0, -12, 0],
+      scale: [1, 1.08, 0.98, 1],
+    },
+    transition: {
+      duration: 0.6,
+      ease: 'easeOut',
+    },
+  },
+
+  thinking: {
+    animate: {
+      rotate: [0, -4, 4, 0],
+      y: [0, -3, 0],
+    },
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
+
+  charging: {
+    animate: {
+      scale: [1, 1.12, 1.03],
+      filter: [
+        'drop-shadow(0 0 0px rgba(247,183,51,0))',
+        'drop-shadow(0 0 24px rgba(247,183,51,0.95))',
+        'drop-shadow(0 0 10px rgba(247,183,51,0.55))',
+      ],
+    },
+    transition: {
+      duration: 0.75,
+      ease: 'easeOut',
+    },
+  },
+
+  charged: {
+    animate: {
+      y: [0, -5, 0],
+      scale: [1, 1.035, 1],
+      filter: [
+        'drop-shadow(0 0 8px rgba(247,183,51,0.35))',
+        'drop-shadow(0 0 18px rgba(247,183,51,0.75))',
+        'drop-shadow(0 0 8px rgba(247,183,51,0.35))',
+      ],
+    },
+    transition: {
+      duration: 2.4,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
+
+  celebrate: {
+    animate: {
+      y: [0, -22, -8, 0],
+      rotate: [0, -7, 7, 0],
+      scale: [1, 1.15, 1.08, 1],
+      filter: [
+        'drop-shadow(0 0 8px rgba(247,183,51,0.35))',
+        'drop-shadow(0 0 28px rgba(247,183,51,0.95))',
+        'drop-shadow(0 0 14px rgba(247,183,51,0.65))',
+      ],
+    },
+    transition: {
+      duration: 0.95,
+      ease: 'easeOut',
+    },
+  },
+
+  proud: {
+    animate: {
+      y: [0, -4, 0],
+      scale: [1, 1.02, 1],
+    },
+    transition: {
+      duration: 2.2,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
 }
 
 function LumaAvatar({
@@ -49,70 +170,38 @@ function LumaAvatar({
           ? 'h-52 w-52'
           : 'h-32 w-32'
 
-  const animationClass =
-    state === 'happy'
-      ? 'animate-[lumaBounce_0.65s_ease-in-out]'
-      : state === 'celebrate'
-        ? 'animate-[lumaCelebrate_0.9s_ease-in-out]'
-        : state === 'charging'
-          ? 'animate-[lumaPulse_0.9s_ease-in-out_infinite]'
-          : state === 'thinking'
-            ? 'animate-[lumaThink_1.1s_ease-in-out_infinite]'
-            : state === 'sleepy'
-              ? 'opacity-85'
-              : ''
+  const motionConfig = motionByState[state]
 
   return (
     <div className="flex items-center gap-4">
-      <style>
-        {`
-          @keyframes lumaBounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            35% { transform: translateY(-10px) scale(1.04); }
-            70% { transform: translateY(0) scale(0.98); }
-          }
-
-          @keyframes lumaCelebrate {
-            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-            25% { transform: translateY(-12px) rotate(-6deg) scale(1.06); }
-            55% { transform: translateY(-4px) rotate(7deg) scale(1.08); }
-            80% { transform: translateY(0) rotate(0deg) scale(1); }
-          }
-
-          @keyframes lumaPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(247,183,51,0)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 18px rgba(247,183,51,0.65)); }
-          }
-
-          @keyframes lumaThink {
-            0%, 100% { transform: rotate(0deg); }
-            35% { transform: rotate(-4deg); }
-            70% { transform: rotate(4deg); }
-          }
-        `}
-      </style>
-
       <div
         className={`relative flex ${sizeClass} shrink-0 items-center justify-center`}
       >
         <div className="absolute inset-3 rounded-full bg-[#FEF3D9] blur-xl" />
 
-        {(state === 'charged' || state === 'celebrate') && (
+        {(state === 'charged' ||
+          state === 'celebrate' ||
+          state === 'charging') && (
           <div className="absolute inset-0 rounded-full bg-[#FDFCDC] opacity-60 blur-2xl" />
         )}
 
         {imageFailed ? (
-          <div
-            className={`relative flex h-full w-full items-center justify-center rounded-full bg-[#FEF3D9] text-6xl shadow-sm ${animationClass}`}
+          <motion.div
+            className="relative flex h-full w-full items-center justify-center rounded-full bg-[#FEF3D9] text-6xl shadow-sm"
+            animate={motionConfig.animate}
+            transition={motionConfig.transition}
           >
             ⭐
-          </div>
+          </motion.div>
         ) : (
-          <img
+          <motion.img
+            key={state}
             src={lumaImageByState[state]}
             alt={name ? `${name}, the learning star` : 'Learning star mascot'}
             onError={() => setImageFailed(true)}
-            className={`relative h-full w-full object-contain drop-shadow-sm transition-transform duration-300 ${animationClass}`}
+            className="relative h-full w-full object-contain drop-shadow-sm"
+            animate={motionConfig.animate}
+            transition={motionConfig.transition}
           />
         )}
 
@@ -140,7 +229,7 @@ function LumaAvatar({
                   key={index}
                   className={`h-3 w-3 rounded-full border ${
                     isCharged
-                      ? 'border-[#F4C542] bg-[#F7B733] shadow-[0_0_8px_rgba(247,183,51,0.55)]'
+                      ? 'border-[#F4C542] bg-[#F7B733]'
                       : 'border-[#073B5A]/15 bg-white'
                   }`}
                 />
