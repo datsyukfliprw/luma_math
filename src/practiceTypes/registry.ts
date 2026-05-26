@@ -5,6 +5,7 @@ import { generateEvaluationProblems } from './evaluation'
 import { generateFactorProductProblems } from './factorProduct'
 import { generateRepeatedAdditionProblems } from './repeatedAddition'
 import type { PracticeProblem } from './types'
+import { generateCommutativePropertyProblems } from './commutativeProperty'
 
 type PracticeGenerator = () => PracticeProblem[]
 
@@ -15,6 +16,7 @@ const practiceRegistry: Record<string, PracticeGenerator> = {
   equal_groups_with_objects: generateEqualGroupsWithObjectsProblems,
   evaluation: generateEvaluationProblems,
   array_rows_columns: generateArrayRowsColumnsProblems,
+  commutative_property_matching: generateCommutativePropertyProblems,
 }
 
 export function generateProblemsForPracticeType(

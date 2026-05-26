@@ -7,6 +7,7 @@ export type PracticeProblem = {
     | 'repeated_addition'
     | 'factor_product'
     | 'array_rows_columns'
+    | 'multiple_choice'
   problemKey: string
   visualData?: {
     groups?: number
@@ -17,6 +18,7 @@ export type PracticeProblem = {
     product?: number
     rows?: number
     columns?: number
+    choices?: string[]
   }
   answerData?: {
     factorA?: string
