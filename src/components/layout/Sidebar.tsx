@@ -104,13 +104,6 @@ function Sidebar() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-30 opacity-90">
-          <div className="absolute bottom-[-38px] left-[-40px] h-26 w-[270px] rounded-t-[80%] bg-[#00AFB9]/60" />
-          <div className="absolute bottom-[-48px] right-[-70px] h-30 w-[310px] rounded-t-[80%] bg-[#0081A7]/80" />
-          <div className="absolute bottom-4 left-1/2 text-4xl text-[#FDFCDC] drop-shadow-[0_0_18px_rgba(253,252,220,0.8)]">
-            ✦
-          </div>
-        </div>
       </div>
     </aside>
   )

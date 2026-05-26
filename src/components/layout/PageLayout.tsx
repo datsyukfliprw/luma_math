@@ -4,8 +4,8 @@ type PageLayoutProps = {
 
 function PageLayout({ children }: PageLayoutProps) {
   return (
-    <section className="flex-1 px-4 py-5 lg:px-0">
-      <div className="mx-auto max-w-[1260px]">{children}</div>
+    <section className="h-full min-w-0 flex-1 overflow-y-auto px-4 py-5 pr-2 lg:px-0 lg:pr-3">
+      <div className="mx-auto max-w-[1260px] pb-6">{children}</div>
     </section>
   )
 }

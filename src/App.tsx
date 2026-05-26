@@ -10,8 +10,8 @@ import ProgressScreen from './screens/ProgressScreen'
 
 function App() {
   return (
-    <main className="min-h-screen bg-[#faf9f4] p-0 text-[#073B5A] xl:p-5">
-      <div className="mx-auto flex min-h-screen max-w-[1540px] gap-7">
+    <main className="h-screen overflow-hidden bg-[#faf9f4] p-0 text-[#073B5A] xl:p-5">
+      <div className="mx-auto flex h-full max-w-[1540px] gap-7 overflow-hidden">
         <Sidebar />
 
         <Routes>
