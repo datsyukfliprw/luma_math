@@ -6,7 +6,7 @@ export function generateFactorProductProblems(): PracticeProblem[] {
       id: 'factor-product-1',
       questionText:
         'In the equation 3 × 4 = 12, what are the factors and what is the product?',
-      correctAnswer: 'factors: 3 and 4, product: 12',
+      correctAnswer: '3,4,12',
       visualType: 'factor_product',
       problemKey: '3x4-factor-product',
       visualData: {
@@ -14,12 +14,17 @@ export function generateFactorProductProblems(): PracticeProblem[] {
         factors: [3, 4],
         product: 12,
       },
+      answerData: {
+        factorA: '3',
+        factorB: '4',
+        product: '12',
+      },
     },
     {
       id: 'factor-product-2',
       questionText:
         'In the equation 5 × 2 = 10, what are the factors and what is the product?',
-      correctAnswer: 'factors: 5 and 2, product: 10',
+      correctAnswer: '5,2,10',
       visualType: 'factor_product',
       problemKey: '5x2-factor-product',
       visualData: {
@@ -27,18 +32,28 @@ export function generateFactorProductProblems(): PracticeProblem[] {
         factors: [5, 2],
         product: 10,
       },
+      answerData: {
+        factorA: '5',
+        factorB: '2',
+        product: '10',
+      },
     },
     {
       id: 'factor-product-3',
       questionText:
         'In the equation 1 × 8 = 8, what are the factors and what is the product?',
-      correctAnswer: 'factors: 1 and 8, product: 8',
+      correctAnswer: '1,8,8',
       visualType: 'factor_product',
       problemKey: '1x8-factor-product',
       visualData: {
         equation: '1 × 8 = 8',
         factors: [1, 8],
         product: 8,
+      },
+      answerData: {
+        factorA: '1',
+        factorB: '8',
+        product: '8',
       },
     },
   ]

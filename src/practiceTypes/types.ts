@@ -12,4 +12,9 @@ export type PracticeProblem = {
     factors?: number[]
     product?: number
   }
+  answerData?: {
+    factorA?: string
+    factorB?: string
+    product?: string
+  }
 }

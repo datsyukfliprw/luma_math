@@ -27,6 +27,9 @@ function PracticeScreen() {
 
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0)
   const [answer, setAnswer] = useState('')
+  const [factorAAnswer, setFactorAAnswer] = useState('')
+  const [factorBAnswer, setFactorBAnswer] = useState('')
+  const [productAnswer, setProductAnswer] = useState('')
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null)
 
   const currentProblem = problems[currentProblemIndex]
@@ -34,6 +37,27 @@ function PracticeScreen() {
 
   function checkAnswer() {
     if (!currentProblem) return
+
+    if (currentProblem.visualType === 'factor_product') {
+      const expected = currentProblem.answerData
+
+      const factorAIsCorrect =
+        normalizeAnswer(factorAAnswer) === normalizeAnswer(expected?.factorA ?? '')
+
+      const factorBIsCorrect =
+        normalizeAnswer(factorBAnswer) === normalizeAnswer(expected?.factorB ?? '')
+
+      const productIsCorrect =
+        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? '')
+
+      setFeedback(
+        factorAIsCorrect && factorBIsCorrect && productIsCorrect
+          ? 'correct'
+          : 'incorrect',
+      )
+
+      return
+    }
 
     const userAnswer = normalizeAnswer(answer)
     const correctAnswer = normalizeAnswer(currentProblem.correctAnswer)
@@ -43,6 +67,9 @@ function PracticeScreen() {
 
   function goToNextQuestion() {
     setAnswer('')
+    setFactorAAnswer('')
+    setFactorBAnswer('')
+    setProductAnswer('')
     setFeedback(null)
 
     if (currentProblemIndex < problems.length - 1) {
@@ -133,42 +160,101 @@ function PracticeScreen() {
                   {visualData.equation}
                 </p>
 
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  <span className="rounded-full bg-white px-4 py-2 text-sm font-black text-[#0081A7]">
-                    Factors: {visualData.factors?.join(' and ')}
-                  </span>
-
-                  <span className="rounded-full bg-white px-4 py-2 text-sm font-black text-[#F07167]">
-                    Product: {visualData.product}
-                  </span>
-                </div>
+                <p className="mt-3 text-lg font-bold text-[#073B5A]/70">
+                  Type the two factors and the product.
+                </p>
               </div>
             )}
 
-            <div className="mt-6 flex max-w-sm gap-3">
-              <input
-                value={answer}
-                onChange={(event) => {
-                  setAnswer(event.target.value)
-                  setFeedback(null)
-                }}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    checkAnswer()
-                  }
-                }}
-                className="min-w-0 flex-1 rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
-                placeholder="Your answer"
-              />
+            {currentProblem.visualType === 'factor_product' ? (
+              <div className="mt-6 grid max-w-2xl gap-4 md:grid-cols-3">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-black uppercase tracking-wide text-[#0081A7]">
+                    Factor 1
+                  </span>
 
-              <button
-                type="button"
-                onClick={checkAnswer}
-                className="rounded-xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm"
-              >
-                Check
-              </button>
-            </div>
+                  <input
+                    value={factorAAnswer}
+                    onChange={(event) => {
+                      setFactorAAnswer(event.target.value)
+                      setFeedback(null)
+                    }}
+                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
+                    placeholder="?"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-black uppercase tracking-wide text-[#0081A7]">
+                    Factor 2
+                  </span>
+
+                  <input
+                    value={factorBAnswer}
+                    onChange={(event) => {
+                      setFactorBAnswer(event.target.value)
+                      setFeedback(null)
+                    }}
+                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
+                    placeholder="?"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-black uppercase tracking-wide text-[#F07167]">
+                    Product
+                  </span>
+
+                  <input
+                    value={productAnswer}
+                    onChange={(event) => {
+                      setProductAnswer(event.target.value)
+                      setFeedback(null)
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        checkAnswer()
+                      }
+                    }}
+                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
+                    placeholder="?"
+                  />
+                </label>
+
+                <button
+                  type="button"
+                  onClick={checkAnswer}
+                  className="rounded-xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm md:col-span-3 md:w-fit"
+                >
+                  Check
+                </button>
+              </div>
+            ) : (
+              <div className="mt-6 flex max-w-sm gap-3">
+                <input
+                  value={answer}
+                  onChange={(event) => {
+                    setAnswer(event.target.value)
+                    setFeedback(null)
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                      checkAnswer()
+                    }
+                  }}
+                  className="min-w-0 flex-1 rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
+                  placeholder="Your answer"
+                />
+
+                <button
+                  type="button"
+                  onClick={checkAnswer}
+                  className="rounded-xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm"
+                >
+                  Check
+                </button>
+              </div>
+            )}
 
             {feedback === 'correct' && (
               <div className="mt-5 rounded-2xl border border-[#00AFB9]/30 bg-[#E9F7F8] p-4">
@@ -199,7 +285,8 @@ function PracticeScreen() {
                 </p>
 
                 <p className="mt-2 text-sm font-semibold text-[#073B5A]/70">
-                  Hint: check the model, repeated addition, or equation pieces.
+                  Hint: factors are the numbers being multiplied. The product is
+                  the answer.
                 </p>
               </div>
             )}
