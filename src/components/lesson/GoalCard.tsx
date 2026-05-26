@@ -11,7 +11,7 @@ function GoalCard({
   const isEvaluation = lessonType === 'evaluation'
 
   return (
-    <div className="relative h-full overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[#FEF3D9] px-6 py-5 shadow-sm">
+    <div className="relative h-full overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_70%_50%,rgba(255,255,255,0.90)_0%,rgba(255,255,255,0.58)_15%,rgba(254,243,217,0.78)_32%,rgba(254,243,217,1)_62%),linear-gradient(90deg,#FEF3D9_0%,#FEF3D9_48%,#FFF8E9_100%)] px-6 py-4 shadow-sm">
       <div className="grid h-full items-center gap-6 md:grid-cols-[1fr_100px_1.1fr]">
         <div>
           <h3 className="text-xl font-extrabold text-[#073B5A]">
