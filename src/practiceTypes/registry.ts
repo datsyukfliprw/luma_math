@@ -5,6 +5,7 @@ import { generateEqualGroupsProblems } from './equalGroups'
 import { generateEqualGroupsWithObjectsProblems } from './equalGroupsWithObjects'
 import { generateEvaluationProblems } from './evaluation'
 import { generateFactorProductProblems } from './factorProduct'
+import { generateFairSharingDivisionProblems } from './fairSharingDivision'
 import { generateRepeatedAdditionProblems } from './repeatedAddition'
 import { generateValidInvalidArraysProblems } from './validInvalidArrays'
 import { generateWeek2EvaluationProblems } from './week2Evaluation'
@@ -25,6 +26,8 @@ const practiceRegistry: Record<string, PracticeGenerator> = {
   draw_arrays: generateDrawArraysProblems,
   valid_invalid_arrays: generateValidInvalidArraysProblems,
   week_2_evaluation: generateWeek2EvaluationProblems,
+
+  fair_sharing_division: generateFairSharingDivisionProblems,
 }
 
 export function generateProblemsForPracticeType(

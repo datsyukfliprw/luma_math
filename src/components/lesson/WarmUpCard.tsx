@@ -1,52 +1,152 @@
+import { useState, type ReactNode } from 'react'
+import { updateLessonProgress } from '../../lib/lessonProgress'
+
 type WarmUpCardProps = {
   factDrill: string
+  lessonId: string
+  isComplete: boolean
+  onComplete: () => void
 }
 
-function WarmUpCard({ factDrill: _factDrill }: WarmUpCardProps) {
+function NumberBox({ children }: { children: ReactNode }) {
   return (
-    <div className="relative h-full min-h-[150px] overflow-hidden rounded-[1.75rem] border border-[#073B5A]/10 bg-[#FDFDFC] px-5 py-4 shadow-sm">
-      <div className="relative z-10">
-        <div className="mb-3 flex items-start justify-between">
+    <span className="inline-flex h-9 min-w-9 items-center justify-center rounded-lg bg-[#F3F7F8] px-2 text-lg font-black text-[#073B5A]">
+      {children}
+    </span>
+  )
+}
+
+function WarmUpCard({
+  factDrill: _factDrill,
+  lessonId,
+  isComplete,
+  onComplete,
+}: WarmUpCardProps) {
+  const [answer, setAnswer] = useState('')
+  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(
+    isComplete ? 'correct' : null,
+  )
+
+  function checkAnswer() {
+    const normalizedAnswer = answer.trim()
+
+    if (normalizedAnswer === '12') {
+      updateLessonProgress(lessonId, {
+        warmupComplete: true,
+      })
+
+      setFeedback('correct')
+      onComplete()
+      return
+    }
+
+    setFeedback('incorrect')
+  }
+
+  return (
+    <div
+      className={`relative h-full min-h-[150px] overflow-hidden rounded-[1.75rem] border px-5 py-4 shadow-sm ${
+        isComplete
+          ? 'border-[#00AFB9]/30 bg-[#FDFDFC]'
+          : 'border-[#073B5A]/10 bg-[#FDFDFC]'
+      }`}
+    >
+      <div className="relative z-10 flex h-full flex-col">
+        <div className="mb-3 flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#073B5A] text-base font-black text-white">
-              1
+            <span
+              className={`flex h-8 w-8 items-center justify-center rounded-full text-base font-black text-white ${
+                isComplete ? 'bg-[#00AFB9]' : 'bg-[#073B5A]'
+              }`}
+            >
+              {isComplete ? '✓' : '1'}
             </span>
 
             <h3 className="text-xl font-black text-[#073B5A]">Warm-Up</h3>
           </div>
 
-          <p className="text-sm font-bold text-[#073B5A]/70">◷ 5 min</p>
+          <p className="shrink-0 text-sm font-bold text-[#073B5A]/70">
+            ◷ 5 min
+          </p>
         </div>
 
-        <p className="mb-4 text-sm font-semibold leading-relaxed text-[#073B5A]/80">
+        <p className="mb-3 text-sm font-semibold leading-relaxed text-[#073B5A]/80">
           Fill in the missing number.
         </p>
 
-        <div className="flex items-center gap-3 pr-48 text-2xl font-black text-[#073B5A]">
-          <span className="rounded-xl bg-[#F3F7F8] px-4 py-2">3</span>
-          <span>+</span>
-          <span className="rounded-xl bg-[#F3F7F8] px-4 py-2">3</span>
-          <span>+</span>
-          <span className="rounded-xl bg-[#F3F7F8] px-4 py-2">3</span>
-          <span>+</span>
-          <span className="rounded-xl bg-[#F3F7F8] px-4 py-2">3</span>
-          <span>=</span>
-          <span className="rounded-xl border-2 border-dashed border-[#00AFB9] bg-white px-5 py-2">
-            ?
-          </span>
+        <div className="w-full rounded-2xl bg-white/75 p-3 shadow-[inset_0_0_0_1px_rgba(7,59,90,0.06)]">
+          <div className="flex w-full flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-lg font-black text-[#073B5A]">
+            <NumberBox>3</NumberBox>
+
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <span>+</span>
+              <NumberBox>3</NumberBox>
+            </span>
+
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <span>+</span>
+              <NumberBox>3</NumberBox>
+            </span>
+
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <span>+</span>
+              <NumberBox>3</NumberBox>
+            </span>
+
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+              <span>=</span>
+
+              <input
+                value={answer}
+                onChange={(event) => {
+                  setAnswer(event.target.value)
+                  if (!isComplete) {
+                    setFeedback(null)
+                  }
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    checkAnswer()
+                  }
+                }}
+                className="h-9 w-12 rounded-lg border-2 border-dashed border-[#00AFB9] bg-white px-2 text-center text-lg font-black text-[#0081A7] outline-none focus:border-[#F07167]"
+                placeholder="?"
+              />
+            </span>
+          </div>
         </div>
 
-        <button className="mt-3 rounded-lg bg-[#00AFB9] px-5 py-2 text-sm font-black text-white shadow-sm">
+        <button
+          type="button"
+          onClick={checkAnswer}
+          className="mt-3 w-fit rounded-lg bg-[#00AFB9] px-5 py-2 text-sm font-black text-white shadow-sm"
+        >
           Check Answer
         </button>
-      </div>
 
-      <div className="pointer-events-none absolute bottom-1 right-4 hidden h-32 w-44 items-end justify-center md:flex">
-        <img
-          src="/images/warmup_plant.png"
-          alt=""
-          className="h-32 w-auto object-contain"
-        />
+        {feedback === 'correct' && (
+          <div className="mt-3 rounded-2xl border border-[#00AFB9]/25 bg-[#E9F7F8] px-4 py-3">
+            <p className="text-sm font-black text-[#073B5A]">
+              Nice! 3 + 3 + 3 + 3 = 12 ✨
+            </p>
+          </div>
+        )}
+
+        {feedback === 'incorrect' && (
+          <div className="mt-3 rounded-2xl border border-[#F07167]/25 bg-[#FCE9E5] px-4 py-3">
+            <p className="text-sm font-black text-[#073B5A]">
+              Not quite. Count by 3s: 3, 6, 9, 12.
+            </p>
+          </div>
+        )}
+
+        <div className="mt-auto hidden justify-end md:flex">
+          <img
+            src="/images/warmup_plant.png"
+            alt=""
+            className="h-16 w-auto object-contain opacity-90"
+          />
+        </div>
       </div>
     </div>
   )

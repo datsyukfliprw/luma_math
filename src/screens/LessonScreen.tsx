@@ -1,14 +1,75 @@
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import PageLayout from '../components/layout/PageLayout'
 import TopBar from '../components/layout/TopBar'
-import GoalCard from '../components/lesson/GoalCard'
 import LearnCard from '../components/lesson/LearnCard'
 import LessonFooter from '../components/lesson/LessonFooter'
 import LessonHero from '../components/lesson/LessonHero'
+import NextUpCard from '../components/lesson/NextUpCard'
 import PracticeTimeCard from '../components/lesson/PracticeTimeCard'
+import TodaysWordsCard from '../components/lesson/TodaysWordsCard'
 import TryItCard from '../components/lesson/TryItCard'
 import WarmUpCard from '../components/lesson/WarmUpCard'
 import { getLessonById } from '../lib/lessonLookup'
+import {
+  getLessonProgress,
+  type LessonProgress,
+} from '../lib/lessonProgress'
+
+function getNextStep(progress: LessonProgress) {
+  if (!progress.warmupComplete) {
+    return {
+      title: 'Warm-Up',
+      description: 'Let’s get started with a quick check-in!',
+    }
+  }
+
+  if (!progress.learnComplete) {
+    return {
+      title: 'Learn',
+      description: 'Watch the short lesson and learn today’s skill.',
+    }
+  }
+
+  if (!progress.tryItComplete) {
+    return {
+      title: 'Try It',
+      description: 'Try one guided problem before practice.',
+    }
+  }
+
+  if (!progress.practiceComplete) {
+    return {
+      title: 'Practice',
+      description: 'Finish with guided practice and lock in the skill.',
+    }
+  }
+
+  return {
+    title: 'Complete',
+    description: 'Great work! You finished today’s lesson.',
+  }
+}
+
+function getTodaysWords(lessonTitle: string, practiceType: string) {
+  if (practiceType === 'factor_product_identification') {
+    return ['factor', 'product', 'equation']
+  }
+
+  if (practiceType === 'array_rows_columns') {
+    return ['array', 'row', 'column']
+  }
+
+  if (practiceType === 'repeated_addition_to_multiplication') {
+    return ['repeated addition', 'groups', 'multiply']
+  }
+
+  if (lessonTitle.toLowerCase().includes('zero')) {
+    return ['zero rule', 'identity rule', 'product']
+  }
+
+  return ['equal groups', 'factor', 'product']
+}
 
 function LessonScreen() {
   const { lessonId } = useParams()
@@ -17,6 +78,17 @@ function LessonScreen() {
   const currentLessonId =
     lessonId ??
     `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`
+
+  const [progress, setProgress] = useState<LessonProgress>(() =>
+    getLessonProgress(currentLessonId),
+  )
+
+  useEffect(() => {
+    setProgress(getLessonProgress(currentLessonId))
+  }, [currentLessonId])
+
+  const nextStep = getNextStep(progress)
+  const todaysWords = getTodaysWords(lesson.lesson_title, lesson.practice_type)
 
   return (
     <PageLayout>
@@ -31,46 +103,68 @@ function LessonScreen() {
         description={lesson.objective}
         minutes={lesson.lesson_type === 'evaluation' ? 35 : 25}
         grade={`${unit.grade_level}rd Grade`}
+        lessonType={lesson.lesson_type}
+        quizQuestionCount={lesson.quiz_question_count}
+        progress={progress}
       />
+<section className="mb-5 grid items-stretch gap-5 lg:grid-cols-4">
+  <div className="lg:col-span-2">
+    <NextUpCard
+      nextStep={nextStep.title}
+      description={nextStep.description}
+    />
+  </div>
 
-      <section className="mb-5 grid items-stretch gap-5 xl:grid-cols-[0.9fr_1.1fr]">
-        <GoalCard
-          objective={lesson.objective}
-          lessonType={lesson.lesson_type}
-          quizQuestionCount={lesson.quiz_question_count}
-        />
+  <div className="lg:col-span-2">
+    <TodaysWordsCard words={todaysWords} />
+  </div>
+</section>
 
-        <WarmUpCard factDrill={lesson.fact_drill} />
-      </section>
+      <section className="grid items-stretch gap-5 lg:grid-cols-4">
+        <div className="lg:col-span-1">
+          <WarmUpCard
+  factDrill={lesson.fact_drill}
+  lessonId={currentLessonId}
+  isComplete={progress.warmupComplete}
+  onComplete={() => {
+    setProgress(getLessonProgress(currentLessonId))
+  }}
+/>
+        </div>
 
-      <section className="grid items-stretch gap-5 lg:grid-cols-3">
-        <LearnCard concept={lesson.concept} />
+        <div className="lg:col-span-1">
+          <LearnCard concept={lesson.concept} />
+        </div>
 
-        <TryItCard
-          practice={lesson.practice}
-          practiceType={lesson.practice_type}
-        />
+        <div className="lg:col-span-1">
+          <TryItCard
+            practice={lesson.practice}
+            practiceType={lesson.practice_type}
+          />
+        </div>
 
-        <PracticeTimeCard
-          lessonId={currentLessonId}
-          activities={[
-            {
-              icon: '🧮',
-              title: 'Guided Practice',
-              subtitle: lesson.practice,
-            },
-            {
-              icon: '✏️',
-              title: 'Independent Practice',
-              subtitle: 'Solve on your own',
-            },
-            {
-              icon: '🏆',
-              title: 'Challenge Yourself',
-              subtitle: 'Take it up a notch!',
-            },
-          ]}
-        />
+        <div className="lg:col-span-1">
+          <PracticeTimeCard
+            lessonId={currentLessonId}
+            activities={[
+              {
+                icon: '🧮',
+                title: 'Guided Practice',
+                subtitle: lesson.practice,
+              },
+              {
+                icon: '✏️',
+                title: 'Independent Practice',
+                subtitle: 'Solve on your own',
+              },
+              {
+                icon: '🏆',
+                title: 'Challenge Yourself',
+                subtitle: 'Take it up a notch!',
+              },
+            ]}
+          />
+        </div>
       </section>
 
       <LessonFooter />

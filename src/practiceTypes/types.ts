@@ -8,6 +8,7 @@ export type PracticeProblem = {
     | 'factor_product'
     | 'array_rows_columns'
     | 'multiple_choice'
+    | 'fair_sharing'
   problemKey: string
   visualData?: {
     groups?: number
@@ -19,6 +20,8 @@ export type PracticeProblem = {
     rows?: number
     columns?: number
     choices?: string[]
+    items?: number
+    groupsToShare?: number
   }
   answerData?: {
     factorA?: string
@@ -26,5 +29,6 @@ export type PracticeProblem = {
     product?: string
     rows?: string
     columns?: string
+    quotient?: string
   }
 }
