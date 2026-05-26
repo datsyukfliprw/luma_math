@@ -1,11 +1,14 @@
 import { generateArrayRowsColumnsProblems } from './arrayRowsColumns'
+import { generateCommutativePropertyProblems } from './commutativeProperty'
+import { generateDrawArraysProblems } from './drawArrays'
 import { generateEqualGroupsProblems } from './equalGroups'
 import { generateEqualGroupsWithObjectsProblems } from './equalGroupsWithObjects'
 import { generateEvaluationProblems } from './evaluation'
 import { generateFactorProductProblems } from './factorProduct'
 import { generateRepeatedAdditionProblems } from './repeatedAddition'
+import { generateValidInvalidArraysProblems } from './validInvalidArrays'
+import { generateWeek2EvaluationProblems } from './week2Evaluation'
 import type { PracticeProblem } from './types'
-import { generateCommutativePropertyProblems } from './commutativeProperty'
 
 type PracticeGenerator = () => PracticeProblem[]
 
@@ -14,9 +17,14 @@ const practiceRegistry: Record<string, PracticeGenerator> = {
   repeated_addition_to_multiplication: generateRepeatedAdditionProblems,
   factor_product_identification: generateFactorProductProblems,
   equal_groups_with_objects: generateEqualGroupsWithObjectsProblems,
+
   evaluation: generateEvaluationProblems,
+
   array_rows_columns: generateArrayRowsColumnsProblems,
   commutative_property_matching: generateCommutativePropertyProblems,
+  draw_arrays: generateDrawArraysProblems,
+  valid_invalid_arrays: generateValidInvalidArraysProblems,
+  week_2_evaluation: generateWeek2EvaluationProblems,
 }
 
 export function generateProblemsForPracticeType(
