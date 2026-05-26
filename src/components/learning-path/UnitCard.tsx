@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import WeekCard from './WeekCard'
 
 type LessonStatus = 'complete' | 'current' | 'locked'
@@ -13,6 +14,7 @@ type UnitCardProps = {
     title: string
     status: WeekStatus
     lessons: {
+      id: string
       day: string
       title: string
       status: LessonStatus
@@ -67,14 +69,15 @@ function UnitCard({
           >
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
               {week.lessons.map((lesson) => (
-                <button
+                <Link
                   key={lesson.day}
+                  to={lesson.status === 'locked' ? '#' : '/lesson/${lesson,id}'}
                   className={`rounded-2xl border bg-white/75 p-4 text-left transition ${
                     lesson.status === 'complete'
                       ? 'border-[#00AFB9]/35'
                       : lesson.status === 'current'
                         ? 'border-[#F07167]/50 shadow-sm'
-                        : 'border-[#073B5A]/10 opacity-70'
+                        : 'pointer-events-none border-[#073B5A]/10 opacity-70'
                   }`}
                 >
                   <div className="mb-2 flex items-center justify-between">
@@ -94,7 +97,7 @@ function UnitCard({
                   <h4 className="text-sm font-black leading-snug">
                     {lesson.title}
                   </h4>
-                </button>
+                </Link>
               ))}
             </div>
           </WeekCard>

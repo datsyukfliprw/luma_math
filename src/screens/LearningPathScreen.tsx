@@ -1,21 +1,36 @@
 import PageLayout from '../components/layout/PageLayout'
 import UnitCard from '../components/learning-path/UnitCard'
+import unitOne from '../data/curriculum/grade_3/unit_01_multiplication_division_foundations.json'
 
 function LearningPathScreen() {
-  const unitOneWeeks = [
-    {
-      weekNumber: 1,
-      title: 'Equal Groups & Repeated Addition',
-      status: 'current' as const,
-      lessons: [
-        { day: 'Day 1', title: 'Equal Groups', status: 'complete' as const },
-        { day: 'Day 2', title: 'Repeated Addition', status: 'complete' as const },
-        { day: 'Day 3', title: 'Multiplication Sentences', status: 'current' as const },
-        { day: 'Day 4', title: 'Factors & Products', status: 'locked' as const },
-        { day: 'Day 5', title: 'Weekly Review Quiz', status: 'locked' as const },
-      ],
-    },
-  ]
+  const weeks = unitOne.weeks.map((week) => ({
+    weekNumber: week.week_number,
+    title: week.week_title,
+    status:
+      week.week_number === 1
+        ? ('current' as const)
+        : ('locked' as const),
+    lessons: week.lessons.map((lesson) => {
+      const lessonId = `unit-${unitOne.unit_number}-week-${week.week_number}-day-${lesson.day_number}`
+
+      let status: 'complete' | 'current' | 'locked' = 'locked'
+
+      if (lesson.day_number === 1 || lesson.day_number === 2) {
+        status = 'complete'
+      }
+
+      if (lesson.day_number === 3) {
+        status = 'current'
+      }
+
+      return {
+        id: lessonId,
+        day: `Day ${lesson.day_number}`,
+        title: lesson.lesson_title,
+        status,
+      }
+    }),
+  }))
 
   return (
     <PageLayout>
@@ -34,11 +49,11 @@ function LearningPathScreen() {
 
       <div className="space-y-5">
         <UnitCard
-          unitNumber={1}
-          title="Multiplication & Division Foundations"
-          description="Learn equal groups, repeated addition, multiplication sentences, factors, products, and weekly review skills."
-          progress={40}
-          weeks={unitOneWeeks}
+          unitNumber={unitOne.unit_number}
+          title={unitOne.unit_title}
+          description={unitOne.unit_description}
+          progress={8}
+          weeks={weeks}
         />
       </div>
     </PageLayout>
