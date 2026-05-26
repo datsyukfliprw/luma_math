@@ -9,6 +9,11 @@ export function generateFactorProductProblems(): PracticeProblem[] {
       correctAnswer: 'factors: 3 and 4, product: 12',
       visualType: 'factor_product',
       problemKey: '3x4-factor-product',
+      visualData: {
+        equation: '3 × 4 = 12',
+        factors: [3, 4],
+        product: 12,
+      },
     },
     {
       id: 'factor-product-2',
@@ -17,6 +22,11 @@ export function generateFactorProductProblems(): PracticeProblem[] {
       correctAnswer: 'factors: 5 and 2, product: 10',
       visualType: 'factor_product',
       problemKey: '5x2-factor-product',
+      visualData: {
+        equation: '5 × 2 = 10',
+        factors: [5, 2],
+        product: 10,
+      },
     },
     {
       id: 'factor-product-3',
@@ -25,6 +35,11 @@ export function generateFactorProductProblems(): PracticeProblem[] {
       correctAnswer: 'factors: 1 and 8, product: 8',
       visualType: 'factor_product',
       problemKey: '1x8-factor-product',
+      visualData: {
+        equation: '1 × 8 = 8',
+        factors: [1, 8],
+        product: 8,
+      },
     },
   ]
 }
