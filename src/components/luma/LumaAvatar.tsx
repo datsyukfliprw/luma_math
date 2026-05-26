@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useState } from 'react'
 
 export type LumaState =
@@ -23,10 +23,7 @@ type LumaAvatarProps = {
 const lumaImageByState: Record<LumaState, string> = {
   idle: '/images/luma/star_idle.png',
   sleepy: '/images/luma/star_sleepy.png',
-
-  // You do not have star_happy.png yet, so this safely reuses proud.
   happy: '/images/luma/star_proud.png',
-
   thinking: '/images/luma/star_thinking.png',
   charging: '/images/luma/star_charging.png',
   charged: '/images/luma/star_charged.png',
@@ -185,25 +182,55 @@ function LumaAvatar({
           <div className="absolute inset-0 rounded-full bg-[#FDFCDC] opacity-60 blur-2xl" />
         )}
 
-        {imageFailed ? (
-          <motion.div
-            className="relative flex h-full w-full items-center justify-center rounded-full bg-[#FEF3D9] text-6xl shadow-sm"
-            animate={motionConfig.animate}
-            transition={motionConfig.transition}
-          >
-            ⭐
-          </motion.div>
-        ) : (
-          <motion.img
-            key={state}
-            src={lumaImageByState[state]}
-            alt={name ? `${name}, the learning star` : 'Learning star mascot'}
-            onError={() => setImageFailed(true)}
-            className="relative h-full w-full object-contain drop-shadow-sm"
-            animate={motionConfig.animate}
-            transition={motionConfig.transition}
-          />
-        )}
+        <AnimatePresence mode="wait">
+          {imageFailed ? (
+            <motion.div
+              key={`fallback-${state}`}
+              className="relative flex h-full w-full items-center justify-center rounded-full bg-[#FEF3D9] text-6xl shadow-sm"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{
+                opacity: 1,
+                ...motionConfig.animate,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.98,
+              }}
+              transition={{
+                opacity: { duration: 0.16 },
+                scale: { duration: 0.16 },
+                ...motionConfig.transition,
+              }}
+            >
+              ⭐
+            </motion.div>
+          ) : (
+            <motion.img
+              key={state}
+              src={lumaImageByState[state]}
+              alt={name ? `${name}, the learning star` : 'Learning star mascot'}
+              onError={() => setImageFailed(true)}
+              className="relative h-full w-full object-contain drop-shadow-sm"
+              initial={{
+                opacity: 0,
+                scale: 0.96,
+              }}
+              animate={{
+                opacity: 1,
+                ...motionConfig.animate,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.98,
+              }}
+              transition={{
+                opacity: { duration: 0.16 },
+                scale: { duration: 0.16 },
+                ...motionConfig.transition,
+              }}
+            />
+          )}
+        </AnimatePresence>
 
         <div className="pointer-events-none absolute -right-1 top-3 text-lg text-[#F7B733]">
           ✦
