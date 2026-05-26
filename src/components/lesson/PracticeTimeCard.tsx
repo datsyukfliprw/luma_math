@@ -1,10 +1,8 @@
-import {
-  Calculator,
-  Pencil,
-  Trophy,
-} from 'lucide-react'
+import { Calculator, Pencil, Trophy } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 type PracticeTimeCardProps = {
+  lessonId?: string
   activities: {
     icon: string
     title: string
@@ -12,7 +10,12 @@ type PracticeTimeCardProps = {
   }[]
 }
 
-function PracticeTimeCard({ activities: _activities }: PracticeTimeCardProps) {
+function PracticeTimeCard({
+  lessonId,
+  activities: _activities,
+}: PracticeTimeCardProps) {
+  const practicePath = lessonId ? `/practice/${lessonId}` : '/practice'
+
   const activities = [
     {
       icon: Calculator,
@@ -20,6 +23,7 @@ function PracticeTimeCard({ activities: _activities }: PracticeTimeCardProps) {
       subtitle: 'Step-by-step problems with hints',
       rowClass: 'bg-[#E9F7F8]',
       iconClass: 'bg-[#00AFB9]/20 text-[#0081A7]',
+      to: practicePath,
     },
     {
       icon: Pencil,
@@ -27,6 +31,7 @@ function PracticeTimeCard({ activities: _activities }: PracticeTimeCardProps) {
       subtitle: 'Solve on your own',
       rowClass: 'bg-[#FFF4E3]',
       iconClass: 'bg-[#FED9B7]/70 text-[#F07167]',
+      to: practicePath,
     },
     {
       icon: Trophy,
@@ -34,6 +39,7 @@ function PracticeTimeCard({ activities: _activities }: PracticeTimeCardProps) {
       subtitle: 'Take it up a notch!',
       rowClass: 'bg-[#FCE9E5]',
       iconClass: 'bg-[#F07167]/20 text-[#F07167]',
+      to: practicePath,
     },
   ]
 
@@ -59,8 +65,9 @@ function PracticeTimeCard({ activities: _activities }: PracticeTimeCardProps) {
           const Icon = activity.icon
 
           return (
-            <button
+            <Link
               key={activity.title}
+              to={activity.to}
               className={`flex w-full items-center gap-3 rounded-xl p-3 text-left transition hover:scale-[1.01] ${activity.rowClass}`}
             >
               <span
@@ -80,14 +87,17 @@ function PracticeTimeCard({ activities: _activities }: PracticeTimeCardProps) {
               </span>
 
               <span className="text-xl font-black text-[#073B5A]">›</span>
-            </button>
+            </Link>
           )
         })}
       </div>
 
-      <button className="mt-4 text-sm font-black text-[#0081A7]">
+      <Link
+        to={practicePath}
+        className="mt-4 inline-block text-sm font-black text-[#0081A7]"
+      >
         See All Activities ›
-      </button>
+      </Link>
     </div>
   )
 }

@@ -21,6 +21,7 @@ function App() {
           <Route path="/lesson/:lessonId" element={<LessonScreen />} />
           <Route path="/flashcards" element={<FlashcardsScreen />} />
           <Route path="/practice" element={<PracticeScreen />} />
+          <Route path="/practice/:lessonId" element={<PracticeScreen />} />
           <Route path="/progress" element={<ProgressScreen />} />
           <Route path="/parent-area" element={<ParentAreaScreen />} />
         </Routes>

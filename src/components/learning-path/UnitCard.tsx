@@ -70,8 +70,8 @@ function UnitCard({
             <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-5">
               {week.lessons.map((lesson) => (
                 <Link
-                  key={lesson.day}
-                  to={lesson.status === 'locked' ? '#' : '/lesson/${lesson,id}'}
+                  key={lesson.id}
+                  to={lesson.status === 'locked' ? '#' : `/lesson/${lesson.id}`}
                   className={`rounded-2xl border bg-white/75 p-4 text-left transition ${
                     lesson.status === 'complete'
                       ? 'border-[#00AFB9]/35'

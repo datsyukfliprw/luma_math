@@ -13,6 +13,10 @@ import { getLessonById } from '../lib/lessonLookup'
 function LessonScreen() {
   const { lessonId } = useParams()
   const { unit, week, lesson } = getLessonById(lessonId)
+  const currentLessonId =
+  lessonId ?? `unit-${unit.unit_number}-week-${week.week_number}-day-${lesson.day_number}`
+
+
 
   return (
     <PageLayout>
@@ -48,6 +52,7 @@ function LessonScreen() {
         />
 
         <PracticeTimeCard
+          lessonId={currentLessonId}
           activities={[
             {
               icon: '🧮',
