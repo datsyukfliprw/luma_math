@@ -5,6 +5,7 @@ import {
   Layers,
   Map,
   Pencil,
+  Settings,
   Trophy,
   Users,
 } from 'lucide-react'
@@ -17,6 +18,7 @@ const navItems = [
   { icon: Layers, label: 'Flashcards', to: '/flashcards' },
   { icon: Pencil, label: 'Practice', to: '/practice' },
   { icon: ChartNoAxesColumnIncreasing, label: 'Progress', to: '/progress' },
+  { icon: Settings, label: 'Settings', to: '/settings' },
   { icon: Users, label: 'Parent Area', to: '/parent-area' },
 ]
 
@@ -103,7 +105,6 @@ function Sidebar() {
             </div>
           </div>
         </div>
-
       </div>
     </aside>
   )

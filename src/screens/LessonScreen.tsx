@@ -15,6 +15,9 @@ import {
   getLessonProgress,
   type LessonProgress,
 } from '../lib/lessonProgress'
+import { getStarProfile } from '../lib/starProfile'
+
+const CURRENT_STUDENT_ID = 'default-student'
 
 function getNextStep(progress: LessonProgress) {
   if (!progress.warmupComplete) {
@@ -83,8 +86,13 @@ function LessonScreen() {
     getLessonProgress(currentLessonId),
   )
 
+  const [starName, setStarName] = useState(
+    () => getStarProfile(CURRENT_STUDENT_ID).starName,
+  )
+
   useEffect(() => {
     setProgress(getLessonProgress(currentLessonId))
+    setStarName(getStarProfile(CURRENT_STUDENT_ID).starName)
   }, [currentLessonId])
 
   const nextStep = getNextStep(progress)
@@ -106,30 +114,28 @@ function LessonScreen() {
         lessonType={lesson.lesson_type}
         quizQuestionCount={lesson.quiz_question_count}
         progress={progress}
+        starName={starName}
       />
-<section className="mb-5 grid items-stretch gap-5 lg:grid-cols-4">
-  <div className="lg:col-span-2">
-    <NextUpCard
-      nextStep={nextStep.title}
-      description={nextStep.description}
-    />
-  </div>
 
-  <div className="lg:col-span-2">
-    <TodaysWordsCard words={todaysWords} />
-  </div>
-</section>
+      <section className="mb-5 grid items-stretch gap-5 xl:grid-cols-[1fr_1.15fr]">
+        <NextUpCard
+          nextStep={nextStep.title}
+          description={nextStep.description}
+        />
+
+        <TodaysWordsCard words={todaysWords} />
+      </section>
 
       <section className="grid items-stretch gap-5 lg:grid-cols-4">
         <div className="lg:col-span-1">
           <WarmUpCard
-  factDrill={lesson.fact_drill}
-  lessonId={currentLessonId}
-  isComplete={progress.warmupComplete}
-  onComplete={() => {
-    setProgress(getLessonProgress(currentLessonId))
-  }}
-/>
+            factDrill={lesson.fact_drill}
+            lessonId={currentLessonId}
+            isComplete={progress.warmupComplete}
+            onComplete={() => {
+              setProgress(getLessonProgress(currentLessonId))
+            }}
+          />
         </div>
 
         <div className="lg:col-span-1">

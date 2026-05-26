@@ -1,16 +1,33 @@
-import Sidebar from './components/layout/Sidebar'
-import LessonScreen from './screens/LessonScreen'
+import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import Sidebar from './components/layout/Sidebar'
+import StarNamePrompt from './components/luma/StarNamePrompt'
 import FlashcardsScreen from './screens/FlashcardsScreen'
 import HomeScreen from './screens/HomeScreen'
 import LearningPathScreen from './screens/LearningPathScreen'
+import LessonScreen from './screens/LessonScreen'
 import ParentAreaScreen from './screens/ParentAreaScreen'
 import PracticeScreen from './screens/PracticeScreen'
 import ProgressScreen from './screens/ProgressScreen'
+import SettingsScreen from './screens/SettingsScreen'
+import { hasNamedStar } from './lib/starProfile'
+
+const CURRENT_STUDENT_ID = 'default-student'
 
 function App() {
+  const [starNameReady, setStarNameReady] = useState(() =>
+    hasNamedStar(CURRENT_STUDENT_ID),
+  )
+
   return (
     <main className="h-screen overflow-hidden bg-[#faf9f4] p-0 text-[#073B5A] xl:p-5">
+      {!starNameReady && (
+        <StarNamePrompt
+          studentId={CURRENT_STUDENT_ID}
+          onSaved={() => setStarNameReady(true)}
+        />
+      )}
+
       <div className="mx-auto flex h-full max-w-[1540px] gap-7 overflow-hidden">
         <Sidebar />
 
@@ -24,6 +41,7 @@ function App() {
           <Route path="/practice/:lessonId" element={<PracticeScreen />} />
           <Route path="/progress" element={<ProgressScreen />} />
           <Route path="/parent-area" element={<ParentAreaScreen />} />
+          <Route path="/settings" element={<SettingsScreen />} />
         </Routes>
       </div>
     </main>

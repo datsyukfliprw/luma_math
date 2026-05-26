@@ -13,6 +13,7 @@ type LessonHeroProps = {
   lessonType: string
   quizQuestionCount: number
   progress: LessonProgress
+  starName: string
 }
 
 type GoalItemProps = {
@@ -24,7 +25,7 @@ function GoalItem({ label, complete }: GoalItemProps) {
   return (
     <div className="flex items-center gap-2">
       {complete ? (
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-[0.7rem] font-black text-white">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-xs font-black text-white">
           ✓
         </span>
       ) : (
@@ -33,11 +34,30 @@ function GoalItem({ label, complete }: GoalItemProps) {
 
       <span
         className={`text-sm font-black ${
-          complete ? 'text-[#073B5A]' : 'text-[#073B5A]/60'
+          complete ? 'text-[#073B5A]' : 'text-[#073B5A]/65'
         }`}
       >
         {label}
       </span>
+    </div>
+  )
+}
+
+function GoalProgressBar({
+  completedCount,
+  totalCount,
+}: {
+  completedCount: number
+  totalCount: number
+}) {
+  const percent = Math.round((completedCount / Math.max(totalCount, 1)) * 100)
+
+  return (
+    <div className="mt-3 h-3 overflow-hidden rounded-full bg-[#073B5A]/10">
+      <div
+        className="h-full rounded-full bg-[#F7B733]"
+        style={{ width: `${percent}%` }}
+      />
     </div>
   )
 }
@@ -53,6 +73,7 @@ function LessonHero({
   lessonType,
   quizQuestionCount,
   progress,
+  starName,
 }: LessonHeroProps) {
   const isEvaluation = lessonType === 'evaluation'
 
@@ -68,102 +89,79 @@ function LessonHero({
       ].filter(Boolean).length
 
   const totalCount = isEvaluation ? 1 : 4
-  const progressPercent = Math.round((completedCount / totalCount) * 100)
-  const circleLength = 251
-  const strokeLength = (progressPercent / 100) * circleLength
+
+  const lumaState =
+    progress.lessonComplete
+      ? 'celebrate'
+      : completedCount === 0
+        ? 'sleepy'
+        : completedCount >= totalCount
+          ? 'charged'
+          : 'happy'
 
   return (
-    <section className="mb-5 rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-7 py-6 shadow-sm">
-      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_560px] xl:items-center">
-        <div>
-          <p className="text-sm font-black text-[#426B82]">
-            Grade 3 <span className="mx-2 text-[#073B5A]/30">›</span> Unit{' '}
-            {unitNumber} <span className="mx-2 text-[#073B5A]/30">›</span>{' '}
-            Week {weekNumber}{' '}
-            <span className="mx-2 text-[#073B5A]/30">›</span> Day {dayNumber}
-          </p>
+    <section className="mb-5 overflow-hidden rounded-[1.75rem] border border-[#073B5A]/10 bg-white shadow-sm">
+      <div className="grid xl:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
+        <div className="grid gap-6 px-7 py-6 lg:grid-cols-[minmax(0,1fr)_280px]">
+          <div>
+            <p className="text-sm font-black text-[#426B82]">
+              Grade 3 <span className="mx-2 text-[#073B5A]/30">›</span> Unit{' '}
+              {unitNumber} <span className="mx-2 text-[#073B5A]/30">›</span>{' '}
+              Week {weekNumber}{' '}
+              <span className="mx-2 text-[#073B5A]/30">›</span> Day {dayNumber}
+            </p>
 
-          <h1 className="mt-3 text-[2.35rem] font-black leading-tight tracking-[-0.03em] text-[#073B5A]">
-            {title}
-          </h1>
+            <h1 className="mt-4 text-[2.35rem] font-black leading-tight tracking-[-0.03em] text-[#073B5A]">
+              {title}
+            </h1>
 
-          <div className="mt-5 flex items-start gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#F4D589] bg-[#FEF3D9] text-2xl shadow-sm">
-              ⭐
-            </div>
+            <div className="mt-5 flex items-start gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#F4D589] bg-[#FEF3D9] text-2xl shadow-sm">
+                ⭐
+              </div>
 
-            <div>
-              <p className="max-w-3xl text-base font-bold leading-relaxed text-[#073B5A]/78">
+              <p className="max-w-2xl text-base font-bold leading-relaxed text-[#073B5A]/78">
                 {description}
               </p>
+            </div>
 
-              <div className="mt-5 flex flex-wrap items-center gap-4 text-sm font-black text-[#073B5A]/75">
-                <span className="flex items-center gap-2">
-                  <span className="text-[#0081A7]">◷</span>
-                  {minutes} min
-                </span>
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-black text-[#073B5A]/75">
+              <span className="flex items-center gap-2 rounded-xl border border-[#073B5A]/10 bg-[#F5FBFC] px-4 py-2">
+                <span className="text-[#0081A7]">◷</span>
+                {minutes} min
+              </span>
 
-                <span className="h-5 w-px bg-[#073B5A]/15" />
-
-                <span className="flex items-center gap-2">
-                  <span className="text-[#0081A7]">▥</span>
-                  {grade}
-                </span>
-              </div>
+              <span className="flex items-center gap-2 rounded-xl border border-[#073B5A]/10 bg-[#F5FBFC] px-4 py-2">
+                <span className="text-[#0081A7]">▥</span>
+                {grade}
+              </span>
             </div>
           </div>
-        </div>
 
-        <div className="relative overflow-hidden rounded-[1.35rem] border border-[#F4D589] bg-[radial-gradient(circle_at_82%_45%,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.42)_18%,rgba(254,243,217,0.76)_42%,rgba(254,243,217,1)_78%),linear-gradient(90deg,#FEF3D9_0%,#FFF8E9_100%)] px-5 py-4 shadow-sm">
-          <div className="grid items-center gap-4 lg:grid-cols-[95px_1fr_175px]">
-            <div>
-              <h3 className="text-lg font-black leading-tight text-[#073B5A]">
-                {isEvaluation ? 'Evaluation Goal' : 'Today’s Goal'}
-              </h3>
+          <div className="border-[#073B5A]/10 lg:border-l lg:pl-6">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#0081A7]">
+              Today’s Goal
+            </p>
 
-              <div className="relative mt-3 flex h-20 w-20 items-center justify-center">
-                <svg
-                  className="absolute inset-0 h-full w-full -rotate-90"
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="10"
-                  />
+            <h2 className="mt-3 text-2xl font-black text-[#073B5A]">
+              {completedCount}/{totalCount} Complete
+            </h2>
 
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="40"
-                    fill="none"
-                    stroke="#00AFB9"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeDasharray={`${strokeLength} ${circleLength}`}
-                  />
-                </svg>
+            <GoalProgressBar
+              completedCount={completedCount}
+              totalCount={totalCount}
+            />
 
-                <span className="relative text-lg font-black text-[#073B5A]">
-                  {completedCount}/{totalCount}
-                </span>
-              </div>
-            </div>
-
-            <div className="space-y-3 border-[#073B5A]/10 lg:border-l lg:pl-5">
+            <div className="mt-5 space-y-3">
               {isEvaluation ? (
                 <>
                   <GoalItem
-                    label="Complete Evaluation"
+                    label="Evaluation"
                     complete={progress.practiceComplete}
                   />
 
-                  <p className="text-xs font-bold leading-relaxed text-[#073B5A]/65">
-                    Complete {quizQuestionCount} review questions and show what
-                    you know.
+                  <p className="text-sm font-bold leading-relaxed text-[#073B5A]/65">
+                    Complete {quizQuestionCount} review questions.
                   </p>
                 </>
               ) : (
@@ -181,18 +179,39 @@ function LessonHero({
                 </>
               )}
             </div>
+          </div>
+        </div>
 
-            <div className="flex justify-end">
-              <LumaAvatar
-                chargeCount={completedCount}
-                totalCharge={totalCount}
-                size="md"
-              />
-            </div>
+        <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden border-t border-[#F4D589] bg-[#FEF3D9] px-6 py-5 xl:border-l xl:border-t-0">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.35)_34%,rgba(254,243,217,0)_68%)]" />
+
+          <div className="pointer-events-none absolute left-8 top-8 text-3xl text-white">
+            ✦
           </div>
 
-          <div className="absolute right-5 top-4 text-2xl text-[#F7B733]">
+          <div className="pointer-events-none absolute right-8 top-10 text-3xl text-[#F7B733]">
             ✦
+          </div>
+
+          <div className="pointer-events-none absolute bottom-10 left-10 text-2xl text-[#00AFB9]">
+            ✦
+          </div>
+
+          <div className="pointer-events-none absolute bottom-12 right-11 text-xl text-white">
+            ✦
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-5 rounded-full bg-white/60 blur-2xl" />
+
+            <LumaAvatar
+              name={starName || 'Your star'}
+              chargeCount={completedCount}
+              totalCharge={totalCount}
+              size="xl"
+              state={lumaState}
+              showEnergy={false}
+            />
           </div>
         </div>
       </div>
