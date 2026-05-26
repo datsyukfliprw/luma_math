@@ -6,18 +6,23 @@ export function getLessonById(lessonId?: string) {
       unit: unitOne,
       week: unitOne.weeks[0],
       lesson: unitOne.weeks[0].lessons[0],
+      weekDayNumber: 1,
     }
   }
 
   for (const week of unitOne.weeks) {
-    for (const lesson of week.lessons) {
-      const id = `unit-${unitOne.unit_number}-week-${week.week_number}-day-${lesson.day_number}`
+    for (let lessonIndex = 0; lessonIndex < week.lessons.length; lessonIndex += 1) {
+      const lesson = week.lessons[lessonIndex]
+      const weekDayNumber = lessonIndex + 1
+
+      const id = `unit-${unitOne.unit_number}-week-${week.week_number}-day-${weekDayNumber}`
 
       if (id === lessonId) {
         return {
           unit: unitOne,
           week,
           lesson,
+          weekDayNumber,
         }
       }
     }
@@ -27,5 +32,6 @@ export function getLessonById(lessonId?: string) {
     unit: unitOne,
     week: unitOne.weeks[0],
     lesson: unitOne.weeks[0].lessons[0],
+    weekDayNumber: 1,
   }
 }

@@ -30,6 +30,8 @@ function PracticeScreen() {
   const [factorAAnswer, setFactorAAnswer] = useState('')
   const [factorBAnswer, setFactorBAnswer] = useState('')
   const [productAnswer, setProductAnswer] = useState('')
+  const [rowsAnswer, setRowsAnswer] = useState('')
+  const [columnsAnswer, setColumnsAnswer] = useState('')
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null)
 
   const currentProblem = problems[currentProblemIndex]
@@ -59,6 +61,27 @@ function PracticeScreen() {
       return
     }
 
+    if (currentProblem.visualType === 'array_rows_columns') {
+      const expected = currentProblem.answerData
+
+      const rowsAreCorrect =
+        normalizeAnswer(rowsAnswer) === normalizeAnswer(expected?.rows ?? '')
+
+      const columnsAreCorrect =
+        normalizeAnswer(columnsAnswer) === normalizeAnswer(expected?.columns ?? '')
+
+      const productIsCorrect =
+        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? '')
+
+      setFeedback(
+        rowsAreCorrect && columnsAreCorrect && productIsCorrect
+          ? 'correct'
+          : 'incorrect',
+      )
+
+      return
+    }
+
     const userAnswer = normalizeAnswer(answer)
     const correctAnswer = normalizeAnswer(currentProblem.correctAnswer)
 
@@ -70,6 +93,8 @@ function PracticeScreen() {
     setFactorAAnswer('')
     setFactorBAnswer('')
     setProductAnswer('')
+    setRowsAnswer('')
+    setColumnsAnswer('')
     setFeedback(null)
 
     if (currentProblemIndex < problems.length - 1) {
@@ -166,6 +191,30 @@ function PracticeScreen() {
               </div>
             )}
 
+            {currentProblem.visualType === 'array_rows_columns' && visualData && (
+              <div className="mt-6 rounded-2xl bg-[#FEF3D9] p-6 text-center">
+                <div
+                  className="mx-auto grid w-fit gap-3 rounded-2xl bg-white p-5 shadow-sm"
+                  style={{
+                    gridTemplateColumns: `repeat(${visualData.columns ?? 1}, minmax(0, 1fr))`,
+                  }}
+                >
+                  {Array.from({
+                    length: (visualData.rows ?? 0) * (visualData.columns ?? 0),
+                  }).map((_, index) => (
+                    <span
+                      key={index}
+                      className="h-8 w-8 rounded-full bg-[#F07167]"
+                    />
+                  ))}
+                </div>
+
+                <p className="mt-4 text-lg font-bold text-[#073B5A]/70">
+                  Count the rows and columns to find the product.
+                </p>
+              </div>
+            )}
+
             {currentProblem.visualType === 'factor_product' ? (
               <div className="mt-6 grid max-w-2xl gap-4 md:grid-cols-3">
                 <label className="block">
@@ -193,6 +242,69 @@ function PracticeScreen() {
                     value={factorBAnswer}
                     onChange={(event) => {
                       setFactorBAnswer(event.target.value)
+                      setFeedback(null)
+                    }}
+                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
+                    placeholder="?"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-black uppercase tracking-wide text-[#F07167]">
+                    Product
+                  </span>
+
+                  <input
+                    value={productAnswer}
+                    onChange={(event) => {
+                      setProductAnswer(event.target.value)
+                      setFeedback(null)
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') {
+                        checkAnswer()
+                      }
+                    }}
+                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
+                    placeholder="?"
+                  />
+                </label>
+
+                <button
+                  type="button"
+                  onClick={checkAnswer}
+                  className="rounded-xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm md:col-span-3 md:w-fit"
+                >
+                  Check
+                </button>
+              </div>
+            ) : currentProblem.visualType === 'array_rows_columns' ? (
+              <div className="mt-6 grid max-w-2xl gap-4 md:grid-cols-3">
+                <label className="block">
+                  <span className="mb-2 block text-sm font-black uppercase tracking-wide text-[#0081A7]">
+                    Rows
+                  </span>
+
+                  <input
+                    value={rowsAnswer}
+                    onChange={(event) => {
+                      setRowsAnswer(event.target.value)
+                      setFeedback(null)
+                    }}
+                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
+                    placeholder="?"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-2 block text-sm font-black uppercase tracking-wide text-[#0081A7]">
+                    Columns
+                  </span>
+
+                  <input
+                    value={columnsAnswer}
+                    onChange={(event) => {
+                      setColumnsAnswer(event.target.value)
                       setFeedback(null)
                     }}
                     className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-lg font-bold outline-none focus:border-[#00AFB9]"
@@ -285,8 +397,7 @@ function PracticeScreen() {
                 </p>
 
                 <p className="mt-2 text-sm font-semibold text-[#073B5A]/70">
-                  Hint: factors are the numbers being multiplied. The product is
-                  the answer.
+                  Hint: check the model, then count carefully.
                 </p>
               </div>
             )}

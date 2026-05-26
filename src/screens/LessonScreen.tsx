@@ -12,11 +12,11 @@ import { getLessonById } from '../lib/lessonLookup'
 
 function LessonScreen() {
   const { lessonId } = useParams()
-  const { unit, week, lesson } = getLessonById(lessonId)
+  const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId)
+
   const currentLessonId =
-  lessonId ?? `unit-${unit.unit_number}-week-${week.week_number}-day-${lesson.day_number}`
-
-
+    lessonId ??
+    `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`
 
   return (
     <PageLayout>
@@ -25,7 +25,7 @@ function LessonScreen() {
       <LessonHero
         unitNumber={unit.unit_number}
         weekNumber={week.week_number}
-        dayNumber={lesson.day_number}
+        dayNumber={weekDayNumber}
         title={lesson.lesson_title}
         topic={unit.unit_title}
         description={lesson.objective}

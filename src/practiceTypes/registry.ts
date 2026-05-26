@@ -1,3 +1,4 @@
+import { generateArrayRowsColumnsProblems } from './arrayRowsColumns'
 import { generateEqualGroupsProblems } from './equalGroups'
 import { generateEqualGroupsWithObjectsProblems } from './equalGroupsWithObjects'
 import { generateEvaluationProblems } from './evaluation'
@@ -13,6 +14,7 @@ const practiceRegistry: Record<string, PracticeGenerator> = {
   factor_product_identification: generateFactorProductProblems,
   equal_groups_with_objects: generateEqualGroupsWithObjectsProblems,
   evaluation: generateEvaluationProblems,
+  array_rows_columns: generateArrayRowsColumnsProblems,
 }
 
 export function generateProblemsForPracticeType(

@@ -10,22 +10,23 @@ function LearningPathScreen() {
       week.week_number === 1
         ? ('current' as const)
         : ('locked' as const),
-    lessons: week.lessons.map((lesson) => {
-      const lessonId = `unit-${unitOne.unit_number}-week-${week.week_number}-day-${lesson.day_number}`
+    lessons: week.lessons.map((lesson, lessonIndex) => {
+      const weekDayNumber = lessonIndex + 1
+      const lessonId = `unit-${unitOne.unit_number}-week-${week.week_number}-day-${weekDayNumber}`
 
       let status: 'complete' | 'current' | 'locked' = 'locked'
 
-      if (lesson.day_number === 1 || lesson.day_number === 2) {
+      if (week.week_number === 1 && (weekDayNumber === 1 || weekDayNumber === 2)) {
         status = 'complete'
       }
 
-      if (lesson.day_number === 3) {
+      if (week.week_number === 1 && weekDayNumber === 3) {
         status = 'current'
       }
 
       return {
         id: lessonId,
-        day: `Day ${lesson.day_number}`,
+        day: `Day ${weekDayNumber}`,
         title: lesson.lesson_title,
         status,
       }
