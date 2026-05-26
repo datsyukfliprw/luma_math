@@ -31,26 +31,30 @@ function WarmUpCard({
     isComplete ? 'correct' : null,
   )
 
+
   function checkAnswer() {
-    const normalizedAnswer = answer.trim()
+  const normalizedAnswer = answer.trim()
 
-    if (normalizedAnswer === '12') {
-      sendSparkleToStar({
-        fromElement: checkButtonRef.current,
-      })
+  if (normalizedAnswer === '12') {
+    sendSparkleToStar({
+      fromElement: checkButtonRef.current,
+    })
 
+    setFeedback('correct')
+
+    window.setTimeout(() => {
       updateLessonProgress(lessonId, {
         warmupComplete: true,
       })
 
-      setFeedback('correct')
       onComplete()
-      return
-    }
+    }, 1200)
 
-    setFeedback('incorrect')
+    return
   }
 
+  setFeedback('incorrect')
+}
   return (
     <div
       className={`relative h-full min-h-[150px] overflow-hidden rounded-[1.75rem] border px-5 py-4 shadow-sm ${

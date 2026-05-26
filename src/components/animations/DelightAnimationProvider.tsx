@@ -15,13 +15,16 @@ export type SparkleTrailId =
   | 'comet_blue'
   | 'rainbow_glow'
 
+export type DelightStarReaction = 'charging' | 'celebrate' | null
+
+type ColorRole = 'primary' | 'secondary' | 'accent'
+
 type SparkleTrailStyle = {
   id: SparkleTrailId
   name: string
-  leadSymbol: string
-  dustSymbol: string
   primaryColor: string
   secondaryColor: string
+  accentColor: string
   glowColor: string
 }
 
@@ -29,54 +32,80 @@ const sparkleTrailStyles: Record<SparkleTrailId, SparkleTrailStyle> = {
   golden_sparkle: {
     id: 'golden_sparkle',
     name: 'Golden Sparkle',
-    leadSymbol: '★',
-    dustSymbol: '✦',
     primaryColor: '#F7B733',
     secondaryColor: '#FDFCDC',
+    accentColor: '#00AFB9',
     glowColor: 'rgba(247, 183, 51, 0.95)',
   },
   teal_magic: {
     id: 'teal_magic',
     name: 'Teal Magic',
-    leadSymbol: '✦',
-    dustSymbol: '✧',
     primaryColor: '#00AFB9',
     secondaryColor: '#E9F7F8',
+    accentColor: '#F7B733',
     glowColor: 'rgba(0, 175, 185, 0.85)',
   },
   comet_blue: {
     id: 'comet_blue',
     name: 'Comet Blue',
-    leadSymbol: '★',
-    dustSymbol: '•',
     primaryColor: '#0081A7',
     secondaryColor: '#E9F7F8',
+    accentColor: '#FDFCDC',
     glowColor: 'rgba(0, 129, 167, 0.9)',
   },
   rainbow_glow: {
     id: 'rainbow_glow',
     name: 'Rainbow Glow',
-    leadSymbol: '✦',
-    dustSymbol: '✧',
     primaryColor: '#F07167',
     secondaryColor: '#FDFCDC',
+    accentColor: '#00AFB9',
     glowColor: 'rgba(240, 113, 103, 0.85)',
   },
 }
 
-type Sparkle = {
+type FlyingLead = {
+  id: string
+  fromX: number
+  fromY: number
+  toX: number
+  toY: number
+  trailId: SparkleTrailId
+}
+
+type DustParticle = {
   id: string
   fromX: number
   fromY: number
   toX: number
   toY: number
   delay: number
-  size: 'lead' | 'dust'
-  curveOffset: number
+  curveOffsetX: number
+  curveOffsetY: number
   endOffsetX: number
   endOffsetY: number
+  size: number
+  colorRole: ColorRole
   trailId: SparkleTrailId
 }
+
+type DustParticleSeed = Omit<
+  DustParticle,
+  'id' | 'toX' | 'toY' | 'trailId'
+>
+
+type BurstParticle = {
+  id: string
+  x: number
+  y: number
+  angle: number
+  distance: number
+  delay: number
+  size: number
+  colorRole: ColorRole
+  trailId: SparkleTrailId
+}
+
+type BurstParticleSeed = Omit<BurstParticle, 'id' | 'x' | 'y' | 'trailId'>
 
 type SendSparkleOptions = {
   fromElement: HTMLElement | null
@@ -86,6 +115,7 @@ type SendSparkleOptions = {
 type DelightAnimationContextValue = {
   registerStarTarget: (element: HTMLElement | null) => void
   sendSparkleToStar: (options: SendSparkleOptions) => void
+  starReaction: DelightStarReaction
 }
 
 const DelightAnimationContext =
@@ -100,87 +130,212 @@ function getCenterPoint(element: HTMLElement) {
   }
 }
 
-type FlyingSparkleProps = {
-  sparkle: Sparkle
+function getColor(style: SparkleTrailStyle, colorRole: ColorRole) {
+  if (colorRole === 'accent') return style.accentColor
+  if (colorRole === 'secondary') return style.secondaryColor
+  return style.primaryColor
+}
+
+type FlyingLeadParticleProps = {
+  particle: FlyingLead
   onDone: (id: string) => void
 }
 
-function FlyingSparkle({ sparkle, onDone }: FlyingSparkleProps) {
-  const trailStyle = sparkleTrailStyles[sparkle.trailId]
-  const midX = (sparkle.fromX + sparkle.toX) / 2 + sparkle.curveOffset
-  const curveY = Math.min(sparkle.fromY, sparkle.toY) - 115
-
-  const isLead = sparkle.size === 'lead'
-  const visualSize = isLead ? 'h-10 w-10' : 'h-5 w-5'
-  const symbolSize = isLead ? 'text-3xl' : 'text-lg'
-  const offset = isLead ? 20 : 10
-  const duration = isLead ? 1.05 : 0.95
+function FlyingLeadParticle({ particle, onDone }: FlyingLeadParticleProps) {
+  const style = sparkleTrailStyles[particle.trailId]
+  const midX = (particle.fromX + particle.toX) / 2
+  const midY = Math.min(particle.fromY, particle.toY) - 130
 
   return (
     <motion.div
       className="pointer-events-none absolute"
       initial={{
-        x: sparkle.fromX - offset,
-        y: sparkle.fromY - offset,
-        scale: isLead ? 0.45 : 0.25,
+        x: particle.fromX - 22,
+        y: particle.fromY - 22,
+        scale: 0.25,
         opacity: 0,
       }}
       animate={{
-        x: [
-          sparkle.fromX - offset,
-          midX - offset,
-          sparkle.toX + sparkle.endOffsetX - offset,
-        ],
-        y: [
-          sparkle.fromY - offset,
-          curveY - offset,
-          sparkle.toY + sparkle.endOffsetY - offset,
-        ],
-        scale: isLead ? [0.45, 1.2, 0.75] : [0.2, 0.75, 0.35],
-        opacity: isLead ? [0, 1, 1, 0] : [0, 0.9, 0.65, 0],
-        rotate: isLead ? [0, 140, 280] : [0, -90, -180],
+        x: [particle.fromX - 22, midX - 22, particle.toX - 22],
+        y: [particle.fromY - 22, midY - 22, particle.toY - 22],
+        scale: [0.25, 1.12, 0.8],
+        opacity: [0, 1, 1, 0],
+        rotate: [0, 160, 320],
       }}
       exit={{ opacity: 0 }}
       transition={{
-        duration,
-        delay: sparkle.delay,
-        ease: 'easeInOut',
+        duration: 1.05,
+        ease: [0.25, 0.9, 0.35, 1],
       }}
-      onAnimationComplete={() => onDone(sparkle.id)}
+      onAnimationComplete={() => onDone(particle.id)}
     >
-      <div className={`relative flex ${visualSize} items-center justify-center`}>
-        <div
-          className="absolute inset-0 rounded-full opacity-60 blur-md"
-          style={{ backgroundColor: trailStyle.primaryColor }}
+      <div className="relative flex h-11 w-11 items-center justify-center">
+        <motion.div
+          className="absolute left-[-34px] top-1/2 h-5 w-20 -translate-y-1/2 rounded-full blur-md"
+          style={{
+            background: `linear-gradient(90deg, transparent, ${style.primaryColor}, ${style.secondaryColor})`,
+            opacity: 0.55,
+          }}
+          animate={{
+            scaleX: [0.3, 1, 0.55],
+            opacity: [0, 0.6, 0],
+          }}
+          transition={{
+            duration: 1.05,
+            ease: 'easeOut',
+          }}
         />
 
         <div
-          className="absolute inset-1 rounded-full opacity-80 blur-sm"
-          style={{ backgroundColor: trailStyle.secondaryColor }}
+          className="absolute inset-0 rounded-full blur-lg"
+          style={{
+            backgroundColor: style.primaryColor,
+            opacity: 0.72,
+          }}
         />
 
         <div
-          className={`relative ${symbolSize} drop-shadow-[0_0_10px_var(--sparkle-glow)]`}
-          style={
-            {
-              color: trailStyle.primaryColor,
-              '--sparkle-glow': trailStyle.glowColor,
-            } as React.CSSProperties
-          }
+          className="absolute inset-2 rounded-full blur-sm"
+          style={{
+            backgroundColor: style.secondaryColor,
+            opacity: 0.9,
+          }}
+        />
+
+        <div
+          className="relative text-4xl font-black"
+          style={{
+            color: style.primaryColor,
+            filter: `drop-shadow(0 0 12px ${style.glowColor})`,
+          }}
         >
-          {isLead ? trailStyle.leadSymbol : trailStyle.dustSymbol}
+          ★
         </div>
       </div>
     </motion.div>
   )
 }
 
+type DustParticleProps = {
+  particle: DustParticle
+  onDone: (id: string) => void
+}
+
+function FlyingDustParticle({ particle, onDone }: DustParticleProps) {
+  const style = sparkleTrailStyles[particle.trailId]
+  const color = getColor(style, particle.colorRole)
+
+  const midX = (particle.fromX + particle.toX) / 2 + particle.curveOffsetX
+  const midY =
+    Math.min(particle.fromY, particle.toY) - 95 + particle.curveOffsetY
+
+  return (
+    <motion.div
+      className="pointer-events-none absolute"
+      initial={{
+        x: particle.fromX - particle.size / 2,
+        y: particle.fromY - particle.size / 2,
+        scale: 0.1,
+        opacity: 0,
+      }}
+      animate={{
+        x: [
+          particle.fromX - particle.size / 2,
+          midX - particle.size / 2,
+          particle.toX + particle.endOffsetX - particle.size / 2,
+        ],
+        y: [
+          particle.fromY - particle.size / 2,
+          midY - particle.size / 2,
+          particle.toY + particle.endOffsetY - particle.size / 2,
+        ],
+        scale: [0.1, 1, 0.15],
+        opacity: [0, 0.9, 0.55, 0],
+      }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.92,
+        delay: particle.delay,
+        ease: [0.25, 0.9, 0.35, 1],
+      }}
+      onAnimationComplete={() => onDone(particle.id)}
+    >
+      <div
+        className="rounded-full"
+        style={{
+          width: particle.size,
+          height: particle.size,
+          backgroundColor: color,
+          boxShadow: `0 0 ${particle.size * 1.5}px ${color}`,
+        }}
+      />
+    </motion.div>
+  )
+}
+
+type ArrivalBurstProps = {
+  particle: BurstParticle
+  onDone: (id: string) => void
+}
+
+function ArrivalBurstParticle({ particle, onDone }: ArrivalBurstProps) {
+  const style = sparkleTrailStyles[particle.trailId]
+  const color = getColor(style, particle.colorRole)
+
+  const radians = (particle.angle * Math.PI) / 180
+  const endX = Math.cos(radians) * particle.distance
+  const endY = Math.sin(radians) * particle.distance
+
+  return (
+    <motion.div
+      className="pointer-events-none absolute"
+      initial={{
+        x: particle.x - particle.size / 2,
+        y: particle.y - particle.size / 2,
+        scale: 0.1,
+        opacity: 0,
+      }}
+      animate={{
+        x: particle.x + endX - particle.size / 2,
+        y: particle.y + endY - particle.size / 2,
+        scale: [0.1, 1.05, 0.15],
+        opacity: [0, 1, 0],
+      }}
+      exit={{ opacity: 0 }}
+      transition={{
+        duration: 0.5,
+        delay: particle.delay,
+        ease: 'easeOut',
+      }}
+      onAnimationComplete={() => onDone(particle.id)}
+    >
+      <div
+        className="rounded-full"
+        style={{
+          width: particle.size,
+          height: particle.size,
+          backgroundColor: color,
+          boxShadow: `0 0 ${particle.size * 1.8}px ${color}`,
+        }}
+      />
+    </motion.div>
+  )
+}
+
 function SparkleLayer({
-  sparkles,
-  removeSparkle,
+  leadParticles,
+  dustParticles,
+  burstParticles,
+  removeLeadParticle,
+  removeDustParticle,
+  removeBurstParticle,
 }: {
-  sparkles: Sparkle[]
-  removeSparkle: (id: string) => void
+  leadParticles: FlyingLead[]
+  dustParticles: DustParticle[]
+  burstParticles: BurstParticle[]
+  removeLeadParticle: (id: string) => void
+  removeDustParticle: (id: string) => void
+  removeBurstParticle: (id: string) => void
 }) {
   if (typeof document === 'undefined') {
     return null
@@ -189,11 +344,27 @@ function SparkleLayer({
   return createPortal(
     <div className="pointer-events-none fixed inset-0 z-[999999] overflow-visible">
       <AnimatePresence>
-        {sparkles.map((sparkle) => (
-          <FlyingSparkle
-            key={sparkle.id}
-            sparkle={sparkle}
-            onDone={removeSparkle}
+        {leadParticles.map((particle) => (
+          <FlyingLeadParticle
+            key={particle.id}
+            particle={particle}
+            onDone={removeLeadParticle}
+          />
+        ))}
+
+        {dustParticles.map((particle) => (
+          <FlyingDustParticle
+            key={particle.id}
+            particle={particle}
+            onDone={removeDustParticle}
+          />
+        ))}
+
+        {burstParticles.map((particle) => (
+          <ArrivalBurstParticle
+            key={particle.id}
+            particle={particle}
+            onDone={removeBurstParticle}
           />
         ))}
       </AnimatePresence>
@@ -210,15 +381,127 @@ export function DelightAnimationProvider({
   children,
 }: DelightAnimationProviderProps) {
   const starTargetRef = useRef<HTMLElement | null>(null)
-  const [sparkles, setSparkles] = useState<Sparkle[]>([])
+  const reactionTimeoutRef = useRef<number | null>(null)
+  const reactionClearTimeoutRef = useRef<number | null>(null)
+  const burstTimeoutRef = useRef<number | null>(null)
+
+  const [leadParticles, setLeadParticles] = useState<FlyingLead[]>([])
+  const [dustParticles, setDustParticles] = useState<DustParticle[]>([])
+  const [burstParticles, setBurstParticles] = useState<BurstParticle[]>([])
+  const [starReaction, setStarReaction] = useState<DelightStarReaction>(null)
 
   const registerStarTarget = useCallback((element: HTMLElement | null) => {
     starTargetRef.current = element
   }, [])
 
-  const removeSparkle = useCallback((id: string) => {
-    setSparkles((current) => current.filter((sparkle) => sparkle.id !== id))
+  const removeLeadParticle = useCallback((id: string) => {
+    setLeadParticles((current) =>
+      current.filter((particle) => particle.id !== id),
+    )
   }, [])
+
+  const removeDustParticle = useCallback((id: string) => {
+    setDustParticles((current) =>
+      current.filter((particle) => particle.id !== id),
+    )
+  }, [])
+
+  const removeBurstParticle = useCallback((id: string) => {
+    setBurstParticles((current) =>
+      current.filter((particle) => particle.id !== id),
+    )
+  }, [])
+
+  const triggerStarReaction = useCallback((reaction: DelightStarReaction) => {
+    if (reactionTimeoutRef.current) {
+      window.clearTimeout(reactionTimeoutRef.current)
+    }
+
+    if (reactionClearTimeoutRef.current) {
+      window.clearTimeout(reactionClearTimeoutRef.current)
+    }
+
+    reactionTimeoutRef.current = window.setTimeout(() => {
+      setStarReaction(reaction)
+
+      reactionClearTimeoutRef.current = window.setTimeout(() => {
+        setStarReaction(null)
+      }, 1500)
+    }, 650)
+  }, [])
+
+  const triggerArrivalBurst = useCallback(
+    (x: number, y: number, trailId: SparkleTrailId) => {
+      if (burstTimeoutRef.current) {
+        window.clearTimeout(burstTimeoutRef.current)
+      }
+
+      burstTimeoutRef.current = window.setTimeout(() => {
+        const burstSeeds: BurstParticleSeed[] = [
+          {
+            angle: -15,
+            distance: 48,
+            size: 8,
+            colorRole: 'primary',
+            delay: 0,
+          },
+          {
+            angle: 35,
+            distance: 35,
+            size: 6,
+            colorRole: 'secondary',
+            delay: 0.03,
+          },
+          {
+            angle: 80,
+            distance: 52,
+            size: 7,
+            colorRole: 'accent',
+            delay: 0.02,
+          },
+          {
+            angle: 130,
+            distance: 38,
+            size: 5,
+            colorRole: 'primary',
+            delay: 0.05,
+          },
+          {
+            angle: 190,
+            distance: 44,
+            size: 6,
+            colorRole: 'secondary',
+            delay: 0.04,
+          },
+          {
+            angle: 245,
+            distance: 32,
+            size: 5,
+            colorRole: 'accent',
+            delay: 0.06,
+          },
+          {
+            angle: 300,
+            distance: 50,
+            size: 7,
+            colorRole: 'primary',
+            delay: 0.01,
+          },
+        ]
+
+        const burst: BurstParticle[] = burstSeeds.map((particle) => ({
+          ...particle,
+          id: crypto.randomUUID(),
+          x,
+          y,
+          trailId,
+        }))
+
+        setBurstParticles((current) => [...current, ...burst])
+      }, 780)
+    },
+    [],
+  )
 
   const sendSparkleToStar = useCallback(
     ({ fromElement, trailId = 'golden_sparkle' }: SendSparkleOptions) => {
@@ -237,77 +520,99 @@ export function DelightAnimationProvider({
       const fromPoint = getCenterPoint(fromElement)
       const toPoint = getCenterPoint(starTarget)
 
-      const newSparkles: Sparkle[] = [
+      const lead: FlyingLead = {
+        id: crypto.randomUUID(),
+        fromX: fromPoint.x,
+        fromY: fromPoint.y,
+        toX: toPoint.x,
+        toY: toPoint.y,
+        trailId,
+      }
+
+      const dustSeeds: DustParticleSeed[] = [
         {
-          id: crypto.randomUUID(),
-          fromX: fromPoint.x,
-          fromY: fromPoint.y,
-          toX: toPoint.x,
-          toY: toPoint.y,
-          delay: 0,
-          size: 'lead',
-          curveOffset: 0,
-          endOffsetX: 0,
-          endOffsetY: 0,
-          trailId,
-        },
-        {
-          id: crypto.randomUUID(),
-          fromX: fromPoint.x - 8,
-          fromY: fromPoint.y + 5,
-          toX: toPoint.x,
-          toY: toPoint.y,
-          delay: 0.07,
-          size: 'dust',
-          curveOffset: -38,
+          fromX: fromPoint.x - 10,
+          fromY: fromPoint.y + 7,
+          delay: 0.04,
+          curveOffsetX: -44,
+          curveOffsetY: 4,
           endOffsetX: -24,
-          endOffsetY: 15,
-          trailId,
-        },
-        {
-          id: crypto.randomUUID(),
-          fromX: fromPoint.x + 10,
-          fromY: fromPoint.y + 2,
-          toX: toPoint.x,
-          toY: toPoint.y,
-          delay: 0.12,
-          size: 'dust',
-          curveOffset: 34,
-          endOffsetX: 22,
-          endOffsetY: -12,
-          trailId,
-        },
-        {
-          id: crypto.randomUUID(),
-          fromX: fromPoint.x - 4,
-          fromY: fromPoint.y + 10,
-          toX: toPoint.x,
-          toY: toPoint.y,
-          delay: 0.17,
-          size: 'dust',
-          curveOffset: -18,
-          endOffsetX: -14,
-          endOffsetY: -20,
-          trailId,
-        },
-        {
-          id: crypto.randomUUID(),
-          fromX: fromPoint.x + 5,
-          fromY: fromPoint.y + 8,
-          toX: toPoint.x,
-          toY: toPoint.y,
-          delay: 0.22,
-          size: 'dust',
-          curveOffset: 20,
-          endOffsetX: 16,
           endOffsetY: 18,
-          trailId,
+          size: 7,
+          colorRole: 'primary',
+        },
+        {
+          fromX: fromPoint.x + 11,
+          fromY: fromPoint.y + 3,
+          delay: 0.08,
+          curveOffsetX: 38,
+          curveOffsetY: -12,
+          endOffsetX: 24,
+          endOffsetY: -14,
+          size: 5,
+          colorRole: 'secondary',
+        },
+        {
+          fromX: fromPoint.x - 3,
+          fromY: fromPoint.y + 14,
+          delay: 0.12,
+          curveOffsetX: -18,
+          curveOffsetY: 18,
+          endOffsetX: -16,
+          endOffsetY: -22,
+          size: 5,
+          colorRole: 'accent',
+        },
+        {
+          fromX: fromPoint.x + 7,
+          fromY: fromPoint.y + 12,
+          delay: 0.16,
+          curveOffsetX: 24,
+          curveOffsetY: 10,
+          endOffsetX: 18,
+          endOffsetY: 20,
+          size: 6,
+          colorRole: 'primary',
+        },
+        {
+          fromX: fromPoint.x,
+          fromY: fromPoint.y + 17,
+          delay: 0.2,
+          curveOffsetX: 8,
+          curveOffsetY: -20,
+          endOffsetX: 5,
+          endOffsetY: 28,
+          size: 4,
+          colorRole: 'secondary',
+        },
+        {
+          fromX: fromPoint.x - 14,
+          fromY: fromPoint.y + 10,
+          delay: 0.24,
+          curveOffsetX: -58,
+          curveOffsetY: -6,
+          endOffsetX: -32,
+          endOffsetY: 2,
+          size: 4,
+          colorRole: 'accent',
         },
       ]
 
-      setSparkles((current) => [...current, ...newSparkles])
+      const dust: DustParticle[] = dustSeeds.map((particle) => ({
+        ...particle,
+        id: crypto.randomUUID(),
+        toX: toPoint.x,
+        toY: toPoint.y,
+        trailId,
+      }))
+
+      setLeadParticles((current) => [...current, lead])
+      setDustParticles((current) => [...current, ...dust])
+
+      triggerStarReaction('charging')
+      triggerArrivalBurst(toPoint.x, toPoint.y, trailId)
     },
-    [],
+    [triggerArrivalBurst, triggerStarReaction],
   )
 
   return (
@@ -315,11 +620,19 @@ export function DelightAnimationProvider({
       value={{
         registerStarTarget,
         sendSparkleToStar,
+        starReaction,
       }}
     >
       {children}
 
-      <SparkleLayer sparkles={sparkles} removeSparkle={removeSparkle} />
+      <SparkleLayer
+        leadParticles={leadParticles}
+        dustParticles={dustParticles}
+        burstParticles={burstParticles}
+        removeLeadParticle={removeLeadParticle}
+        removeDustParticle={removeDustParticle}
+        removeBurstParticle={removeBurstParticle}
+      />
     </DelightAnimationContext.Provider>
   )
 }

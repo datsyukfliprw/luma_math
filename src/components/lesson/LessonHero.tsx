@@ -76,7 +76,7 @@ function LessonHero({
   progress,
   starName,
 }: LessonHeroProps) {
-  const { registerStarTarget } = useDelightAnimation()
+  const { registerStarTarget, starReaction } = useDelightAnimation()
   const isEvaluation = lessonType === 'evaluation'
 
   const completedCount = isEvaluation
@@ -214,7 +214,7 @@ function LessonHero({
               chargeCount={completedCount}
               totalCharge={totalCount}
               size="xl"
-              state={lumaState}
+              state={starReaction ?? lumaState}
               showEnergy={false}
             />
           </div>
