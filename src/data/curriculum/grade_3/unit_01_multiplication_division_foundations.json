@@ -28,25 +28,118 @@
       "weekly_focus": "Students learn that multiplication means counting equal groups. They begin with 0s and 1s facts and connect equal groups to repeated addition and multiplication equations.",
       "lessons": [
         {
-          "day_number": 1,
-          "day_name": "Monday",
-          "lesson_title": "Zero and Identity Rules",
-          "lesson_type": "lesson",
-          "fact_drill": "Introduce the Zero and Identity Rules for 0s and 1s multiplication using flashcards.",
-          "concept": "Show that multiplication is counting equal groups. Avoid abstract shortcuts at this stage.",
-          "practice": "Worksheet matching illustrations of equal groups to multiplication expressions, such as 3 groups of 4 = 3 × 4.",
-          "objective": "Understand that multiplication describes equal groups and begin learning the ×0 and ×1 facts.",
-          "practice_type": "equal_groups",
-          "skills": [
-            "equal_groups",
-            "multiplication_expressions",
-            "zero_property",
-            "identity_property"
-          ],
-          "lesson_video_url": "",
-          "worksheet_url": "",
-          "quiz_question_count": 5
-        },
+  "day_number": 1,
+  "day_name": "Monday",
+  "lesson_title": "Zero and Identity Rules",
+  "lesson_type": "lesson",
+  "fact_drill": "Introduce the Zero and Identity Rules for 0s and 1s multiplication using flashcards.",
+  "concept": "Show that multiplication is counting equal groups. Avoid abstract shortcuts at this stage.",
+  "practice": "Worksheet matching illustrations of equal groups to multiplication expressions, such as 3 groups of 4 = 3 × 4.",
+  "objective": "Understand that multiplication describes equal groups and begin learning the ×0 and ×1 facts.",
+  "practice_type": "equal_groups",
+  "skills": [
+    "equal_groups",
+    "multiplication_expressions",
+    "zero_property",
+    "identity_property"
+  ],
+  "lesson_video_url": "",
+  "worksheet_url": "",
+  "quiz_question_count": 5,
+  "warmup": {
+    "title": "Luma Charge",
+    "type": "skip_counting_review",
+    "question_count": 5,
+    "instructions": "Warm up with quick review questions before today’s lesson.",
+    "questions": [
+      {
+        "id": "g3-u1-w1-d1-warmup-1",
+        "prompt": "Count by 1s: 1, 2, 3, __",
+        "correct_answer": "4",
+        "hint": "Count one more after 3.",
+        "skill": "skip_counting"
+      },
+      {
+        "id": "g3-u1-w1-d1-warmup-2",
+        "prompt": "Count by 2s: 2, 4, 6, __",
+        "correct_answer": "8",
+        "hint": "Count two more after 6.",
+        "skill": "skip_counting"
+      },
+      {
+        "id": "g3-u1-w1-d1-warmup-3",
+        "prompt": "What is 5 + 0?",
+        "correct_answer": "5",
+        "hint": "Adding zero keeps the number the same.",
+        "skill": "zero_addition_review"
+      },
+      {
+        "id": "g3-u1-w1-d1-warmup-4",
+        "prompt": "What is 7 + 1?",
+        "correct_answer": "8",
+        "hint": "Adding one means counting up one.",
+        "skill": "one_more_review"
+      },
+      {
+        "id": "g3-u1-w1-d1-warmup-5",
+        "prompt": "There are 3 groups with 1 star in each group. How many stars total?",
+        "correct_answer": "3",
+        "hint": "One in each group means the total matches the number of groups.",
+        "skill": "identity_property_preview"
+      }
+    ]
+  },
+  "learn": {
+    "title": "Zero and One in Multiplication",
+    "teaching_points": [
+      "Multiplication can describe equal groups.",
+      "When each group has 0 items, the total is 0.",
+      "When each group has 1 item, the total is the number of groups.",
+      "The ×0 and ×1 facts are patterns students can see with equal groups."
+    ],
+    "example": {
+      "prompt": "There are 4 groups with 1 star in each group.",
+      "visual_type": "equal_groups",
+      "groups": 4,
+      "items_per_group": 1,
+      "equation": "4 × 1 = 4"
+    },
+    "vocabulary": [
+      "equal groups",
+      "factor",
+      "product",
+      "zero rule",
+      "identity rule"
+    ]
+  },
+  "try_it": {
+    "title": "Try one together",
+    "type": "guided_equal_groups",
+    "prompt": "There are 5 groups with 1 star in each group. How many stars are there?",
+    "correct_answer": "5",
+    "hint": "Count one star in each group. There are 5 groups.",
+    "visual_data": {
+      "groups": 5,
+      "items_per_group": 1
+    }
+  },
+  "practice_block": {
+    "title": "Practice Time",
+    "type": "equal_groups",
+    "question_count": 8,
+    "instructions": "Use equal groups to solve multiplication problems with 0s and 1s."
+  },
+  "flashcards": {
+    "enabled": true,
+    "required": false,
+    "title": "0s and 1s Fact Fluency",
+    "type": "zero_one_facts",
+    "card_count": 10,
+    "instructions": "Practice ×0 and ×1 facts when you want extra fluency review."
+  }
+}
+
+        ,
         {
           "day_number": 2,
           "day_name": "Tuesday",

@@ -1,113 +1,84 @@
-import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 type LearnCardProps = {
+  lessonId: string
   concept: string
+  isComplete: boolean
 }
 
-function LearnCard({ concept: _concept }: LearnCardProps) {
-  const [isVideoOpen, setIsVideoOpen] = useState(false)
+function LearnCard({ lessonId, concept, isComplete }: LearnCardProps) {
+  const navigate = useNavigate()
 
-  const videoUrl = 'https://www.youtube.com/embed/gLcD7otUHxw'
+  function startLearn() {
+    navigate(`/learn/${lessonId}`)
+  }
 
   return (
-    <>
-      <div className="h-full rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FDFDFC] p-4 shadow-sm">
-        <div className="mb-3 flex items-center justify-between">
-          <h3 className="text-lg font-extrabold text-[#073B5A]">
-            <span className="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#073B5A] text-sm text-white">
-              2
+    <div
+      className={`relative h-full min-h-[260px] overflow-hidden rounded-[1.75rem] border bg-white px-5 py-4 shadow-sm ${
+        isComplete
+          ? 'border-[#00AFB9]/30'
+          : 'border-[#073B5A]/10'
+      }`}
+    >
+      <div className="relative z-10 flex h-full flex-col">
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span
+              className={`flex h-9 w-9 items-center justify-center rounded-full text-base font-black text-white ${
+                isComplete ? 'bg-[#00AFB9]' : 'bg-[#073B5A]'
+              }`}
+            >
+              {isComplete ? '✓' : '2'}
             </span>
-            Learn
-          </h3>
 
-          <p className="text-sm font-bold text-[#073B5A]/70">10 min</p>
+            <div>
+              <h3 className="text-xl font-black text-[#073B5A]">Learn</h3>
+              <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0081A7]">
+                Big Idea
+              </p>
+            </div>
+          </div>
+
+          <p className="shrink-0 text-sm font-bold text-[#073B5A]/70">
+            10 min
+          </p>
         </div>
 
-        <div className="overflow-hidden rounded-2xl bg-[#FEF3D9] text-center">
-          <div className="px-4 pb-3 pt-4">
-            <p className="mx-auto max-w-[250px] text-sm font-black leading-snug text-[#073B5A]">
-              Turning Repeated Addition into Multiplication
+        <p className="text-sm font-bold leading-relaxed text-[#073B5A]/75">
+          {concept}
+        </p>
+
+        <div className="mt-4 rounded-2xl bg-[#FFF3D9] p-4 text-center">
+          <p className="text-sm font-black leading-snug text-[#073B5A]">
+            Zero and Identity Rules
+          </p>
+
+          <div className="mt-3 rounded-2xl bg-white/65 p-3">
+            <p className="text-lg font-black text-[#073B5A]">
+              4 × 1 = 4
             </p>
-
-            <button
-              type="button"
-              onClick={() => setIsVideoOpen(true)}
-              className="relative mt-4 h-[185px] w-full overflow-hidden rounded-t-2xl bg-[#FFF7E3] text-[#073B5A]"
-            >
-              <div className="absolute left-0 right-0 top-5 flex justify-center gap-3">
-                {[1, 2, 3, 4].map((group) => (
-                  <div
-                    key={group}
-                    className="flex h-12 w-12 items-center justify-center rounded-full border border-[#0081A7] bg-[#FDFDFC]"
-                  >
-                    <div className="flex gap-1">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#F07167]" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#F07167]" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[#F07167]" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="absolute left-1/2 top-[78px] flex h-13 w-13 -translate-x-1/2 items-center justify-center rounded-full bg-[#073B5A] text-lg text-white shadow-lg">
-                ▶
-              </div>
-
-              <div className="absolute bottom-11 left-0 right-0 space-y-1 text-center">
-                <p className="text-xl font-black">3 + 3 + 3 + 3 = 12</p>
-                <p className="text-xl font-black">4 × 3 = 12</p>
-              </div>
-
-              <div className="absolute bottom-0 left-0 right-0 flex items-center gap-2 bg-[#073B5A] px-3 py-2.5 text-white">
-                <span className="text-sm">▶</span>
-                <span className="text-xs font-bold">0:00 / 2:45</span>
-
-                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/35">
-                  <div className="h-full w-[35%] rounded-full bg-white" />
-                </div>
-
-                <span className="text-sm">⚙</span>
-                <span className="text-sm">⛶</span>
-              </div>
-            </button>
+            <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
+              Multiplying by 1 keeps the number the same.
+            </p>
           </div>
         </div>
 
-        <button className="mt-3 rounded-lg bg-[#E9F7F8] px-3 py-2 text-sm font-black text-[#0081A7]">
-          📄 View Lesson Slides
+        <button
+          type="button"
+          onClick={startLearn}
+          className={`mt-4 w-fit rounded-xl px-5 py-2.5 text-sm font-black shadow-sm ${
+            isComplete
+              ? 'bg-[#E9F7F8] text-[#0081A7]'
+              : 'bg-[#00AFB9] text-white'
+          }`}
+        >
+          {isComplete ? 'Review Learn ›' : 'Start Learn ›'}
         </button>
       </div>
 
-      {isVideoOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/70 p-6 backdrop-blur-sm">
-          <div className="w-full max-w-4xl rounded-[2rem] bg-white p-4 shadow-2xl">
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Lesson Video
-              </h2>
-
-              <button
-                type="button"
-                onClick={() => setIsVideoOpen(false)}
-                className="rounded-full bg-[#F07167] px-4 py-2 font-black text-white"
-              >
-                Close
-              </button>
-            </div>
-
-            <div className="aspect-video overflow-hidden rounded-2xl bg-black">
-              <iframe
-                className="h-full w-full"
-                src={`${videoUrl}?autoplay=1`}
-                title="Repeated Addition to Multiplication"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; autoplay"
-                allowFullScreen
-              />
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+      <div className="pointer-events-none absolute -right-12 -bottom-12 h-32 w-32 rounded-full bg-[#E9F7F8] opacity-80 blur-2xl" />
+    </div>
   )
 }
 
