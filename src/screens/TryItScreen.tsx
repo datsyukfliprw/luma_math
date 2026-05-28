@@ -1,4 +1,4 @@
-// @SECTION TRYIT_IM{starName}port { useMemo, useState } from "react";
+// @SECTION TRYIT_IMPORTS
 import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, CheckCircle2, Clock3, Lightbulb, Star } from "lucide-react";
@@ -162,10 +162,14 @@ function TryItScreen() {
   const currentAnswers = answersByProblem[problemIndex] ?? {};
 
   const isRequiredRound = problemIndex < REQUIRED_TRY_IT_COUNT;
-  const requiredProblemsComplete = problemIndex >= REQUIRED_TRY_IT_COUNT - 1;
+  const isFinalRequiredProblem = problemIndex >= REQUIRED_TRY_IT_COUNT - 1;
   const displayProblemNumber = isRequiredRound
     ? problemIndex + 1
     : `Extra ${problemIndex - REQUIRED_TRY_IT_COUNT + 1}`;
+
+  const problemBadgeText = isRequiredRound
+    ? `Problem ${displayProblemNumber} of ${REQUIRED_TRY_IT_COUNT}`
+    : `Extra Problem ${problemIndex - REQUIRED_TRY_IT_COUNT + 1}`;
 
   const correctStepCount = useMemo(() => {
     const requiredAnswers: Record<TryItStepKey, string> = {
@@ -229,36 +233,45 @@ function TryItScreen() {
     step,
     correct,
     choices,
+    isEquation = false,
   }: {
     step: TryItStepKey;
     correct: string;
     choices: string[];
+    isEquation?: boolean;
   }) {
     return (
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap justify-end gap-2.5">
         {choices.map((choice) => {
-          const isCorrectSelected =
-            currentAnswers[step] === choice && choice === correct;
+          const isSelected = currentAnswers[step] === choice;
+          const isCorrectSelected = isSelected && choice === correct;
+          const isWrongSelected = isSelected && choice !== correct;
 
           return (
             <button
               key={choice}
               type="button"
               onClick={() => chooseAnswer(step, choice)}
-              className={`relative min-w-14 rounded-2xl border px-4 py-2.5 text-center text-sm font-black shadow-sm transition hover:scale-[1.02] ${getChoiceClass(
-                step,
-                choice,
-                correct,
-              )}`}
+              className={`relative rounded-2xl border text-center font-black shadow-sm transition hover:scale-[1.02] ${
+                isEquation
+                  ? "min-w-[120px] px-5 py-3 text-base"
+                  : "min-w-[72px] px-5 py-3 text-lg"
+              } ${getChoiceClass(step, choice, correct)}`}
             >
               {choice}
 
               {isCorrectSelected && (
                 <CheckCircle2
-                  size={15}
+                  size={17}
                   strokeWidth={3}
-                  className="absolute right-1.5 top-1.5"
+                  className="absolute right-2 top-2"
                 />
+              )}
+
+              {isWrongSelected && (
+                <span className="absolute right-2 top-2 flex h-5 w-5 items-center justify-center rounded-full bg-[#F07167] text-xs text-white">
+                  ×
+                </span>
               )}
             </button>
           );
@@ -371,6 +384,7 @@ function TryItScreen() {
             data-name="try-it-main-card"
             className="rounded-[2rem] border border-[#073B5A]/10 bg-white p-5 shadow-sm"
           >
+            {/* @SECTION TRYIT_MAIN_HEADER */}
             <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
               <div className="flex items-start gap-4">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-2xl">
@@ -389,28 +403,34 @@ function TryItScreen() {
               </div>
 
               <div className="shrink-0 rounded-full bg-[#E9F7F8] px-4 py-2 text-sm font-black text-[#0081A7]">
-                Problem {displayProblemNumber} of {REQUIRED_TRY_IT_COUNT}
+                {problemBadgeText}
               </div>
             </div>
 
             {/* @SECTION TRYIT_STORY_CARD */}
             <section className="rounded-[1.75rem] border border-[#00AFB9]/20 bg-[#E9F7F8] p-4 shadow-sm">
-              <div className="grid items-center gap-4 lg:grid-cols-[1fr_auto]">
+              <div className="grid items-center gap-4 xl:grid-cols-[1.08fr_0.92fr]">
                 <div>
                   <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                     Word problem
                   </p>
 
-                  <p className="mt-2 text-xl font-black leading-relaxed text-[#073B5A]">
-                    {currentProblem.story}
-                  </p>
+                  <div className="mt-3 rounded-2xl bg-white/80 px-4 py-3 shadow-sm">
+                    <p className="text-xl font-black leading-relaxed text-[#073B5A]">
+                      {currentProblem.story}
+                    </p>
 
-                  <p className="mt-1 text-lg font-black leading-relaxed text-[#073B5A]">
-                    {currentProblem.question}
-                  </p>
+                    <p className="mt-1 text-lg font-black leading-relaxed text-[#073B5A]">
+                      {currentProblem.question}
+                    </p>
+                  </div>
                 </div>
 
                 <div className="rounded-[1.5rem] bg-white/85 p-4 shadow-sm">
+                  <p className="mb-3 text-center text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
+                    Equal groups picture
+                  </p>
+
                   <div className="flex flex-wrap justify-center gap-2">
                     {Array.from({ length: Number(currentProblem.groups) }).map(
                       (_, index) => (
@@ -433,15 +453,22 @@ function TryItScreen() {
 
             {/* @SECTION TRYIT_GUIDED_STEPS */}
             <section className="mt-4 grid gap-3">
-              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
+              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex min-w-[230px] items-start gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
                       1
                     </span>
-                    <p className="text-base font-black text-[#073B5A]">
-                      How many groups?
-                    </p>
+
+                    <div>
+                      <p className="text-base font-black text-[#073B5A]">
+                        How many groups?
+                      </p>
+
+                      <p className="mt-1 text-xs font-bold leading-relaxed text-[#073B5A]/65">
+                        Look for how many equal groups are in the story.
+                      </p>
+                    </div>
                   </div>
 
                   <ChoiceGroup
@@ -452,15 +479,22 @@ function TryItScreen() {
                 </div>
               </div>
 
-              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
+              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex min-w-[230px] items-start gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
                       2
                     </span>
-                    <p className="text-base font-black text-[#073B5A]">
-                      How many in each group?
-                    </p>
+
+                    <div>
+                      <p className="text-base font-black text-[#073B5A]">
+                        How many in each group?
+                      </p>
+
+                      <p className="mt-1 text-xs font-bold leading-relaxed text-[#073B5A]/65">
+                        Find the amount inside each group.
+                      </p>
+                    </div>
                   </div>
 
                   <ChoiceGroup
@@ -471,21 +505,29 @@ function TryItScreen() {
                 </div>
               </div>
 
-              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
+              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-4 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex min-w-[230px] items-start gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
                       3
                     </span>
-                    <p className="text-base font-black text-[#073B5A]">
-                      Which equation matches?
-                    </p>
+
+                    <div>
+                      <p className="text-base font-black text-[#073B5A]">
+                        Which equation matches?
+                      </p>
+
+                      <p className="mt-1 text-xs font-bold leading-relaxed text-[#073B5A]/65">
+                        Match groups × in each = total.
+                      </p>
+                    </div>
                   </div>
 
                   <ChoiceGroup
                     step="equation"
                     correct={currentProblem.equation}
                     choices={currentProblem.equationChoices}
+                    isEquation
                   />
                 </div>
               </div>
@@ -528,7 +570,7 @@ function TryItScreen() {
 
                 {isProblemComplete && (
                   <div className="flex flex-wrap gap-3">
-                    {requiredProblemsComplete ? (
+                    {isFinalRequiredProblem ? (
                       <>
                         <button
                           type="button"
@@ -563,6 +605,7 @@ function TryItScreen() {
 
           {/* @SECTION TRYIT_SIDEBAR */}
           <aside data-name="try-it-sidebar" className="flex flex-col gap-4">
+            {/* @SECTION TRYIT_STAR_TIP */}
             <section className="relative min-h-[165px] overflow-hidden rounded-[1.5rem] border border-[#F7B733]/25 bg-[#FFF3D9] p-5 shadow-sm">
               <div className="relative z-10">
                 <div className="mb-3 flex items-center gap-2">
@@ -573,7 +616,7 @@ function TryItScreen() {
                   />
 
                   <p className="text-lg font-black text-[#C78300]">
-                    {starName}'s Tip!
+                    {starName} Says
                   </p>
                 </div>
 
@@ -595,6 +638,7 @@ function TryItScreen() {
               </div>
             </section>
 
+            {/* @SECTION TRYIT_CLUES_CARD */}
             <section className="rounded-[1.5rem] border border-[#00AFB9]/20 bg-[#E9F7F8] p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#00AFB9] shadow-sm">
@@ -632,6 +676,7 @@ function TryItScreen() {
               </div>
             </section>
 
+            {/* @SECTION TRYIT_MATH_WORDS */}
             <section className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-5 shadow-sm">
               <div className="mb-4 flex items-center gap-3">
                 <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#E9F7F8] text-xl">
