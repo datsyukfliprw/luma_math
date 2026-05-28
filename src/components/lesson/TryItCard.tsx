@@ -1,9 +1,12 @@
 type TryItCardProps = {
-  practice: string
-  practiceType: string
-}
+  practice: string;
+  practiceType: string;
+};
 
-function TryItCard({ practice: _practice, practiceType: _practiceType }: TryItCardProps) {
+function TryItCard({
+  practice: _practice,
+  practiceType: _practiceType,
+}: TryItCardProps) {
   return (
     <div className="h-full rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FDFDFC] p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
@@ -49,7 +52,7 @@ function TryItCard({ practice: _practice, practiceType: _practiceType }: TryItCa
         Check My Answer
       </button>
     </div>
-  )
+  );
 }
 
-export default TryItCard
+export default TryItCard;
