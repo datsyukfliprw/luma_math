@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { DelightAnimationProvider } from './components/animations/DelightAnimationProvider'
 import Sidebar from './components/layout/Sidebar'
@@ -18,14 +18,55 @@ import { hasNamedStar } from './lib/starProfile'
 
 const CURRENT_STUDENT_ID = 'default-student'
 
+const APP_STAGE_WIDTH = 1540
+const APP_STAGE_HEIGHT = 900
+const APP_STAGE_MIN_SCALE = 0.88
+const APP_STAGE_MAX_SCALE = 1.14
+
+function getAppStageScale() {
+  if (typeof window === 'undefined') {
+    return 1
+  }
+
+  if (window.innerWidth < 1024) {
+    return 1
+  }
+
+  const availableWidth = window.innerWidth - 72
+  const availableHeight = window.innerHeight - 72
+
+  const widthScale = availableWidth / APP_STAGE_WIDTH
+  const heightScale = availableHeight / APP_STAGE_HEIGHT
+  const nextScale = Math.min(widthScale, heightScale)
+
+  return Math.min(
+    APP_STAGE_MAX_SCALE,
+    Math.max(APP_STAGE_MIN_SCALE, nextScale),
+  )
+}
+
 function App() {
   const [starNameReady, setStarNameReady] = useState(() =>
     hasNamedStar(CURRENT_STUDENT_ID),
   )
+  const [appStageScale, setAppStageScale] = useState(getAppStageScale)
+
+  useEffect(() => {
+    const updateAppStageScale = () => {
+      setAppStageScale(getAppStageScale())
+    }
+
+    updateAppStageScale()
+    window.addEventListener('resize', updateAppStageScale)
+
+    return () => {
+      window.removeEventListener('resize', updateAppStageScale)
+    }
+  }, [])
 
   return (
     <DelightAnimationProvider>
-      <main className="h-screen overflow-hidden bg-[#faf9f4] p-0 text-[#073B5A] xl:p-5">
+      <main className="flex h-screen items-start justify-center overflow-hidden bg-[#faf9f4] p-0 text-[#073B5A] lg:items-center lg:p-6">
         {!starNameReady && (
           <StarNamePrompt
             studentId={CURRENT_STUDENT_ID}
@@ -33,10 +74,31 @@ function App() {
           />
         )}
 
-        <div className="mx-auto flex h-full max-w-[1540px] gap-7 overflow-hidden">
-          <Sidebar />
+        <div
+          className="h-full w-full lg:h-auto lg:w-auto"
+          style={{
+            width:
+              appStageScale === 1 && typeof window !== 'undefined' && window.innerWidth < 1024
+                ? undefined
+                : `${APP_STAGE_WIDTH * appStageScale}px`,
+            height:
+              appStageScale === 1 && typeof window !== 'undefined' && window.innerWidth < 1024
+                ? undefined
+                : `${APP_STAGE_HEIGHT * appStageScale}px`,
+          }}
+        >
+          <div
+            className="mx-auto h-full w-full overflow-visible lg:h-[900px] lg:w-[1540px] lg:origin-top lg:scale-[var(--app-stage-scale)]"
+            style={
+              {
+                '--app-stage-scale': appStageScale,
+              } as React.CSSProperties
+            }
+          >
+            <div className="flex h-full w-full gap-7 overflow-visible p-1">
+              <Sidebar />
 
-          <Routes>
+              <Routes>
             <Route path="/" element={<HomeScreen />} />
             <Route path="/learning-path" element={<LearningPathScreen />} />
             <Route path="/lesson" element={<LessonScreen />} />
@@ -53,7 +115,9 @@ function App() {
             <Route path="/progress" element={<ProgressScreen />} />
             <Route path="/parent-area" element={<ParentAreaScreen />} />
             <Route path="/settings" element={<SettingsScreen />} />
-          </Routes>
+              </Routes>
+            </div>
+          </div>
         </div>
       </main>
     </DelightAnimationProvider>

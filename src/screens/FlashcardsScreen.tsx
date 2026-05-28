@@ -12,7 +12,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import PageLayout from '../components/layout/PageLayout'
 
-const FLASHCARD_ASSET_VERSION = 'v3'
+const FLASHCARD_ASSET_VERSION = 'v4'
 
 function flashcardAsset(filename: string) {
   return `${new URL(`../assets/images/flashcards/${filename}`, import.meta.url).href}?${FLASHCARD_ASSET_VERSION}`
@@ -187,7 +187,7 @@ const gradeCards: BrowseCard[] = [
     icon: '5',
     className: 'bg-[#FCE9E5] border-[#F07167]/20',
     image: {
-      src: undefined,
+      src: flashcardAsset('grade-5.png'),
       alt: 'Fifth grade flashcard character',
       width: 118,
       height: 86,
@@ -199,12 +199,11 @@ const gradeCards: BrowseCard[] = [
     icon: '6',
     className: 'bg-[#F3F6F8] border-[#073B5A]/10',
     image: {
-      src: undefined,
-      alt: 'Sixth grade locked flashcard character',
+      src: flashcardAsset('grade-6.png'),
+      alt: 'Sixth grade flashcard character',
       width: 118,
       height: 86,
     },
-    locked: true,
   },
 ]
 
@@ -215,7 +214,7 @@ const unitCards: BrowseCard[] = [
     icon: '🌱',
     className: 'bg-white border-[#00AFB9]',
     image: {
-      src: undefined,
+      src: flashcardAsset('unit-1.png'),
       alt: 'Unit 1 sprout deck illustration',
       width: 118,
       height: 74,
