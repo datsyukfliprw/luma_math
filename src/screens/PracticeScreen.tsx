@@ -1,9 +1,19 @@
-import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import PageLayout from '../components/layout/PageLayout'
 import { getLessonById } from '../lib/lessonLookup'
+import { updateLessonProgress } from '../lib/lessonProgress'
+import {
+  getRecommendedNextPracticeMode,
+  hasPracticeReward,
+  markPracticeReward,
+} from '../lib/practiceRewards'
 import { generateProblemsForPracticeType } from '../practiceTypes/registry'
+import type { PracticeMode } from '../practiceTypes/types'
 
+const CURRENT_STUDENT_ID = 'default-student'
+
+// @SECTION PRACTICE_HELPERS
 function formatPracticeType(practiceType: string) {
   return practiceType
     .split('_')
@@ -17,6 +27,69 @@ function normalizeAnswer(answer: string) {
     .replaceAll(' ', '')
     .replaceAll('×', 'x')
     .replaceAll('*', 'x')
+}
+
+function normalizePracticeMode(mode: string | null): PracticeMode {
+  if (mode === 'independent' || mode === 'challenge') {
+    return mode
+  }
+
+  return 'guided'
+}
+
+// @SECTION PRACTICE_MODE_CONFIG
+const PRACTICE_MODE_CONFIG = {
+  guided: {
+    title: 'Guided Practice',
+    eyebrow: 'Step-by-step support',
+    description:
+      'Use hints and visual support while you build confidence with today’s skill.',
+    rewardTitle: 'Earn a Common Accessory',
+    rewardTier: '🎒 Common Reward',
+    rewardDescription:
+      'Complete Guided Practice to earn a common accessory for your star. Want something rarer? Try Independent Practice for rare rewards or Challenge Yourself for epic rewards.',
+    rewardIcon: '🎒',
+    skillDescription: 'Use equal groups to find the total.',
+    hintTitle: 'Helpful Hint',
+    accentClass: 'border-[#00AFB9]/25 bg-[#E9F7F8]',
+    badgeClass: 'bg-[#E9F7F8] text-[#0081A7]',
+  },
+  independent: {
+    title: 'Independent Practice',
+    eyebrow: 'Solo round',
+    description:
+      'Your turn! Show what you know and power up a rare reward.',
+    rewardTitle: 'Rare Reward',
+    rewardTier: '✨ Rare Reward',
+    rewardDescription:
+      'Finish Independent Practice to unlock a rare accessory for your star.',
+    rewardIcon: '✨',
+    skillDescription: 'Solve the skill on your own with fewer hints.',
+    hintTitle: 'Need a Hint?',
+    accentClass: 'border-[#F7B733]/30 bg-[#FFF3D9]',
+    badgeClass: 'bg-[#FFF3D9] text-[#C78300]',
+  },
+  challenge: {
+    title: 'Challenge Yourself',
+    eyebrow: 'Bonus difficulty',
+    description:
+      'Try a tougher version of the skill with less support and a bigger reward.',
+    rewardTitle: 'Earn an Epic Accessory',
+    rewardTier: '👑 Epic Reward',
+    rewardDescription:
+      'Complete Challenge Practice to earn an epic accessory for your star. Challenge problems ask you to spot mistakes and explain your thinking.',
+    rewardIcon: '👑',
+    skillDescription: 'Solve trickier questions that test your reasoning.',
+    hintTitle: 'Need a Hint?',
+    accentClass: 'border-[#F07167]/25 bg-[#FCE9E5]',
+    badgeClass: 'bg-[#FCE9E5] text-[#F07167]',
+  },
+} as const
+
+
+type CompletionModalState = {
+  firstCompletion: boolean
+  recommendedMode: PracticeMode | null
 }
 
 function getHintText(visualType?: string) {
@@ -67,6 +140,32 @@ function getSmallHintText(visualType?: string) {
   return 'Count all the stars to find the total.'
 }
 
+
+function buildAnswerChoices(correctAnswer: string, groups?: number) {
+  const correct = Number(correctAnswer)
+
+  if (Number.isNaN(correct)) {
+    return [correctAnswer]
+  }
+
+  if (correct === 0) {
+    return Array.from(new Set(['0', '1', String(groups ?? 2)])).slice(0, 3)
+  }
+
+  if (correct === 1) {
+    return ['0', '1', '2']
+  }
+
+  return Array.from(new Set(['0', '1', String(correct)])).slice(0, 3)
+}
+
+function getRewardChargeLabel(mode: PracticeMode) {
+  if (mode === 'guided') return 'Common Reward Charge'
+  if (mode === 'independent') return 'Rare Reward Charge'
+  return 'Epic Reward Charge'
+}
+
+
 function getFactorProductSlotOrder(problemIndex: number) {
   const orders = [
     ['factorA', 'factorB', 'product'],
@@ -77,11 +176,56 @@ function getFactorProductSlotOrder(problemIndex: number) {
   return orders[problemIndex % orders.length]
 }
 
+
+function getModePath(lessonId: string, mode: PracticeMode) {
+  return `/practice/${lessonId}?mode=${mode}`
+}
+
+function getModeLabel(mode: PracticeMode) {
+  if (mode === 'guided') return 'Guided Practice'
+  if (mode === 'independent') return 'Independent Practice'
+  return 'Challenge Yourself'
+}
+
+function getModeRewardLabel(mode: PracticeMode) {
+  if (mode === 'guided') return 'common accessory'
+  if (mode === 'independent') return 'rare accessory'
+  return 'epic accessory'
+}
+
+function getNextLessonPath({
+  unitNumber,
+  weekNumber,
+  dayNumber,
+}: {
+  unitNumber: number
+  weekNumber: number
+  dayNumber: number
+}) {
+  return `/lesson/unit-${unitNumber}-week-${weekNumber}-day-${dayNumber + 1}`
+}
+
+// @SECTION PRACTICE_SCREEN
 function PracticeScreen() {
   const { lessonId } = useParams()
-  const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId)
+  const [searchParams] = useSearchParams()
+  const practiceMode = normalizePracticeMode(searchParams.get('mode'))
+  const modeConfig = PRACTICE_MODE_CONFIG[practiceMode]
 
-  const problems = generateProblemsForPracticeType(lesson.practice_type)
+  const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId)
+  const currentLessonId =
+    lessonId ??
+    `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`
+  const nextLessonPath = getNextLessonPath({
+    unitNumber: unit.unit_number,
+    weekNumber: week.week_number,
+    dayNumber: weekDayNumber,
+  })
+
+  const problems = generateProblemsForPracticeType(lesson.practice_type, {
+    mode: practiceMode,
+    lesson,
+  })
 
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0)
   const [answer, setAnswer] = useState('')
@@ -92,33 +236,113 @@ function PracticeScreen() {
   const [columnsAnswer, setColumnsAnswer] = useState('')
   const [quotientAnswer, setQuotientAnswer] = useState('')
   const [selectedChoice, setSelectedChoice] = useState('')
-  const [showHint, setShowHint] = useState(false)
+  const [mistakeJudgment, setMistakeJudgment] = useState('')
+  const [mistakeReason, setMistakeReason] = useState('')
+  const [showHint, setShowHint] = useState(practiceMode === 'guided')
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null)
   const [correctProblemIndexes, setCorrectProblemIndexes] = useState<number[]>([])
+  const [currentStreak, setCurrentStreak] = useState(0)
+  const [completionModal, setCompletionModal] =
+    useState<CompletionModalState | null>(null)
+
+  useEffect(() => {
+    setCurrentProblemIndex(0)
+    setAnswer('')
+    setFactorAAnswer('')
+    setFactorBAnswer('')
+    setProductAnswer('')
+    setRowsAnswer('')
+    setColumnsAnswer('')
+    setQuotientAnswer('')
+    setSelectedChoice('')
+    setMistakeJudgment('')
+    setMistakeReason('')
+    setShowHint(practiceMode === 'guided')
+    setFeedback(null)
+    setCorrectProblemIndexes([])
+    setCurrentStreak(0)
+    setCompletionModal(null)
+  }, [practiceMode, currentLessonId])
 
   const currentProblem = problems[currentProblemIndex]
   const visualData = currentProblem?.visualData
 
   const lessonPath = lessonId ? `/lesson/${lessonId}` : '/lesson'
-  const practiceTypeLabel = formatPracticeType(lesson.practice_type)
   const correctCount = correctProblemIndexes.length
+  const rewardChargePercent =
+    problems.length > 0 ? (correctCount / problems.length) * 100 : 0
+  const isEqualGroupsChoiceMode =
+    (practiceMode === 'guided' || practiceMode === 'independent') &&
+    currentProblem?.visualType === 'equal_groups'
+  const answerChoices = currentProblem
+    ? buildAnswerChoices(currentProblem.correctAnswer, visualData?.groups)
+    : []
+
+  function openCompletionModal(firstCompletion: boolean) {
+    const recommendedMode = getRecommendedNextPracticeMode(
+      CURRENT_STUDENT_ID,
+      currentLessonId,
+      practiceMode,
+    )
+
+    setCompletionModal({
+      firstCompletion,
+      recommendedMode,
+    })
+  }
 
   function recordFeedback(isCorrect: boolean) {
     setFeedback(isCorrect ? 'correct' : 'incorrect')
 
-    if (isCorrect) {
-      setCorrectProblemIndexes((current) => {
-        if (current.includes(currentProblemIndex)) {
-          return current
-        }
-
-        return [...current, currentProblemIndex]
-      })
+    // In Challenge mode, judgment + reason are checked together.
+    // If either part is wrong, the streak resets.
+    if (!isCorrect) {
+      setCurrentStreak(0)
+      return
     }
-  }
 
+    setCurrentStreak((current) => current + 1)
+
+    setCorrectProblemIndexes((current) => {
+      const nextCorrectIndexes = current.includes(currentProblemIndex)
+        ? current
+        : [...current, currentProblemIndex]
+
+      const justFinishedLastQuestion =
+        currentProblemIndex >= problems.length - 1 &&
+        !current.includes(currentProblemIndex)
+
+      if (justFinishedLastQuestion) {
+        const firstCompletion = !hasPracticeReward(
+          CURRENT_STUDENT_ID,
+          currentLessonId,
+          practiceMode,
+        )
+
+        markPracticeReward(CURRENT_STUDENT_ID, currentLessonId, practiceMode)
+        updateLessonProgress(currentLessonId, {
+          practiceComplete: true,
+        })
+
+        window.setTimeout(() => {
+          openCompletionModal(firstCompletion)
+        }, 350)
+      }
+
+      return nextCorrectIndexes
+    })
+  }
   function checkAnswer() {
     if (!currentProblem) return
+
+    if (isEqualGroupsChoiceMode) {
+      recordFeedback(
+        normalizeAnswer(selectedChoice) ===
+          normalizeAnswer(currentProblem.correctAnswer),
+      )
+
+      return
+    }
 
     if (currentProblem.visualType === 'factor_product') {
       const expected = currentProblem.answerData
@@ -160,6 +384,17 @@ function PracticeScreen() {
       return
     }
 
+    if (currentProblem.visualType === 'mistake_check') {
+      const challengeData = currentProblem.challengeData
+
+      recordFeedback(
+        mistakeJudgment === challengeData?.correctJudgment &&
+          mistakeReason === challengeData?.correctReason,
+      )
+
+      return
+    }
+
     if (currentProblem.visualType === 'multiple_choice') {
       recordFeedback(
         normalizeAnswer(selectedChoice) ===
@@ -195,7 +430,9 @@ function PracticeScreen() {
     setColumnsAnswer('')
     setQuotientAnswer('')
     setSelectedChoice('')
-    setShowHint(false)
+    setMistakeJudgment('')
+    setMistakeReason('')
+    setShowHint(practiceMode === 'guided')
     setFeedback(null)
 
     if (currentProblemIndex < problems.length - 1) {
@@ -204,6 +441,25 @@ function PracticeScreen() {
   }
 
   function renderHintVisual() {
+    if (currentProblem?.visualType === 'mistake_check') {
+      return (
+        <div className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-center">
+          <p className="text-sm font-black uppercase tracking-[0.14em] text-[#0081A7]">
+            Detective clue
+          </p>
+
+          <p className="mt-2 text-xl font-black text-[#073B5A]">
+            Check the factor after ×.
+          </p>
+
+          <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
+            If the equation says ×0, each group has 0.
+            If it says ×1, each group has 1.
+          </p>
+        </div>
+      )
+    }
+
     if (currentProblem?.visualType === 'factor_product') {
       return (
         <div className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-center">
@@ -312,16 +568,76 @@ function PracticeScreen() {
     }
 
     if (currentProblem.visualType === 'equal_groups') {
+      if (practiceMode === 'guided' || practiceMode === 'independent') {
+        return (
+          <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-4 pb-4 pt-1">
+            <span className="absolute left-8 top-10 text-xl text-[#00AFB9]/65">
+              ✦
+            </span>
+            <span className="absolute left-16 top-20 text-lg text-[#F7B733]">
+              ✦
+            </span>
+            <span className="absolute right-14 top-14 text-lg text-[#F7B733]">
+              ✦
+            </span>
+            <span className="absolute right-24 top-28 text-sm text-[#00AFB9]/65">
+              ✦
+            </span>
+
+            <div className="mb-3 flex flex-wrap justify-center gap-2 text-xs font-black uppercase tracking-[0.12em]">
+              <span className="rounded-full bg-[#E9F7F8] px-3 py-1.5 text-[#0081A7] shadow-sm">
+                {visualData.groups} groups
+              </span>
+
+              <span className="rounded-full bg-[#FFF3D9] px-3 py-1.5 text-[#C78300] shadow-sm">
+                {visualData.itemsPerGroup} in each
+              </span>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-4">
+              {Array.from({ length: visualData.groups ?? 0 }).map(
+                (_, groupIndex) => (
+                  <div
+                    key={groupIndex}
+                    className="flex h-16 min-w-28 items-center justify-center rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-5 py-2.5 shadow-sm"
+                  >
+                    <div className="grid grid-cols-2 gap-1.5 text-[1.8rem] leading-none">
+                      {Array.from({
+                        length: visualData.itemsPerGroup ?? 0,
+                      }).map((_, starIndex) => (
+                        <span key={starIndex}>⭐</span>
+                      ))}
+                    </div>
+                  </div>
+                ),
+              )}
+            </div>
+
+            <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
+          </div>
+        )
+      }
+
       return (
-        <div className="mt-4 rounded-3xl bg-[#FEF3D9]/70 px-4 py-5">
+        <div className="mt-3 rounded-3xl bg-[#FEF3D9]/70 px-4 py-5">
+          <div className="mb-2.5 flex flex-wrap justify-center gap-2 text-xs font-black uppercase tracking-[0.12em]">
+            <span className="rounded-full bg-white px-3 py-1.5 text-[#0081A7] shadow-sm">
+              {visualData.groups} groups
+            </span>
+
+            <span className="rounded-full bg-white px-3 py-1.5 text-[#C78300] shadow-sm">
+              {visualData.itemsPerGroup} in each
+            </span>
+          </div>
+
           <div className="flex flex-wrap justify-center gap-4">
             {Array.from({ length: visualData.groups ?? 0 }).map(
               (_, groupIndex) => (
                 <div
                   key={groupIndex}
-                  className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] p-4 shadow-sm"
+                  className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-6 py-3.5 shadow-sm"
                 >
-                  <div className="grid grid-cols-2 gap-2.5 text-[2rem] leading-none">
+                  <div className="grid grid-cols-2 gap-2 text-[1.9rem] leading-none">
                     {Array.from({
                       length: visualData.itemsPerGroup ?? 0,
                     }).map((_, starIndex) => (
@@ -369,7 +685,7 @@ function PracticeScreen() {
             ))}
           </div>
 
-          <p className="mt-3 text-sm font-bold text-[#073B5A]/70">
+          <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
             Count the rows and columns to find the product.
           </p>
         </div>
@@ -383,7 +699,7 @@ function PracticeScreen() {
             {visualData.equation}
           </p>
 
-          <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
+          <p className="mt-1 text-xs font-bold text-[#073B5A]/70">
             Multiplication can be flipped around and still have the same product.
           </p>
         </div>
@@ -420,7 +736,7 @@ function PracticeScreen() {
             )}
           </div>
 
-          <p className="mt-3 text-sm font-bold text-[#073B5A]/70">
+          <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
             Share {visualData.items} items equally into{' '}
             {visualData.groupsToShare} groups.
           </p>
@@ -433,11 +749,11 @@ function PracticeScreen() {
 
   return (
     <PageLayout>
-      <div className="mb-3 flex items-center justify-between gap-4">
+      <div className="mb-2 flex items-center justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-3">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-[#00AFB9]">
-              Practice Time
+              {modeConfig.eyebrow}
             </p>
 
             <span className="hidden h-4 w-px bg-[#073B5A]/15 sm:block" />
@@ -448,9 +764,13 @@ function PracticeScreen() {
             </p>
           </div>
 
-          <h1 className="mt-0.5 text-[1.45rem] font-black leading-tight tracking-[-0.02em] text-[#073B5A]">
-            {lesson.lesson_title}
+          <h1 className="mt-0.5 text-[1.35rem] font-black leading-tight tracking-[-0.02em] text-[#073B5A]">
+            {modeConfig.title}
           </h1>
+
+          <p className="mt-0.5 max-w-2xl text-sm font-bold leading-snug text-[#073B5A]/70">
+            {modeConfig.description}
+          </p>
         </div>
 
         <div className="hidden rounded-xl border border-[#073B5A]/10 bg-white px-3 py-1.5 shadow-sm md:flex md:items-center md:gap-2">
@@ -467,40 +787,10 @@ function PracticeScreen() {
         </div>
       </div>
 
-      <section className="mb-3 rounded-[1.2rem] border border-[#F4D589] bg-[radial-gradient(circle_at_82%_50%,rgba(255,255,255,0.88)_0%,rgba(255,255,255,0.48)_18%,rgba(254,243,217,0.86)_38%,rgba(254,243,217,1)_72%),linear-gradient(90deg,#FEF3D9_0%,#FEF3D9_48%,#FFF8E9_100%)] p-3 shadow-sm">
-        <div className="grid gap-3 lg:grid-cols-[210px_1fr_90px] lg:items-center">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-xl shadow-sm">
-              ⭐
-            </div>
-
-            <div>
-              <p className="text-[0.7rem] font-black uppercase tracking-[0.18em] text-[#00AFB9]">
-                Skill
-              </p>
-
-              <h2 className="text-lg font-black leading-tight text-[#073B5A]">
-                {practiceTypeLabel}
-              </h2>
-            </div>
-          </div>
-
-          <div className="border-[#073B5A]/10 lg:border-l lg:pl-4">
-            <p className="text-sm font-bold leading-relaxed text-[#073B5A]/75">
-              {lesson.practice}
-            </p>
-          </div>
-
-          <div className="text-xs font-black text-[#073B5A]/70 lg:text-right">
-            ◷ 5 min
-          </div>
-        </div>
-      </section>
-
       <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
         {currentProblem ? (
           <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FDFDFC] p-4 shadow-sm">
-            <div className="mb-3 flex items-center justify-between gap-3">
+            <div className="mb-2 flex items-center justify-between gap-3">
               <p className="rounded-full border border-[#00AFB9]/20 bg-[#E9F7F8] px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 Question {currentProblemIndex + 1} of {problems.length}
               </p>
@@ -510,9 +800,19 @@ function PracticeScreen() {
               </p>
             </div>
 
-            <h2 className="max-w-3xl text-[1.35rem] font-black leading-snug tracking-[-0.01em] text-[#073B5A]">
-              {currentProblem.questionText}
-            </h2>
+            <div
+              className={`${
+                practiceMode === 'independent'
+                  ? 'mx-auto max-w-3xl text-center'
+                  : 'max-w-3xl'
+              }`}
+            >
+              <h2 className="text-[1.12rem] font-black leading-tight tracking-[-0.01em] text-[#073B5A]">
+                {currentProblem.visualType === 'mistake_check'
+                  ? 'Find the mistake'
+                  : currentProblem.questionText}
+              </h2>
+            </div>
 
             {renderProblemVisual()}
 
@@ -630,6 +930,97 @@ function PracticeScreen() {
                   ✓ Check Answer
                 </button>
               </div>
+            ) : currentProblem.visualType === 'mistake_check' ? (
+              <div className="mx-auto mt-4 max-w-4xl">
+                <div className="relative overflow-hidden rounded-3xl border border-[#F07167]/20 bg-[radial-gradient(circle_at_15%_20%,rgba(255,255,255,0.95),transparent_30%),linear-gradient(90deg,#FFF8E9,#FCE9E5)] px-5 py-4 text-center shadow-sm">
+                  <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
+                    ✦
+                  </span>
+                  <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
+                    ✦
+                  </span>
+
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
+                    Detective Challenge
+                  </p>
+
+                  <p className="mt-2 text-[2.65rem] font-black leading-none tracking-wide text-[#073B5A]">
+                    {currentProblem.challengeData?.equationToCheck}
+                  </p>
+
+                  <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
+                    Decide if the equation is correct. Then choose the reason.
+                  </p>
+                </div>
+
+                <div className="mt-3 rounded-[1.35rem] border border-[#073B5A]/10 bg-white p-3.5 shadow-sm">
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0081A7]">
+                    Is this correct?
+                  </p>
+
+                  <div className="mt-2.5 grid gap-3 sm:grid-cols-2">
+                    {currentProblem.challengeData?.judgmentChoices.map((choice) => (
+                      <button
+                        key={choice}
+                        type="button"
+                        onClick={() => {
+                          setMistakeJudgment(choice)
+                          setMistakeReason('')
+                          setFeedback(null)
+                        }}
+                        className={`rounded-2xl border px-5 py-3 text-lg font-black shadow-sm transition hover:scale-[1.01] ${
+                          mistakeJudgment === choice
+                            ? 'border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20'
+                            : 'border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]'
+                        }`}
+                      >
+                        {choice === 'yes' ? 'Yes' : 'No'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {mistakeJudgment && (
+                  <div className="mt-2.5 rounded-[1.35rem] border border-[#F7B733]/25 bg-[#FFF3D9] p-3.5 shadow-sm">
+                    <p className="text-xs font-black uppercase tracking-[0.16em] text-[#C78300]">
+                      Why?
+                    </p>
+
+                    <div className="mt-2.5 grid gap-2">
+                      {currentProblem.challengeData?.reasonChoices.map((reason) => (
+                        <button
+                          key={reason}
+                          type="button"
+                          onClick={() => {
+                            setMistakeReason(reason)
+                            setFeedback(null)
+                          }}
+                          className={`rounded-2xl border px-4 py-2.5 text-left text-sm font-black shadow-sm transition hover:scale-[1.005] ${
+                            mistakeReason === reason
+                              ? 'border-[#00AFB9] bg-white text-[#0081A7] ring-2 ring-[#00AFB9]/20'
+                              : 'border-[#073B5A]/10 bg-white/80 text-[#073B5A] hover:bg-white'
+                          }`}
+                        >
+                          {reason}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={checkAnswer}
+                  disabled={!mistakeJudgment || !mistakeReason}
+                  className={`mt-2.5 w-full rounded-xl px-6 py-2.5 font-black shadow-sm ${
+                    mistakeJudgment && mistakeReason
+                      ? 'bg-[#00AFB9] text-white'
+                      : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                  }`}
+                >
+                  ✓ Check Answer
+                </button>
+              </div>
             ) : currentProblem.visualType === 'multiple_choice' ? (
               <div className="mx-auto mt-5 grid max-w-2xl gap-2.5">
                 {visualData?.choices?.map((choice) => (
@@ -686,6 +1077,64 @@ function PracticeScreen() {
                   ✓ Check Answer
                 </button>
               </div>
+            ) : isEqualGroupsChoiceMode ? (
+              <div
+                className={`mx-auto max-w-4xl ${
+                  practiceMode === 'independent' ? '-mt-1' : 'mt-4'
+                }`}
+              >
+                <div className="text-center">
+                  <p className="text-sm font-black text-[#00AFB9]">
+                    {practiceMode === 'guided' ? 'Complete the sentence:' : 'Solve it:'}
+                  </p>
+
+                  <p className="mt-1.5 text-[2.8rem] font-black leading-none tracking-wide text-[#073B5A]">
+                    {visualData?.groups} × {visualData?.itemsPerGroup} ={' '}
+                    <span className="inline-flex h-16 min-w-16 translate-y-1 items-center justify-center rounded-2xl border-2 border-dashed border-[#00AFB9]/45 bg-white px-4 text-[#9AB5C7]">
+                      ?
+                    </span>
+                  </p>
+
+                  <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
+                    {practiceMode === 'guided'
+                      ? `Use the picture: ${visualData?.groups} groups with ${visualData?.itemsPerGroup} in each group.`
+                      : 'Choose the correct answer.'}
+                  </p>
+                </div>
+
+                <div className="mt-3 grid gap-4 sm:grid-cols-3">
+                  {answerChoices.map((choice) => (
+                    <button
+                      key={choice}
+                      type="button"
+                      onClick={() => {
+                        setSelectedChoice(choice)
+                        setFeedback(null)
+                      }}
+                      className={`rounded-2xl border px-5 py-3 text-2xl font-black shadow-sm transition hover:scale-[1.01] ${
+                        selectedChoice === choice
+                          ? 'border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20'
+                          : 'border-[#00AFB9]/55 bg-white text-[#073B5A] hover:bg-[#F8FBFB]'
+                      }`}
+                    >
+                      {choice}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={checkAnswer}
+                  disabled={!selectedChoice}
+                  className={`mx-auto mt-3 block rounded-xl px-10 py-2.5 font-black shadow-sm ${
+                    selectedChoice
+                      ? 'bg-[#00AFB9] text-white'
+                      : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                  }`}
+                >
+                  ✓ Check Answer
+                </button>
+              </div>
             ) : (
               <div className="mx-auto mt-5 flex max-w-xl gap-3">
                 <input
@@ -711,20 +1160,56 @@ function PracticeScreen() {
               </div>
             )}
 
-            <div className="mx-auto mt-4 flex max-w-3xl items-center gap-4 rounded-2xl border border-[#00AFB9]/25 bg-[#E9F7F8] p-4">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-xl text-white">
-                ★
-              </div>
+            {false && (
+              <div className="mx-auto mt-3 flex max-w-3xl items-center gap-3 rounded-2xl border border-[#00AFB9]/25 bg-[#E9F7F8] p-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-lg text-white">
+                  ★
+                </div>
 
-              <p className="text-sm font-bold leading-relaxed text-[#073B5A]">
-                {getSmallHintText(currentProblem.visualType)}
-              </p>
-            </div>
+                <p className="text-sm font-bold leading-relaxed text-[#073B5A]">
+                  {getSmallHintText(currentProblem.visualType)}
+                </p>
+              </div>
+            )}
+
+            {feedback === null && (
+              <div className="mx-auto mt-4 flex max-w-4xl items-center gap-4 rounded-3xl border border-[#00AFB9]/25 bg-[#E9F7F8] px-5 py-3 shadow-sm">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#BDEFF2] text-3xl shadow-sm">
+                  {practiceMode === 'challenge'
+                    ? '🕵️'
+                    : practiceMode === 'guided'
+                      ? '🎒'
+                      : '🌟'}
+                </div>
+
+                <div>
+                  <p className="text-base font-black text-[#073B5A]">
+                    {practiceMode === 'challenge'
+                      ? 'Pattern detective mode!'
+                      : practiceMode === 'guided'
+                        ? 'Step-by-step power!'
+                        : 'You&apos;ve got this!'}
+                  </p>
+
+                  <p className="text-sm font-bold text-[#073B5A]/70">
+                    {practiceMode === 'challenge'
+                      ? 'Every solved mistake powers up your Epic Reward!'
+                      : practiceMode === 'guided'
+                        ? 'Every correct answer powers up your Common Reward!'
+                        : 'Every correct answer powers up your Rare Reward!'}
+                  </p>
+                </div>
+              </div>
+            )}
 
             {feedback === 'correct' && (
-              <div className="mx-auto mt-3 max-w-2xl rounded-2xl border border-[#00AFB9]/30 bg-[#E9F7F8] p-3 text-center">
+              <div className="mx-auto mt-2.5 max-w-2xl rounded-2xl border border-[#00AFB9]/30 bg-[#E9F7F8] p-2.5 text-center">
                 <p className="font-black text-[#073B5A]">
-                  Nice! That’s correct. ✨
+                  {practiceMode === 'independent'
+                    ? 'Nice solo solve! Rare reward charge +1 ⚡'
+                    : practiceMode === 'challenge'
+                      ? 'Great detective work! Epic reward charge +1 👑'
+                      : 'Nice guided solve! Common reward charge +1 🎒'}
                 </p>
               </div>
             )}
@@ -732,22 +1217,41 @@ function PracticeScreen() {
             {feedback === 'incorrect' && (
               <div className="mx-auto mt-3 max-w-2xl rounded-2xl border border-[#F07167]/25 bg-[#FCE9E5] p-3 text-center">
                 <p className="font-black text-[#073B5A]">
-                  Not quite. Try again.
+                  {currentProblem.visualType === 'mistake_check'
+                    ? 'Not quite. The answer and the reason both need to match.'
+                    : 'Not quite. Try again.'}
                 </p>
 
                 <p className="mt-1 text-sm font-semibold text-[#073B5A]/70">
-                  {getHintText(currentProblem.visualType)}
+                  {currentProblem.visualType === 'mistake_check' ? currentProblem.challengeData?.feedback : getHintText(currentProblem.visualType)}
                 </p>
               </div>
             )}
 
-            <div className="mt-4 flex items-center justify-between border-t border-[#073B5A]/10 pt-4">
+            <div className="mt-2.5 grid items-center gap-3 border-t border-[#073B5A]/10 pt-2.5 md:grid-cols-[auto_1fr_auto]">
               <Link
                 to={lessonPath}
-                className="rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2.5 text-sm font-black text-[#0081A7]"
+                className="rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2 text-sm font-black text-[#0081A7]"
               >
                 ← Back to Lesson
               </Link>
+
+              <div className="flex flex-wrap justify-center gap-2">
+                {problems.map((problem, index) => (
+                  <div
+                    key={problem.id}
+                    className={`flex h-7 w-7 items-center justify-center rounded-full border text-[0.68rem] font-black ${
+                      index === currentProblemIndex
+                        ? 'border-[#00AFB9] bg-[#00AFB9] text-white'
+                        : index < currentProblemIndex
+                          ? 'border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]'
+                          : 'border-[#073B5A]/15 bg-white text-[#073B5A]/45'
+                    }`}
+                  >
+                    {index + 1}
+                  </div>
+                ))}
+              </div>
 
               <button
                 type="button"
@@ -756,7 +1260,7 @@ function PracticeScreen() {
                   feedback !== 'correct' ||
                   currentProblemIndex >= problems.length - 1
                 }
-                className={`rounded-xl px-4 py-2.5 text-sm font-black shadow-sm ${
+                className={`rounded-xl px-4 py-2 text-sm font-black shadow-sm ${
                   feedback === 'correct' &&
                   currentProblemIndex < problems.length - 1
                     ? 'bg-[#00AFB9] text-white'
@@ -780,9 +1284,80 @@ function PracticeScreen() {
         )}
 
         <aside className="space-y-3">
+          {true && (
+            <>
+              <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
+                  {practiceMode === 'challenge' ? '👑 Epic Reward' : practiceMode === 'guided' ? '🎒 Common Reward' : '✨ Rare Reward'}
+                </p>
+
+                <div className="mt-2 flex items-center gap-3">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
+                    {practiceMode === 'challenge' ? '👑' : practiceMode === 'guided' ? '🎒' : '🎁'}
+                  </div>
+
+                  <p className="text-sm font-black leading-relaxed text-[#073B5A]">
+                    {practiceMode === 'challenge'
+                      ? 'Finish Challenge Practice to unlock an epic accessory!'
+                      : practiceMode === 'guided'
+                        ? 'Finish Guided Practice to unlock a common accessory!'
+                        : 'Finish Independent Practice to unlock a rare accessory!'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+                  {getRewardChargeLabel(practiceMode)}
+                </p>
+
+                <div className="mt-3 flex items-center gap-3">
+                  <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#073B5A]/10">
+                    <div
+                      className="h-full rounded-full bg-[#00AFB9]"
+                      style={{ width: `${rewardChargePercent}%` }}
+                    />
+                  </div>
+
+                  <p className="text-xs font-black text-[#073B5A]/70">
+                    {correctCount}/{problems.length} correct
+                  </p>
+                </div>
+              </div>
+
+              {practiceMode !== 'guided' && (
+              <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
+                  🔥 Streak
+                </p>
+
+                <div className="mt-2 flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-4xl font-black text-[#F07167]">
+                      {currentStreak}
+                    </p>
+
+                    <p className="text-sm font-black text-[#073B5A]">
+                      in a row
+                    </p>
+
+                    <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
+                      Keep it going!
+                    </p>
+                  </div>
+
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
+                    🏅
+                  </div>
+                </div>
+              </div>
+              )}
+            </>
+          )}
+
           <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FFFDF7] p-4 shadow-sm">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              Need a hint?
+              {modeConfig.hintTitle}
             </p>
 
             {showHint ? (
@@ -795,7 +1370,7 @@ function PracticeScreen() {
               </>
             ) : (
               <p className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-sm font-bold leading-relaxed text-[#073B5A]/60">
-                Stuck? Tap the button for a clue.
+                Use a hint if you get stuck.
               </p>
             )}
 
@@ -808,54 +1383,56 @@ function PracticeScreen() {
             </button>
           </div>
 
-          <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              Progress
-            </p>
+          {false && (
+            <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+                Progress
+              </p>
 
-            <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
-              Question {currentProblemIndex + 1} of {problems.length}
-            </p>
+              <p className="mt-1 text-xs font-bold text-[#073B5A]/70">
+                Question {currentProblemIndex + 1} of {problems.length}
+              </p>
 
-            <div className="mt-3 flex items-center gap-2">
-              {problems.map((problem, index) => (
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                {problems.map((problem, index) => (
+                  <div
+                    key={problem.id}
+                    className={`flex h-9 w-9 items-center justify-center rounded-full border text-xs font-black ${
+                      index === currentProblemIndex
+                        ? 'border-[#00AFB9] bg-[#00AFB9] text-white'
+                        : index < currentProblemIndex
+                          ? 'border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]'
+                          : 'border-[#073B5A]/15 bg-white text-[#073B5A]/45'
+                    }`}
+                  >
+                    {index + 1}
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-[#073B5A]/10">
                 <div
-                  key={problem.id}
-                  className={`flex h-9 w-9 items-center justify-center rounded-full border text-xs font-black ${
-                    index === currentProblemIndex
-                      ? 'border-[#00AFB9] bg-[#00AFB9] text-white'
-                      : index < currentProblemIndex
-                        ? 'border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]'
-                        : 'border-[#073B5A]/15 bg-white text-[#073B5A]/45'
-                  }`}
-                >
-                  {index + 1}
-                </div>
-              ))}
-            </div>
+                  className="h-full rounded-full bg-[#00AFB9]"
+                  style={{
+                    width: `${
+                      ((currentProblemIndex + 1) /
+                        Math.max(problems.length, 1)) *
+                      100
+                    }%`,
+                  }}
+                />
+              </div>
 
-            <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-[#073B5A]/10">
-              <div
-                className="h-full rounded-full bg-[#00AFB9]"
-                style={{
-                  width: `${
-                    ((currentProblemIndex + 1) /
-                      Math.max(problems.length, 1)) *
-                    100
-                  }%`,
-                }}
-              />
+              <p className="mt-4 text-sm font-black text-[#073B5A]/75">
+                Correct answers:{' '}
+                <span className="text-[#0081A7]">{correctCount}</span>
+              </p>
             </div>
-
-            <p className="mt-4 text-sm font-black text-[#073B5A]/75">
-              Correct answers:{' '}
-              <span className="text-[#0081A7]">{correctCount}</span>
-            </p>
-          </div>
+          )}
 
           <div className="rounded-[1.5rem] border border-[#F4D589] bg-[#FEF3D9] p-4 shadow-sm">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              Today&apos;s Goal
+              Today&apos;s Goals
             </p>
 
             <div className="mt-4 flex items-center gap-3">
@@ -864,17 +1441,118 @@ function PracticeScreen() {
               </div>
 
               <div className="space-y-2 text-sm font-bold text-[#073B5A]/80">
-                <p>◉ Answer 3 questions</p>
-                <p>◉ Score 80% or higher</p>
+                <p>◎ Finish {problems.length} questions</p>
+                <p>◎ Score 80% or higher</p>
+                <p>◎ Earn {practiceMode === 'challenge' ? 'an' : 'a'} {getModeRewardLabel(practiceMode)}</p>
               </div>
             </div>
 
             <div className="mt-4 border-t border-[#F4D589] pt-3">
-              <p className="font-black text-[#073B5A]">You&apos;ve got this! ⭐</p>
+              <p className="font-black text-[#073B5A]">
+                {practiceMode === 'independent'
+                  ? "You're on your way! ⭐"
+                  : "You've got this! ⭐"}
+              </p>
             </div>
           </div>
         </aside>
       </section>
+
+      {completionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/45 px-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 text-center shadow-2xl">
+            <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_30%_20%,rgba(253,252,220,0.95),transparent_34%),radial-gradient(circle_at_75%_30%,rgba(0,175,185,0.20),transparent_36%)]" />
+
+            <div className="relative z-10">
+              <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-[#FFF3D9] text-5xl shadow-sm">
+                {modeConfig.rewardIcon}
+              </div>
+
+              <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-[#00AFB9]">
+                Practice Complete
+              </p>
+
+              <h2 className="mt-2 text-3xl font-black text-[#073B5A]">
+                {completionModal.firstCompletion ? 'You did it!' : 'Nice work!'}
+              </h2>
+
+              {completionModal.firstCompletion ? (
+                <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
+                  You completed {modeConfig.title} and earned a{' '}
+                  <span className="font-black text-[#0081A7]">
+                    {getModeRewardLabel(practiceMode)}
+                  </span>{' '}
+                  for your star.
+                </p>
+              ) : completionModal.recommendedMode ? (
+                <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
+                  You already earned this reward. Try{' '}
+                  <span className="font-black text-[#0081A7]">
+                    {getModeLabel(completionModal.recommendedMode)}
+                  </span>{' '}
+                  to unlock more accessories.
+                </p>
+              ) : (
+                <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
+                  You completed this practice again. Great review!
+                </p>
+              )}
+
+              {completionModal.recommendedMode && (
+                <div className="mx-auto mt-5 rounded-2xl border border-[#00AFB9]/20 bg-[#E9F7F8] p-4">
+                  <p className="text-sm font-black text-[#073B5A]">
+                    Want something rarer?
+                  </p>
+
+                  <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
+                    {getModeLabel(completionModal.recommendedMode)} can unlock a{' '}
+                    {getModeRewardLabel(completionModal.recommendedMode)}.
+                  </p>
+                </div>
+              )}
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                {completionModal.recommendedMode ? (
+                  <Link
+                    to={getModePath(currentLessonId, completionModal.recommendedMode)}
+                    onClick={() => setCompletionModal(null)}
+                    className="rounded-2xl bg-[#00AFB9] px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                  >
+                    Try {getModeLabel(completionModal.recommendedMode)} ›
+                  </Link>
+                ) : (
+                  <Link
+                    to={nextLessonPath}
+                    onClick={() => setCompletionModal(null)}
+                    className="rounded-2xl bg-[#00AFB9] px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                  >
+                    Next Lesson ›
+                  </Link>
+                )}
+
+                <Link
+                  to={lessonPath}
+                  onClick={() => setCompletionModal(null)}
+                  className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB]"
+                >
+                  Back to Lesson
+                </Link>
+              </div>
+
+              {completionModal.recommendedMode && (
+                <Link
+                  to={nextLessonPath}
+                  onClick={() => setCompletionModal(null)}
+                  className="mt-3 inline-flex text-sm font-black text-[#0081A7]"
+                >
+                  Continue to next lesson instead ›
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
     </PageLayout>
   )
 }

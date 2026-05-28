@@ -1,45 +1,131 @@
-import type { PracticeProblem } from './types'
+import type { PracticeGenerationOptions, PracticeProblem } from './types'
 
-export function generateEqualGroupsProblems(): PracticeProblem[] {
+function makeEqualGroupsProblem({
+  id,
+  groups,
+  itemsPerGroup,
+}: {
+  id: string
+  groups: number
+  itemsPerGroup: number
+}): PracticeProblem {
+  const total = groups * itemsPerGroup
+
+  return {
+    id,
+    questionText: `There are ${groups} groups with ${itemsPerGroup} ${
+      itemsPerGroup === 1 ? 'star' : 'stars'
+    } in each group. How many stars are there in all?`,
+    correctAnswer: String(total),
+    visualType: 'equal_groups',
+    problemKey: `${groups}-groups-of-${itemsPerGroup}`,
+    visualData: {
+      groups,
+      itemsPerGroup,
+      equation: `${groups} × ${itemsPerGroup} = ${total}`,
+    },
+  }
+}
+
+function generateGuidedEqualGroupsProblems(): PracticeProblem[] {
   return [
-    {
-      id: 'equal-groups-1',
-      questionText:
-        'There are 3 groups with 4 stars in each group. How many stars are there in all?',
-      correctAnswer: '12',
-      visualType: 'equal_groups',
-      problemKey: '3-groups-of-4',
-      visualData: {
-        groups: 3,
-        itemsPerGroup: 4,
-        equation: '3 × 4 = 12',
-      },
-    },
-    {
-      id: 'equal-groups-2',
-      questionText:
-        'There are 5 groups with 2 stars in each group. How many stars are there in all?',
-      correctAnswer: '10',
-      visualType: 'equal_groups',
-      problemKey: '5-groups-of-2',
-      visualData: {
-        groups: 5,
-        itemsPerGroup: 2,
-        equation: '5 × 2 = 10',
-      },
-    },
-    {
-      id: 'equal-groups-3',
-      questionText:
-        'There are 4 groups with 3 stars in each group. How many stars are there in all?',
-      correctAnswer: '12',
-      visualType: 'equal_groups',
-      problemKey: '4-groups-of-3',
-      visualData: {
-        groups: 4,
-        itemsPerGroup: 3,
-        equation: '4 × 3 = 12',
-      },
-    },
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-1', groups: 3, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-2', groups: 4, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-3', groups: 5, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-4', groups: 6, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-5', groups: 7, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-6', groups: 8, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-7', groups: 9, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-guided-8', groups: 2, itemsPerGroup: 0 }),
   ]
+}
+
+function generateIndependentEqualGroupsProblems(): PracticeProblem[] {
+  return [
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-1', groups: 3, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-2', groups: 4, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-3', groups: 5, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-4', groups: 6, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-5', groups: 7, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-6', groups: 8, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-7', groups: 9, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-8', groups: 2, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-9', groups: 10, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-10', groups: 11, itemsPerGroup: 0 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-11', groups: 12, itemsPerGroup: 1 }),
+    makeEqualGroupsProblem({ id: 'equal-groups-independent-12', groups: 1, itemsPerGroup: 0 }),
+  ]
+}
+
+function makeMistakeCheckProblem({
+  id,
+  groups,
+  factor,
+  shownAnswer,
+  correctJudgment,
+}: {
+  id: string
+  groups: number
+  factor: 0 | 1
+  shownAnswer: number
+  correctJudgment: 'yes' | 'no'
+}): PracticeProblem {
+  const correctTotal = groups * factor
+  const equationToCheck = `${groups} × ${factor} = ${shownAnswer}`
+  const correctReason = `${groups} groups of ${factor} makes ${correctTotal}`
+
+  const otherFactor = factor === 0 ? 1 : 0
+  const otherTotal = groups * otherFactor
+
+  return {
+    id,
+    questionText: `A student wrote: ${equationToCheck}`,
+    correctAnswer: correctJudgment,
+    visualType: 'mistake_check',
+    problemKey: `mistake-${groups}x${factor}-equals-${shownAnswer}`,
+    challengeData: {
+      equationToCheck,
+      judgmentChoices: ['yes', 'no'],
+      correctJudgment,
+      correctReason,
+      reasonChoices: [
+        correctReason,
+        `${groups} groups of ${otherFactor} makes ${otherTotal}`,
+        `${factor} groups of ${groups} makes ${shownAnswer}`,
+      ],
+      feedback:
+        factor === 0
+          ? `The equation uses ×0, so each group has 0 and the total is ${correctTotal}.`
+          : `The equation uses ×1, so ${groups} groups of 1 makes ${correctTotal}.`,
+    },
+  }
+}
+
+function generateChallengeEqualGroupsProblems(): PracticeProblem[] {
+  return [
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-1', groups: 5, factor: 0, shownAnswer: 5, correctJudgment: 'no' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-2', groups: 6, factor: 1, shownAnswer: 6, correctJudgment: 'yes' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-3', groups: 4, factor: 1, shownAnswer: 1, correctJudgment: 'no' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-4', groups: 8, factor: 0, shownAnswer: 0, correctJudgment: 'yes' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-5', groups: 7, factor: 0, shownAnswer: 7, correctJudgment: 'no' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-6', groups: 9, factor: 1, shownAnswer: 0, correctJudgment: 'no' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-7', groups: 3, factor: 0, shownAnswer: 0, correctJudgment: 'yes' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-8', groups: 10, factor: 1, shownAnswer: 10, correctJudgment: 'yes' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-9', groups: 2, factor: 1, shownAnswer: 1, correctJudgment: 'no' }),
+    makeMistakeCheckProblem({ id: 'equal-groups-challenge-10', groups: 11, factor: 0, shownAnswer: 11, correctJudgment: 'no' }),
+  ]
+}
+
+export function generateEqualGroupsProblems(
+  options?: PracticeGenerationOptions,
+): PracticeProblem[] {
+  if (options?.mode === 'challenge') {
+    return generateChallengeEqualGroupsProblems()
+  }
+
+  if (options?.mode === 'independent') {
+    return generateIndependentEqualGroupsProblems()
+  }
+
+  return generateGuidedEqualGroupsProblems()
 }

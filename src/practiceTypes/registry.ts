@@ -9,9 +9,11 @@ import { generateFairSharingDivisionProblems } from './fairSharingDivision'
 import { generateRepeatedAdditionProblems } from './repeatedAddition'
 import { generateValidInvalidArraysProblems } from './validInvalidArrays'
 import { generateWeek2EvaluationProblems } from './week2Evaluation'
-import type { PracticeProblem } from './types'
+import type { PracticeGenerationOptions, PracticeProblem } from './types'
 
-type PracticeGenerator = () => PracticeProblem[]
+type PracticeGenerator = (
+  options?: PracticeGenerationOptions,
+) => PracticeProblem[]
 
 const practiceRegistry: Record<string, PracticeGenerator> = {
   equal_groups: generateEqualGroupsProblems,
@@ -32,6 +34,7 @@ const practiceRegistry: Record<string, PracticeGenerator> = {
 
 export function generateProblemsForPracticeType(
   practiceType: string,
+  options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
   const generator = practiceRegistry[practiceType]
 
@@ -39,5 +42,5 @@ export function generateProblemsForPracticeType(
     return []
   }
 
-  return generator()
+  return generator(options)
 }

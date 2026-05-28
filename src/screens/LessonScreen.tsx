@@ -96,6 +96,7 @@ function getSectionState(
   return progress.tryItComplete ? "active" : "future";
 }
 
+// @SECTION LESSON_CARD_FRAME
 function LessonCardFrame({
   state,
   children,
@@ -111,12 +112,13 @@ function LessonCardFrame({
         : "bg-transparent";
 
   return (
-    <div className={`h-full rounded-[1.9rem] p-[2px] ${frameClass}`}>
-      <div className="h-full rounded-[1.75rem]">{children}</div>
+    <div className={`h-full min-h-0 rounded-[1.9rem] p-[2px] ${frameClass}`}>
+      <div className="h-full min-h-0 rounded-[1.75rem]">{children}</div>
     </div>
   );
 }
 
+// @SECTION LESSON_ACTION_BAR
 function LessonActionBar({
   nextStep,
   words,
@@ -128,10 +130,13 @@ function LessonActionBar({
   words: string[];
 }) {
   return (
-    <section className="mb-5 overflow-hidden rounded-[1.5rem] border border-[#073B5A]/10 bg-white shadow-sm">
+    <section
+      data-name="lesson-action-bar"
+      className="mb-4 overflow-hidden rounded-[1.5rem] border border-[#073B5A]/10 bg-white shadow-sm"
+    >
       <div className="grid items-stretch lg:grid-cols-[1fr_auto]">
-        <div className="flex items-center gap-4 px-5 py-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#FFF3D9] text-2xl">
+        <div className="flex items-center gap-4 px-5 py-3.5">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#FFF3D9] text-2xl">
             🚀
           </div>
 
@@ -140,21 +145,21 @@ function LessonActionBar({
               Next Up: <span className="text-[#0081A7]">{nextStep.title}</span>
             </p>
 
-            <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
+            <p className="mt-0.5 text-sm font-bold text-[#073B5A]/70">
               {nextStep.description}
             </p>
           </div>
 
           <button
             type="button"
-            className="ml-auto hidden shrink-0 rounded-xl bg-[#00AFB9] px-6 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7] md:block"
+            className="ml-auto hidden shrink-0 rounded-xl bg-[#00AFB9] px-6 py-2.5 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7] md:block"
           >
             Continue Lesson ›
           </button>
         </div>
 
-        <div className="flex items-center gap-3 border-t border-[#073B5A]/10 px-5 py-4 lg:border-l lg:border-t-0">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-xl">
+        <div className="flex items-center gap-3 border-t border-[#073B5A]/10 px-5 py-3.5 lg:border-l lg:border-t-0">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-xl">
             📖
           </div>
 
@@ -178,6 +183,7 @@ function LessonActionBar({
   );
 }
 
+// @SECTION LESSON_SCREEN
 function LessonScreen() {
   const { lessonId } = useParams();
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
@@ -205,72 +211,79 @@ function LessonScreen() {
 
   return (
     <PageLayout>
-      <LessonHero
-        unitNumber={unit.unit_number}
-        weekNumber={week.week_number}
-        dayNumber={weekDayNumber}
-        title={lesson.lesson_title}
-        topic={unit.unit_title}
-        description={lesson.objective}
-        minutes={lesson.lesson_type === "evaluation" ? 35 : 25}
-        grade={`${unit.grade_level}rd Grade`}
-        lessonType={lesson.lesson_type}
-        quizQuestionCount={lesson.quiz_question_count}
-        progress={progress}
-        starName={starName}
-      />
+      {/* @SECTION LESSON_OVERVIEW_STACK */}
+      <div data-name="lesson-overview-stack" className="flex min-h-0 flex-col">
+        <LessonHero
+          unitNumber={unit.unit_number}
+          weekNumber={week.week_number}
+          dayNumber={weekDayNumber}
+          title={lesson.lesson_title}
+          topic={unit.unit_title}
+          description={lesson.objective}
+          minutes={lesson.lesson_type === "evaluation" ? 35 : 25}
+          grade={`${unit.grade_level}rd Grade`}
+          lessonType={lesson.lesson_type}
+          quizQuestionCount={lesson.quiz_question_count}
+          progress={progress}
+          starName={starName}
+        />
 
-      <LessonActionBar nextStep={nextStep} words={todaysWords} />
+        <LessonActionBar nextStep={nextStep} words={todaysWords} />
 
-      <section className="grid items-stretch gap-5 lg:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.15fr]">
-        <LessonCardFrame state={getSectionState("warmup", progress)}>
-          <WarmUpCard
-            factDrill={lesson.fact_drill}
-            warmup={structuredLesson.warmup}
-            lessonId={currentLessonId}
-            isComplete={progress.warmupComplete}
-          />
-        </LessonCardFrame>
+        {/* @SECTION LESSON_STAGE_GRID */}
+        <section
+          data-name="lesson-stage-grid"
+          className="grid min-h-0 items-stretch gap-4 lg:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.12fr]"
+        >
+          <LessonCardFrame state={getSectionState("warmup", progress)}>
+            <WarmUpCard
+              factDrill={lesson.fact_drill}
+              warmup={structuredLesson.warmup}
+              lessonId={currentLessonId}
+              isComplete={progress.warmupComplete}
+            />
+          </LessonCardFrame>
 
-        <LessonCardFrame state={getSectionState("learn", progress)}>
-          <LearnCard
-            lessonId={currentLessonId}
-            concept={lesson.concept}
-            isComplete={progress.learnComplete}
-          />
-        </LessonCardFrame>
+          <LessonCardFrame state={getSectionState("learn", progress)}>
+            <LearnCard
+              lessonId={currentLessonId}
+              concept={lesson.concept}
+              isComplete={progress.learnComplete}
+            />
+          </LessonCardFrame>
 
-        <LessonCardFrame state={getSectionState("tryIt", progress)}>
-          <TryItCard
-            lessonId={currentLessonId}
-            practice={lesson.practice}
-            practiceType={lesson.practice_type}
-          />
-        </LessonCardFrame>
+          <LessonCardFrame state={getSectionState("tryIt", progress)}>
+            <TryItCard
+              lessonId={currentLessonId}
+              practice={lesson.practice}
+              practiceType={lesson.practice_type}
+            />
+          </LessonCardFrame>
 
-        <LessonCardFrame state={getSectionState("practice", progress)}>
-          <PracticeTimeCard
-            lessonId={currentLessonId}
-            activities={[
-              {
-                icon: "🧮",
-                title: "Guided Practice",
-                subtitle: lesson.practice,
-              },
-              {
-                icon: "✏️",
-                title: "Independent Practice",
-                subtitle: "Solve on your own",
-              },
-              {
-                icon: "🏆",
-                title: "Challenge Yourself",
-                subtitle: "Take it up a notch!",
-              },
-            ]}
-          />
-        </LessonCardFrame>
-      </section>
+          <LessonCardFrame state={getSectionState("practice", progress)}>
+            <PracticeTimeCard
+              lessonId={currentLessonId}
+              activities={[
+                {
+                  icon: "🧮",
+                  title: "Guided Practice",
+                  subtitle: lesson.practice,
+                },
+                {
+                  icon: "✏️",
+                  title: "Independent Practice",
+                  subtitle: "Solve on your own",
+                },
+                {
+                  icon: "🏆",
+                  title: "Challenge Yourself",
+                  subtitle: "Take it up a notch!",
+                },
+              ]}
+            />
+          </LessonCardFrame>
+        </section>
+      </div>
     </PageLayout>
   );
 }

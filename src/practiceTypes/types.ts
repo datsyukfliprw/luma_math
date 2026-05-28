@@ -1,3 +1,19 @@
+export type PracticeMode = 'guided' | 'independent' | 'challenge'
+
+export type PracticeGenerationOptions = {
+  mode?: PracticeMode
+  lesson?: {
+    lesson_title?: string
+    practice_type?: string
+    skills?: string[]
+    practice_block?: {
+      question_count?: number
+      type?: string
+      instructions?: string
+    }
+  }
+}
+
 export type PracticeProblem = {
   id: string
   questionText: string
@@ -9,6 +25,7 @@ export type PracticeProblem = {
     | 'array_rows_columns'
     | 'multiple_choice'
     | 'fair_sharing'
+    | 'mistake_check'
   problemKey: string
   visualData?: {
     groups?: number
@@ -30,5 +47,13 @@ export type PracticeProblem = {
     rows?: string
     columns?: string
     quotient?: string
+  }
+  challengeData?: {
+    equationToCheck: string
+    judgmentChoices: Array<'yes' | 'no'>
+    correctJudgment: 'yes' | 'no'
+    reasonChoices: string[]
+    correctReason: string
+    feedback: string
   }
 }
