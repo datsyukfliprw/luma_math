@@ -107,24 +107,28 @@ function LearnScreen() {
   // @SECTION LEARN_PAGE_ROUTING
   const page = useMemo(() => {
     if (currentStep === 0) {
-      return <BigIdeaPage />;
+      return <BigIdeaPage starName={starName} />;
     }
 
     if (currentStep === 1) {
-      return <BuildItPage onBuildComplete={() => setIsBuildItComplete(true)} />;
+      return (
+        <BuildItPage
+          starName={starName}
+          onBuildComplete={() => setIsBuildItComplete(true)}
+        />
+      );
     }
 
     if (currentStep === 2) {
-      return <SeeItPage />;
+      return <SeeItPage starName={starName} />;
     }
 
     if (currentStep === 3) {
-      return <WordsPage />;
+      return <WordsPage starName={starName} />;
     }
 
     return <QuickCheckPage starName={starName} />;
   }, [currentStep, starName]);
-
   // @SECTION LEARN_COMPACT_HEADER_SCROLL_THRESHOLD
   useEffect(() => {
     const pageContent = pageContentRef.current;

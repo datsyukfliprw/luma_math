@@ -242,6 +242,7 @@ function LessonScreen() {
 
         <LessonCardFrame state={getSectionState("tryIt", progress)}>
           <TryItCard
+            lessonId={currentLessonId}
             practice={lesson.practice}
             practiceType={lesson.practice_type}
           />

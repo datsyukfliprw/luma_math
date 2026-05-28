@@ -16,11 +16,7 @@ type SeeItClue = {
 };
 
 // @SECTION SEEIT_PAGE
-type SeeItPageProps = {
-  starName: string;
-};
-
-function SeeItPage({ starName }: SeeItPageProps) {
+function SeeItPage() {
   // @SECTION SEEIT_DATA
   const clues: SeeItClue[] = [
     {
@@ -322,9 +318,7 @@ function SeeItPage({ starName }: SeeItPageProps) {
                 className="fill-[#F7B733] text-[#F7B733]"
               />
 
-              <p className="text-lg font-black text-[#C78300]">
-                {starName}'s Tip
-              </p>
+              <p className="text-lg font-black text-[#C78300]">Luma Tip</p>
             </div>
 
             <div

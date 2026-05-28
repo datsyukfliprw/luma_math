@@ -7,11 +7,7 @@ import LumaAvatar from "../../components/luma/LumaAvatar";
 const lessonVideoUrl = "https://www.youtube.com/embed/gLcD7otUHxw";
 
 // @SECTION BIGIDEA_PAGE
-type BigIdeaPageProps = {
-  starName: string;
-};
-
-function BigIdeaPage({ starName }: BigIdeaPageProps) {
+function BigIdeaPage() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   const missionSteps = [
@@ -195,9 +191,7 @@ function BigIdeaPage({ starName }: BigIdeaPageProps) {
                 className="fill-[#F7B733] text-[#F7B733]"
               />
 
-              <p className="text-lg font-black text-[#C78300]">
-                {starName}'s Tip
-              </p>
+              <p className="text-lg font-black text-[#C78300]">Luma Tip</p>
             </div>
 
             <div className="w-fit rounded-2xl bg-white px-5 py-4 text-xl font-black leading-tight text-[#073B5A] shadow-sm">

@@ -5,12 +5,11 @@ import LumaAvatar from "../../components/luma/LumaAvatar";
 
 // @SECTION BUILDIT_TYPES
 type BuildItPageProps = {
-  starName: string;
   onBuildComplete?: () => void;
 };
 
 // @SECTION BUILDIT_PAGE
-function BuildItPage({ starName, onBuildComplete }: BuildItPageProps) {
+function BuildItPage({ onBuildComplete }: BuildItPageProps) {
   // @SECTION BUILDIT_DATA
   const buildRounds = [
     {
@@ -428,9 +427,8 @@ function BuildItPage({ starName, onBuildComplete }: BuildItPageProps) {
                 strokeWidth={2.7}
                 className="fill-[#F7B733] text-[#F7B733]"
               />
-              <p className="text-lg font-black text-[#C78300]">
-                {starName}'s Tip
-              </p>
+
+              <p className="text-lg font-black text-[#C78300]">Luma Tip</p>
             </div>
 
             <div className="w-fit rounded-2xl bg-white px-5 py-4 text-xl font-black leading-tight text-[#073B5A] shadow-sm">

@@ -3,12 +3,8 @@ import { useState } from "react";
 import { BookOpen, CheckCircle2, Sparkles, Star } from "lucide-react";
 import LumaAvatar from "../../components/luma/LumaAvatar";
 
-// @SECTION WORDS_TYPES
-type WordsPageProps = {
-  starName: string;
-};
-
-function WordsPage({ starName }: WordsPageProps) {
+// @SECTION WORDS_PAGE
+function WordsPage() {
   // @SECTION WORDS_DATA
   const vocabularyWords = [
     {
@@ -374,7 +370,7 @@ function WordsPage({ starName }: WordsPageProps) {
 
                   <h3 className="mt-0.5 text-base font-black text-[#073B5A]">
                     {isMatchingComplete
-                      ? `Great matching! ${starName} is fully charged!`
+                      ? "Great matching! Luma is fully charged!"
                       : matchMessage}
                   </h3>
                 </div>
@@ -511,9 +507,7 @@ function WordsPage({ starName }: WordsPageProps) {
               />
 
               <p className="text-lg font-black text-[#C78300]">
-                {wordsStep === "match"
-                  ? `${starName}’s Charge`
-                  : `${starName} Tip`}
+                {wordsStep === "match" ? "Luma’s Charge" : "Luma Tip"}
               </p>
             </div>
 
@@ -538,7 +532,7 @@ function WordsPage({ starName }: WordsPageProps) {
                 <p className="mt-2 text-sm font-black leading-relaxed text-[#073B5A]/70">
                   {isMatchingComplete
                     ? "Full charge! Great matching."
-                    : `Match words to power up ${starName}.`}
+                    : "Match words to power up Luma."}
                 </p>
 
                 <div

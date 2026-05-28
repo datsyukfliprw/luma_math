@@ -1,0 +1,669 @@
+// @SECTION TRYIT_IM{starName}port { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft, CheckCircle2, Clock3, Lightbulb, Star } from "lucide-react";
+
+import PageLayout from "../components/layout/PageLayout";
+import LumaAvatar from "../components/luma/LumaAvatar";
+import { getLessonById } from "../lib/lessonLookup";
+import { updateLessonProgress } from "../lib/lessonProgress";
+import { getStarProfile } from "../lib/starProfile";
+
+const CURRENT_STUDENT_ID = "default-student";
+const REQUIRED_TRY_IT_COUNT = 5;
+
+// @SECTION TRYIT_TYPES
+type TryItStepKey = "groups" | "inEach" | "equation";
+
+type TryItProblem = {
+  story: string;
+  question: string;
+  groups: string;
+  inEach: string;
+  total: string;
+  groupLabel: string;
+  inEachLabel: string;
+  visualEmoji: string;
+  visualEmpty?: boolean;
+  equation: string;
+  groupsChoices: string[];
+  inEachChoices: string[];
+  equationChoices: string[];
+  successMessage: string;
+  tip: string;
+};
+
+type ProblemAnswers = Partial<Record<TryItStepKey, string>>;
+
+// @SECTION TRYIT_DATA
+const tryItProblems: TryItProblem[] = [
+  {
+    story: "There are 5 flower pots.",
+    question: "Each pot has 1 sprout. How many sprouts are there in all?",
+    groups: "5",
+    inEach: "1",
+    total: "5",
+    groupLabel: "flower pots",
+    inEachLabel: "1 sprout",
+    visualEmoji: "🌱",
+    equation: "5 × 1 = 5",
+    groupsChoices: ["3", "4", "5"],
+    inEachChoices: ["0", "1", "2"],
+    equationChoices: ["5 × 1 = 5", "5 × 0 = 5", "5 × 1 = 1"],
+    successMessage: "Nice! 5 groups of 1 makes 5 total.",
+    tip: "Look for the number of pots first. Each pot has 1 sprout.",
+  },
+  {
+    story: "There are 4 baskets on a table.",
+    question: "Each basket has 0 apples. How many apples are there in all?",
+    groups: "4",
+    inEach: "0",
+    total: "0",
+    groupLabel: "baskets",
+    inEachLabel: "0 apples",
+    visualEmoji: "🍎",
+    visualEmpty: true,
+    equation: "4 × 0 = 0",
+    groupsChoices: ["0", "4", "5"],
+    inEachChoices: ["0", "1", "4"],
+    equationChoices: ["4 × 1 = 4", "4 × 0 = 0", "0 × 1 = 4"],
+    successMessage: "Correct! 4 empty groups makes 0 total.",
+    tip: "Empty groups still count as groups. There are just 0 in each.",
+  },
+  {
+    story: "Milo has 6 sticker spots.",
+    question: "Each spot has 1 star sticker. How many stickers are there?",
+    groups: "6",
+    inEach: "1",
+    total: "6",
+    groupLabel: "sticker spots",
+    inEachLabel: "1 sticker",
+    visualEmoji: "⭐",
+    equation: "6 × 1 = 6",
+    groupsChoices: ["1", "5", "6"],
+    inEachChoices: ["0", "1", "6"],
+    equationChoices: ["6 × 1 = 6", "6 × 0 = 6", "6 × 1 = 1"],
+    successMessage: "Great! 6 groups of 1 makes 6 total.",
+    tip: "When each group has 1, the total matches the number of groups.",
+  },
+  {
+    story: "Ava sets out 3 empty snack plates.",
+    question: "Each plate has 0 crackers. How many crackers are there?",
+    groups: "3",
+    inEach: "0",
+    total: "0",
+    groupLabel: "plates",
+    inEachLabel: "0 crackers",
+    visualEmoji: "🥨",
+    visualEmpty: true,
+    equation: "3 × 0 = 0",
+    groupsChoices: ["0", "3", "5"],
+    inEachChoices: ["0", "1", "3"],
+    equationChoices: ["3 × 1 = 3", "3 × 0 = 0", "0 × 3 = 3"],
+    successMessage: "You got it! 3 groups of 0 makes 0 total.",
+    tip: "The plates are the groups. The crackers in each plate are 0.",
+  },
+  {
+    story: "There are 7 tiny lanterns.",
+    question: "Each lantern has 1 glowing star. How many stars glow?",
+    groups: "7",
+    inEach: "1",
+    total: "7",
+    groupLabel: "lanterns",
+    inEachLabel: "1 star",
+    visualEmoji: "⭐",
+    equation: "7 × 1 = 7",
+    groupsChoices: ["1", "6", "7"],
+    inEachChoices: ["0", "1", "7"],
+    equationChoices: ["7 × 0 = 7", "7 × 1 = 7", "1 × 1 = 7"],
+    successMessage: "Nice work! 7 groups of 1 makes 7 total.",
+    tip: "For ×1, the product stays the same as the number of groups.",
+  },
+];
+
+// @SECTION TRYIT_LESSON_ID_HELPER
+function getCurrentLessonId({
+  lessonId,
+  unitNumber,
+  weekNumber,
+  dayNumber,
+}: {
+  lessonId?: string;
+  unitNumber: number;
+  weekNumber: number;
+  dayNumber: number;
+}) {
+  return lessonId ?? `unit-${unitNumber}-week-${weekNumber}-day-${dayNumber}`;
+}
+
+// @SECTION TRYIT_SCREEN
+function TryItScreen() {
+  const navigate = useNavigate();
+  const { lessonId } = useParams();
+
+  const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
+
+  const currentLessonId = getCurrentLessonId({
+    lessonId,
+    unitNumber: unit.unit_number,
+    weekNumber: week.week_number,
+    dayNumber: weekDayNumber,
+  });
+
+  const starName = getStarProfile(CURRENT_STUDENT_ID).starName;
+
+  // @SECTION TRYIT_STATE
+  const [problemIndex, setProblemIndex] = useState(0);
+  const [answersByProblem, setAnswersByProblem] = useState<
+    Record<number, ProblemAnswers>
+  >({});
+
+  const currentProblem = tryItProblems[problemIndex % tryItProblems.length];
+  const currentAnswers = answersByProblem[problemIndex] ?? {};
+
+  const isRequiredRound = problemIndex < REQUIRED_TRY_IT_COUNT;
+  const requiredProblemsComplete = problemIndex >= REQUIRED_TRY_IT_COUNT - 1;
+  const displayProblemNumber = isRequiredRound
+    ? problemIndex + 1
+    : `Extra ${problemIndex - REQUIRED_TRY_IT_COUNT + 1}`;
+
+  const correctStepCount = useMemo(() => {
+    const requiredAnswers: Record<TryItStepKey, string> = {
+      groups: currentProblem.groups,
+      inEach: currentProblem.inEach,
+      equation: currentProblem.equation,
+    };
+
+    return (Object.keys(requiredAnswers) as TryItStepKey[]).filter(
+      (step) => currentAnswers[step] === requiredAnswers[step],
+    ).length;
+  }, [currentAnswers, currentProblem]);
+
+  const isProblemComplete = correctStepCount === 3;
+
+  // @SECTION TRYIT_HELPERS
+  function chooseAnswer(step: TryItStepKey, value: string) {
+    setAnswersByProblem((current) => ({
+      ...current,
+      [problemIndex]: {
+        ...(current[problemIndex] ?? {}),
+        [step]: value,
+      },
+    }));
+  }
+
+  function getChoiceClass(step: TryItStepKey, choice: string, correct: string) {
+    const selected = currentAnswers[step];
+    const isSelected = selected === choice;
+    const isCorrect = choice === correct;
+
+    if (isSelected && isCorrect) {
+      return "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20";
+    }
+
+    if (isSelected && !isCorrect) {
+      return "border-[#F07167] bg-[#FCE9E5] text-[#F07167] ring-2 ring-[#F07167]/15";
+    }
+
+    return "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]";
+  }
+
+  function goToNextProblem() {
+    setProblemIndex((current) => current + 1);
+  }
+
+  function continueToPractice() {
+    updateLessonProgress(currentLessonId, {
+      tryItComplete: true,
+    });
+
+    navigate(`/practice/${currentLessonId}`);
+  }
+
+  function backToLesson() {
+    navigate(`/lesson/${currentLessonId}`);
+  }
+
+  // @SECTION TRYIT_CHOICE_GROUP
+  function ChoiceGroup({
+    step,
+    correct,
+    choices,
+  }: {
+    step: TryItStepKey;
+    correct: string;
+    choices: string[];
+  }) {
+    return (
+      <div className="flex flex-wrap gap-2">
+        {choices.map((choice) => {
+          const isCorrectSelected =
+            currentAnswers[step] === choice && choice === correct;
+
+          return (
+            <button
+              key={choice}
+              type="button"
+              onClick={() => chooseAnswer(step, choice)}
+              className={`relative min-w-14 rounded-2xl border px-4 py-2.5 text-center text-sm font-black shadow-sm transition hover:scale-[1.02] ${getChoiceClass(
+                step,
+                choice,
+                correct,
+              )}`}
+            >
+              {choice}
+
+              {isCorrectSelected && (
+                <CheckCircle2
+                  size={15}
+                  strokeWidth={3}
+                  className="absolute right-1.5 top-1.5"
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <PageLayout>
+      {/* @SECTION TRYIT_SCREEN_LAYOUT */}
+      <div
+        data-name="try-it-screen-wrapper"
+        className="flex min-h-0 flex-col gap-4"
+      >
+        {/* @SECTION TRYIT_HEADER */}
+        <header
+          data-name="try-it-header"
+          className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white/95 px-4 py-3 shadow-sm backdrop-blur"
+        >
+          <div className="flex items-center justify-between gap-6">
+            <div className="flex min-w-0 items-center gap-4">
+              <button
+                type="button"
+                onClick={backToLesson}
+                data-name="try-it-back-button"
+                className="inline-flex shrink-0 items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-2 text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#E9F7F8]"
+              >
+                <ArrowLeft size={18} strokeWidth={3} />
+                Back to Lesson
+              </button>
+
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#073B5A] text-lg font-black text-white shadow-sm">
+                3
+              </div>
+
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <h1 className="text-xl font-black text-[#073B5A]">Try It</h1>
+
+                  <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
+
+                  <p className="text-sm font-black text-[#00AFB9]">
+                    Guided word problem
+                  </p>
+
+                  <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
+
+                  <div className="flex items-center gap-1.5 text-sm font-black text-[#275875]">
+                    <Clock3 size={16} strokeWidth={2.7} />
+                    10 min
+                  </div>
+                </div>
+
+                <p className="mt-1 truncate text-base font-black text-[#073B5A]">
+                  {lesson.lesson_title}
+                </p>
+              </div>
+            </div>
+
+            {/* @SECTION TRYIT_HEADER_STEPPER */}
+            <div className="hidden items-center gap-2 xl:flex">
+              {["Warm-Up", "Learn", "Try It", "Practice"].map(
+                (label, index) => {
+                  const isDone = index < 2;
+                  const isActive = index === 2;
+
+                  return (
+                    <div key={label} className="flex items-center">
+                      <div className="flex flex-col items-center">
+                        <div
+                          className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${
+                            isActive
+                              ? "border-[#00AFB9] bg-[#00AFB9] text-white shadow-[0_0_16px_rgba(0,175,185,0.38)]"
+                              : isDone
+                                ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]"
+                                : "border-[#9AB5C7]/55 bg-white text-[#275875]"
+                          }`}
+                        >
+                          {isDone ? "✓" : index + 1}
+                        </div>
+
+                        <p
+                          className={`mt-1 whitespace-nowrap text-center text-[0.68rem] font-black ${
+                            isActive ? "text-[#073B5A]" : "text-[#275875]/75"
+                          }`}
+                        >
+                          {label}
+                        </p>
+                      </div>
+
+                      {index < 3 && (
+                        <div className="mt-[-18px] h-0.5 w-10 border-t-2 border-dashed border-[#9AB5C7]/45" />
+                      )}
+                    </div>
+                  );
+                },
+              )}
+            </div>
+          </div>
+        </header>
+
+        {/* @SECTION TRYIT_CONTENT_GRID */}
+        <section
+          data-name="try-it-content-grid"
+          className="grid items-start gap-5 xl:grid-cols-[1.55fr_0.7fr]"
+        >
+          {/* @SECTION TRYIT_MAIN_CARD */}
+          <main
+            data-name="try-it-main-card"
+            className="rounded-[2rem] border border-[#073B5A]/10 bg-white p-5 shadow-sm"
+          >
+            <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-2xl">
+                  🖐️
+                </div>
+
+                <div>
+                  <h2 className="text-2xl font-black text-[#073B5A]">
+                    Try It Together
+                  </h2>
+
+                  <p className="mt-1 text-base font-bold leading-relaxed text-[#275875]">
+                    Help {starName} solve one word problem at a time.
+                  </p>
+                </div>
+              </div>
+
+              <div className="shrink-0 rounded-full bg-[#E9F7F8] px-4 py-2 text-sm font-black text-[#0081A7]">
+                Problem {displayProblemNumber} of {REQUIRED_TRY_IT_COUNT}
+              </div>
+            </div>
+
+            {/* @SECTION TRYIT_STORY_CARD */}
+            <section className="rounded-[1.75rem] border border-[#00AFB9]/20 bg-[#E9F7F8] p-4 shadow-sm">
+              <div className="grid items-center gap-4 lg:grid-cols-[1fr_auto]">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
+                    Word problem
+                  </p>
+
+                  <p className="mt-2 text-xl font-black leading-relaxed text-[#073B5A]">
+                    {currentProblem.story}
+                  </p>
+
+                  <p className="mt-1 text-lg font-black leading-relaxed text-[#073B5A]">
+                    {currentProblem.question}
+                  </p>
+                </div>
+
+                <div className="rounded-[1.5rem] bg-white/85 p-4 shadow-sm">
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {Array.from({ length: Number(currentProblem.groups) }).map(
+                      (_, index) => (
+                        <div
+                          key={index}
+                          className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[#00AFB9]/20 bg-[#F8FBFB] text-2xl shadow-inner"
+                        >
+                          {currentProblem.visualEmpty ? (
+                            <span className="text-[#9AB5C7]">∅</span>
+                          ) : (
+                            currentProblem.visualEmoji
+                          )}
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* @SECTION TRYIT_GUIDED_STEPS */}
+            <section className="mt-4 grid gap-3">
+              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
+                      1
+                    </span>
+                    <p className="text-base font-black text-[#073B5A]">
+                      How many groups?
+                    </p>
+                  </div>
+
+                  <ChoiceGroup
+                    step="groups"
+                    correct={currentProblem.groups}
+                    choices={currentProblem.groupsChoices}
+                  />
+                </div>
+              </div>
+
+              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
+                      2
+                    </span>
+                    <p className="text-base font-black text-[#073B5A]">
+                      How many in each group?
+                    </p>
+                  </div>
+
+                  <ChoiceGroup
+                    step="inEach"
+                    correct={currentProblem.inEach}
+                    choices={currentProblem.inEachChoices}
+                  />
+                </div>
+              </div>
+
+              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-sm font-black text-white">
+                      3
+                    </span>
+                    <p className="text-base font-black text-[#073B5A]">
+                      Which equation matches?
+                    </p>
+                  </div>
+
+                  <ChoiceGroup
+                    step="equation"
+                    correct={currentProblem.equation}
+                    choices={currentProblem.equationChoices}
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* @SECTION TRYIT_FEEDBACK */}
+            <section
+              className={`mt-4 rounded-[1.5rem] border px-5 py-4 shadow-sm ${
+                isProblemComplete
+                  ? "border-[#7CCB5B]/25 bg-[#EEF9EA]"
+                  : "border-[#F7B733]/25 bg-[#FFF3D9]"
+              }`}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div
+                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-xl font-black ${
+                      isProblemComplete
+                        ? "bg-[#7CCB5B] text-white"
+                        : "bg-white text-[#F7B733]"
+                    }`}
+                  >
+                    {isProblemComplete ? "✓" : "⭐"}
+                  </div>
+
+                  <div>
+                    <p className="text-base font-black text-[#073B5A]">
+                      {isProblemComplete
+                        ? currentProblem.successMessage
+                        : "Pick one answer for each step."}
+                    </p>
+
+                    <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
+                      {isProblemComplete
+                        ? "You used the word problem clues to write the equation."
+                        : `${correctStepCount} of 3 steps are correct.`}
+                    </p>
+                  </div>
+                </div>
+
+                {isProblemComplete && (
+                  <div className="flex flex-wrap gap-3">
+                    {requiredProblemsComplete ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={continueToPractice}
+                          className="rounded-2xl bg-[#00AFB9] px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                        >
+                          Continue to Practice ›
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={goToNextProblem}
+                          className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB]"
+                        >
+                          Try Another
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={goToNextProblem}
+                        className="rounded-2xl bg-[#00AFB9] px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                      >
+                        Next ›
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </section>
+          </main>
+
+          {/* @SECTION TRYIT_SIDEBAR */}
+          <aside data-name="try-it-sidebar" className="flex flex-col gap-4">
+            <section className="relative min-h-[165px] overflow-hidden rounded-[1.5rem] border border-[#F7B733]/25 bg-[#FFF3D9] p-5 shadow-sm">
+              <div className="relative z-10">
+                <div className="mb-3 flex items-center gap-2">
+                  <Star
+                    size={22}
+                    strokeWidth={2.7}
+                    className="fill-[#F7B733] text-[#F7B733]"
+                  />
+
+                  <p className="text-lg font-black text-[#C78300]">
+                    {starName}'s Tip!
+                  </p>
+                </div>
+
+                <div className="w-fit rounded-2xl bg-white px-5 py-4 text-lg font-black leading-tight text-[#073B5A] shadow-sm">
+                  Look for
+                  <br />
+                  groups, in each,
+                  <br />
+                  and total.
+                </div>
+
+                <p className="mt-3 max-w-[210px] text-sm font-black leading-relaxed text-[#073B5A]/70">
+                  {currentProblem.tip}
+                </p>
+              </div>
+
+              <div className="absolute bottom-[-38px] right-[-10px] w-32">
+                <LumaAvatar size="lg" state="happy" showEnergy={false} />
+              </div>
+            </section>
+
+            <section className="rounded-[1.5rem] border border-[#00AFB9]/20 bg-[#E9F7F8] p-5 shadow-sm">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-[#00AFB9] shadow-sm">
+                  <Lightbulb size={24} strokeWidth={2.6} />
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-black text-[#073B5A]">
+                    Word Problem Clues
+                  </h2>
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
+                    Use the story
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2.5">
+                <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
+                  <p className="text-sm font-black text-[#073B5A]">
+                    Groups = {currentProblem.groupLabel}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
+                  <p className="text-sm font-black text-[#073B5A]">
+                    In each = {currentProblem.inEachLabel}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
+                  <p className="text-sm font-black text-[#073B5A]">
+                    Total = all together
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-5 shadow-sm">
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#E9F7F8] text-xl">
+                  📖
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-black text-[#073B5A]">
+                    Math Words
+                  </h2>
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
+                    Today’s helpers
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {["equal groups", "factor", "product"].map((word) => (
+                  <span
+                    key={word}
+                    className="rounded-xl bg-[#E9F7F8] px-3 py-2 text-xs font-black text-[#0081A7]"
+                  >
+                    {word}
+                  </span>
+                ))}
+              </div>
+            </section>
+          </aside>
+        </section>
+      </div>
+    </PageLayout>
+  );
+}
+
+export default TryItScreen;
