@@ -2,87 +2,23 @@
 import { useState } from "react";
 import { BookOpen, CheckCircle2, Sparkles, Star } from "lucide-react";
 import LumaAvatar from "../../components/luma/LumaAvatar";
+import {
+  getMatchingCards,
+  getVocabularyWords,
+  type LearnLesson,
+} from "../../lib/learnContent";
 
 // @SECTION WORDS_TYPES
 type WordsPageProps = {
+  lesson: LearnLesson;
   starName: string;
 };
 
-function WordsPage({ starName }: WordsPageProps) {
+function WordsPage({ lesson, starName }: WordsPageProps) {
   // @SECTION WORDS_DATA
-  const vocabularyWords = [
-    {
-      word: "equal groups",
-      definition: "Same amount in each group.",
-      example: "4 groups of 1",
-      visual: ["⭐", "⭐", "⭐", "⭐"],
-      equation: "4 groups of 1",
-      color: "bg-[#E9F7F8]",
-      border: "border-[#00AFB9]/25",
-      labelColor: "text-[#0081A7]",
-    },
-    {
-      word: "repeated addition",
-      definition: "Adding the same number again and again.",
-      example: "1 + 1 + 1 + 1",
-      visual: ["1", "+", "1", "+", "1", "+", "1"],
-      equation: "1 + 1 + 1 + 1 = 4",
-      color: "bg-[#FFF3D9]",
-      border: "border-[#F7B733]/30",
-      labelColor: "text-[#C78300]",
-    },
-    {
-      word: "factor",
-      definition: "A number being multiplied.",
-      example: "4 and 1 are factors",
-      visual: ["4", "×", "1"],
-      equation: "factor × factor",
-      color: "bg-[#FCE9E5]",
-      border: "border-[#F07167]/25",
-      labelColor: "text-[#F07167]",
-    },
-    {
-      word: "product",
-      definition: "The answer to a multiplication problem.",
-      example: "4 is the product",
-      visual: ["4", "×", "1", "=", "4"],
-      equation: "product = answer",
-      color: "bg-[#F8FBFB]",
-      border: "border-[#073B5A]/10",
-      labelColor: "text-[#073B5A]",
-    },
-  ];
+  const vocabularyWords = getVocabularyWords(lesson);
 
-  const matchingCards = [
-    {
-      id: "equal-groups-visual",
-      correctWord: "equal groups",
-      title: "Same-size groups",
-      color: "bg-[#E9F7F8]",
-      border: "border-[#00AFB9]/25",
-    },
-    {
-      id: "repeated-addition-visual",
-      correctWord: "repeated addition",
-      title: "Add again and again",
-      color: "bg-[#FFF3D9]",
-      border: "border-[#F7B733]/30",
-    },
-    {
-      id: "factor-visual",
-      correctWord: "factor",
-      title: "Numbers being multiplied",
-      color: "bg-[#FCE9E5]",
-      border: "border-[#F07167]/25",
-    },
-    {
-      id: "product-visual",
-      correctWord: "product",
-      title: "The answer",
-      color: "bg-[#F8FBFB]",
-      border: "border-[#073B5A]/10",
-    },
-  ];
+  const matchingCards = getMatchingCards(lesson);
 
   // @SECTION WORDS_STATE
   const [wordsStep, setWordsStep] = useState<"learn" | "match">("learn");

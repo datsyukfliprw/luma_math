@@ -555,20 +555,49 @@ function PracticeScreen() {
 
     if (currentProblem.visualType === 'factor_product') {
       return (
-        <div className="mt-4 overflow-hidden rounded-3xl border border-[#F4D589] bg-[radial-gradient(circle_at_8%_28%,rgba(255,255,255,0.9)_0%,rgba(255,255,255,0)_30%),linear-gradient(90deg,#FEF3D9_0%,#FFF8E9_100%)] p-6 text-center">
-          <p className="text-[3.25rem] font-black tracking-wide text-[#073B5A]">
+        <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
+            ✦
+          </span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
+            ✦
+          </span>
+
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+            Factor + Product Hunt
+          </p>
+
+          <p className="mt-3 text-[2.85rem] font-black leading-none tracking-wide text-[#073B5A]">
             {visualData.equation}
           </p>
 
-          <p className="mt-3 text-base font-bold text-[#073B5A]/75">
-            Which numbers are being multiplied, and which number is the answer?
+          <p className="mx-auto mt-3 max-w-xl text-sm font-bold text-[#073B5A]/70">
+            Find the two factors being multiplied and the product they make.
           </p>
+
+          <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
       )
     }
 
     if (currentProblem.visualType === 'equal_groups') {
-      if (practiceMode === 'guided' || practiceMode === 'independent') {
+      const groups = visualData.groups ?? 0
+      const itemsPerGroup = visualData.itemsPerGroup ?? 0
+      const totalItems = groups * itemsPerGroup
+      const shouldUseCompactGroups = groups > 5 || itemsPerGroup > 4 || totalItems > 12
+
+      if (shouldUseCompactGroups) {
+        const shouldUseDenseGroupView =
+          itemsPerGroup > 6 || groups > 6 || totalItems > 24
+
+        const starSizeClass =
+          totalItems > 24 ? 'text-[1.1rem]' : 'text-[1.18rem]'
+
+        const groupCardClass =
+          groups > 5
+            ? 'h-14 min-w-20 px-3 py-2'
+            : 'h-[4.25rem] min-w-24 px-4 py-2'
+
         return (
           <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-4 pb-4 pt-1">
             <span className="absolute left-8 top-10 text-xl text-[#00AFB9]/65">
@@ -586,31 +615,37 @@ function PracticeScreen() {
 
             <div className="mb-3 flex flex-wrap justify-center gap-2 text-xs font-black uppercase tracking-[0.12em]">
               <span className="rounded-full bg-[#E9F7F8] px-3 py-1.5 text-[#0081A7] shadow-sm">
-                {visualData.groups} groups
+                {groups} groups
               </span>
 
               <span className="rounded-full bg-[#FFF3D9] px-3 py-1.5 text-[#C78300] shadow-sm">
-                {visualData.itemsPerGroup} in each
+                {itemsPerGroup} in each
               </span>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
-              {Array.from({ length: visualData.groups ?? 0 }).map(
-                (_, groupIndex) => (
-                  <div
-                    key={groupIndex}
-                    className="flex h-16 min-w-28 items-center justify-center rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-5 py-2.5 shadow-sm"
-                  >
-                    <div className="grid grid-cols-2 gap-1.5 text-[1.8rem] leading-none">
-                      {Array.from({
-                        length: visualData.itemsPerGroup ?? 0,
-                      }).map((_, starIndex) => (
+            <div className="mx-auto flex max-w-4xl flex-wrap justify-center gap-3">
+              {Array.from({ length: groups }).map((_, groupIndex) => (
+                <div
+                  key={groupIndex}
+                  className={`flex items-center justify-center rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] shadow-sm ${groupCardClass}`}
+                >
+                  {shouldUseDenseGroupView ? (
+                    <div className="grid grid-cols-4 gap-0.5 text-[0.82rem] leading-none">
+                      {Array.from({ length: itemsPerGroup }).map((_, starIndex) => (
                         <span key={starIndex}>⭐</span>
                       ))}
                     </div>
-                  </div>
-                ),
-              )}
+                  ) : (
+                    <div
+                      className={`grid grid-cols-3 gap-1 leading-none ${starSizeClass}`}
+                    >
+                      {Array.from({ length: itemsPerGroup }).map((_, starIndex) => (
+                        <span key={starIndex}>⭐</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
 
             <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
@@ -619,58 +654,99 @@ function PracticeScreen() {
       }
 
       return (
-        <div className="mt-3 rounded-3xl bg-[#FEF3D9]/70 px-4 py-5">
-          <div className="mb-2.5 flex flex-wrap justify-center gap-2 text-xs font-black uppercase tracking-[0.12em]">
-            <span className="rounded-full bg-white px-3 py-1.5 text-[#0081A7] shadow-sm">
-              {visualData.groups} groups
+        <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-4 pb-4 pt-1">
+          <span className="absolute left-8 top-10 text-xl text-[#00AFB9]/65">
+            ✦
+          </span>
+          <span className="absolute left-16 top-20 text-lg text-[#F7B733]">
+            ✦
+          </span>
+          <span className="absolute right-14 top-14 text-lg text-[#F7B733]">
+            ✦
+          </span>
+          <span className="absolute right-24 top-28 text-sm text-[#00AFB9]/65">
+            ✦
+          </span>
+
+          <div className="mb-3 flex flex-wrap justify-center gap-2 text-xs font-black uppercase tracking-[0.12em]">
+            <span className="rounded-full bg-[#E9F7F8] px-3 py-1.5 text-[#0081A7] shadow-sm">
+              {groups} groups
             </span>
 
-            <span className="rounded-full bg-white px-3 py-1.5 text-[#C78300] shadow-sm">
-              {visualData.itemsPerGroup} in each
+            <span className="rounded-full bg-[#FFF3D9] px-3 py-1.5 text-[#C78300] shadow-sm">
+              {itemsPerGroup} in each
             </span>
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            {Array.from({ length: visualData.groups ?? 0 }).map(
-              (_, groupIndex) => (
+            {Array.from({ length: groups }).map((_, groupIndex) => (
+              <div
+                key={groupIndex}
+                className="flex min-h-16 min-w-28 items-center justify-center rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-5 py-2.5 shadow-sm"
+              >
                 <div
-                  key={groupIndex}
-                  className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-6 py-3.5 shadow-sm"
+                  className={`grid gap-1.5 leading-none ${
+                    itemsPerGroup === 3
+                      ? 'grid-cols-3 text-[1.65rem]'
+                      : 'grid-cols-2 text-[1.8rem]'
+                  }`}
                 >
-                  <div className="grid grid-cols-2 gap-2 text-[1.9rem] leading-none">
-                    {Array.from({
-                      length: visualData.itemsPerGroup ?? 0,
-                    }).map((_, starIndex) => (
-                      <span key={starIndex}>⭐</span>
-                    ))}
-                  </div>
+                  {Array.from({ length: itemsPerGroup }).map((_, starIndex) => (
+                    <span key={starIndex}>⭐</span>
+                  ))}
                 </div>
-              ),
-            )}
+              </div>
+            ))}
           </div>
+
+          <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
       )
     }
 
     if (currentProblem.visualType === 'repeated_addition') {
       return (
-        <div className="mt-4 rounded-3xl bg-[#FEF3D9] p-5 text-center">
-          <p className="text-4xl font-black text-[#073B5A]">
+        <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
+            ✦
+          </span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
+            ✦
+          </span>
+
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+            Spot the groups
+          </p>
+
+          <p className="mt-3 text-[2.65rem] font-black leading-none tracking-wide text-[#073B5A]">
             {visualData.repeatedAddition}
           </p>
 
-          <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
-            Write this as a multiplication sentence.
+          <p className="mx-auto mt-3 max-w-xl text-sm font-bold text-[#073B5A]/70">
+            Write this repeated addition as a multiplication sentence.
           </p>
+
+          <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
       )
     }
 
     if (currentProblem.visualType === 'array_rows_columns') {
       return (
-        <div className="mt-4 rounded-3xl bg-[#FEF3D9] p-5 text-center">
+        <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
+            ✦
+          </span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
+            ✦
+          </span>
+
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+            Array Builder
+          </p>
+
           <div
-            className="mx-auto grid w-fit gap-2.5 rounded-2xl bg-white p-4 shadow-sm"
+            className="mx-auto mt-3 grid w-fit gap-2 rounded-3xl border border-[#00AFB9]/20 bg-[#E9F7F8] p-4 shadow-sm"
             style={{
               gridTemplateColumns: `repeat(${visualData.columns ?? 1}, minmax(0, 1fr))`,
             }}
@@ -680,36 +756,62 @@ function PracticeScreen() {
             }).map((_, index) => (
               <span
                 key={index}
-                className="h-8 w-8 rounded-full bg-[#F07167]"
+                className="h-7 w-7 rounded-full bg-[#F07167] shadow-sm"
               />
             ))}
           </div>
 
-          <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
-            Count the rows and columns to find the product.
+          <p className="mx-auto mt-3 max-w-xl text-sm font-bold text-[#073B5A]/70">
+            Count the rows and columns, then find the product.
           </p>
+
+          <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
       )
     }
 
     if (currentProblem.visualType === 'multiple_choice') {
       return (
-        <div className="mt-4 rounded-3xl bg-[#FEF3D9] p-5 text-center">
-          <p className="text-4xl font-black text-[#073B5A]">
+        <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
+            ✦
+          </span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
+            ✦
+          </span>
+
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+            Find the match
+          </p>
+
+          <p className="mt-3 text-[2.85rem] font-black leading-none tracking-wide text-[#073B5A]">
             {visualData.equation}
           </p>
 
-          <p className="mt-1 text-xs font-bold text-[#073B5A]/70">
-            Multiplication can be flipped around and still have the same product.
+          <p className="mx-auto mt-3 max-w-xl text-sm font-bold text-[#073B5A]/70">
+            Choose the equation or idea that matches.
           </p>
+
+          <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
       )
     }
 
     if (currentProblem.visualType === 'fair_sharing') {
       return (
-        <div className="mt-4 rounded-3xl bg-[#FEF3D9] p-5 text-center">
-          <p className="text-4xl font-black text-[#073B5A]">
+        <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
+            ✦
+          </span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
+            ✦
+          </span>
+
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+            Fair Sharing
+          </p>
+
+          <p className="mt-2 text-[2.35rem] font-black leading-none tracking-wide text-[#073B5A]">
             {visualData.equation}
           </p>
 
@@ -718,7 +820,7 @@ function PracticeScreen() {
               (_, groupIndex) => (
                 <div
                   key={groupIndex}
-                  className="rounded-2xl border border-[#00AFB9]/35 bg-white p-3 shadow-sm"
+                  className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-4 py-3 shadow-sm"
                 >
                   <p className="mb-2 text-xs font-black uppercase tracking-wide text-[#0081A7]">
                     Group {groupIndex + 1}
@@ -736,17 +838,18 @@ function PracticeScreen() {
             )}
           </div>
 
-          <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
+          <p className="mx-auto mt-3 max-w-xl text-sm font-bold text-[#073B5A]/70">
             Share {visualData.items} items equally into{' '}
             {visualData.groupsToShare} groups.
           </p>
+
+          <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
       )
     }
 
     return null
   }
-
   return (
     <PageLayout>
       <div className="mb-2 flex items-center justify-between gap-4">
@@ -817,7 +920,7 @@ function PracticeScreen() {
             {renderProblemVisual()}
 
             {currentProblem.visualType === 'factor_product' ? (
-              <div className="mx-auto mt-5 grid max-w-2xl gap-3 md:grid-cols-3">
+              <div className="mx-auto mt-4 grid max-w-3xl gap-3 md:grid-cols-3">
                 {getFactorProductSlotOrder(currentProblemIndex).map((slot) => {
                   const isProduct = slot === 'product'
 
@@ -854,7 +957,7 @@ function PracticeScreen() {
                         onKeyDown={(event) => {
                           if (event.key === 'Enter') checkAnswer()
                         }}
-                        className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-2.5 text-center text-base font-bold outline-none focus:border-[#00AFB9]"
+                        className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                         placeholder="Enter a number"
                       />
                     </label>
@@ -864,13 +967,13 @@ function PracticeScreen() {
                 <button
                   type="button"
                   onClick={checkAnswer}
-                  className="mx-auto rounded-xl bg-[#00AFB9] px-6 py-3 font-black text-white shadow-sm md:col-span-3"
+                  className="mx-auto rounded-2xl bg-[#00AFB9] px-8 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7] md:col-span-3"
                 >
                   ✓ Check Answer
                 </button>
               </div>
             ) : currentProblem.visualType === 'array_rows_columns' ? (
-              <div className="mx-auto mt-5 grid max-w-2xl gap-3 md:grid-cols-3">
+              <div className="mx-auto mt-4 grid max-w-3xl gap-3 md:grid-cols-3">
                 <label className="block">
                   <span className="mb-1.5 block text-center text-xs font-black uppercase tracking-wide text-[#0081A7]">
                     Rows
@@ -882,7 +985,7 @@ function PracticeScreen() {
                       setRowsAnswer(event.target.value)
                       setFeedback(null)
                     }}
-                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-2.5 text-center text-base font-bold outline-none focus:border-[#00AFB9]"
+                    className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                     placeholder="?"
                   />
                 </label>
@@ -898,7 +1001,7 @@ function PracticeScreen() {
                       setColumnsAnswer(event.target.value)
                       setFeedback(null)
                     }}
-                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-2.5 text-center text-base font-bold outline-none focus:border-[#00AFB9]"
+                    className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                     placeholder="?"
                   />
                 </label>
@@ -917,7 +1020,7 @@ function PracticeScreen() {
                     onKeyDown={(event) => {
                       if (event.key === 'Enter') checkAnswer()
                     }}
-                    className="w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-2.5 text-center text-base font-bold outline-none focus:border-[#00AFB9]"
+                    className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                     placeholder="?"
                   />
                 </label>
@@ -925,7 +1028,7 @@ function PracticeScreen() {
                 <button
                   type="button"
                   onClick={checkAnswer}
-                  className="mx-auto rounded-xl bg-[#00AFB9] px-6 py-3 font-black text-white shadow-sm md:col-span-3"
+                  className="mx-auto rounded-2xl bg-[#00AFB9] px-8 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7] md:col-span-3"
                 >
                   ✓ Check Answer
                 </button>
@@ -1022,7 +1125,7 @@ function PracticeScreen() {
                 </button>
               </div>
             ) : currentProblem.visualType === 'multiple_choice' ? (
-              <div className="mx-auto mt-5 grid max-w-2xl gap-2.5">
+              <div className="mx-auto mt-4 grid max-w-3xl gap-3">
                 {visualData?.choices?.map((choice) => (
                   <button
                     key={choice}
@@ -1031,7 +1134,7 @@ function PracticeScreen() {
                       setSelectedChoice(choice)
                       setFeedback(null)
                     }}
-                    className={`rounded-xl border px-4 py-3 text-left text-lg font-black transition ${
+                    className={`rounded-2xl border px-5 py-3 text-left text-lg font-black shadow-sm transition hover:scale-[1.005] ${
                       selectedChoice === choice
                         ? 'border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]'
                         : 'border-[#073B5A]/10 bg-white text-[#073B5A] hover:border-[#00AFB9]/40 hover:bg-[#F5FBFC]'
@@ -1065,14 +1168,14 @@ function PracticeScreen() {
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') checkAnswer()
                   }}
-                  className="min-w-0 flex-1 rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-center text-base font-bold outline-none focus:border-[#00AFB9]"
+                  className="min-w-0 flex-1 rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                   placeholder="How many in each group?"
                 />
 
                 <button
                   type="button"
                   onClick={checkAnswer}
-                  className="rounded-xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm"
+                  className="rounded-2xl bg-[#00AFB9] px-6 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7]"
                 >
                   ✓ Check Answer
                 </button>
@@ -1136,27 +1239,42 @@ function PracticeScreen() {
                 </button>
               </div>
             ) : (
-              <div className="mx-auto mt-5 flex max-w-xl gap-3">
-                <input
-                  value={answer}
-                  onChange={(event) => {
-                    setAnswer(event.target.value)
-                    setFeedback(null)
-                  }}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter') checkAnswer()
-                  }}
-                  className="min-w-0 flex-1 rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-center text-base font-bold outline-none focus:border-[#00AFB9]"
-                  placeholder="Your answer"
-                />
+              <div className="mx-auto mt-4 max-w-3xl rounded-[1.35rem] border border-[#00AFB9]/20 bg-[#E9F7F8] p-4 text-center shadow-sm">
+                <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0081A7]">
+                  Your answer
+                </p>
 
-                <button
-                  type="button"
-                  onClick={checkAnswer}
-                  className="rounded-xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm"
-                >
-                  ✓ Check Answer
-                </button>
+                <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+                  <input
+                    value={answer}
+                    onChange={(event) => {
+                      setAnswer(event.target.value)
+                      setFeedback(null)
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') checkAnswer()
+                    }}
+                    className="min-w-0 flex-1 rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
+                    placeholder={
+                      currentProblem.visualType === 'repeated_addition'
+                        ? 'Example: 3 × 5 = 15'
+                        : 'Type your answer'
+                    }
+                  />
+
+                  <button
+                    type="button"
+                    onClick={checkAnswer}
+                    disabled={!answer.trim()}
+                    className={`rounded-2xl px-6 py-3 font-black shadow-sm ${
+                      answer.trim()
+                        ? 'bg-[#00AFB9] text-white'
+                        : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                    }`}
+                  >
+                    ✓ Check Answer
+                  </button>
+                </div>
               </div>
             )}
 
@@ -1188,7 +1306,7 @@ function PracticeScreen() {
                       ? 'Pattern detective mode!'
                       : practiceMode === 'guided'
                         ? 'Step-by-step power!'
-                        : 'You&apos;ve got this!'}
+                        : 'You’ve got this!'}
                   </p>
 
                   <p className="text-sm font-bold text-[#073B5A]/70">

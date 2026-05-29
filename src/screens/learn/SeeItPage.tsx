@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Binoculars, BookOpen, Search, Sparkles, Star } from "lucide-react";
 import LumaAvatar from "../../components/luma/LumaAvatar";
+import { getSeeItClues, type LearnLesson } from "../../lib/learnContent";
 
 // @SECTION SEEIT_TYPES
 type SeeItClue = {
@@ -17,44 +18,13 @@ type SeeItClue = {
 
 // @SECTION SEEIT_PAGE
 type SeeItPageProps = {
+  lesson: LearnLesson;
   starName: string;
 };
 
-function SeeItPage({ starName }: SeeItPageProps) {
+function SeeItPage({ lesson, starName }: SeeItPageProps) {
   // @SECTION SEEIT_DATA
-  const clues: SeeItClue[] = [
-    {
-      visualLabel: "The picture shows 4 groups of 1",
-      groups: 4,
-      inEach: 1,
-      choices: ["4 × 1 = 4", "4 × 0 = 4", "1 + 1 + 1 + 1 = 4"],
-      sneakyEquation: "4 × 0 = 4",
-      feedback: "Nice spotting! The picture shows 1 in each group, not 0.",
-      tip: "Check the groups first. Then check what is in each group.",
-      ruleFocus: "identity",
-    },
-    {
-      visualLabel: "The picture shows 4 groups of 0",
-      groups: 4,
-      inEach: 0,
-      choices: ["4 × 0 = 0", "4 × 1 = 0", "0 + 0 + 0 + 0 = 0"],
-      sneakyEquation: "4 × 1 = 0",
-      feedback:
-        "Good eye! The groups are empty, so the equation should use 0 in each group.",
-      tip: "Empty groups mean there are no items to count.",
-      ruleFocus: "zero",
-    },
-    {
-      visualLabel: "The picture shows 6 groups of 1",
-      groups: 6,
-      inEach: 1,
-      choices: ["6 × 1 = 6", "1 + 1 + 1 + 1 + 1 + 1 = 6", "6 × 1 = 1"],
-      sneakyEquation: "6 × 1 = 1",
-      feedback: "You found it! Six groups of 1 makes 6 total, not 1.",
-      tip: "When each group has 1, the total matches the number of groups.",
-      ruleFocus: "identity",
-    },
-  ];
+  const clues: SeeItClue[] = getSeeItClues(lesson);
 
   // @SECTION SEEIT_STATE
   const [currentClueIndex, setCurrentClueIndex] = useState(0);

@@ -1,60 +1,80 @@
-import type { PracticeProblem } from './types'
+import { takePracticeProblems } from './practiceModeCounts'
+import type { PracticeGenerationOptions, PracticeProblem } from './types'
 
-export function generateFactorProductProblems(): PracticeProblem[] {
-  return [
-    {
-      id: 'factor-product-1',
-      questionText:
-        'In the equation 3 × 4 = 12, what are the factors and what is the product?',
-      correctAnswer: '3,4,12',
-      visualType: 'factor_product',
-      problemKey: '3x4-factor-product',
-      visualData: {
-        equation: '3 × 4 = 12',
-        factors: [3, 4],
-        product: 12,
-      },
-      answerData: {
-        factorA: '3',
-        factorB: '4',
-        product: '12',
-      },
+function makeFactorProductProblem({
+  id,
+  factorA,
+  factorB,
+}: {
+  id: string
+  factorA: number
+  factorB: number
+}): PracticeProblem {
+  const product = factorA * factorB
+
+  return {
+    id,
+    questionText: `In the equation ${factorA} × ${factorB} = ${product}, what are the factors and what is the product?`,
+    correctAnswer: `${factorA},${factorB},${product}`,
+    visualType: 'factor_product',
+    problemKey: `${factorA}x${factorB}-factor-product`,
+    visualData: {
+      equation: `${factorA} × ${factorB} = ${product}`,
+      factors: [factorA, factorB],
+      product,
     },
-    {
-      id: 'factor-product-2',
-      questionText:
-        'In the equation 5 × 2 = 10, what are the factors and what is the product?',
-      correctAnswer: '5,2,10',
-      visualType: 'factor_product',
-      problemKey: '5x2-factor-product',
-      visualData: {
-        equation: '5 × 2 = 10',
-        factors: [5, 2],
-        product: 10,
-      },
-      answerData: {
-        factorA: '5',
-        factorB: '2',
-        product: '10',
-      },
+    answerData: {
+      factorA: String(factorA),
+      factorB: String(factorB),
+      product: String(product),
     },
-    {
-      id: 'factor-product-3',
-      questionText:
-        'In the equation 1 × 8 = 8, what are the factors and what is the product?',
-      correctAnswer: '1,8,8',
-      visualType: 'factor_product',
-      problemKey: '1x8-factor-product',
-      visualData: {
-        equation: '1 × 8 = 8',
-        factors: [1, 8],
-        product: 8,
-      },
-      answerData: {
-        factorA: '1',
-        factorB: '8',
-        product: '8',
-      },
-    },
-  ]
+  }
+}
+
+const factorProductBank = [
+  [3, 4],
+  [5, 2],
+  [1, 8],
+  [6, 3],
+  [4, 5],
+  [2, 7],
+  [8, 1],
+  [3, 6],
+  [5, 5],
+  [9, 2],
+  [7, 3],
+  [4, 4],
+] as const
+
+const factorProductChallengeBank = [
+  [6, 4],
+  [7, 3],
+  [8, 2],
+  [5, 6],
+  [9, 3],
+  [4, 7],
+  [6, 6],
+  [8, 5],
+  [7, 4],
+  [9, 2],
+] as const
+
+export function generateFactorProductProblems(
+  options?: PracticeGenerationOptions,
+): PracticeProblem[] {
+  const source =
+    options?.mode === 'challenge'
+      ? factorProductChallengeBank
+      : factorProductBank
+
+  return takePracticeProblems(
+    source.map(([factorA, factorB], index) =>
+      makeFactorProductProblem({
+        id: `factor-product-${options?.mode ?? 'guided'}-${index + 1}`,
+        factorA,
+        factorB,
+      }),
+    ),
+    options,
+  )
 }

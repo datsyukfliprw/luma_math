@@ -2,47 +2,19 @@
 import { useState } from "react";
 import { Sparkles, Star } from "lucide-react";
 import LumaAvatar from "../../components/luma/LumaAvatar";
+import { getBuildRounds, type LearnLesson } from "../../lib/learnContent";
 
 // @SECTION BUILDIT_TYPES
 type BuildItPageProps = {
+  lesson: LearnLesson;
   starName: string;
   onBuildComplete?: () => void;
 };
 
 // @SECTION BUILDIT_PAGE
-function BuildItPage({ starName, onBuildComplete }: BuildItPageProps) {
+function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
   // @SECTION BUILDIT_DATA
-  const buildRounds = [
-    {
-      groups: 4,
-      targetCount: 1,
-      instruction: "Put 1 star in each group.",
-      summary: "4 groups of 1 = 4 total",
-      pattern:
-        "When each group has 1, the total stays the same as the number of groups.",
-    },
-    {
-      groups: 4,
-      targetCount: 0,
-      instruction: "Make 4 groups with 0 stars in each group.",
-      summary: "4 groups of 0 = 0 total",
-      pattern: "When each group has 0, there are no stars to count.",
-    },
-    {
-      groups: 6,
-      targetCount: 1,
-      instruction: "Put 1 star in each group.",
-      summary: "6 groups of 1 = 6 total",
-      pattern: "Multiplying by 1 keeps the number the same.",
-    },
-    {
-      groups: 6,
-      targetCount: 0,
-      instruction: "Make 6 groups with 0 stars in each group.",
-      summary: "6 groups of 0 = 0 total",
-      pattern: "Multiplying by 0 always gives 0.",
-    },
-  ];
+  const buildRounds = getBuildRounds(lesson);
 
   // @SECTION BUILDIT_STATE
   const [roundIndex, setRoundIndex] = useState(0);

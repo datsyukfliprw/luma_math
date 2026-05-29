@@ -1,71 +1,51 @@
-// @SECTION FILE_OVERVIEW
-// LearnScreen.tsx
-// LumaMath Learn flow shell for the Grade 3 zero and identity multiplication rules lesson.
-//
-// Navigation standard:
-// - Search @SECTION in Neovim to jump between major areas.
-// - Search a specific tag like LEARN_SCREEN_HEADER or LEARN_PAGE_ROUTING.
-// - Keep data-name attributes for browser/devtools inspection.
-//
-// @SECTION_INDEX
-// FILE_OVERVIEW
-// IMPORTS
-// LEARN_CONSTANTS
-// LEARN_SCROLL_HELPERS
-// LEARN_LESSON_ID_HELPER
-// LEARN_SCREEN
-// LEARN_SCREEN_STATE
-// LEARN_PAGE_ROUTING
-// LEARN_COMPACT_HEADER_SCROLL_THRESHOLD
-// LEARN_SCROLL_HINT_OBSERVER
-// LEARN_NAVIGATION_HELPERS
-// LEARN_SCREEN_LAYOUT
-// LEARN_SCREEN_HEADER
-// LEARN_HEADER_STEPPER
-// LEARN_SCREEN_CONTENT_GRID
-
-// @SECTION IMPORTS
+// @SECTION LEARN_SCREEN_IMPORTS
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Clock3 } from "lucide-react";
-
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  CheckCircle2,
+  Clock3,
+} from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
 import { updateLessonProgress } from "../lib/lessonProgress";
 import { getStarProfile } from "../lib/starProfile";
-
+import type { LearnLesson } from "../lib/learnContent";
 import BigIdeaPage from "./learn/BigIdeaPage";
 import BuildItPage from "./learn/BuildItPage";
-import LearnStepper, { learnSteps } from "./learn/LearnStepper";
-import QuickCheckPage from "./learn/QuickCheckPage";
-import ScrollMoreHint from "./learn/ScrollMoreHint";
 import SeeItPage from "./learn/SeeItPage";
 import WordsPage from "./learn/WordsPage";
+import QuickCheckPage from "./learn/QuickCheckPage";
 
-// @SECTION LEARN_CONSTANTS
+// @SECTION LEARN_SCREEN_CONSTANTS
 const CURRENT_STUDENT_ID = "default-student";
-const COMPACT_HEADER_SCROLL_THRESHOLD = 96;
-const MEANINGFUL_SCROLL_DISTANCE = 180;
 
-// @SECTION LEARN_SCROLL_HELPERS
-function getScrollParent(element: HTMLElement | null) {
-  let currentElement = element?.parentElement ?? null;
+const learnSteps = [
+  {
+    label: "Big Idea",
+    nextLabel: "Next: Build It",
+  },
+  {
+    label: "Build It",
+    nextLabel: "Next: See It",
+  },
+  {
+    label: "See It",
+    nextLabel: "Next: Words",
+  },
+  {
+    label: "Words",
+    nextLabel: "Next: Quick Check",
+  },
+  {
+    label: "Quick Check",
+    nextLabel: "Finish Learn",
+  },
+];
 
-  while (currentElement) {
-    const styles = window.getComputedStyle(currentElement);
-    const overflowY = styles.overflowY;
-
-    if (overflowY === "auto" || overflowY === "scroll") {
-      return currentElement;
-    }
-
-    currentElement = currentElement.parentElement;
-  }
-
-  return document.documentElement;
-}
-
-// @SECTION LEARN_LESSON_ID_HELPER
+// @SECTION LEARN_SCREEN_HELPERS
 function getCurrentLessonId({
   lessonId,
   unitNumber,
@@ -80,11 +60,124 @@ function getCurrentLessonId({
   return lessonId ?? `unit-${unitNumber}-week-${weekNumber}-day-${dayNumber}`;
 }
 
+// @SECTION LEARN_STEPPER
+function LearnStepper({
+  currentStep,
+  onPrevious,
+  onNext,
+}: {
+  currentStep: number;
+  onPrevious: () => void;
+  onNext: () => void;
+}) {
+  const isFirstStep = currentStep === 0;
+
+  return (
+    <div
+      data-name="learn-stepper-nav"
+      className="flex items-center justify-end gap-2"
+    >
+      <button
+        type="button"
+        onClick={onPrevious}
+        disabled={isFirstStep}
+        aria-label="Previous Learn page"
+        data-name="learn-stepper-previous-button"
+        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm font-black shadow-sm transition ${
+          isFirstStep
+            ? "cursor-not-allowed border-[#073B5A]/10 bg-[#F1F5F7] text-[#9AB5C7]"
+            : "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]"
+        }`}
+      >
+        <ArrowLeft size={17} strokeWidth={3} />
+      </button>
+
+      <div data-name="learn-stepper-steps" className="flex items-start gap-0">
+        {learnSteps.map((step, index) => {
+          const isActive = index === currentStep;
+          const isDone = index < currentStep;
+
+          return (
+            <div
+              key={step.label}
+              data-name={`learn-stepper-step-${index + 1}`}
+              className="flex items-start"
+            >
+              <div
+                data-name={`learn-stepper-step-${index + 1}-content`}
+                className="flex flex-col items-center"
+              >
+                <div
+                  data-name={`learn-stepper-step-${index + 1}-circle`}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${
+                    isActive
+                      ? "border-[#00AFB9] bg-[#00AFB9] text-white shadow-[0_0_16px_rgba(0,175,185,0.38)]"
+                      : isDone
+                        ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]"
+                        : "border-[#9AB5C7]/55 bg-white text-[#275875]"
+                  }`}
+                >
+                  {isDone ? (
+                    <CheckCircle2 size={18} strokeWidth={3} />
+                  ) : (
+                    index + 1
+                  )}
+                </div>
+
+                <p
+                  data-name={`learn-stepper-step-${index + 1}-label`}
+                  className={`mt-1 whitespace-nowrap text-center text-[0.68rem] font-black ${
+                    isActive ? "text-[#073B5A]" : "text-[#275875]/75"
+                  }`}
+                >
+                  {step.label}
+                </p>
+              </div>
+
+              {index < learnSteps.length - 1 && (
+                <div
+                  data-name={`learn-stepper-connector-${index + 1}`}
+                  className="mt-5 h-0.5 w-10 border-t-2 border-dashed border-[#9AB5C7]/45"
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <button
+        type="button"
+        onClick={onNext}
+        aria-label="Next Learn page"
+        data-name="learn-stepper-next-button"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-white shadow-[0_8px_18px_rgba(0,175,185,0.28)] transition hover:bg-[#0081A7]"
+      >
+        <ArrowRight size={18} strokeWidth={3} />
+      </button>
+    </div>
+  );
+}
+
+// @SECTION SCROLL_MORE_HINT
+function ScrollMoreHint({ isVisible }: { isVisible: boolean }) {
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <div
+      data-name="learn-scroll-more-hint"
+      className="pointer-events-none fixed bottom-7 left-1/2 z-40 -translate-x-1/2 rounded-full border border-[#073B5A]/10 bg-white/95 px-4 py-2 text-sm font-black text-[#0081A7] shadow-sm backdrop-blur"
+    >
+      Scroll for more ↓
+    </div>
+  );
+}
+
 // @SECTION LEARN_SCREEN
 function LearnScreen() {
   const navigate = useNavigate();
   const { lessonId } = useParams();
-
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
 
   const currentLessonId = getCurrentLessonId({
@@ -94,137 +187,117 @@ function LearnScreen() {
     dayNumber: weekDayNumber,
   });
 
-  // @SECTION LEARN_SCREEN_STATE
+  const lessonPath = `/lesson/${currentLessonId}`;
+  const starName = getStarProfile(CURRENT_STUDENT_ID).starName;
+
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompactHeader, setIsCompactHeader] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
-  const [isBuildItComplete, setIsBuildItComplete] = useState(false);
-
+  const topSentinelRef = useRef<HTMLDivElement | null>(null);
   const pageContentRef = useRef<HTMLDivElement | null>(null);
 
-  const starName = getStarProfile(CURRENT_STUDENT_ID).starName;
+  const learnLesson = lesson as LearnLesson;
 
-  // @SECTION LEARN_PAGE_ROUTING
+  useEffect(() => {
+    setCurrentStep(0);
+  }, [currentLessonId]);
+
+  useEffect(() => {
+    const sentinel = topSentinelRef.current;
+
+    if (!sentinel) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsCompactHeader(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        threshold: 1,
+      },
+    );
+
+    observer.observe(sentinel);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    const scrollContainer = pageContentRef.current;
+
+    if (!scrollContainer) {
+      setShowScrollHint(false);
+      return;
+    }
+
+    const updateScrollHint = () => {
+      const hasOverflow =
+        scrollContainer.scrollHeight > scrollContainer.clientHeight;
+      const isNearBottom =
+        scrollContainer.scrollTop + scrollContainer.clientHeight >=
+        scrollContainer.scrollHeight - 24;
+
+      setShowScrollHint(hasOverflow && !isNearBottom);
+    };
+
+    updateScrollHint();
+    scrollContainer.addEventListener("scroll", updateScrollHint);
+    window.addEventListener("resize", updateScrollHint);
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", updateScrollHint);
+      window.removeEventListener("resize", updateScrollHint);
+    };
+  }, [currentStep]);
+
+  useEffect(() => {
+    const scrollContainer = pageContentRef.current;
+
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [currentStep]);
+
   const page = useMemo(() => {
     if (currentStep === 0) {
-      return <BigIdeaPage starName={starName} />;
+      return <BigIdeaPage lesson={learnLesson} starName={starName} />;
     }
 
     if (currentStep === 1) {
       return (
         <BuildItPage
+          lesson={learnLesson}
           starName={starName}
-          onBuildComplete={() => setIsBuildItComplete(true)}
+          onBuildComplete={() => {
+            updateLessonProgress(currentLessonId, {
+              learnComplete: true,
+            });
+          }}
         />
       );
     }
 
     if (currentStep === 2) {
-      return <SeeItPage starName={starName} />;
+      return <SeeItPage lesson={learnLesson} starName={starName} />;
     }
 
     if (currentStep === 3) {
-      return <WordsPage starName={starName} />;
+      return <WordsPage lesson={learnLesson} starName={starName} />;
     }
 
     return <QuickCheckPage starName={starName} />;
-  }, [currentStep, starName]);
-  // @SECTION LEARN_COMPACT_HEADER_SCROLL_THRESHOLD
-  useEffect(() => {
-    const pageContent = pageContentRef.current;
-
-    if (!pageContent) {
-      return;
-    }
-
-    const scrollElement = getScrollParent(pageContent);
-
-    const updateCompactHeader = () => {
-      const scrollableDistance =
-        scrollElement.scrollHeight - scrollElement.clientHeight;
-
-      const hasMeaningfulScrollableContent =
-        scrollableDistance > MEANINGFUL_SCROLL_DISTANCE;
-
-      setIsCompactHeader(
-        hasMeaningfulScrollableContent &&
-          scrollElement.scrollTop > COMPACT_HEADER_SCROLL_THRESHOLD,
-      );
-    };
-
-    requestAnimationFrame(updateCompactHeader);
-
-    scrollElement.addEventListener("scroll", updateCompactHeader, {
-      passive: true,
-    });
-    window.addEventListener("resize", updateCompactHeader);
-
-    return () => {
-      scrollElement.removeEventListener("scroll", updateCompactHeader);
-      window.removeEventListener("resize", updateCompactHeader);
-    };
-  }, [currentStep]);
-
-  // @SECTION LEARN_SCROLL_HINT_OBSERVER
-  useEffect(() => {
-    const pageContent = pageContentRef.current;
-
-    if (!pageContent) {
-      return;
-    }
-
-    const scrollElement = getScrollParent(pageContent);
-
-    const checkScrollPosition = () => {
-      const scrollableDistance =
-        scrollElement.scrollHeight - scrollElement.clientHeight;
-
-      const hasMeaningfulScrollableContent =
-        scrollableDistance > MEANINGFUL_SCROLL_DISTANCE;
-
-      const isNearBottom =
-        scrollElement.scrollTop + scrollElement.clientHeight >=
-        scrollElement.scrollHeight - 96;
-
-      setShowScrollHint(hasMeaningfulScrollableContent && !isNearBottom);
-    };
-
-    requestAnimationFrame(checkScrollPosition);
-
-    scrollElement.addEventListener("scroll", checkScrollPosition, {
-      passive: true,
-    });
-    window.addEventListener("resize", checkScrollPosition);
-
-    return () => {
-      scrollElement.removeEventListener("scroll", checkScrollPosition);
-      window.removeEventListener("resize", checkScrollPosition);
-    };
-  }, [currentStep]);
-
-  // @SECTION LEARN_NAVIGATION_HELPERS
-  function scrollLearnPageToTop() {
-    const pageContent = pageContentRef.current;
-
-    if (!pageContent) {
-      return;
-    }
-
-    const scrollElement = getScrollParent(pageContent);
-
-    requestAnimationFrame(() => {
-      scrollElement.scrollTo({
-        top: 0,
-        behavior: "auto",
-      });
-
-      setIsCompactHeader(false);
-      setShowScrollHint(false);
-    });
-  }
+  }, [currentLessonId, currentStep, learnLesson, starName]);
 
   function backToLesson() {
-    navigate(`/lesson/${currentLessonId}`);
+    navigate(lessonPath);
+  }
+
+  function goBack() {
+    setCurrentStep((current) => Math.max(current - 1, 0));
   }
 
   function goNext() {
@@ -232,38 +305,27 @@ function LearnScreen() {
       updateLessonProgress(currentLessonId, {
         learnComplete: true,
       });
-
-      navigate(`/lesson/${currentLessonId}`);
+      navigate(lessonPath);
       return;
     }
 
-    setIsCompactHeader(false);
-    setShowScrollHint(false);
-    setCurrentStep((current) => current + 1);
-    scrollLearnPageToTop();
-  }
-
-  function goBack() {
-    if (currentStep === 0) {
-      backToLesson();
-      return;
-    }
-
-    setIsCompactHeader(false);
-    setShowScrollHint(false);
-    setCurrentStep((current) => current - 1);
-    scrollLearnPageToTop();
+    setCurrentStep((current) => Math.min(current + 1, learnSteps.length - 1));
   }
 
   return (
     <PageLayout>
-      {/* @SECTION LEARN_SCREEN_LAYOUT */}
       <div
         ref={pageContentRef}
-        data-name="learn-screen-wrapper"
-        className="flex min-h-0 flex-col gap-4 pb-0"
+        data-name="learn-screen"
+        className="relative flex h-full min-h-0 flex-col gap-5 overflow-y-auto pr-1"
       >
-        {/* @SECTION LEARN_SCREEN_HEADER */}
+        <div
+          ref={topSentinelRef}
+          data-name="learn-top-sentinel"
+          className="h-0"
+        />
+
+        {/* @SECTION LEARN_HEADER */}
         <header
           data-name="learn-header"
           className={`sticky top-0 z-30 rounded-[1.5rem] border border-[#073B5A]/10 bg-white/95 shadow-sm backdrop-blur transition-all duration-300 ${
@@ -348,7 +410,6 @@ function LearnScreen() {
               </div>
             </div>
 
-            {/* @SECTION LEARN_HEADER_STEPPER */}
             <div
               data-name="learn-header-stepper-nav"
               className="hidden xl:block"
@@ -357,19 +418,51 @@ function LearnScreen() {
                 currentStep={currentStep}
                 onPrevious={goBack}
                 onNext={goNext}
-                isNextHighlighted={currentStep === 1 && isBuildItComplete}
               />
             </div>
           </div>
         </header>
 
-        {/* @SECTION LEARN_SCREEN_CONTENT_GRID */}
+        {/* @SECTION LEARN_PAGE_CONTENT_GRID */}
         <section
           data-name="learn-page-content-grid"
-          className="grid items-start gap-5 xl:grid-cols-[1.55fr_0.7fr]"
+          className={`grid items-start gap-5 ${
+            currentStep === 1
+              ? "xl:grid-cols-[1.55fr_0.75fr]"
+              : "xl:grid-cols-[1.15fr_0.85fr]"
+          }`}
         >
           {page}
         </section>
+
+        {/* @SECTION LEARN_MOBILE_NAV */}
+        <div className="flex items-center justify-between rounded-[1.25rem] border border-[#073B5A]/10 bg-white p-3 shadow-sm xl:hidden">
+          <button
+            type="button"
+            onClick={goBack}
+            disabled={currentStep === 0}
+            className={`rounded-xl px-4 py-2 text-sm font-black ${
+              currentStep === 0
+                ? "bg-[#F1F5F7] text-[#9AB5C7]"
+                : "bg-[#E9F7F8] text-[#0081A7]"
+            }`}
+          >
+            ← Back
+          </button>
+
+          <div className="flex items-center gap-2 text-sm font-black text-[#073B5A]">
+            <BookOpen size={16} strokeWidth={2.7} />
+            {currentStep + 1} / {learnSteps.length}
+          </div>
+
+          <button
+            type="button"
+            onClick={goNext}
+            className="rounded-xl bg-[#00AFB9] px-4 py-2 text-sm font-black text-white"
+          >
+            {currentStep === learnSteps.length - 1 ? "Finish" : "Next →"}
+          </button>
+        </div>
 
         <ScrollMoreHint isVisible={showScrollHint} />
       </div>

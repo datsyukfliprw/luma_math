@@ -41,6 +41,7 @@ type BrowseCard = {
   icon: string
   className: string
   image: ImageSpec
+  imageClassName?: string
   active?: boolean
   locked?: boolean
 }
@@ -192,6 +193,7 @@ const gradeCards: BrowseCard[] = [
       width: 118,
       height: 86,
     },
+    imageClassName: 'h-[64px] w-[82px] bottom-0 right-1',
   },
   {
     title: '6th Grade',
@@ -204,6 +206,7 @@ const gradeCards: BrowseCard[] = [
       width: 118,
       height: 86,
     },
+    imageClassName: 'h-[62px] w-[76px] bottom-0 right-1',
   },
 ]
 
@@ -479,7 +482,7 @@ function BrowseTile({ card }: { card: BrowseCard }) {
 
       <ImagePlaceholder
         image={card.image}
-        className="absolute -bottom-1 -right-2 rounded-tl-2xl object-contain object-right-bottom"
+        className={`absolute -bottom-1 -right-2 h-[86px] w-[118px] rounded-tl-2xl object-contain object-right-bottom ${card.imageClassName ?? ''}`}
       >
         <div className="flex h-full w-full items-center justify-center rounded-tl-2xl bg-[#EDF2F4]/70 text-lg font-black text-[#073B5A]/25">
           {card.locked ? '🔒' : card.icon}
