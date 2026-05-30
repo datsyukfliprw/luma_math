@@ -54,7 +54,7 @@ const recommendedDeck = {
   minutes: 5,
   topics: 3,
   image: {
-    src: flashcardAsset('hero.png'),
+    src: flashcardAsset('hero.webp'),
     alt: 'Mascot holding a math flashcard beside a stack of star cards',
     width: 620,
     height: 320,
@@ -70,7 +70,7 @@ const continueDecks: ReviewDeck[] = [
     accentClass: 'from-[#00AFB9] to-[#0081A7]',
     barClass: 'bg-[#00AFB9]',
     image: {
-      src: flashcardAsset('cont-zero.png'),
+      src: flashcardAsset('cont-zero.webp'),
       alt: 'Star flashcard deck thumbnail',
       width: 120,
       height: 120,
@@ -84,7 +84,7 @@ const continueDecks: ReviewDeck[] = [
     accentClass: 'from-[#FED9B7] to-[#F07167]',
     barClass: 'bg-[#F07167]',
     image: {
-      src: flashcardAsset('cont-groups.png'),
+      src: flashcardAsset('cont-groups.webp'),
       alt: 'Equal groups flashcard thumbnail',
       width: 120,
       height: 120,
@@ -98,7 +98,7 @@ const continueDecks: ReviewDeck[] = [
     accentClass: 'from-[#BDEFF2] to-[#00AFB9]',
     barClass: 'bg-[#0081A7]',
     image: {
-      src: flashcardAsset('cont-addition.png'),
+      src: flashcardAsset('cont-addition.webp'),
       alt: 'Repeated addition flashcard thumbnail',
       width: 120,
       height: 120,
@@ -112,7 +112,7 @@ const continueDecks: ReviewDeck[] = [
     accentClass: 'from-[#FDFCDC] to-[#FED9B7]',
     barClass: 'bg-[#F7B733]',
     image: {
-      src: flashcardAsset('cont-words.png'),
+      src: flashcardAsset('cont-words.webp'),
       alt: 'Vocabulary flashcard thumbnail',
       width: 120,
       height: 120,
@@ -127,7 +127,7 @@ const gradeCards: BrowseCard[] = [
     icon: 'K',
     className: 'bg-[#FFF8E9] border-[#F4D589]',
     image: {
-      src: flashcardAsset('grade-k.png'),
+      src: flashcardAsset('grade-k.webp'),
       alt: 'Kindergarten flashcard character',
       width: 118,
       height: 86,
@@ -139,7 +139,7 @@ const gradeCards: BrowseCard[] = [
     icon: '1',
     className: 'bg-[#E9F7F8] border-[#00AFB9]/20',
     image: {
-      src: flashcardAsset('grade-1.png'),
+      src: flashcardAsset('grade-1.webp'),
       alt: 'First grade flashcard character',
       width: 118,
       height: 86,
@@ -151,7 +151,7 @@ const gradeCards: BrowseCard[] = [
     icon: '2',
     className: 'bg-[#FFF4E3] border-[#FED9B7]',
     image: {
-      src: flashcardAsset('grade-2.png'),
+      src: flashcardAsset('grade-2.webp'),
       alt: 'Second grade flashcard character',
       width: 118,
       height: 86,
@@ -163,7 +163,7 @@ const gradeCards: BrowseCard[] = [
     icon: '3',
     className: 'bg-white border-[#00AFB9]',
     image: {
-      src: flashcardAsset('grade-3.png'),
+      src: flashcardAsset('grade-3.webp'),
       alt: 'Third grade sprout flashcard character',
       width: 118,
       height: 86,
@@ -176,7 +176,7 @@ const gradeCards: BrowseCard[] = [
     icon: '4',
     className: 'bg-[#F8FBFB] border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('grade-4.png'),
+      src: flashcardAsset('grade-4.webp'),
       alt: 'Fourth grade flashcard character',
       width: 118,
       height: 86,
@@ -188,7 +188,7 @@ const gradeCards: BrowseCard[] = [
     icon: '5',
     className: 'bg-[#FCE9E5] border-[#F07167]/20',
     image: {
-      src: flashcardAsset('grade-5.png'),
+      src: flashcardAsset('grade-5.webp'),
       alt: 'Fifth grade flashcard character',
       width: 118,
       height: 86,
@@ -201,7 +201,7 @@ const gradeCards: BrowseCard[] = [
     icon: '6',
     className: 'bg-[#F3F6F8] border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('grade-6.png'),
+      src: flashcardAsset('grade-6.webp'),
       alt: 'Sixth grade flashcard character',
       width: 118,
       height: 86,
@@ -217,7 +217,7 @@ const unitCards: BrowseCard[] = [
     icon: '🌱',
     className: 'bg-white border-[#00AFB9]',
     image: {
-      src: flashcardAsset('unit-1.png'),
+      src: flashcardAsset('unit-1.webp'),
       alt: 'Unit 1 sprout deck illustration',
       width: 118,
       height: 74,
@@ -230,7 +230,7 @@ const unitCards: BrowseCard[] = [
     icon: '▦',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('unit-2.png'),
+      src: flashcardAsset('unit-2.webp'),
       alt: 'Unit 2 array deck illustration',
       width: 118,
       height: 74,
@@ -242,7 +242,7 @@ const unitCards: BrowseCard[] = [
     icon: '◔',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('unit-3.png'),
+      src: flashcardAsset('unit-3.webp'),
       alt: 'Unit 3 fractions deck illustration',
       width: 118,
       height: 74,
@@ -254,7 +254,7 @@ const unitCards: BrowseCard[] = [
     icon: '📏',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('unit-4.png'),
+      src: flashcardAsset('unit-4.webp'),
       alt: 'Unit 4 measurement deck illustration',
       width: 118,
       height: 74,
@@ -266,7 +266,7 @@ const unitCards: BrowseCard[] = [
     icon: '▥',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('unit-5.png'),
+      src: flashcardAsset('unit-5.webp'),
       alt: 'Unit 5 data and geometry deck illustration',
       width: 118,
       height: 74,
@@ -281,7 +281,7 @@ const skillCards: BrowseCard[] = [
     icon: '123',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('skill-facts.png'),
+      src: flashcardAsset('skill-facts.webp'),
       alt: 'Math facts deck icon',
       width: 72,
       height: 72,
@@ -293,7 +293,7 @@ const skillCards: BrowseCard[] = [
     icon: 'Aa',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('skill-words.png'),
+      src: flashcardAsset('skill-words.webp'),
       alt: 'Vocabulary deck icon',
       width: 72,
       height: 72,
@@ -305,7 +305,7 @@ const skillCards: BrowseCard[] = [
     icon: '🛡️',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('skill-rules.png'),
+      src: flashcardAsset('skill-rules.webp'),
       alt: 'Rules deck icon',
       width: 72,
       height: 72,
@@ -317,7 +317,7 @@ const skillCards: BrowseCard[] = [
     icon: '•••',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('skill-visual.png'),
+      src: flashcardAsset('skill-visual.webp'),
       alt: 'Visual models deck icon',
       width: 72,
       height: 72,
@@ -329,7 +329,7 @@ const skillCards: BrowseCard[] = [
     icon: '🎯',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('skill-mistakes.png'),
+      src: flashcardAsset('skill-mistakes.webp'),
       alt: 'Mistake review deck icon',
       width: 72,
       height: 72,
@@ -341,7 +341,7 @@ const skillCards: BrowseCard[] = [
     icon: '🏆',
     className: 'bg-white border-[#073B5A]/10',
     image: {
-      src: flashcardAsset('skill-challenge.png'),
+      src: flashcardAsset('skill-challenge.webp'),
       alt: 'Challenge cards deck icon',
       width: 72,
       height: 72,

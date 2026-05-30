@@ -7,10 +7,218 @@ import {
   getBigQuestion,
   getLessonVideoUrl,
   getMissionSteps,
-  getRuleCards,
   getVideoCaption,
   type LearnLesson,
 } from "../../lib/learnContent";
+
+type RuleCardStyle = {
+  card: string;
+  eyebrow: string;
+  badge: string;
+};
+
+const RULE_CARD_STYLES: RuleCardStyle[] = [
+  {
+    card: "border-[#00AFB9]/20 bg-[#E9F7F8]",
+    eyebrow: "text-[#0081A7]",
+    badge: "text-[#0081A7]",
+  },
+  {
+    card: "border-[#F07167]/20 bg-[#FCE9E5]",
+    eyebrow: "text-[#F07167]",
+    badge: "text-[#F07167]",
+  },
+  {
+    card: "border-[#F7B733]/25 bg-[#FFF8E9]",
+    eyebrow: "text-[#C78300]",
+    badge: "text-[#C78300]",
+  },
+];
+
+type BigIdeaRuleCard = {
+  eyebrow: string;
+  equation: string;
+  badge: string;
+  description: string;
+};
+
+function getDynamicRuleCards(lesson: LearnLesson): BigIdeaRuleCard[] {
+  const title = (lesson.lesson_title ?? "").toLowerCase();
+  const practiceType = lesson.practice_type ?? "";
+
+  if (title.includes("zero") || title.includes("identity")) {
+    return [
+      {
+        eyebrow: "Multiplying by 1",
+        equation: "4 × 1 = 4",
+        badge: "Same number",
+        description: "One in each group keeps the total the same as the number of groups.",
+      },
+      {
+        eyebrow: "Multiplying by 0",
+        equation: "4 × 0 = 0",
+        badge: "Zero total",
+        description: "Zero in each group means there are no items to count.",
+      },
+    ];
+  }
+
+  if (practiceType === "repeated_addition_to_multiplication") {
+    return [
+      {
+        eyebrow: "Repeated addition",
+        equation: "5 + 5 + 5 = 15",
+        badge: "Add groups",
+        description: "When the same number repeats, you can add each group to find the total.",
+      },
+      {
+        eyebrow: "Multiplication match",
+        equation: "3 × 5 = 15",
+        badge: "Same total",
+        description: "Three groups of 5 can be written faster as 3 × 5.",
+      },
+    ];
+  }
+
+  if (practiceType === "factor_product_identification") {
+    return [
+      {
+        eyebrow: "Factors",
+        equation: "3 × 5",
+        badge: "Numbers multiplied",
+        description: "Factors are the numbers being multiplied together.",
+      },
+      {
+        eyebrow: "Product",
+        equation: "3 × 5 = 15",
+        badge: "Answer",
+        description: "The product is the answer to a multiplication problem.",
+      },
+    ];
+  }
+
+  if (practiceType === "equal_groups_with_objects" || practiceType === "equal_groups") {
+    return [
+      {
+        eyebrow: "Groups",
+        equation: "4 groups",
+        badge: "How many groups?",
+        description: "First count how many equal groups there are.",
+      },
+      {
+        eyebrow: "In each group",
+        equation: "4 × 3 = 12",
+        badge: "Find total",
+        description: "Then count how many are in each group and multiply.",
+      },
+    ];
+  }
+
+  if (practiceType.includes("array")) {
+    return [
+      {
+        eyebrow: "Rows",
+        equation: "3 rows",
+        badge: "Across",
+        description: "Rows help organize equal groups in an array.",
+      },
+      {
+        eyebrow: "Columns",
+        equation: "3 × 4 = 12",
+        badge: "Total",
+        description: "Rows and columns work together to show the product.",
+      },
+    ];
+  }
+
+  return [
+    {
+      eyebrow: "Big idea",
+      equation: "Groups × in each",
+      badge: "Product",
+      description: "Use the pattern in the lesson to find the answer.",
+    },
+    {
+      eyebrow: "Math move",
+      equation: "Think, model, solve",
+      badge: "Strategy",
+      description: "Look for what the problem gives you, then choose a strategy.",
+    },
+  ];
+}
+
+function getTopicTip(lesson: LearnLesson) {
+  const title = (lesson.lesson_title ?? "").toLowerCase();
+  const practiceType = lesson.practice_type ?? "";
+
+  if (title.includes("zero") || title.includes("identity")) {
+    return {
+      title: "Use the rule",
+      lines: ["×1 keeps it", "×0 makes 0"],
+    };
+  }
+
+  if (practiceType === "repeated_addition_to_multiplication") {
+    return {
+      title: "Math shortcut",
+      lines: ["Groups × in each", "= product"],
+    };
+  }
+
+  if (practiceType === "factor_product_identification") {
+    return {
+      title: "Name the parts",
+      lines: ["Factors make", "the product"],
+    };
+  }
+
+  if (practiceType === "equal_groups_with_objects" || practiceType === "equal_groups") {
+    return {
+      title: "Look closely",
+      lines: ["Count groups", "then in each"],
+    };
+  }
+
+  if (practiceType.includes("array")) {
+    return {
+      title: "Rows and columns",
+      lines: ["Rows × columns", "makes total"],
+    };
+  }
+
+  return {
+    title: "Math mission",
+    lines: ["Look for", "the pattern"],
+  };
+}
+
+function getLessonThumbnailUrl(lesson: LearnLesson) {
+  const title = (lesson.lesson_title ?? "").toLowerCase();
+  const practiceType = lesson.practice_type ?? "";
+
+  if (title.includes("zero") || title.includes("identity")) {
+    return "/images/learn/thumbnails/zero-one-rules.webp";
+  }
+
+  if (practiceType === "repeated_addition_to_multiplication") {
+    return "/images/learn/thumbnails/repeated-addition.webp";
+  }
+
+  if (practiceType === "factor_product_identification") {
+    return "/images/learn/thumbnails/factors-products.webp";
+  }
+
+  if (practiceType === "equal_groups_with_objects" || practiceType === "equal_groups") {
+    return "/images/learn/thumbnails/equal-groups.webp";
+  }
+
+  if (practiceType.includes("array")) {
+    return "/images/learn/thumbnails/arrays.webp";
+  }
+
+  return "/images/learn/thumbnails/zero-one-rules.webp";
+}
+
 
 // @SECTION BIGIDEA_PAGE
 type BigIdeaPageProps = {
@@ -25,8 +233,10 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
   const videoCaption = getVideoCaption(lesson);
   const bigIdeaDescription = getBigIdeaDescription(lesson);
   const missionSteps = getMissionSteps(lesson);
-  const ruleCards = getRuleCards(lesson);
+  const ruleCards = getDynamicRuleCards(lesson);
   const bigQuestion = getBigQuestion(lesson);
+  const topicTip = getTopicTip(lesson);
+  const lessonThumbnailUrl = getLessonThumbnailUrl(lesson);
 
   return (
     <>
@@ -96,7 +306,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
                 aria-label={`Play ${videoCaption} lesson video`}
               >
                 <img
-                  src="/images/learn/thumbnails/zero-one-rules.webp"
+                  src={lessonThumbnailUrl}
                   alt={`${videoCaption} lesson video`}
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
                 />
@@ -140,47 +350,39 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
           data-name="big-idea-rule-cards-grid"
           className="mt-4 grid gap-3 md:grid-cols-2"
         >
-          <div
-            data-name="big-idea-rule-times-one-card"
-            className="rounded-2xl border border-[#00AFB9]/20 bg-[#E9F7F8] p-4"
-          >
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
-              {ruleCards[0].eyebrow}
-            </p>
+          {ruleCards.map((card, index) => {
+            const style = RULE_CARD_STYLES[index % RULE_CARD_STYLES.length];
 
-            <div className="mt-2 flex items-center justify-between gap-3">
-              <p className="text-2xl font-black text-[#073B5A]">{ruleCards[0].equation}</p>
+            return (
+              <div
+                key={`${card.eyebrow}-${card.equation}`}
+                data-name={`big-idea-rule-card-${index + 1}`}
+                className={`rounded-2xl border p-4 ${style.card}`}
+              >
+                <p
+                  className={`text-xs font-black uppercase tracking-[0.14em] ${style.eyebrow}`}
+                >
+                  {card.eyebrow}
+                </p>
 
-              <div className="rounded-2xl bg-white px-3 py-2 text-sm font-black text-[#0081A7] shadow-sm">
-                {ruleCards[0].badge}
+                <div className="mt-2 flex items-center justify-between gap-3">
+                  <p className="text-2xl font-black text-[#073B5A]">
+                    {card.equation}
+                  </p>
+
+                  <div
+                    className={`rounded-2xl bg-white px-3 py-2 text-sm font-black shadow-sm ${style.badge}`}
+                  >
+                    {card.badge}
+                  </div>
+                </div>
+
+                <p className="mt-2 text-sm font-bold leading-relaxed text-[#073B5A]/70">
+                  {card.description}
+                </p>
               </div>
-            </div>
-
-            <p className="mt-2 text-sm font-bold leading-relaxed text-[#073B5A]/70">
-              {ruleCards[0].description}
-            </p>
-          </div>
-
-          <div
-            data-name="big-idea-rule-times-zero-card"
-            className="rounded-2xl border border-[#F07167]/20 bg-[#FCE9E5] p-4"
-          >
-            <p className="text-xs font-black uppercase tracking-[0.14em] text-[#F07167]">
-              {ruleCards[1].eyebrow}
-            </p>
-
-            <div className="mt-2 flex items-center justify-between gap-3">
-              <p className="text-2xl font-black text-[#073B5A]">{ruleCards[1].equation}</p>
-
-              <div className="rounded-2xl bg-white px-3 py-2 text-sm font-black text-[#F07167] shadow-sm">
-                {ruleCards[1].badge}
-              </div>
-            </div>
-
-            <p className="mt-2 text-sm font-bold leading-relaxed text-[#073B5A]/70">
-              {ruleCards[1].description}
-            </p>
-          </div>
+            );
+          })}
         </div>
       </main>
 
@@ -204,10 +406,14 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
               </p>
             </div>
 
+            <p className="mb-2 text-xs font-black uppercase tracking-[0.16em] text-[#C78300]">
+              {topicTip.title}
+            </p>
+
             <div className="w-fit rounded-2xl bg-white px-5 py-4 text-xl font-black leading-tight text-[#073B5A] shadow-sm">
-              Look for
+              {topicTip.lines[0]}
               <br />
-              equal groups!
+              {topicTip.lines[1]}
             </div>
           </div>
 

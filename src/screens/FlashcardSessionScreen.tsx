@@ -448,7 +448,7 @@ function FlashcardSessionScreen() {
             className="relative mx-auto flex max-w-[920px] items-center gap-5 overflow-hidden rounded-3xl border border-[#F4D589] bg-[#FFF8E9] px-6 py-4 shadow-sm"
           >
             <img
-              src={mascotAsset('star-happy.png')}
+              src={mascotAsset('star-happy.webp')}
               alt="Happy star mascot"
               className="h-24 w-24 shrink-0 object-contain"
             />

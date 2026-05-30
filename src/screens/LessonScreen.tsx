@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import LearnCard from "../components/lesson/LearnCard";
 import LessonHero from "../components/lesson/LessonHero";
@@ -7,7 +7,10 @@ import PracticeTimeCard from "../components/lesson/PracticeTimeCard";
 import TryItCard from "../components/lesson/TryItCard";
 import WarmUpCard from "../components/lesson/WarmUpCard";
 import { getLessonById } from "../lib/lessonLookup";
+import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
+import { getFlashcardDeckProgress } from "../lib/flashcardProgress";
 import { getLessonProgress, type LessonProgress } from "../lib/lessonProgress";
+import { getPracticeRewardState } from "../lib/practiceRewards";
 import { getStarProfile } from "../lib/starProfile";
 import type { WarmUpData } from "../types/warmup";
 
@@ -19,11 +22,54 @@ type LessonWithStructuredData = {
 
 type SectionState = "complete" | "active" | "future";
 
-function getNextStep(progress: LessonProgress) {
+type NextLessonStep = {
+  title: string;
+  description: string;
+  buttonLabel: string;
+  to: string;
+};
+
+function getFlashcardDeckIdForLesson(lessonId: string) {
+  const deckMap: Record<string, string> = {
+    "unit-1-week-1-day-1": "lesson-g3-u1-w1-d1-zero-identity",
+    "unit-1-week-1-day-2": "lesson-g3-u1-w1-d2-repeated-addition",
+    "unit-1-week-1-day-3": "lesson-g3-u1-w1-d3-factors-products",
+    "unit-1-week-1-day-4": "lesson-g3-u1-w1-d4-object-groups",
+    "unit-1-week-1-day-5": "lesson-g3-u1-w1-d5-week-review",
+  };
+
+  return deckMap[lessonId] ?? `lesson-${lessonId}`;
+}
+
+function getNextStep({
+  lessonId,
+  nextLessonId,
+  progress,
+}: {
+  lessonId: string;
+  nextLessonId?: string;
+  progress: LessonProgress;
+}): NextLessonStep {
+  const practiceRewards = getPracticeRewardState(CURRENT_STUDENT_ID, lessonId);
+  const guidedComplete =
+    practiceRewards.guided?.completed === true || progress.practiceComplete;
+  const independentComplete = practiceRewards.independent?.completed === true;
+  const challengeComplete = practiceRewards.challenge?.completed === true;
+
+  const flashcardDeckId = getFlashcardDeckIdForLesson(lessonId);
+  const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
+  const flashcardProgress = getFlashcardDeckProgress(
+    CURRENT_STUDENT_ID,
+    flashcardDeckId,
+    flashcardCardIds,
+  );
+
   if (!progress.warmupComplete) {
     return {
       title: "Warm-Up",
-      description: "Power up your star with quick review rounds.",
+      description: "Start with quick review before today’s lesson.",
+      buttonLabel: "Start Warm-Up ›",
+      to: `/learn/${lessonId}?step=warmup`,
     };
   }
 
@@ -31,6 +77,8 @@ function getNextStep(progress: LessonProgress) {
     return {
       title: "Learn",
       description: "Watch the short lesson and learn today’s skill.",
+      buttonLabel: "Continue Lesson ›",
+      to: `/learn/${lessonId}?step=learn`,
     };
   }
 
@@ -38,19 +86,61 @@ function getNextStep(progress: LessonProgress) {
     return {
       title: "Try It",
       description: "Try one guided problem before practice.",
+      buttonLabel: "Start Try It ›",
+      to: `/try-it/${lessonId}`,
     };
   }
 
-  if (!progress.practiceComplete) {
+  if (!guidedComplete) {
     return {
-      title: "Practice",
-      description: "Finish with guided practice and lock in the skill.",
+      title: "Guided Practice",
+      description: "Solve step-by-step problems with hints.",
+      buttonLabel: "Start Guided Practice ›",
+      to: `/practice/${lessonId}?mode=guided`,
+    };
+  }
+
+  if (!independentComplete) {
+    return {
+      title: "Independent Practice",
+      description: "Show what you can do on your own.",
+      buttonLabel: "Start Independent Practice ›",
+      to: `/practice/${lessonId}?mode=independent`,
+    };
+  }
+
+  if (!challengeComplete) {
+    return {
+      title: "Challenge",
+      description: "Try a tougher version for an epic reward.",
+      buttonLabel: "Try Challenge ›",
+      to: `/practice/${lessonId}?mode=challenge`,
+    };
+  }
+
+  if (!flashcardProgress.completed) {
+    return {
+      title: "Flashcards",
+      description: "Review this lesson’s deck and strengthen recall.",
+      buttonLabel: "Try Flashcards ›",
+      to: `/flashcards/deck/${flashcardDeckId}`,
+    };
+  }
+
+  if (nextLessonId) {
+    return {
+      title: "Lesson Complete",
+      description: "Great work! You’re ready for the next lesson.",
+      buttonLabel: "Next Lesson ›",
+      to: `/lesson/${nextLessonId}`,
     };
   }
 
   return {
-    title: "Complete",
-    description: "Great work! You finished today’s lesson.",
+    title: "Unit Checkpoint",
+    description: "Great work! Head back to the learning path.",
+    buttonLabel: "Back to Learning Path ›",
+    to: "/learning-path",
   };
 }
 
@@ -123,12 +213,11 @@ function LessonActionBar({
   nextStep,
   words,
 }: {
-  nextStep: {
-    title: string;
-    description: string;
-  };
+  nextStep: NextLessonStep;
   words: string[];
 }) {
+  const navigate = useNavigate();
+
   return (
     <section
       data-name="lesson-action-bar"
@@ -152,9 +241,10 @@ function LessonActionBar({
 
           <button
             type="button"
+            onClick={() => navigate(nextStep.to)}
             className="ml-auto hidden shrink-0 rounded-xl bg-[#00AFB9] px-6 py-2.5 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7] md:block"
           >
-            Continue Lesson ›
+            {nextStep.buttonLabel}
           </button>
         </div>
 
@@ -206,7 +296,22 @@ function LessonScreen() {
     setStarName(getStarProfile(CURRENT_STUDENT_ID).starName);
   }, [currentLessonId]);
 
-  const nextStep = getNextStep(progress);
+  const currentWeekIndex = unit.weeks.findIndex(
+    (unitWeek) => unitWeek.week_number === week.week_number,
+  );
+  const nextLessonInSameWeek = week.lessons[weekDayNumber];
+  const nextWeek = unit.weeks[currentWeekIndex + 1];
+  const nextLessonId = nextLessonInSameWeek
+    ? `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber + 1}`
+    : nextWeek
+      ? `unit-${unit.unit_number}-week-${nextWeek.week_number}-day-1`
+      : undefined;
+
+  const nextStep = getNextStep({
+    lessonId: currentLessonId,
+    nextLessonId,
+    progress,
+  });
   const todaysWords = getTodaysWords(lesson.lesson_title, lesson.practice_type);
 
   return (
@@ -257,6 +362,7 @@ function LessonScreen() {
               lessonId={currentLessonId}
               practice={lesson.practice}
               practiceType={lesson.practice_type}
+              isComplete={progress.tryItComplete}
             />
           </LessonCardFrame>
 
