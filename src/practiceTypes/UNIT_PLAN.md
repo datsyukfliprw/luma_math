@@ -20,7 +20,7 @@ Status: In progress
 - [x] `factor_product_identification`
   - Identify factors and products in multiplication equations.
   - Example: 3 × 4 = 12 → factors are 3 and 4, product is 12.
-- [ ] `equal_groups_with_objects`
+- [x] `equal_groups_with_objects`
   - Build or interpret equal groups using object-based prompts.
   - Example: Arrange buttons/blocks into equal piles.
 - [ ] `mixed_evaluation`

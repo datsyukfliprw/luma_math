@@ -22,6 +22,8 @@ const practiceRegistry: Record<string, PracticeGenerator> = {
   equal_groups_with_objects: generateEqualGroupsWithObjectsProblems,
 
   evaluation: generateEvaluationProblems,
+  mixed_evaluation: generateEvaluationProblems,
+  week_1_evaluation: generateEvaluationProblems,
 
   array_rows_columns: generateArrayRowsColumnsProblems,
   commutative_property_matching: generateCommutativePropertyProblems,

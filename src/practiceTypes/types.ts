@@ -3,15 +3,18 @@ export type PracticeMode = 'guided' | 'independent' | 'challenge'
 export type PracticeGenerationOptions = {
   mode?: PracticeMode
   lesson?: {
-    lesson_title?: string
-    practice_type?: string
-    skills?: string[]
-    practice_block?: {
-      question_count?: number
-      type?: string
-      instructions?: string
-    }
+  lesson_title?: string
+  practice_type?: string
+  skills?: string[]
+  quiz_question_count?: number
+  review_types?: string[]
+
+  practice_block?: {
+    question_count?: number
+    type?: string
+    instructions?: string
   }
+}
 }
 
 export type PracticeProblem = {
