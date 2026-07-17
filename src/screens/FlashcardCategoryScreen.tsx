@@ -1,23 +1,15 @@
 // @SECTION FLASHCARD_CATEGORY_IMPORTS
-import {
-  ArrowLeft,
-  BookOpen,
-  ChevronRight,
-  Clock3,
-  Layers3,
-  Sparkles,
-  Star,
-} from 'lucide-react'
-import { Link, useParams } from 'react-router-dom'
-import PageLayout from '../components/layout/PageLayout'
+import { ArrowLeft, BookOpen, ChevronRight, Clock3, Layers3, Sparkles, Star } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
+import PageLayout from "../components/layout/PageLayout";
 import {
   getDecksForFlashcardCatalogCategory,
   getFlashcardCatalogCategory,
-} from '../flashcards/deckRegistry'
-import type { FlashcardDeck } from '../flashcards/types'
-import { getFlashcardDeckProgress } from '../lib/flashcardProgress'
+} from "../flashcards/deckRegistry";
+import type { FlashcardDeck } from "../flashcards/types";
+import { getFlashcardDeckProgress } from "../lib/flashcardProgress";
 
-const CURRENT_STUDENT_ID = 'default-student'
+const CURRENT_STUDENT_ID = "default-student";
 
 // @SECTION FLASHCARD_CATEGORY_HELPERS
 function getDeckProgressSummary(deck: FlashcardDeck) {
@@ -25,31 +17,31 @@ function getDeckProgressSummary(deck: FlashcardDeck) {
     CURRENT_STUDENT_ID,
     deck.deckId,
     deck.cards.map((card) => card.id),
-  )
+  );
 
-  const reviewedCount = progress.answeredCardIds.length
+  const reviewedCount = progress.answeredCardIds.length;
   const progressPercent =
-    deck.cards.length > 0 ? Math.round((reviewedCount / deck.cards.length) * 100) : 0
+    deck.cards.length > 0 ? Math.round((reviewedCount / deck.cards.length) * 100) : 0;
 
   return {
     reviewedCount,
     progressPercent,
     completed: progress.completed,
-  }
+  };
 }
 
-function getKindLabel(kind: FlashcardDeck['kind']) {
-  if (kind === 'math_facts') return 'Math Facts'
-  if (kind === 'vocabulary') return 'Vocabulary'
-  if (kind === 'rules') return 'Rules'
-  if (kind === 'visual_models') return 'Visual Models'
-  if (kind === 'mistake_review') return 'Mistake Review'
-  return 'Challenge'
+function getKindLabel(kind: FlashcardDeck["kind"]) {
+  if (kind === "math_facts") return "Math Facts";
+  if (kind === "vocabulary") return "Vocabulary";
+  if (kind === "rules") return "Rules";
+  if (kind === "visual_models") return "Visual Models";
+  if (kind === "mistake_review") return "Mistake Review";
+  return "Challenge";
 }
 
 // @SECTION FLASHCARD_DECK_LIBRARY_CARD
 function FlashcardDeckLibraryCard({ deck }: { deck: FlashcardDeck }) {
-  const progress = getDeckProgressSummary(deck)
+  const progress = getDeckProgressSummary(deck);
 
   return (
     <Link
@@ -77,9 +69,7 @@ function FlashcardDeckLibraryCard({ deck }: { deck: FlashcardDeck }) {
             {deck.title}
           </h2>
 
-          <p className="mt-1 text-sm font-bold leading-snug text-[#073B5A]/65">
-            {deck.subtitle}
-          </p>
+          <p className="mt-1 text-sm font-bold leading-snug text-[#073B5A]/65">{deck.subtitle}</p>
 
           <p className="mt-2 text-xs font-black uppercase tracking-[0.12em] text-[#073B5A]/45">
             {deck.meta}
@@ -87,15 +77,15 @@ function FlashcardDeckLibraryCard({ deck }: { deck: FlashcardDeck }) {
         </div>
 
         <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[#E9F7F8] text-2xl shadow-sm">
-          {deck.kind === 'vocabulary'
-            ? 'Aa'
-            : deck.kind === 'visual_models'
-              ? '•••'
-              : deck.kind === 'rules'
-                ? '🛡️'
-                : deck.kind === 'challenge'
-                  ? '🏆'
-                  : '⭐'}
+          {deck.kind === "vocabulary"
+            ? "Aa"
+            : deck.kind === "visual_models"
+              ? "•••"
+              : deck.kind === "rules"
+                ? "🛡️"
+                : deck.kind === "challenge"
+                  ? "🏆"
+                  : "⭐"}
         </div>
       </div>
 
@@ -113,9 +103,7 @@ function FlashcardDeckLibraryCard({ deck }: { deck: FlashcardDeck }) {
         <div className="rounded-xl bg-white px-3 py-2 shadow-sm">
           <div className="flex items-center gap-1.5 text-[#0081A7]">
             <Clock3 size={16} strokeWidth={2.7} />
-            <p className="text-sm font-black text-[#073B5A]">
-              {deck.estimatedMinutes ?? 5}m
-            </p>
+            <p className="text-sm font-black text-[#073B5A]">{deck.estimatedMinutes ?? 5}m</p>
           </div>
           <p className="mt-0.5 text-[0.62rem] font-bold uppercase tracking-wide text-[#073B5A]/50">
             Time
@@ -149,14 +137,14 @@ function FlashcardDeckLibraryCard({ deck }: { deck: FlashcardDeck }) {
         </div>
       </div>
     </Link>
-  )
+  );
 }
 
 // @SECTION FLASHCARD_CATEGORY_SCREEN
 function FlashcardCategoryScreen() {
-  const { categoryType, categoryId } = useParams()
-  const category = getFlashcardCatalogCategory(categoryType, categoryId)
-  const decks = getDecksForFlashcardCatalogCategory(categoryType, categoryId)
+  const { categoryType, categoryId } = useParams();
+  const category = getFlashcardCatalogCategory(categoryType, categoryId);
+  const decks = getDecksForFlashcardCatalogCategory(categoryType, categoryId);
 
   return (
     <PageLayout>
@@ -182,9 +170,7 @@ function FlashcardCategoryScreen() {
               {category.title}
             </h1>
 
-            <p className="mt-1.5 text-sm font-bold text-[#073B5A]/70">
-              {category.subtitle}
-            </p>
+            <p className="mt-1.5 text-sm font-bold text-[#073B5A]/70">{category.subtitle}</p>
           </div>
 
           <div className="hidden items-center gap-3 xl:flex">
@@ -242,13 +228,11 @@ function FlashcardCategoryScreen() {
                 {category.icon}
               </div>
 
-              <h2 className="mt-4 text-2xl font-black text-[#073B5A]">
-                More decks coming soon
-              </h2>
+              <h2 className="mt-4 text-2xl font-black text-[#073B5A]">More decks coming soon</h2>
 
               <p className="mx-auto mt-2 max-w-xl text-sm font-bold leading-relaxed text-[#073B5A]/65">
-                This shelf is ready, but we have not added its flashcard decks yet.
-                As we build more lessons, this category will fill with practice decks.
+                This shelf is ready, but we have not added its flashcard decks yet. As we build more
+                lessons, this category will fill with practice decks.
               </p>
 
               <Link
@@ -263,7 +247,7 @@ function FlashcardCategoryScreen() {
         </main>
       </div>
     </PageLayout>
-  )
+  );
 }
 
-export default FlashcardCategoryScreen
+export default FlashcardCategoryScreen;

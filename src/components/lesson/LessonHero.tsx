@@ -1,26 +1,26 @@
-import LumaAvatar from '../luma/LumaAvatar'
-import { useDelightAnimation } from '../animations/DelightAnimationProvider'
-import type { LessonProgress } from '../../lib/lessonProgress'
+import LumaAvatar from "../luma/LumaAvatar";
+import { useDelightAnimation } from "../animations/DelightAnimationProvider";
+import type { LessonProgress } from "../../lib/lessonProgress";
 
 type LessonHeroProps = {
-  unitNumber: number
-  weekNumber: number
-  dayNumber: number
-  title: string
-  topic: string
-  description: string
-  minutes: number
-  grade: string
-  lessonType: string
-  quizQuestionCount: number
-  progress: LessonProgress
-  starName: string
-}
+  unitNumber: number;
+  weekNumber: number;
+  dayNumber: number;
+  title: string;
+  topic: string;
+  description: string;
+  minutes: number;
+  grade: string;
+  lessonType: string;
+  quizQuestionCount: number;
+  progress: LessonProgress;
+  starName: string;
+};
 
 type GoalItemProps = {
-  label: string
-  complete: boolean
-}
+  label: string;
+  complete: boolean;
+};
 
 function GoalItem({ label, complete }: GoalItemProps) {
   return (
@@ -33,34 +33,27 @@ function GoalItem({ label, complete }: GoalItemProps) {
         <span className="h-6 w-6 shrink-0 rounded-full border-2 border-[#0081A7] bg-white" />
       )}
 
-      <span
-        className={`text-sm font-black ${
-          complete ? 'text-[#073B5A]' : 'text-[#073B5A]/65'
-        }`}
-      >
+      <span className={`text-sm font-black ${complete ? "text-[#073B5A]" : "text-[#073B5A]/65"}`}>
         {label}
       </span>
     </div>
-  )
+  );
 }
 
 function GoalProgressBar({
   completedCount,
   totalCount,
 }: {
-  completedCount: number
-  totalCount: number
+  completedCount: number;
+  totalCount: number;
 }) {
-  const percent = Math.round((completedCount / Math.max(totalCount, 1)) * 100)
+  const percent = Math.round((completedCount / Math.max(totalCount, 1)) * 100);
 
   return (
     <div className="mt-3 h-3 overflow-hidden rounded-full bg-[#073B5A]/10">
-      <div
-        className="h-full rounded-full bg-[#F7B733]"
-        style={{ width: `${percent}%` }}
-      />
+      <div className="h-full rounded-full bg-[#F7B733]" style={{ width: `${percent}%` }} />
     </div>
-  )
+  );
 }
 
 function LessonHero({
@@ -76,8 +69,8 @@ function LessonHero({
   progress,
   starName,
 }: LessonHeroProps) {
-  const { registerStarTarget, starReaction } = useDelightAnimation()
-  const isEvaluation = lessonType === 'evaluation'
+  const { registerStarTarget, starReaction } = useDelightAnimation();
+  const isEvaluation = lessonType === "evaluation";
 
   const completedCount = isEvaluation
     ? progress.practiceComplete
@@ -88,18 +81,17 @@ function LessonHero({
         progress.learnComplete,
         progress.tryItComplete,
         progress.practiceComplete,
-      ].filter(Boolean).length
+      ].filter(Boolean).length;
 
-  const totalCount = isEvaluation ? 1 : 4
+  const totalCount = isEvaluation ? 1 : 4;
 
-  const lumaState =
-    progress.lessonComplete
-      ? 'celebrate'
-      : completedCount === 0
-        ? 'sleepy'
-        : completedCount >= totalCount
-          ? 'charged'
-          : 'happy'
+  const lumaState = progress.lessonComplete
+    ? "celebrate"
+    : completedCount === 0
+      ? "sleepy"
+      : completedCount >= totalCount
+        ? "charged"
+        : "happy";
 
   return (
     <section className="mb-5 overflow-hidden rounded-[1.75rem] border border-[#073B5A]/10 bg-white shadow-sm">
@@ -107,9 +99,8 @@ function LessonHero({
         <div className="grid gap-6 px-7 py-6 lg:grid-cols-[minmax(0,1fr)_280px]">
           <div>
             <p className="text-sm font-black text-[#426B82]">
-              Grade 3 <span className="mx-2 text-[#073B5A]/30">›</span> Unit{' '}
-              {unitNumber} <span className="mx-2 text-[#073B5A]/30">›</span>{' '}
-              Week {weekNumber}{' '}
+              Grade 3 <span className="mx-2 text-[#073B5A]/30">›</span> Unit {unitNumber}{" "}
+              <span className="mx-2 text-[#073B5A]/30">›</span> Week {weekNumber}{" "}
               <span className="mx-2 text-[#073B5A]/30">›</span> Day {dayNumber}
             </p>
 
@@ -149,18 +140,12 @@ function LessonHero({
               {completedCount}/{totalCount} Complete
             </h2>
 
-            <GoalProgressBar
-              completedCount={completedCount}
-              totalCount={totalCount}
-            />
+            <GoalProgressBar completedCount={completedCount} totalCount={totalCount} />
 
             <div className="mt-5 space-y-3">
               {isEvaluation ? (
                 <>
-                  <GoalItem
-                    label="Evaluation"
-                    complete={progress.practiceComplete}
-                  />
+                  <GoalItem label="Evaluation" complete={progress.practiceComplete} />
 
                   <p className="text-sm font-bold leading-relaxed text-[#073B5A]/65">
                     Complete {quizQuestionCount} review questions.
@@ -168,16 +153,10 @@ function LessonHero({
                 </>
               ) : (
                 <>
-                  <GoalItem
-                    label="Warm-Up"
-                    complete={progress.warmupComplete}
-                  />
+                  <GoalItem label="Warm-Up" complete={progress.warmupComplete} />
                   <GoalItem label="Learn" complete={progress.learnComplete} />
                   <GoalItem label="Try It" complete={progress.tryItComplete} />
-                  <GoalItem
-                    label="Practice"
-                    complete={progress.practiceComplete}
-                  />
+                  <GoalItem label="Practice" complete={progress.practiceComplete} />
                 </>
               )}
             </div>
@@ -190,9 +169,7 @@ function LessonHero({
         >
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.35)_34%,rgba(254,243,217,0)_68%)]" />
 
-          <div className="pointer-events-none absolute left-8 top-8 text-3xl text-white">
-            ✦
-          </div>
+          <div className="pointer-events-none absolute left-8 top-8 text-3xl text-white">✦</div>
 
           <div className="pointer-events-none absolute right-8 top-10 text-3xl text-[#F7B733]">
             ✦
@@ -210,7 +187,7 @@ function LessonHero({
             <div className="absolute inset-5 rounded-full bg-white/60 blur-2xl" />
 
             <LumaAvatar
-              name={starName || 'Your star'}
+              name={starName || "Your star"}
               chargeCount={completedCount}
               totalCharge={totalCount}
               size="xl"
@@ -221,7 +198,7 @@ function LessonHero({
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default LessonHero
+export default LessonHero;

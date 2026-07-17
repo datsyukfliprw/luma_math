@@ -1,80 +1,70 @@
-import type { PracticeMode } from '../practiceTypes/types'
+import type { PracticeMode } from "../practiceTypes/types";
 
 type PracticeRewardRecord = {
-  completed: boolean
-  rewardId: string
-  completedAt: string
-}
+  completed: boolean;
+  rewardId: string;
+  completedAt: string;
+};
 
-type LessonPracticeRewardState = Partial<Record<PracticeMode, PracticeRewardRecord>>
+type LessonPracticeRewardState = Partial<Record<PracticeMode, PracticeRewardRecord>>;
 
-type StudentPracticeRewardState = Record<string, LessonPracticeRewardState>
+type StudentPracticeRewardState = Record<string, LessonPracticeRewardState>;
 
-const STORAGE_KEY = 'lumamath.practiceRewards'
+const STORAGE_KEY = "lumamath.practiceRewards";
 
 const REWARD_IDS: Record<PracticeMode, string> = {
-  guided: 'common_star_accessory',
-  independent: 'rare_star_accessory',
-  challenge: 'epic_star_accessory',
-}
+  guided: "common_star_accessory",
+  independent: "rare_star_accessory",
+  challenge: "epic_star_accessory",
+};
 
 function readAllPracticeRewards(): Record<string, StudentPracticeRewardState> {
-  if (typeof window === 'undefined') {
-    return {}
+  if (typeof window === "undefined") {
+    return {};
   }
 
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : {}
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
   } catch {
-    return {}
+    return {};
   }
 }
 
-function writeAllPracticeRewards(
-  rewards: Record<string, StudentPracticeRewardState>,
-) {
-  if (typeof window === 'undefined') {
-    return
+function writeAllPracticeRewards(rewards: Record<string, StudentPracticeRewardState>) {
+  if (typeof window === "undefined") {
+    return;
   }
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(rewards))
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(rewards));
 }
 
 export function getPracticeRewardState(
   studentId: string,
   lessonId: string,
 ): LessonPracticeRewardState {
-  const rewards = readAllPracticeRewards()
-  return rewards[studentId]?.[lessonId] ?? {}
+  const rewards = readAllPracticeRewards();
+  return rewards[studentId]?.[lessonId] ?? {};
 }
 
-export function hasPracticeReward(
-  studentId: string,
-  lessonId: string,
-  mode: PracticeMode,
-) {
-  return getPracticeRewardState(studentId, lessonId)[mode]?.completed === true
+export function hasPracticeReward(studentId: string, lessonId: string, mode: PracticeMode) {
+  return getPracticeRewardState(studentId, lessonId)[mode]?.completed === true;
 }
 
-export function markPracticeReward(
-  studentId: string,
-  lessonId: string,
-  mode: PracticeMode,
-) {
-  const rewards = readAllPracticeRewards()
-  const studentRewards = rewards[studentId] ?? {}
-  const lessonRewards = studentRewards[lessonId] ?? {}
+export function markPracticeReward(studentId: string, lessonId: string, mode: PracticeMode) {
+  const rewards = readAllPracticeRewards();
+  const studentRewards = rewards[studentId] ?? {};
+  const lessonRewards = studentRewards[lessonId] ?? {};
 
   if (lessonRewards[mode]?.completed) {
-    return lessonRewards[mode]
+    return lessonRewards[mode];
   }
 
   const rewardRecord: PracticeRewardRecord = {
     completed: true,
     rewardId: REWARD_IDS[mode],
     completedAt: new Date().toISOString(),
-  }
+  };
 
   const nextRewards = {
     ...rewards,
@@ -85,10 +75,10 @@ export function markPracticeReward(
         [mode]: rewardRecord,
       },
     },
-  }
+  };
 
-  writeAllPracticeRewards(nextRewards)
-  return rewardRecord
+  writeAllPracticeRewards(nextRewards);
+  return rewardRecord;
 }
 
 export function getRecommendedNextPracticeMode(
@@ -96,19 +86,19 @@ export function getRecommendedNextPracticeMode(
   lessonId: string,
   currentMode: PracticeMode,
 ): PracticeMode | null {
-  const hasIndependent = hasPracticeReward(studentId, lessonId, 'independent')
-  const hasChallenge = hasPracticeReward(studentId, lessonId, 'challenge')
+  const hasIndependent = hasPracticeReward(studentId, lessonId, "independent");
+  const hasChallenge = hasPracticeReward(studentId, lessonId, "challenge");
 
-  if (currentMode === 'guided') {
-    if (!hasIndependent) return 'independent'
-    if (!hasChallenge) return 'challenge'
-    return null
+  if (currentMode === "guided") {
+    if (!hasIndependent) return "independent";
+    if (!hasChallenge) return "challenge";
+    return null;
   }
 
-  if (currentMode === 'independent') {
-    if (!hasChallenge) return 'challenge'
-    return null
+  if (currentMode === "independent") {
+    if (!hasChallenge) return "challenge";
+    return null;
   }
 
-  return null
+  return null;
 }

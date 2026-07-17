@@ -1,6 +1,6 @@
 type TodaysWordsCardProps = {
-  words: string[]
-}
+  words: string[];
+};
 
 function TodaysWordsCard({ words }: TodaysWordsCardProps) {
   return (
@@ -9,9 +9,7 @@ function TodaysWordsCard({ words }: TodaysWordsCardProps) {
         📖
       </div>
 
-      <h3 className="whitespace-nowrap text-base font-black text-[#073B5A]">
-        Today’s Words
-      </h3>
+      <h3 className="whitespace-nowrap text-base font-black text-[#073B5A]">Today’s Words</h3>
 
       <div className="flex flex-wrap gap-3">
         {words.map((word) => (
@@ -24,7 +22,7 @@ function TodaysWordsCard({ words }: TodaysWordsCardProps) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default TodaysWordsCard
+export default TodaysWordsCard;

@@ -14,13 +14,7 @@
     "Build fluency with 0s, 1s, 2s, 5s, and 10s multiplication facts.",
     "Use number lines, fact families, and word-problem strategies."
   ],
-  "fact_focus": [
-    "×0",
-    "×1",
-    "×2",
-    "×5",
-    "×10"
-  ],
+  "fact_focus": ["×0", "×1", "×2", "×5", "×10"],
   "weeks": [
     {
       "week_number": 1,
@@ -28,118 +22,110 @@
       "weekly_focus": "Students learn that multiplication means counting equal groups. They begin with 0s and 1s facts and connect equal groups to repeated addition and multiplication equations.",
       "lessons": [
         {
-  "day_number": 1,
-  "day_name": "Monday",
-  "lesson_title": "Zero and Identity Rules",
-  "lesson_type": "lesson",
-  "fact_drill": "Introduce the Zero and Identity Rules for 0s and 1s multiplication using flashcards.",
-  "concept": "Show that multiplication is counting equal groups. Avoid abstract shortcuts at this stage.",
-  "practice": "Worksheet matching illustrations of equal groups to multiplication expressions, such as 3 groups of 4 = 3 × 4.",
-  "objective": "Understand that multiplication describes equal groups and begin learning the ×0 and ×1 facts.",
-  "practice_type": "equal_groups",
-  "skills": [
-    "equal_groups",
-    "multiplication_expressions",
-    "zero_property",
-    "identity_property"
-  ],
-  "lesson_video_url": "",
-  "worksheet_url": "",
-  "quiz_question_count": 5,
-  "warmup": {
-    "title": "Luma Charge",
-    "type": "skip_counting_review",
-    "question_count": 5,
-    "instructions": "Warm up with quick review questions before today’s lesson.",
-    "questions": [
-      {
-        "id": "g3-u1-w1-d1-warmup-1",
-        "prompt": "Count by 1s: 1, 2, 3, __",
-        "correct_answer": "4",
-        "hint": "Count one more after 3.",
-        "skill": "skip_counting"
-      },
-      {
-        "id": "g3-u1-w1-d1-warmup-2",
-        "prompt": "Count by 2s: 2, 4, 6, __",
-        "correct_answer": "8",
-        "hint": "Count two more after 6.",
-        "skill": "skip_counting"
-      },
-      {
-        "id": "g3-u1-w1-d1-warmup-3",
-        "prompt": "What is 5 + 0?",
-        "correct_answer": "5",
-        "hint": "Adding zero keeps the number the same.",
-        "skill": "zero_addition_review"
-      },
-      {
-        "id": "g3-u1-w1-d1-warmup-4",
-        "prompt": "What is 7 + 1?",
-        "correct_answer": "8",
-        "hint": "Adding one means counting up one.",
-        "skill": "one_more_review"
-      },
-      {
-        "id": "g3-u1-w1-d1-warmup-5",
-        "prompt": "There are 3 groups with 1 star in each group. How many stars total?",
-        "correct_answer": "3",
-        "hint": "One in each group means the total matches the number of groups.",
-        "skill": "identity_property_preview"
-      }
-    ]
-  },
-  "learn": {
-    "title": "Zero and One in Multiplication",
-    "teaching_points": [
-      "Multiplication can describe equal groups.",
-      "When each group has 0 items, the total is 0.",
-      "When each group has 1 item, the total is the number of groups.",
-      "The ×0 and ×1 facts are patterns students can see with equal groups."
-    ],
-    "example": {
-      "prompt": "There are 4 groups with 1 star in each group.",
-      "visual_type": "equal_groups",
-      "groups": 4,
-      "items_per_group": 1,
-      "equation": "4 × 1 = 4"
-    },
-    "vocabulary": [
-      "equal groups",
-      "factor",
-      "product",
-      "zero rule",
-      "identity rule"
-    ]
-  },
-  "try_it": {
-    "title": "Try one together",
-    "type": "guided_equal_groups",
-    "prompt": "There are 5 groups with 1 star in each group. How many stars are there?",
-    "correct_answer": "5",
-    "hint": "Count one star in each group. There are 5 groups.",
-    "visual_data": {
-      "groups": 5,
-      "items_per_group": 1
-    }
-  },
-  "practice_block": {
-    "title": "Practice Time",
-    "type": "equal_groups",
-    "question_count": 8,
-    "instructions": "Use equal groups to solve multiplication problems with 0s and 1s."
-  },
-  "flashcards": {
-    "enabled": true,
-    "required": false,
-    "title": "0s and 1s Fact Fluency",
-    "type": "zero_one_facts",
-    "card_count": 10,
-    "instructions": "Practice ×0 and ×1 facts when you want extra fluency review."
-  }
-}
-
-        ,
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Zero and Identity Rules",
+          "lesson_type": "lesson",
+          "fact_drill": "Introduce the Zero and Identity Rules for 0s and 1s multiplication using flashcards.",
+          "concept": "Show that multiplication is counting equal groups. Avoid abstract shortcuts at this stage.",
+          "practice": "Worksheet matching illustrations of equal groups to multiplication expressions, such as 3 groups of 4 = 3 × 4.",
+          "objective": "Understand that multiplication describes equal groups and begin learning the ×0 and ×1 facts.",
+          "practice_type": "equal_groups",
+          "skills": [
+            "equal_groups",
+            "multiplication_expressions",
+            "zero_property",
+            "identity_property"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "skip_counting_review",
+            "question_count": 5,
+            "instructions": "Warm up with quick review questions before today’s lesson.",
+            "questions": [
+              {
+                "id": "g3-u1-w1-d1-warmup-1",
+                "prompt": "Count by 1s: 1, 2, 3, __",
+                "correct_answer": "4",
+                "hint": "Count one more after 3.",
+                "skill": "skip_counting"
+              },
+              {
+                "id": "g3-u1-w1-d1-warmup-2",
+                "prompt": "Count by 2s: 2, 4, 6, __",
+                "correct_answer": "8",
+                "hint": "Count two more after 6.",
+                "skill": "skip_counting"
+              },
+              {
+                "id": "g3-u1-w1-d1-warmup-3",
+                "prompt": "What is 5 + 0?",
+                "correct_answer": "5",
+                "hint": "Adding zero keeps the number the same.",
+                "skill": "zero_addition_review"
+              },
+              {
+                "id": "g3-u1-w1-d1-warmup-4",
+                "prompt": "What is 7 + 1?",
+                "correct_answer": "8",
+                "hint": "Adding one means counting up one.",
+                "skill": "one_more_review"
+              },
+              {
+                "id": "g3-u1-w1-d1-warmup-5",
+                "prompt": "There are 3 groups with 1 star in each group. How many stars total?",
+                "correct_answer": "3",
+                "hint": "One in each group means the total matches the number of groups.",
+                "skill": "identity_property_preview"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Zero and One in Multiplication",
+            "teaching_points": [
+              "Multiplication can describe equal groups.",
+              "When each group has 0 items, the total is 0.",
+              "When each group has 1 item, the total is the number of groups.",
+              "The ×0 and ×1 facts are patterns students can see with equal groups."
+            ],
+            "example": {
+              "prompt": "There are 4 groups with 1 star in each group.",
+              "visual_type": "equal_groups",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "4 × 1 = 4"
+            },
+            "vocabulary": ["equal groups", "factor", "product", "zero rule", "identity rule"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "guided_equal_groups",
+            "prompt": "There are 5 groups with 1 star in each group. How many stars are there?",
+            "correct_answer": "5",
+            "hint": "Count one star in each group. There are 5 groups.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "equal_groups",
+            "question_count": 8,
+            "instructions": "Use equal groups to solve multiplication problems with 0s and 1s."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "0s and 1s Fact Fluency",
+            "type": "zero_one_facts",
+            "card_count": 10,
+            "instructions": "Practice ×0 and ×1 facts when you want extra fluency review."
+          }
+        },
         {
           "day_number": 2,
           "day_name": "Tuesday",
@@ -150,11 +136,7 @@
           "practice": "Worksheet converting repeated addition strings into multiplication equations.",
           "objective": "Connect repeated addition to multiplication equations.",
           "practice_type": "repeated_addition_to_multiplication",
-          "skills": [
-            "repeated_addition",
-            "equal_groups",
-            "multiplication_expressions"
-          ],
+          "skills": ["repeated_addition", "equal_groups", "multiplication_expressions"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -169,12 +151,7 @@
           "practice": "Word problem worksheet identifying factors and products within simple text narratives.",
           "objective": "Identify factors and products in multiplication equations and word problems.",
           "practice_type": "factor_product_identification",
-          "skills": [
-            "factors",
-            "products",
-            "multiplication_vocabulary",
-            "word_problems"
-          ],
+          "skills": ["factors", "products", "multiplication_vocabulary", "word_problems"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -230,10 +207,7 @@
           "timed_test": {
             "title": "3-Minute Fluency Drill",
             "duration_minutes": 3,
-            "facts": [
-              "×0",
-              "×1"
-            ]
+            "facts": ["×0", "×1"]
           }
         }
       ]
@@ -253,13 +227,7 @@
           "practice": "Worksheet identifying the number of rows and columns in printed dot arrays.",
           "objective": "Use arrays to model multiplication as rows and columns.",
           "practice_type": "array_rows_columns",
-          "skills": [
-            "arrays",
-            "rows",
-            "columns",
-            "multiplication_models",
-            "twos_facts"
-          ],
+          "skills": ["arrays", "rows", "columns", "multiplication_models", "twos_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -274,12 +242,7 @@
           "practice": "Worksheet matching equation pairs using the Commutative Property, such as 2 × 6 = 6 × 2.",
           "objective": "Understand that changing the order of factors does not change the product.",
           "practice_type": "commutative_property_matching",
-          "skills": [
-            "commutative_property",
-            "arrays",
-            "equivalent_equations",
-            "twos_facts"
-          ],
+          "skills": ["commutative_property", "arrays", "equivalent_equations", "twos_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -294,13 +257,7 @@
           "practice": "Worksheet requiring the student to draw distinct arrays for specific target multiplication expressions.",
           "objective": "Identify rows and columns in arrays and draw arrays for multiplication facts.",
           "practice_type": "draw_arrays",
-          "skills": [
-            "arrays",
-            "rows",
-            "columns",
-            "drawing_models",
-            "twos_facts"
-          ],
+          "skills": ["arrays", "rows", "columns", "drawing_models", "twos_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -315,13 +272,7 @@
           "practice": "Array application and word problem review sheet.",
           "objective": "Distinguish true arrays from uneven arrangements and apply array thinking to word problems.",
           "practice_type": "valid_invalid_arrays",
-          "skills": [
-            "arrays",
-            "equal_rows",
-            "error_analysis",
-            "word_problems",
-            "twos_facts"
-          ],
+          "skills": ["arrays", "equal_rows", "error_analysis", "word_problems", "twos_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -336,22 +287,14 @@
           "practice": "Written weekly test assessing array generation and Commutative Property matching.",
           "objective": "Demonstrate understanding of arrays, rows, columns, and the Commutative Property.",
           "practice_type": "week_2_evaluation",
-          "skills": [
-            "arrays",
-            "rows",
-            "columns",
-            "commutative_property",
-            "twos_facts"
-          ],
+          "skills": ["arrays", "rows", "columns", "commutative_property", "twos_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 10,
           "timed_test": {
             "title": "3-Minute Fluency Drill",
             "duration_minutes": 3,
-            "facts": [
-              "×2"
-            ]
+            "facts": ["×2"]
           }
         }
       ]
@@ -371,12 +314,7 @@
           "practice": "Worksheet dividing visual items into equal, circled sets.",
           "objective": "Understand division as sharing a total equally among groups.",
           "practice_type": "fair_sharing_division",
-          "skills": [
-            "division",
-            "fair_sharing",
-            "equal_groups",
-            "fives_facts"
-          ],
+          "skills": ["division", "fair_sharing", "equal_groups", "fives_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -391,13 +329,7 @@
           "practice": "Worksheet identifying dividends, divisors, and quotients in equations.",
           "objective": "Identify the dividend, divisor, and quotient in division equations.",
           "practice_type": "division_vocabulary",
-          "skills": [
-            "division",
-            "dividend",
-            "divisor",
-            "quotient",
-            "math_vocabulary"
-          ],
+          "skills": ["division", "dividend", "divisor", "quotient", "math_vocabulary"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -412,12 +344,7 @@
           "practice": "Word problem worksheet distinguishing fair-share division from measurement division.",
           "objective": "Understand division as finding how many equal-size groups can be made from a total.",
           "practice_type": "measurement_division",
-          "skills": [
-            "division",
-            "measurement_division",
-            "word_problems",
-            "fives_facts"
-          ],
+          "skills": ["division", "measurement_division", "word_problems", "fives_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -432,13 +359,7 @@
           "practice": "Mid-unit review worksheet covering equal groups, arrays, and basic sharing division.",
           "objective": "Use drawings to model division and review equal groups and arrays.",
           "practice_type": "division_drawings",
-          "skills": [
-            "division",
-            "drawing_models",
-            "equal_groups",
-            "arrays",
-            "fives_facts"
-          ],
+          "skills": ["division", "drawing_models", "equal_groups", "arrays", "fives_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -453,23 +374,14 @@
           "practice": "Written weekly test evaluating division vocabulary, structure, and sharing calculations.",
           "objective": "Demonstrate understanding of fair sharing division and ×5 fact fluency.",
           "practice_type": "week_3_evaluation",
-          "skills": [
-            "division",
-            "fair_sharing",
-            "dividend",
-            "divisor",
-            "quotient",
-            "fives_facts"
-          ],
+          "skills": ["division", "fair_sharing", "dividend", "divisor", "quotient", "fives_facts"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 10,
           "timed_test": {
             "title": "3-Minute Fluency Drill",
             "duration_minutes": 3,
-            "facts": [
-              "×5"
-            ]
+            "facts": ["×5"]
           }
         }
       ]
@@ -510,13 +422,7 @@
           "practice": "Worksheet generating two multiplication sentences and two division sentences for given arrays.",
           "objective": "Use arrays to generate related multiplication and division facts.",
           "practice_type": "array_fact_families",
-          "skills": [
-            "arrays",
-            "fact_families",
-            "inverse_operations",
-            "multiplication",
-            "division"
-          ],
+          "skills": ["arrays", "fact_families", "inverse_operations", "multiplication", "division"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -586,13 +492,7 @@
           "timed_test": {
             "title": "3-Minute Fluency Drill",
             "duration_minutes": 3,
-            "facts": [
-              "×0",
-              "×1",
-              "×2",
-              "×5",
-              "×10"
-            ]
+            "facts": ["×0", "×1", "×2", "×5", "×10"]
           }
         }
       ]
@@ -654,12 +554,7 @@
           "practice": "Real-world scenario problem sheet.",
           "objective": "Identify whether a word problem is asking for a total product or an unknown group size.",
           "practice_type": "unknown_product_group_size",
-          "skills": [
-            "word_problems",
-            "unknown_product",
-            "unknown_group_size",
-            "fact_families"
-          ],
+          "skills": ["word_problems", "unknown_product", "unknown_group_size", "fact_families"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5
@@ -710,13 +605,7 @@
           "timed_test": {
             "title": "5-Minute Comprehensive Fluency Exam",
             "duration_minutes": 5,
-            "facts": [
-              "×0",
-              "×1",
-              "×2",
-              "×5",
-              "×10"
-            ]
+            "facts": ["×0", "×1", "×2", "×5", "×10"]
           }
         }
       ]

@@ -1,14 +1,14 @@
-import { generateArrayRowsColumnsProblems } from './arrayRowsColumns'
-import { generateCommutativePropertyProblems } from './commutativeProperty'
-import { generateDrawArraysProblems } from './drawArrays'
-import { generateValidInvalidArraysProblems } from './validInvalidArrays'
-import type { PracticeProblem } from './types'
+import { generateArrayRowsColumnsProblems } from "./arrayRowsColumns";
+import { generateCommutativePropertyProblems } from "./commutativeProperty";
+import { generateDrawArraysProblems } from "./drawArrays";
+import { generateValidInvalidArraysProblems } from "./validInvalidArrays";
+import type { PracticeProblem } from "./types";
 
 export function generateWeek2EvaluationProblems(): PracticeProblem[] {
-  const arrayRowsColumns = generateArrayRowsColumnsProblems()
-  const commutativeProperty = generateCommutativePropertyProblems()
-  const drawArrays = generateDrawArraysProblems()
-  const validInvalidArrays = generateValidInvalidArraysProblems()
+  const arrayRowsColumns = generateArrayRowsColumnsProblems();
+  const commutativeProperty = generateCommutativePropertyProblems();
+  const drawArrays = generateDrawArraysProblems();
+  const validInvalidArrays = generateValidInvalidArraysProblems();
 
   return [
     arrayRowsColumns[0],
@@ -23,5 +23,5 @@ export function generateWeek2EvaluationProblems(): PracticeProblem[] {
     commutativeProperty[2],
     drawArrays[2],
     validInvalidArrays[2],
-  ]
+  ];
 }

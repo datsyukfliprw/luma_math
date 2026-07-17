@@ -1,37 +1,37 @@
 export type LessonProgress = {
-  lessonId: string
-  warmupComplete: boolean
-  learnComplete: boolean
-  tryItComplete: boolean
-  practiceComplete: boolean
-  lessonComplete: boolean
-  correctAnswers: number
-  totalQuestions: number
-  updatedAt: string
-}
+  lessonId: string;
+  warmupComplete: boolean;
+  learnComplete: boolean;
+  tryItComplete: boolean;
+  practiceComplete: boolean;
+  lessonComplete: boolean;
+  correctAnswers: number;
+  totalQuestions: number;
+  updatedAt: string;
+};
 
-const STORAGE_KEY = 'lumamath_lesson_progress'
+const STORAGE_KEY = "lumamath_lesson_progress";
 
 function getAllProgress(): Record<string, LessonProgress> {
-  const saved = window.localStorage.getItem(STORAGE_KEY)
+  const saved = window.localStorage.getItem(STORAGE_KEY);
 
   if (!saved) {
-    return {}
+    return {};
   }
 
   try {
-    return JSON.parse(saved) as Record<string, LessonProgress>
+    return JSON.parse(saved) as Record<string, LessonProgress>;
   } catch {
-    return {}
+    return {};
   }
 }
 
 function saveAllProgress(progress: Record<string, LessonProgress>) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress))
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
 }
 
 export function getLessonProgress(lessonId: string): LessonProgress {
-  const allProgress = getAllProgress()
+  const allProgress = getAllProgress();
 
   return (
     allProgress[lessonId] ?? {
@@ -45,36 +45,36 @@ export function getLessonProgress(lessonId: string): LessonProgress {
       totalQuestions: 0,
       updatedAt: new Date().toISOString(),
     }
-  )
+  );
 }
 
 export function updateLessonProgress(
   lessonId: string,
-  updates: Partial<Omit<LessonProgress, 'lessonId' | 'updatedAt'>>,
+  updates: Partial<Omit<LessonProgress, "lessonId" | "updatedAt">>,
 ): LessonProgress {
-  const allProgress = getAllProgress()
-  const currentProgress = getLessonProgress(lessonId)
+  const allProgress = getAllProgress();
+  const currentProgress = getLessonProgress(lessonId);
 
   const nextProgress: LessonProgress = {
     ...currentProgress,
     ...updates,
     updatedAt: new Date().toISOString(),
-  }
+  };
 
   nextProgress.lessonComplete =
     nextProgress.warmupComplete &&
     nextProgress.learnComplete &&
     nextProgress.tryItComplete &&
-    nextProgress.practiceComplete
+    nextProgress.practiceComplete;
 
-  allProgress[lessonId] = nextProgress
-  saveAllProgress(allProgress)
+  allProgress[lessonId] = nextProgress;
+  saveAllProgress(allProgress);
 
-  return nextProgress
+  return nextProgress;
 }
 
 export function resetLessonProgress(lessonId: string) {
-  const allProgress = getAllProgress()
-  delete allProgress[lessonId]
-  saveAllProgress(allProgress)
+  const allProgress = getAllProgress();
+  delete allProgress[lessonId];
+  saveAllProgress(allProgress);
 }

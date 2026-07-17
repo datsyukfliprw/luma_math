@@ -28,9 +28,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
 
   const totalStars = groupCounts.reduce((sum, count) => sum + count, 0);
   const isZeroRound = currentRound.targetCount === 0;
-  const isCorrect = groupCounts.every(
-    (count) => count === currentRound.targetCount,
-  );
+  const isCorrect = groupCounts.every((count) => count === currentRound.targetCount);
   const canMoveNextRound = hasChecked && isCorrect;
 
   // @SECTION BUILDIT_HELPERS
@@ -59,9 +57,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
           return count;
         }
 
-        return count === currentRound.targetCount
-          ? 0
-          : currentRound.targetCount;
+        return count === currentRound.targetCount ? 0 : currentRound.targetCount;
       }),
     );
   }
@@ -112,9 +108,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
             </div>
 
             <div>
-              <h2 className="text-2xl font-black text-[#073B5A]">
-                Build It Together
-              </h2>
+              <h2 className="text-2xl font-black text-[#073B5A]">Build It Together</h2>
 
               <p className="mt-1 text-base font-bold leading-relaxed text-[#275875]">
                 {currentRound.instruction}
@@ -155,11 +149,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                   <span className="text-4xl drop-shadow-sm">⭐</span>
                 ) : isZeroRound ? (
                   <div className="text-center">
-                    <Sparkles
-                      size={17}
-                      strokeWidth={2.8}
-                      className="mx-auto mb-2 text-[#A9D7E1]"
-                    />
+                    <Sparkles size={17} strokeWidth={2.8} className="mx-auto mb-2 text-[#A9D7E1]" />
                     <p className="text-sm font-black text-[#6D9AB1]">Empty</p>
                   </div>
                 ) : (
@@ -177,9 +167,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
         >
           <div className="flex items-center justify-center gap-3 px-4 py-3">
             <span className="text-2xl text-[#00AFB9]">👥</span>
-            <p className="text-base font-black text-[#073B5A]">
-              {currentRound.groups} groups
-            </p>
+            <p className="text-base font-black text-[#073B5A]">{currentRound.groups} groups</p>
           </div>
 
           <div className="flex items-center justify-center gap-3 border-t border-[#073B5A]/10 px-4 py-3 md:border-l md:border-t-0">
@@ -193,9 +181,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-base font-black text-white">
               =
             </span>
-            <p className="text-base font-black text-[#073B5A]">
-              {totalStars} total
-            </p>
+            <p className="text-base font-black text-[#073B5A]">{totalStars} total</p>
           </div>
         </div>
 
@@ -251,9 +237,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
               </div>
 
               <div data-name="build-it-result-text">
-                <h2 className="text-lg font-black text-[#073B5A]">
-                  What did you build?
-                </h2>
+                <h2 className="text-lg font-black text-[#073B5A]">What did you build?</h2>
 
                 <p className="mt-1 text-sm font-bold leading-relaxed text-[#275875]">
                   {hasChecked && isCorrect
@@ -300,9 +284,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                         : `${currentRound.groups} groups of 1`}
                     </h3>
 
-                    <p className="mt-1 text-sm font-bold text-[#355F7C]">
-                      {currentRound.summary}
-                    </p>
+                    <p className="mt-1 text-sm font-bold text-[#355F7C]">{currentRound.summary}</p>
                   </div>
                 </div>
 
@@ -343,9 +325,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
         >
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Build Progress
-              </h2>
+              <h2 className="text-xl font-black text-[#073B5A]">Build Progress</h2>
 
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 Round {roundIndex + 1} of {buildRounds.length}
@@ -375,9 +355,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                         : "border-[#073B5A]/10 bg-white"
                   }`}
                 >
-                  <p className="text-sm font-black text-[#073B5A]">
-                    {isDone ? "✓" : index + 1}
-                  </p>
+                  <p className="text-sm font-black text-[#073B5A]">{isDone ? "✓" : index + 1}</p>
 
                   <p className="mt-1 text-[0.68rem] font-bold text-[#073B5A]/65">
                     {round.groups}×{round.targetCount}
@@ -395,14 +373,8 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
         >
           <div className="relative z-10">
             <div className="mb-3 flex items-center gap-2">
-              <Star
-                size={22}
-                strokeWidth={2.7}
-                className="fill-[#F7B733] text-[#F7B733]"
-              />
-              <p className="text-lg font-black text-[#C78300]">
-                {starName}'s Tip
-              </p>
+              <Star size={22} strokeWidth={2.7} className="fill-[#F7B733] text-[#F7B733]" />
+              <p className="text-lg font-black text-[#C78300]">{starName}'s Tip</p>
             </div>
 
             <div className="w-fit rounded-2xl bg-white px-5 py-4 text-xl font-black leading-tight text-[#073B5A] shadow-sm">
@@ -438,9 +410,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
             </div>
 
             <div>
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Math Pattern
-              </h2>
+              <h2 className="text-xl font-black text-[#073B5A]">Math Pattern</h2>
 
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 Notice the rule
@@ -449,9 +419,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
           </div>
 
           <div className="rounded-2xl bg-white p-4">
-            <p className="text-sm font-black text-[#073B5A]">
-              {currentRound.pattern}
-            </p>
+            <p className="text-sm font-black text-[#073B5A]">{currentRound.pattern}</p>
 
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <div className="rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center">
@@ -460,9 +428,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                   {currentRound.groups * currentRound.targetCount}
                 </p>
 
-                <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
-                  This round
-                </p>
+                <p className="mt-1 text-xs font-bold text-[#073B5A]/65">This round</p>
               </div>
 
               <div className="rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center">
@@ -470,9 +436,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                   {currentRound.targetCount === 0 ? "9 × 0 = 0" : "7 × 1 = 7"}
                 </p>
 
-                <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
-                  Same pattern
-                </p>
+                <p className="mt-1 text-xs font-bold text-[#073B5A]/65">Same pattern</p>
               </div>
             </div>
           </div>

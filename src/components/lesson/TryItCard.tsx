@@ -1,12 +1,13 @@
 // @SECTION TRYIT_CARD_TYPES
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import { requireLessonExperience } from "../../data/lessonExperience";
 
 type TryItCardProps = {
-  lessonId: string
-  practice: string
-  practiceType: string
-  isComplete?: boolean
-}
+  lessonId: string;
+  practice: string;
+  practiceType: string;
+  isComplete?: boolean;
+};
 
 // @SECTION TRYIT_CARD
 function TryItCard({
@@ -15,7 +16,9 @@ function TryItCard({
   practiceType: _practiceType,
   isComplete = false,
 }: TryItCardProps) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const lesson = requireLessonExperience(lessonId);
+  const preview = lesson.tryIt.problems[0];
 
   return (
     <button
@@ -29,10 +32,10 @@ function TryItCard({
         <div className="flex items-start gap-3">
           <span
             className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-black text-white ${
-              isComplete ? 'bg-[#00AFB9]' : 'bg-[#073B5A]'
+              isComplete ? "bg-[#00AFB9]" : "bg-[#073B5A]"
             }`}
           >
-            {isComplete ? '✓' : '3'}
+            {isComplete ? "✓" : "3"}
           </span>
 
           <div>
@@ -50,9 +53,7 @@ function TryItCard({
       </div>
 
       {/* @SECTION TRYIT_CARD_COPY */}
-      <p className="mb-4 text-sm font-semibold leading-relaxed text-[#073B5A]">
-        Solve one guided word problem with support before practice.
-      </p>
+      <p className="mb-4 text-sm font-semibold leading-relaxed text-[#073B5A]">{preview.tip}</p>
 
       {/* @SECTION TRYIT_CARD_PREVIEW */}
       <div className="rounded-2xl border border-[#00AFB9]/15 bg-[#E9F7F8] p-3">
@@ -60,17 +61,15 @@ function TryItCard({
           Try It Together
         </p>
 
-        <p className="mt-1 text-sm font-black leading-relaxed text-[#073B5A]">
-          Find groups, in each, and the matching equation.
-        </p>
+        <p className="mt-1 text-sm font-black leading-relaxed text-[#073B5A]">{preview.question}</p>
 
         <div className="mt-3 flex flex-wrap items-center gap-2 text-xl">
-          {Array.from({ length: 5 }).map((_, index) => (
+          {Array.from({ length: Number(preview.groups) }).map((_, index) => (
             <span
               key={index}
               className="flex h-9 w-9 items-center justify-center rounded-xl bg-white shadow-inner"
             >
-              🌱
+              {preview.visualEmoji}
             </span>
           ))}
         </div>
@@ -80,16 +79,14 @@ function TryItCard({
       <div className="mt-auto pt-4">
         <div
           className={`inline-flex rounded-xl px-5 py-2 text-sm font-black shadow-sm ${
-            isComplete
-              ? 'bg-[#E9F7F8] text-[#0081A7]'
-              : 'bg-[#00AFB9] text-white'
+            isComplete ? "bg-[#E9F7F8] text-[#0081A7]" : "bg-[#00AFB9] text-white"
           }`}
         >
-          {isComplete ? 'Review Try It ›' : 'Start Try It ›'}
+          {isComplete ? "Review Try It ›" : "Start Try It ›"}
         </div>
       </div>
     </button>
-  )
+  );
 }
 
-export default TryItCard
+export default TryItCard;

@@ -6,6 +6,7 @@ import {
   getMatchingCards,
   getVocabularyWords,
   type LearnLesson,
+  type MatchingCard,
 } from "../../lib/learnContent";
 
 // @SECTION WORDS_TYPES
@@ -52,9 +53,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
     }
 
     if (!selectedWord) {
-      setMatchMessage(
-        "Pick a word choice first, then tap its matching picture.",
-      );
+      setMatchMessage("Pick a word choice first, then tap its matching picture.");
       return;
     }
 
@@ -69,70 +68,31 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
       return;
     }
 
-    setMatchMessage(
-      `Almost! Try matching "${selectedWord}" to another picture.`,
-    );
+    setMatchMessage(`Almost! Try matching "${selectedWord}" to another picture.`);
   }
 
   // @SECTION WORDS_MATCHING_VISUAL_RENDERER
-  function renderMatchingVisual(cardId: string) {
-    if (cardId === "equal-groups-visual") {
-      return (
-        <div className="grid grid-cols-2 gap-1.5">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <div
-              key={index}
-              className="flex h-8 w-8 items-center justify-center rounded-xl border border-[#00AFB9]/20 bg-white text-base shadow-inner"
-            >
-              ⭐
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    if (cardId === "repeated-addition-visual") {
-      return (
-        <div className="flex flex-wrap items-center justify-center gap-1 text-base font-black text-[#073B5A]">
-          {["1", "+", "1", "+", "1", "+", "1"].map((piece, index) => (
-            <span
-              key={`${piece}-${index}`}
-              className={`flex h-7 min-w-7 items-center justify-center rounded-lg ${
-                piece === "+"
-                  ? "bg-transparent text-[#9AB5C7]"
-                  : "bg-white px-1.5 shadow-inner"
-              }`}
-            >
-              {piece}
-            </span>
-          ))}
-        </div>
-      );
-    }
-
-    if (cardId === "factor-visual") {
-      return (
-        <div className="flex items-center justify-center gap-1.5 text-lg font-black text-[#073B5A]">
-          <span className="rounded-xl bg-white px-3 py-1.5 text-[#F07167] shadow-inner">
-            4
-          </span>
-          <span className="text-[#9AB5C7]">×</span>
-          <span className="rounded-xl bg-white px-3 py-1.5 text-[#F07167] shadow-inner">
-            1
-          </span>
-        </div>
-      );
-    }
-
+  function renderMatchingVisual(card: MatchingCard) {
     return (
-      <div className="flex items-center justify-center gap-1.5 text-lg font-black text-[#073B5A]">
-        <span>4</span>
-        <span className="text-[#9AB5C7]">×</span>
-        <span>1</span>
-        <span className="text-[#9AB5C7]">=</span>
-        <span className="rounded-xl bg-white px-3 py-1.5 text-[#00AFB9] shadow-inner">
-          4
-        </span>
+      <div className="flex flex-col items-center justify-center gap-2">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 text-base font-black text-[#073B5A]">
+          {card.visual.map((piece, index) => {
+            const isOperator = piece === "+" || piece === "×" || piece === "=";
+
+            return (
+              <span
+                key={`${card.id}-${piece}-${index}`}
+                className={`flex min-h-7 min-w-7 items-center justify-center rounded-lg px-1.5 ${
+                  isOperator ? "bg-transparent text-[#9AB5C7]" : "bg-white shadow-inner"
+                }`}
+              >
+                {piece}
+              </span>
+            );
+          })}
+        </div>
+
+        <p className="text-center text-xs font-black text-[#0081A7]">{card.equation}</p>
       </div>
     );
   }
@@ -153,18 +113,13 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
             data-name="words-header-and-navigation-top-row"
             className="mb-3 flex flex-wrap items-start justify-between gap-3"
           >
-            <div
-              data-name="words-header-title-group"
-              className="flex items-start gap-3"
-            >
+            <div data-name="words-header-title-group" className="flex items-start gap-3">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-[#00AFB9]">
                 <BookOpen size={26} strokeWidth={2.7} />
               </div>
 
               <div>
-                <h2 className="text-2xl font-black text-[#073B5A]">
-                  Math Words
-                </h2>
+                <h2 className="text-2xl font-black text-[#073B5A]">Math Words</h2>
                 <p className="mt-0.5 text-sm font-bold leading-relaxed text-[#275875]">
                   Learn each word, then match it to the picture it explains.
                 </p>
@@ -176,10 +131,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
             </div>
           </div>
 
-          <div
-            data-name="words-internal-step-tabs"
-            className="grid gap-2 sm:grid-cols-2"
-          >
+          <div data-name="words-internal-step-tabs" className="grid gap-2 sm:grid-cols-2">
             <button
               type="button"
               onClick={() => setWordsStep("learn")}
@@ -217,10 +169,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
         {wordsStep === "learn" ? (
           <>
             {/* @SECTION WORDS_LEARN_CARDS */}
-            <div
-              data-name="words-vocabulary-grid"
-              className="grid gap-2.5 md:grid-cols-2"
-            >
+            <div data-name="words-vocabulary-grid" className="grid gap-2.5 md:grid-cols-2">
               {vocabularyWords.map((item, index) => (
                 <section
                   key={item.word}
@@ -238,9 +187,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
                         Word {index + 1}
                       </p>
 
-                      <h3 className="mt-0.5 text-xl font-black text-[#073B5A]">
-                        {item.word}
-                      </h3>
+                      <h3 className="mt-0.5 text-xl font-black text-[#073B5A]">{item.word}</h3>
                     </div>
 
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white text-base font-black text-[#00AFB9] shadow-sm">
@@ -287,9 +234,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
                       Example
                     </p>
 
-                    <p className="text-xs font-black text-[#073B5A]">
-                      {item.example}
-                    </p>
+                    <p className="text-xs font-black text-[#073B5A]">{item.example}</p>
                   </div>
                 </section>
               ))}
@@ -318,21 +263,14 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
                 {isMatchingComplete && (
                   <div className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-black text-[#C78300] shadow-sm">
                     Full charge!
-                    <Sparkles
-                      size={18}
-                      strokeWidth={2.7}
-                      className="text-[#F7B733]"
-                    />
+                    <Sparkles size={18} strokeWidth={2.7} className="text-[#F7B733]" />
                   </div>
                 )}
               </div>
             </section>
 
             {/* @SECTION WORDS_MATCH_VISUALS */}
-            <section
-              data-name="words-matching-visual-grid"
-              className="grid gap-2.5 sm:grid-cols-2"
-            >
+            <section data-name="words-matching-visual-grid" className="grid gap-2.5 sm:grid-cols-2">
               {matchingCards.map((card, index) => {
                 const matchedWord = matches[card.id];
                 const isMatched = Boolean(matchedWord);
@@ -355,16 +293,12 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
                         <p className="text-[0.62rem] font-black uppercase tracking-[0.14em] text-[#0081A7]">
                           Picture {index + 1}
                         </p>
-                        <h3 className="mt-0.5 text-sm font-black text-[#073B5A]">
-                          {card.title}
-                        </h3>
+                        <h3 className="mt-0.5 text-sm font-black text-[#073B5A]">{card.title}</h3>
                       </div>
 
                       <div
                         className={`rounded-full px-3 py-1 text-xs font-black shadow-sm ${
-                          isMatched
-                            ? "bg-white text-[#0081A7]"
-                            : "bg-white/75 text-[#275875]/60"
+                          isMatched ? "bg-white text-[#0081A7]" : "bg-white/75 text-[#275875]/60"
                         }`}
                       >
                         {matchedWord ? `✓ ${matchedWord}` : "Tap"}
@@ -375,7 +309,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
                       data-name={`words-matching-visual-card-${index + 1}-picture`}
                       className="flex min-h-[54px] items-center justify-center rounded-2xl bg-white/80 px-3 py-2 shadow-inner"
                     >
-                      {renderMatchingVisual(card.id)}
+                      {renderMatchingVisual(card)}
                     </div>
                   </button>
                 );
@@ -397,10 +331,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
                     type="button"
                     onClick={() => chooseWord(item.word)}
                     disabled={isMatched}
-                    data-name={`words-matching-word-${item.word.replaceAll(
-                      " ",
-                      "-",
-                    )}`}
+                    data-name={`words-matching-word-${item.word.replaceAll(" ", "-")}`}
                     className={`rounded-2xl border px-4 py-2.5 text-left shadow-sm transition ${
                       isMatched
                         ? "cursor-default border-[#00AFB9]/25 bg-[#E9F7F8] text-[#0081A7]"
@@ -436,28 +367,16 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
           className="relative min-h-[155px] overflow-hidden rounded-[1.5rem] border border-[#F7B733]/30 bg-[#FFF3D9] p-5 shadow-sm"
         >
           <div className="relative z-10">
-            <div
-              data-name="words-luma-charge-title-row"
-              className="mb-3 flex items-center gap-2"
-            >
-              <Star
-                size={22}
-                strokeWidth={2.7}
-                className="fill-[#F7B733] text-[#F7B733]"
-              />
+            <div data-name="words-luma-charge-title-row" className="mb-3 flex items-center gap-2">
+              <Star size={22} strokeWidth={2.7} className="fill-[#F7B733] text-[#F7B733]" />
 
               <p className="text-lg font-black text-[#C78300]">
-                {wordsStep === "match"
-                  ? `${starName}’s Charge`
-                  : `${starName} Tip`}
+                {wordsStep === "match" ? `${starName}’s Charge` : `${starName} Tip`}
               </p>
             </div>
 
             {wordsStep === "match" ? (
-              <div
-                data-name="words-luma-charge-content"
-                className="max-w-[190px]"
-              >
+              <div data-name="words-luma-charge-content" className="max-w-[190px]">
                 <div
                   data-name="words-luma-charge-progress-box"
                   className="inline-flex items-end gap-2 rounded-2xl bg-white px-4 py-3 shadow-sm"
@@ -523,9 +442,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
             </div>
 
             <div>
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Say It Like This
-              </h2>
+              <h2 className="text-xl font-black text-[#073B5A]">Say It Like This</h2>
 
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 Math talk
@@ -537,17 +454,13 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
             <div className="rounded-2xl border border-[#00AFB9]/20 bg-[#E9F7F8] px-4 py-3">
               <p className="text-sm font-black text-[#0081A7]">Say it</p>
 
-              <p className="mt-1 text-xl font-black text-[#073B5A]">
-                4 groups of 1
-              </p>
+              <p className="mt-1 text-xl font-black text-[#073B5A]">4 groups of 1</p>
             </div>
 
             <div className="rounded-2xl border border-[#073B5A]/10 bg-[#F8FBFB] px-4 py-3">
               <p className="text-sm font-black text-[#0081A7]">Write it</p>
 
-              <p className="mt-1 text-xl font-black text-[#073B5A]">
-                4 × 1 = 4
-              </p>
+              <p className="mt-1 text-xl font-black text-[#073B5A]">4 × 1 = 4</p>
             </div>
           </div>
         </section>
@@ -563,9 +476,7 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
             </div>
 
             <div>
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Mini Pattern
-              </h2>
+              <h2 className="text-xl font-black text-[#073B5A]">Mini Pattern</h2>
 
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 Keep it straight

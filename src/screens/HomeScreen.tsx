@@ -1,4 +1,4 @@
-import PlaceholderScreen from '../components/ui/PlaceholderScreen'
+import PlaceholderScreen from "../components/ui/PlaceholderScreen";
 
 function HomeScreen() {
   return (
@@ -7,7 +7,7 @@ function HomeScreen() {
       title="Home"
       description="This will become the student dashboard."
     />
-  )
+  );
 }
 
-export default HomeScreen
+export default HomeScreen;

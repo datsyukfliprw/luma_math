@@ -18,7 +18,7 @@ function TopBar() {
         <span className="ml-2 text-xs font-black text-[#073B5A]">⌄</span>
       </button>
     </header>
-  )
+  );
 }
 
-export default TopBar
+export default TopBar;

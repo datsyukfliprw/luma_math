@@ -41,16 +41,11 @@ function getAppStageScale() {
   const heightScale = availableHeight / APP_STAGE_HEIGHT;
   const nextScale = Math.min(widthScale, heightScale);
 
-  return Math.min(
-    APP_STAGE_MAX_SCALE,
-    Math.max(APP_STAGE_MIN_SCALE, nextScale),
-  );
+  return Math.min(APP_STAGE_MAX_SCALE, Math.max(APP_STAGE_MIN_SCALE, nextScale));
 }
 
 function App() {
-  const [starNameReady, setStarNameReady] = useState(() =>
-    hasNamedStar(CURRENT_STUDENT_ID),
-  );
+  const [starNameReady, setStarNameReady] = useState(() => hasNamedStar(CURRENT_STUDENT_ID));
   const [appStageScale, setAppStageScale] = useState(getAppStageScale);
 
   useEffect(() => {
@@ -70,25 +65,18 @@ function App() {
     <DelightAnimationProvider>
       <main className="flex h-screen items-start justify-center overflow-hidden bg-[#faf9f4] p-0 text-[#073B5A] lg:items-center lg:p-6">
         {!starNameReady && (
-          <StarNamePrompt
-            studentId={CURRENT_STUDENT_ID}
-            onSaved={() => setStarNameReady(true)}
-          />
+          <StarNamePrompt studentId={CURRENT_STUDENT_ID} onSaved={() => setStarNameReady(true)} />
         )}
 
         <div
           className="h-full w-full lg:h-auto lg:w-auto"
           style={{
             width:
-              appStageScale === 1 &&
-              typeof window !== "undefined" &&
-              window.innerWidth < 1024
+              appStageScale === 1 && typeof window !== "undefined" && window.innerWidth < 1024
                 ? undefined
                 : `${APP_STAGE_WIDTH * appStageScale}px`,
             height:
-              appStageScale === 1 &&
-              typeof window !== "undefined" &&
-              window.innerWidth < 1024
+              appStageScale === 1 && typeof window !== "undefined" && window.innerWidth < 1024
                 ? undefined
                 : `${APP_STAGE_HEIGHT * appStageScale}px`,
           }}
@@ -121,18 +109,9 @@ function App() {
                   path="/flashcards/category/:categoryType/:categoryId"
                   element={<FlashcardCategoryScreen />}
                 />
-                <Route
-                  path="/flashcards/deck/:deckId"
-                  element={<FlashcardSessionScreen />}
-                />
-                <Route
-                  path="/flashcards/:deckId"
-                  element={<FlashcardSessionScreen />}
-                />
-                <Route
-                  path="/practice/:lessonId"
-                  element={<PracticeScreen />}
-                />
+                <Route path="/flashcards/deck/:deckId" element={<FlashcardSessionScreen />} />
+                <Route path="/flashcards/:deckId" element={<FlashcardSessionScreen />} />
+                <Route path="/practice/:lessonId" element={<PracticeScreen />} />
                 <Route path="/progress" element={<ProgressScreen />} />
                 <Route path="/parent-area" element={<ParentAreaScreen />} />
                 <Route path="/settings" element={<SettingsScreen />} />

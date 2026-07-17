@@ -7,356 +7,356 @@ import {
   RotateCcw,
   Sparkles,
   Star,
-} from 'lucide-react'
-import type { ReactNode } from 'react'
-import { Link } from 'react-router-dom'
-import PageLayout from '../components/layout/PageLayout'
+} from "lucide-react";
+import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import PageLayout from "../components/layout/PageLayout";
 
-const FLASHCARD_ASSET_VERSION = 'v4'
+const FLASHCARD_ASSET_VERSION = "v4";
 
 function flashcardAsset(filename: string) {
-  return `${new URL(`../assets/images/flashcards/${filename}`, import.meta.url).href}?${FLASHCARD_ASSET_VERSION}`
+  return `${new URL(`../assets/images/flashcards/${filename}`, import.meta.url).href}?${FLASHCARD_ASSET_VERSION}`;
 }
 
 type ImageSpec = {
-  src?: string
-  alt: string
-  width: number
-  height: number
-}
+  src?: string;
+  alt: string;
+  width: number;
+  height: number;
+};
 
 type ReviewDeck = {
-  title: string
-  subtitle: string
-  progress: number
-  icon: string
-  accentClass: string
-  barClass: string
-  image: ImageSpec
-}
+  title: string;
+  subtitle: string;
+  progress: number;
+  icon: string;
+  accentClass: string;
+  barClass: string;
+  image: ImageSpec;
+};
 
 type BrowseCard = {
-  title: string
-  subtitle: string
-  icon: string
-  className: string
-  image: ImageSpec
-  imageClassName?: string
-  active?: boolean
-  locked?: boolean
-}
+  title: string;
+  subtitle: string;
+  icon: string;
+  className: string;
+  image: ImageSpec;
+  imageClassName?: string;
+  active?: boolean;
+  locked?: boolean;
+};
 
 const recommendedDeck = {
-  title: 'Zero and Identity Rules',
-  subtitle: 'Review ×0 and ×1 rules, plus key math words.',
-  lessonMeta: 'Unit 1 • Week 1 • Day 1',
+  title: "Zero and Identity Rules",
+  subtitle: "Review ×0 and ×1 rules, plus key math words.",
+  lessonMeta: "Unit 1 • Week 1 • Day 1",
   cardCount: 10,
   minutes: 5,
   topics: 3,
   image: {
-    src: flashcardAsset('hero.webp'),
-    alt: 'Mascot holding a math flashcard beside a stack of star cards',
+    src: flashcardAsset("hero.webp"),
+    alt: "Mascot holding a math flashcard beside a stack of star cards",
     width: 620,
     height: 320,
   },
-}
+};
 
 const continueDecks: ReviewDeck[] = [
   {
-    title: 'Zero and Identity Rules',
-    subtitle: '6 / 10 cards reviewed',
+    title: "Zero and Identity Rules",
+    subtitle: "6 / 10 cards reviewed",
     progress: 60,
-    icon: '⭐',
-    accentClass: 'from-[#00AFB9] to-[#0081A7]',
-    barClass: 'bg-[#00AFB9]',
+    icon: "⭐",
+    accentClass: "from-[#00AFB9] to-[#0081A7]",
+    barClass: "bg-[#00AFB9]",
     image: {
-      src: flashcardAsset('cont-zero.webp'),
-      alt: 'Star flashcard deck thumbnail',
+      src: flashcardAsset("cont-zero.webp"),
+      alt: "Star flashcard deck thumbnail",
       width: 120,
       height: 120,
     },
   },
   {
-    title: 'Equal Groups',
-    subtitle: '4 / 8 cards reviewed',
+    title: "Equal Groups",
+    subtitle: "4 / 8 cards reviewed",
     progress: 50,
-    icon: '•••',
-    accentClass: 'from-[#FED9B7] to-[#F07167]',
-    barClass: 'bg-[#F07167]',
+    icon: "•••",
+    accentClass: "from-[#FED9B7] to-[#F07167]",
+    barClass: "bg-[#F07167]",
     image: {
-      src: flashcardAsset('cont-groups.webp'),
-      alt: 'Equal groups flashcard thumbnail',
+      src: flashcardAsset("cont-groups.webp"),
+      alt: "Equal groups flashcard thumbnail",
       width: 120,
       height: 120,
     },
   },
   {
-    title: 'Repeated Addition',
-    subtitle: '2 / 6 cards reviewed',
+    title: "Repeated Addition",
+    subtitle: "2 / 6 cards reviewed",
     progress: 34,
-    icon: '+',
-    accentClass: 'from-[#BDEFF2] to-[#00AFB9]',
-    barClass: 'bg-[#0081A7]',
+    icon: "+",
+    accentClass: "from-[#BDEFF2] to-[#00AFB9]",
+    barClass: "bg-[#0081A7]",
     image: {
-      src: flashcardAsset('cont-addition.webp'),
-      alt: 'Repeated addition flashcard thumbnail',
+      src: flashcardAsset("cont-addition.webp"),
+      alt: "Repeated addition flashcard thumbnail",
       width: 120,
       height: 120,
     },
   },
   {
-    title: 'Multiplication Words',
-    subtitle: '1 / 8 cards reviewed',
+    title: "Multiplication Words",
+    subtitle: "1 / 8 cards reviewed",
     progress: 13,
-    icon: 'Aa',
-    accentClass: 'from-[#FDFCDC] to-[#FED9B7]',
-    barClass: 'bg-[#F7B733]',
+    icon: "Aa",
+    accentClass: "from-[#FDFCDC] to-[#FED9B7]",
+    barClass: "bg-[#F7B733]",
     image: {
-      src: flashcardAsset('cont-words.webp'),
-      alt: 'Vocabulary flashcard thumbnail',
+      src: flashcardAsset("cont-words.webp"),
+      alt: "Vocabulary flashcard thumbnail",
       width: 120,
       height: 120,
     },
   },
-]
+];
 
 const gradeCards: BrowseCard[] = [
   {
-    title: 'Kindergarten',
-    subtitle: 'Counting, shapes, and more',
-    icon: 'K',
-    className: 'bg-[#FFF8E9] border-[#F4D589]',
+    title: "Kindergarten",
+    subtitle: "Counting, shapes, and more",
+    icon: "K",
+    className: "bg-[#FFF8E9] border-[#F4D589]",
     image: {
-      src: flashcardAsset('grade-k.webp'),
-      alt: 'Kindergarten flashcard character',
+      src: flashcardAsset("grade-k.webp"),
+      alt: "Kindergarten flashcard character",
       width: 118,
       height: 86,
     },
   },
   {
-    title: '1st Grade',
-    subtitle: 'Addition, subtraction, and more',
-    icon: '1',
-    className: 'bg-[#E9F7F8] border-[#00AFB9]/20',
+    title: "1st Grade",
+    subtitle: "Addition, subtraction, and more",
+    icon: "1",
+    className: "bg-[#E9F7F8] border-[#00AFB9]/20",
     image: {
-      src: flashcardAsset('grade-1.webp'),
-      alt: 'First grade flashcard character',
+      src: flashcardAsset("grade-1.webp"),
+      alt: "First grade flashcard character",
       width: 118,
       height: 86,
     },
   },
   {
-    title: '2nd Grade',
-    subtitle: 'Place value, addition, subtraction',
-    icon: '2',
-    className: 'bg-[#FFF4E3] border-[#FED9B7]',
+    title: "2nd Grade",
+    subtitle: "Place value, addition, subtraction",
+    icon: "2",
+    className: "bg-[#FFF4E3] border-[#FED9B7]",
     image: {
-      src: flashcardAsset('grade-2.webp'),
-      alt: 'Second grade flashcard character',
+      src: flashcardAsset("grade-2.webp"),
+      alt: "Second grade flashcard character",
       width: 118,
       height: 86,
     },
   },
   {
-    title: '3rd Grade',
-    subtitle: 'Multiplication, division, fractions',
-    icon: '3',
-    className: 'bg-white border-[#00AFB9]',
+    title: "3rd Grade",
+    subtitle: "Multiplication, division, fractions",
+    icon: "3",
+    className: "bg-white border-[#00AFB9]",
     image: {
-      src: flashcardAsset('grade-3.webp'),
-      alt: 'Third grade sprout flashcard character',
+      src: flashcardAsset("grade-3.webp"),
+      alt: "Third grade sprout flashcard character",
       width: 118,
       height: 86,
     },
     active: true,
   },
   {
-    title: '4th Grade',
-    subtitle: 'Fractions, decimals, geometry',
-    icon: '4',
-    className: 'bg-[#F8FBFB] border-[#073B5A]/10',
+    title: "4th Grade",
+    subtitle: "Fractions, decimals, geometry",
+    icon: "4",
+    className: "bg-[#F8FBFB] border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('grade-4.webp'),
-      alt: 'Fourth grade flashcard character',
+      src: flashcardAsset("grade-4.webp"),
+      alt: "Fourth grade flashcard character",
       width: 118,
       height: 86,
     },
   },
   {
-    title: '5th Grade',
-    subtitle: 'Fractions, decimals, algebra',
-    icon: '5',
-    className: 'bg-[#FCE9E5] border-[#F07167]/20',
+    title: "5th Grade",
+    subtitle: "Fractions, decimals, algebra",
+    icon: "5",
+    className: "bg-[#FCE9E5] border-[#F07167]/20",
     image: {
-      src: flashcardAsset('grade-5.webp'),
-      alt: 'Fifth grade flashcard character',
+      src: flashcardAsset("grade-5.webp"),
+      alt: "Fifth grade flashcard character",
       width: 118,
       height: 86,
     },
-    imageClassName: 'h-[64px] w-[82px] bottom-0 right-1',
+    imageClassName: "h-[64px] w-[82px] bottom-0 right-1",
   },
   {
-    title: '6th Grade',
-    subtitle: 'Ratios, algebra, geometry',
-    icon: '6',
-    className: 'bg-[#F3F6F8] border-[#073B5A]/10',
+    title: "6th Grade",
+    subtitle: "Ratios, algebra, geometry",
+    icon: "6",
+    className: "bg-[#F3F6F8] border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('grade-6.webp'),
-      alt: 'Sixth grade flashcard character',
+      src: flashcardAsset("grade-6.webp"),
+      alt: "Sixth grade flashcard character",
       width: 118,
       height: 86,
     },
-    imageClassName: 'h-[62px] w-[76px] bottom-0 right-1',
+    imageClassName: "h-[62px] w-[76px] bottom-0 right-1",
   },
-]
+];
 
 const unitCards: BrowseCard[] = [
   {
-    title: 'Unit 1',
-    subtitle: 'Multiplication & Division Foundations',
-    icon: '🌱',
-    className: 'bg-white border-[#00AFB9]',
+    title: "Unit 1",
+    subtitle: "Multiplication & Division Foundations",
+    icon: "🌱",
+    className: "bg-white border-[#00AFB9]",
     image: {
-      src: flashcardAsset('unit-1.webp'),
-      alt: 'Unit 1 sprout deck illustration',
+      src: flashcardAsset("unit-1.webp"),
+      alt: "Unit 1 sprout deck illustration",
       width: 118,
       height: 74,
     },
     active: true,
   },
   {
-    title: 'Unit 2',
-    subtitle: 'Arrays and Area',
-    icon: '▦',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Unit 2",
+    subtitle: "Arrays and Area",
+    icon: "▦",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('unit-2.webp'),
-      alt: 'Unit 2 array deck illustration',
+      src: flashcardAsset("unit-2.webp"),
+      alt: "Unit 2 array deck illustration",
       width: 118,
       height: 74,
     },
   },
   {
-    title: 'Unit 3',
-    subtitle: 'Fractions',
-    icon: '◔',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Unit 3",
+    subtitle: "Fractions",
+    icon: "◔",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('unit-3.webp'),
-      alt: 'Unit 3 fractions deck illustration',
+      src: flashcardAsset("unit-3.webp"),
+      alt: "Unit 3 fractions deck illustration",
       width: 118,
       height: 74,
     },
   },
   {
-    title: 'Unit 4',
-    subtitle: 'Measurement',
-    icon: '📏',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Unit 4",
+    subtitle: "Measurement",
+    icon: "📏",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('unit-4.webp'),
-      alt: 'Unit 4 measurement deck illustration',
+      src: flashcardAsset("unit-4.webp"),
+      alt: "Unit 4 measurement deck illustration",
       width: 118,
       height: 74,
     },
   },
   {
-    title: 'Unit 5',
-    subtitle: 'Data & Geometry',
-    icon: '▥',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Unit 5",
+    subtitle: "Data & Geometry",
+    icon: "▥",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('unit-5.webp'),
-      alt: 'Unit 5 data and geometry deck illustration',
+      src: flashcardAsset("unit-5.webp"),
+      alt: "Unit 5 data and geometry deck illustration",
       width: 118,
       height: 74,
     },
   },
-]
+];
 
 const skillCards: BrowseCard[] = [
   {
-    title: 'Math Facts',
-    subtitle: '42 decks',
-    icon: '123',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Math Facts",
+    subtitle: "42 decks",
+    icon: "123",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('skill-facts.webp'),
-      alt: 'Math facts deck icon',
+      src: flashcardAsset("skill-facts.webp"),
+      alt: "Math facts deck icon",
       width: 72,
       height: 72,
     },
   },
   {
-    title: 'Vocabulary',
-    subtitle: '36 decks',
-    icon: 'Aa',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Vocabulary",
+    subtitle: "36 decks",
+    icon: "Aa",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('skill-words.webp'),
-      alt: 'Vocabulary deck icon',
+      src: flashcardAsset("skill-words.webp"),
+      alt: "Vocabulary deck icon",
       width: 72,
       height: 72,
     },
   },
   {
-    title: 'Rules',
-    subtitle: '28 decks',
-    icon: '🛡️',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Rules",
+    subtitle: "28 decks",
+    icon: "🛡️",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('skill-rules.webp'),
-      alt: 'Rules deck icon',
+      src: flashcardAsset("skill-rules.webp"),
+      alt: "Rules deck icon",
       width: 72,
       height: 72,
     },
   },
   {
-    title: 'Visual Models',
-    subtitle: '24 decks',
-    icon: '•••',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Visual Models",
+    subtitle: "24 decks",
+    icon: "•••",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('skill-visual.webp'),
-      alt: 'Visual models deck icon',
+      src: flashcardAsset("skill-visual.webp"),
+      alt: "Visual models deck icon",
       width: 72,
       height: 72,
     },
   },
   {
-    title: 'Mistake Review',
-    subtitle: 'Your missed topics',
-    icon: '🎯',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Mistake Review",
+    subtitle: "Your missed topics",
+    icon: "🎯",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('skill-mistakes.webp'),
-      alt: 'Mistake review deck icon',
+      src: flashcardAsset("skill-mistakes.webp"),
+      alt: "Mistake review deck icon",
       width: 72,
       height: 72,
     },
   },
   {
-    title: 'Challenge Cards',
-    subtitle: 'Think deeper',
-    icon: '🏆',
-    className: 'bg-white border-[#073B5A]/10',
+    title: "Challenge Cards",
+    subtitle: "Think deeper",
+    icon: "🏆",
+    className: "bg-white border-[#073B5A]/10",
     image: {
-      src: flashcardAsset('skill-challenge.webp'),
-      alt: 'Challenge cards deck icon',
+      src: flashcardAsset("skill-challenge.webp"),
+      alt: "Challenge cards deck icon",
       width: 72,
       height: 72,
     },
   },
-]
+];
 
 function ImagePlaceholder({
   image,
-  className = '',
+  className = "",
   children,
 }: {
-  image: ImageSpec
-  className?: string
-  children?: ReactNode
+  image: ImageSpec;
+  className?: string;
+  children?: ReactNode;
 }) {
   if (image.src) {
     return (
@@ -367,7 +367,7 @@ function ImagePlaceholder({
         height={image.height}
         className={className}
       />
-    )
+    );
   }
 
   return (
@@ -388,21 +388,19 @@ function ImagePlaceholder({
         </span>
       )}
     </div>
-  )
+  );
 }
 
 function SectionHeader({
   title,
-  actionLabel = 'See all',
+  actionLabel = "See all",
 }: {
-  title: string
-  actionLabel?: string
+  title: string;
+  actionLabel?: string;
 }) {
   return (
     <div className="mb-2 flex items-center justify-between">
-      <h2 className="text-lg font-black tracking-[-0.02em] text-[#073B5A]">
-        {title}
-      </h2>
+      <h2 className="text-lg font-black tracking-[-0.02em] text-[#073B5A]">{title}</h2>
 
       <button
         type="button"
@@ -412,7 +410,7 @@ function SectionHeader({
         <ChevronRight size={16} strokeWidth={3} />
       </button>
     </div>
-  )
+  );
 }
 
 function ContinueDeckCard({ deck }: { deck: ReviewDeck }) {
@@ -422,10 +420,7 @@ function ContinueDeckCard({ deck }: { deck: ReviewDeck }) {
       className="group flex min-w-[245px] flex-1 items-center gap-3 rounded-2xl border border-[#073B5A]/10 bg-white p-2.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
     >
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl shadow-sm">
-        <ImagePlaceholder
-          image={deck.image}
-          className="h-14 w-14 rounded-2xl object-cover"
-        >
+        <ImagePlaceholder image={deck.image} className="h-14 w-14 rounded-2xl object-cover">
           <div
             className={`flex h-full w-full items-center justify-center bg-gradient-to-br ${deck.accentClass} text-xl font-black text-white`}
           >
@@ -435,13 +430,9 @@ function ContinueDeckCard({ deck }: { deck: ReviewDeck }) {
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-[0.82rem] font-black text-[#073B5A]">
-          {deck.title}
-        </p>
+        <p className="truncate text-[0.82rem] font-black text-[#073B5A]">{deck.title}</p>
 
-        <p className="mt-0.5 text-xs font-bold text-[#073B5A]/65">
-          {deck.subtitle}
-        </p>
+        <p className="mt-0.5 text-xs font-bold text-[#073B5A]/65">{deck.subtitle}</p>
 
         <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[#073B5A]/10">
           <div
@@ -451,7 +442,7 @@ function ContinueDeckCard({ deck }: { deck: ReviewDeck }) {
         </div>
       </div>
     </button>
-  )
+  );
 }
 
 function BrowseTile({ card }: { card: BrowseCard }) {
@@ -459,15 +450,13 @@ function BrowseTile({ card }: { card: BrowseCard }) {
     <button
       type="button"
       className={`relative min-h-[88px] overflow-hidden rounded-2xl border p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${card.className} ${
-        card.active ? 'ring-2 ring-[#00AFB9]/20' : ''
+        card.active ? "ring-2 ring-[#00AFB9]/20" : ""
       }`}
     >
       <div className="relative z-10 max-w-[67%]">
         <div
           className={`mb-1.5 flex h-7 w-7 items-center justify-center rounded-xl text-sm font-black ${
-            card.active
-              ? 'bg-[#00AFB9] text-white'
-              : 'bg-white text-[#073B5A] shadow-sm'
+            card.active ? "bg-[#00AFB9] text-white" : "bg-white text-[#073B5A] shadow-sm"
           }`}
         >
           {card.icon}
@@ -482,10 +471,10 @@ function BrowseTile({ card }: { card: BrowseCard }) {
 
       <ImagePlaceholder
         image={card.image}
-        className={`absolute -bottom-1 -right-2 h-[86px] w-[118px] rounded-tl-2xl object-contain object-right-bottom ${card.imageClassName ?? ''}`}
+        className={`absolute -bottom-1 -right-2 h-[86px] w-[118px] rounded-tl-2xl object-contain object-right-bottom ${card.imageClassName ?? ""}`}
       >
         <div className="flex h-full w-full items-center justify-center rounded-tl-2xl bg-[#EDF2F4]/70 text-lg font-black text-[#073B5A]/25">
-          {card.locked ? '🔒' : card.icon}
+          {card.locked ? "🔒" : card.icon}
         </div>
       </ImagePlaceholder>
 
@@ -501,7 +490,7 @@ function BrowseTile({ card }: { card: BrowseCard }) {
         </div>
       )}
     </button>
-  )
+  );
 }
 
 // @SECTION FLASHCARDS_SCREEN
@@ -549,12 +538,8 @@ function FlashcardsScreen() {
           <div className="absolute inset-0 opacity-35">
             <div className="absolute left-[53%] top-8 h-48 w-48 rounded-full border border-white/20" />
             <div className="absolute left-[62%] top-[-30px] h-72 w-72 rounded-full border border-white/10" />
-            <div className="absolute bottom-5 right-12 text-2xl text-[#FDFCDC]">
-              ✦
-            </div>
-            <div className="absolute right-[29%] top-12 text-xl text-[#FED9B7]">
-              ✦
-            </div>
+            <div className="absolute bottom-5 right-12 text-2xl text-[#FDFCDC]">✦</div>
+            <div className="absolute right-[29%] top-12 text-xl text-[#FED9B7]">✦</div>
           </div>
 
           {/* Hero art fills the right side like a background layer, then fades into the teal card. */}
@@ -585,9 +570,7 @@ function FlashcardsScreen() {
               {recommendedDeck.subtitle}
             </p>
 
-            <p className="mt-1 text-sm font-black text-[#BDEFF2]">
-              {recommendedDeck.lessonMeta}
-            </p>
+            <p className="mt-1 text-sm font-black text-[#BDEFF2]">{recommendedDeck.lessonMeta}</p>
 
             <div className="mt-3 flex max-w-md flex-wrap gap-2 rounded-2xl bg-white/95 p-1.5 text-[#073B5A] shadow-sm">
               <div className="flex flex-1 items-center gap-2 rounded-xl px-3 py-1.5">
@@ -689,7 +672,7 @@ function FlashcardsScreen() {
         </div>
       </div>
     </PageLayout>
-  )
+  );
 }
 
-export default FlashcardsScreen
+export default FlashcardsScreen;

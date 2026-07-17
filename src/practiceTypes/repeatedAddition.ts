@@ -1,25 +1,23 @@
-import { takePracticeProblems } from './practiceModeCounts'
-import type { PracticeGenerationOptions, PracticeProblem } from './types'
+import { takePracticeProblems } from "./practiceModeCounts";
+import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeRepeatedAdditionProblem({
   id,
   groups,
   addend,
 }: {
-  id: string
-  groups: number
-  addend: number
+  id: string;
+  groups: number;
+  addend: number;
 }): PracticeProblem {
-  const total = groups * addend
-  const repeatedAddition = Array.from({ length: groups }, () => String(addend)).join(
-    ' + ',
-  )
+  const total = groups * addend;
+  const repeatedAddition = Array.from({ length: groups }, () => String(addend)).join(" + ");
 
   return {
     id,
     questionText: `Write the multiplication sentence for ${repeatedAddition} = ${total}.`,
     correctAnswer: `${groups}x${addend}`,
-    visualType: 'repeated_addition',
+    visualType: "repeated_addition",
     problemKey: `${groups}-groups-of-${addend}`,
     visualData: {
       repeatedAddition: `${repeatedAddition} = ${total}`,
@@ -28,7 +26,7 @@ function makeRepeatedAdditionProblem({
       itemsPerGroup: addend,
       product: total,
     },
-  }
+  };
 }
 
 const repeatedAdditionBank = [
@@ -44,7 +42,7 @@ const repeatedAdditionBank = [
   [2, 9],
   [7, 3],
   [6, 5],
-] as const
+] as const;
 
 const repeatedAdditionChallengeBank = [
   [3, 6],
@@ -57,24 +55,22 @@ const repeatedAdditionChallengeBank = [
   [5, 6],
   [4, 8],
   [9, 2],
-] as const
+] as const;
 
 export function generateRepeatedAdditionProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
   const source =
-    options?.mode === 'challenge'
-      ? repeatedAdditionChallengeBank
-      : repeatedAdditionBank
+    options?.mode === "challenge" ? repeatedAdditionChallengeBank : repeatedAdditionBank;
 
   return takePracticeProblems(
     source.map(([groups, addend], index) =>
       makeRepeatedAdditionProblem({
-        id: `repeated-addition-${options?.mode ?? 'guided'}-${index + 1}`,
+        id: `repeated-addition-${options?.mode ?? "guided"}-${index + 1}`,
         groups,
         addend,
       }),
     ),
     options,
-  )
+  );
 }

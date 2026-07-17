@@ -1,7 +1,7 @@
 type NextUpCardProps = {
-  nextStep: string
-  description: string
-}
+  nextStep: string;
+  description: string;
+};
 
 function NextUpCard({ nextStep, description }: NextUpCardProps) {
   return (
@@ -16,9 +16,7 @@ function NextUpCard({ nextStep, description }: NextUpCardProps) {
             Next Up: <span className="text-[#0081A7]">{nextStep}</span>
           </h3>
 
-          <p className="mt-1 text-sm font-bold leading-snug text-[#073B5A]/70">
-            {description}
-          </p>
+          <p className="mt-1 text-sm font-bold leading-snug text-[#073B5A]/70">{description}</p>
         </div>
       </div>
 
@@ -29,7 +27,7 @@ function NextUpCard({ nextStep, description }: NextUpCardProps) {
         Continue Lesson ›
       </button>
     </div>
-  )
+  );
 }
 
-export default NextUpCard
+export default NextUpCard;

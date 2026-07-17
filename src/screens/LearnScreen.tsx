@@ -1,13 +1,7 @@
 // @SECTION LEARN_SCREEN_IMPORTS
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  Clock3,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Clock3 } from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
 import { updateLessonProgress } from "../lib/lessonProgress";
@@ -73,10 +67,7 @@ function LearnStepper({
   const isFirstStep = currentStep === 0;
 
   return (
-    <div
-      data-name="learn-stepper-nav"
-      className="flex items-center justify-end gap-2"
-    >
+    <div data-name="learn-stepper-nav" className="flex items-center justify-end gap-2">
       <button
         type="button"
         onClick={onPrevious}
@@ -117,11 +108,7 @@ function LearnStepper({
                         : "border-[#9AB5C7]/55 bg-white text-[#275875]"
                   }`}
                 >
-                  {isDone ? (
-                    <CheckCircle2 size={18} strokeWidth={3} />
-                  ) : (
-                    index + 1
-                  )}
+                  {isDone ? <CheckCircle2 size={18} strokeWidth={3} /> : index + 1}
                 </div>
 
                 <p
@@ -235,8 +222,7 @@ function LearnScreen() {
     }
 
     const updateScrollHint = () => {
-      const hasOverflow =
-        scrollContainer.scrollHeight > scrollContainer.clientHeight;
+      const hasOverflow = scrollContainer.scrollHeight > scrollContainer.clientHeight;
       const isNearBottom =
         scrollContainer.scrollTop + scrollContainer.clientHeight >=
         scrollContainer.scrollHeight - 24;
@@ -289,7 +275,7 @@ function LearnScreen() {
       return <WordsPage lesson={learnLesson} starName={starName} />;
     }
 
-    return <QuickCheckPage starName={starName} />;
+    return <QuickCheckPage lessonId={currentLessonId} starName={starName} />;
   }, [currentLessonId, currentStep, learnLesson, starName]);
 
   function backToLesson() {
@@ -319,11 +305,7 @@ function LearnScreen() {
         data-name="learn-screen"
         className="relative flex h-full min-h-0 flex-col gap-5 overflow-y-auto pr-1"
       >
-        <div
-          ref={topSentinelRef}
-          data-name="learn-top-sentinel"
-          className="h-0"
-        />
+        <div ref={topSentinelRef} data-name="learn-top-sentinel" className="h-0" />
 
         {/* @SECTION LEARN_HEADER */}
         <header
@@ -332,14 +314,8 @@ function LearnScreen() {
             isCompactHeader ? "px-4 py-1.5" : "px-4 py-2.5"
           }`}
         >
-          <div
-            data-name="learn-header-row"
-            className="flex items-center justify-between gap-6"
-          >
-            <div
-              data-name="learn-header-left"
-              className="flex min-w-0 items-center gap-4"
-            >
+          <div data-name="learn-header-row" className="flex items-center justify-between gap-6">
+            <div data-name="learn-header-left" className="flex min-w-0 items-center gap-4">
               <button
                 type="button"
                 onClick={backToLesson}
@@ -410,15 +386,8 @@ function LearnScreen() {
               </div>
             </div>
 
-            <div
-              data-name="learn-header-stepper-nav"
-              className="hidden xl:block"
-            >
-              <LearnStepper
-                currentStep={currentStep}
-                onPrevious={goBack}
-                onNext={goNext}
-              />
+            <div data-name="learn-header-stepper-nav" className="hidden xl:block">
+              <LearnStepper currentStep={currentStep} onPrevious={goBack} onNext={goNext} />
             </div>
           </div>
         </header>
@@ -427,9 +396,7 @@ function LearnScreen() {
         <section
           data-name="learn-page-content-grid"
           className={`grid items-start gap-5 ${
-            currentStep === 1
-              ? "xl:grid-cols-[1.55fr_0.75fr]"
-              : "xl:grid-cols-[1.15fr_0.85fr]"
+            currentStep === 1 ? "xl:grid-cols-[1.55fr_0.75fr]" : "xl:grid-cols-[1.15fr_0.85fr]"
           }`}
         >
           {page}
@@ -442,9 +409,7 @@ function LearnScreen() {
             onClick={goBack}
             disabled={currentStep === 0}
             className={`rounded-xl px-4 py-2 text-sm font-black ${
-              currentStep === 0
-                ? "bg-[#F1F5F7] text-[#9AB5C7]"
-                : "bg-[#E9F7F8] text-[#0081A7]"
+              currentStep === 0 ? "bg-[#F1F5F7] text-[#9AB5C7]" : "bg-[#E9F7F8] text-[#0081A7]"
             }`}
           >
             ← Back

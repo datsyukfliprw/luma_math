@@ -1,19 +1,19 @@
 type WeekCardProps = {
-  weekNumber: number
-  title: string
-  status: 'complete' | 'current' | 'locked'
-  children: React.ReactNode
-}
+  weekNumber: number;
+  title: string;
+  status: "complete" | "current" | "locked";
+  children: React.ReactNode;
+};
 
 function WeekCard({ weekNumber, title, status, children }: WeekCardProps) {
   return (
     <section
       className={`rounded-[1.75rem] border p-5 ${
-        status === 'complete'
-          ? 'border-[#00AFB9]/30 bg-[#E9F7F8]'
-          : status === 'current'
-            ? 'border-[#F07167]/40 bg-[#FED9B7]/35'
-            : 'border-[#073B5A]/10 bg-[#F5F5F2] opacity-75'
+        status === "complete"
+          ? "border-[#00AFB9]/30 bg-[#E9F7F8]"
+          : status === "current"
+            ? "border-[#F07167]/40 bg-[#FED9B7]/35"
+            : "border-[#073B5A]/10 bg-[#F5F5F2] opacity-75"
       }`}
     >
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -26,13 +26,13 @@ function WeekCard({ weekNumber, title, status, children }: WeekCardProps) {
         </div>
 
         <span className="text-2xl">
-          {status === 'complete' ? '✓' : status === 'current' ? '▶' : '🔒'}
+          {status === "complete" ? "✓" : status === "current" ? "▶" : "🔒"}
         </span>
       </div>
 
       {children}
     </section>
-  )
+  );
 }
 
-export default WeekCard
+export default WeekCard;

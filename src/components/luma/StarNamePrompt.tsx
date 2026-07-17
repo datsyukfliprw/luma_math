@@ -1,36 +1,30 @@
-import { useState } from 'react'
-import {
-  cleanStarName,
-  getRandomStarName,
-  updateStarProfile,
-} from '../../lib/starProfile'
+import { useState } from "react";
+import { cleanStarName, getRandomStarName, updateStarProfile } from "../../lib/starProfile";
 
 type StarNamePromptProps = {
-  studentId: string
-  onSaved: () => void
-}
+  studentId: string;
+  onSaved: () => void;
+};
 
 function StarNamePrompt({ studentId, onSaved }: StarNamePromptProps) {
-  const [starName, setStarName] = useState(getRandomStarName())
-  const cleanedName = cleanStarName(starName)
-  const canSave = cleanedName.length > 0
+  const [starName, setStarName] = useState(getRandomStarName());
+  const cleanedName = cleanStarName(starName);
+  const canSave = cleanedName.length > 0;
 
   function saveName() {
-    if (!canSave) return
+    if (!canSave) return;
 
     updateStarProfile(studentId, {
       starName: cleanedName,
-    })
+    });
 
-    onSaved()
+    onSaved();
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/55 p-6 backdrop-blur-sm">
       <div className="relative w-full max-w-2xl overflow-hidden rounded-[2rem] border border-[#F4D589] bg-[#FFFDF7] p-8 shadow-2xl">
-        <div className="pointer-events-none absolute right-8 top-8 text-3xl text-[#F7B733]">
-          ✦
-        </div>
+        <div className="pointer-events-none absolute right-8 top-8 text-3xl text-[#F7B733]">✦</div>
 
         <div className="grid gap-7 md:grid-cols-[1fr_190px] md:items-center">
           <div>
@@ -43,8 +37,7 @@ function StarNamePrompt({ studentId, onSaved }: StarNamePromptProps) {
             </h2>
 
             <p className="mt-4 text-base font-bold leading-relaxed text-[#073B5A]/70">
-              Your star will cheer you on, collect energy, and celebrate your
-              math progress.
+              Your star will cheer you on, collect energy, and celebrate your math progress.
             </p>
 
             <label className="mt-6 block">
@@ -56,7 +49,7 @@ function StarNamePrompt({ studentId, onSaved }: StarNamePromptProps) {
                 value={starName}
                 onChange={(event) => setStarName(event.target.value)}
                 onKeyDown={(event) => {
-                  if (event.key === 'Enter') saveName()
+                  if (event.key === "Enter") saveName();
                 }}
                 maxLength={16}
                 className="w-full rounded-2xl border border-[#073B5A]/15 bg-white px-5 py-4 text-xl font-black text-[#073B5A] outline-none focus:border-[#00AFB9]"
@@ -83,9 +76,7 @@ function StarNamePrompt({ studentId, onSaved }: StarNamePromptProps) {
                 onClick={saveName}
                 disabled={!canSave}
                 className={`rounded-xl px-5 py-3 font-black shadow-sm ${
-                  canSave
-                    ? 'bg-[#00AFB9] text-white'
-                    : 'bg-[#DDEEEF] text-[#073B5A]/45'
+                  canSave ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/45"
                 }`}
               >
                 Save Star Name
@@ -102,25 +93,21 @@ function StarNamePrompt({ studentId, onSaved }: StarNamePromptProps) {
                 alt="Learning star mascot"
                 className="relative h-full w-full object-contain drop-shadow-sm"
                 onError={(event) => {
-                  event.currentTarget.style.display = 'none'
+                  event.currentTarget.style.display = "none";
                 }}
               />
 
               <div className="absolute text-8xl">⭐</div>
 
-              <div className="absolute -right-1 top-6 text-2xl text-[#F7B733]">
-                ✦
-              </div>
+              <div className="absolute -right-1 top-6 text-2xl text-[#F7B733]">✦</div>
 
-              <div className="absolute bottom-8 left-2 text-xl text-[#00AFB9]">
-                ✦
-              </div>
+              <div className="absolute bottom-8 left-2 text-xl text-[#00AFB9]">✦</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default StarNamePrompt
+export default StarNamePrompt;

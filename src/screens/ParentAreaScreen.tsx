@@ -1,4 +1,4 @@
-import PlaceholderScreen from '../components/ui/PlaceholderScreen'
+import PlaceholderScreen from "../components/ui/PlaceholderScreen";
 
 function ParentAreaScreen() {
   return (
@@ -7,7 +7,7 @@ function ParentAreaScreen() {
       title="Parent Area"
       description="This will show student settings, curriculum controls, and progress summaries."
     />
-  )
+  );
 }
 
-export default ParentAreaScreen
+export default ParentAreaScreen;

@@ -10,13 +10,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
 
 const App = () => (
-  <Router>
-    <MainLayout />
-    <Switch>
-      <Route path="/lesson/:id" component={LessonPage} />
-      {/* Other routes */}
-    </Switch>
-  </Router>
+<Router>
+<MainLayout />
+<Switch>
+<Route path="/lesson/:id" component={LessonPage} />
+{/* Other routes */}
+</Switch>
+</Router>
 );
 export default App;
 src/components/MainLayout.js: Provides the main layout structure.
@@ -41,18 +41,18 @@ Javascript
 
 Apply
 const LessonPage = ({ match }) => {
-  const { id } = match.params;
-  const lesson = useFetch(`data/curriculum.json`).find(l => l.id === id);
-  
-  return (
-    <div>
-      {lesson.sections.map(section => (
-        <section key={section.id}>
-          {/* Render section based on type */}
-        </section>
-      ))}
-    </div>
-  );
+const { id } = match.params;
+const lesson = useFetch(`data/curriculum.json`).find(l => l.id === id);
+
+return (
+<div>
+{lesson.sections.map(section => (
+<section key={section.id}>
+{/* Render section based on type */}
+</section>
+))}
+</div>
+);
 };
 export default LessonPage;
 Learn Pages
@@ -62,18 +62,18 @@ Javascript
 
 Apply
 const LearnPage = ({ match }) => {
-  const { id } = match.params;
-  const lesson = useFetch(`data/curriculum.json`).find(l => l.id === id);
-  
-  return (
-    <div>
-      {lesson.sections.map(section => (
-        <section key={section.id}>
-          {/* Render Learn section based on type */}
-        </section>
-      ))}
-    </div>
-  );
+const { id } = match.params;
+const lesson = useFetch(`data/curriculum.json`).find(l => l.id === id);
+
+return (
+<div>
+{lesson.sections.map(section => (
+<section key={section.id}>
+{/* Render Learn section based on type */}
+</section>
+))}
+</div>
+);
 };
 export default LearnPage;
 Try It Screen
@@ -83,8 +83,8 @@ Javascript
 
 Apply
 const TryItScreen = () => {
-  // Fetch and render problem sets or questions
-  return <div>Try It Screen</div>;
+// Fetch and render problem sets or questions
+return <div>Try It Screen</div>;
 };
 export default TryItScreen;
 Guided Practice, Independent Practice, Challenge Practice
@@ -95,8 +95,8 @@ Javascript
 
 Apply
 const GuidedPractice = () => {
-  // Fetch and render guided practice questions
-  return <div>Guided Practice</div>;
+// Fetch and render guided practice questions
+return <div>Guided Practice</div>;
 };
 export default GuidedPractice;
 src/components/IndependentPractice.js: Independent practice component.
@@ -105,8 +105,8 @@ Javascript
 
 Apply
 const IndependentPractice = () => {
-  // Fetch and render independent practice questions
-  return <div>Independent Practice</div>;
+// Fetch and render independent practice questions
+return <div>Independent Practice</div>;
 };
 export default IndependentPractice;
 src/components/ChallengePractice.js: Challenge practice component.
@@ -115,8 +115,8 @@ Javascript
 
 Apply
 const ChallengePractice = () => {
-  // Fetch and render challenge practice questions
-  return <div>Challenge Practice</div>;
+// Fetch and render challenge practice questions
+return <div>Challenge Practice</div>;
 };
 export default ChallengePractice;
 Curriculum / Lesson JSON Data Structure
@@ -126,19 +126,19 @@ Json
 
 Apply
 {
-  "lessons": [
-    {
-      "id": "lesson-1",
-      "title": "Introduction to Numbers",
-      "sections": [
-        {
-          "id": "section-1.1",
-          "type": "BigIdea",
-          "content": "Numbers represent quantities."
-        }
-      ]
-    }
-  ]
+"lessons": [
+{
+"id": "lesson-1",
+"title": "Introduction to Numbers",
+"sections": [
+{
+"id": "section-1.1",
+"type": "BigIdea",
+"content": "Numbers represent quantities."
+}
+]
+}
+]
 }
 Flashcards
 
@@ -160,10 +160,10 @@ Json
 
 Apply
 {
-  "flashcards": [
-    { "id": "1", "front": "2 + 2?", "back": "4" },
-    // Other flashcards
-  ]
+"flashcards": [
+{ "id": "1", "front": "2 + 2?", "back": "4" },
+// Other flashcards
+]
 }
 Student Progress, Lesson Completion, and Unlock Logic
 
@@ -175,16 +175,16 @@ Apply
 import { createStore } from 'redux';
 
 const initialState = {
-  completedLessons: [],
+completedLessons: [],
 };
 
 const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'COMPLETE_LESSON':
-      return { ...state, completedLessons: [...state.completedLessons, action.id] };
-    default:
-      return state;
-  }
+switch (action.type) {
+case 'COMPLETE_LESSON':
+return { ...state, completedLessons: [...state.completedLessons, action.id] };
+default:
+return state;
+}
 };
 
 const progressStore = createStore(reducer);
@@ -195,7 +195,7 @@ Javascript
 
 Apply
 const unlockNewContent = () => {
-  // Logic to determine if new content can be unlocked
+// Logic to determine if new content can be unlocked
 };
 export { unlockNewContent };
 Mascot / StarName Usage
@@ -218,10 +218,10 @@ Json
 
 Apply
 {
-  "locks": [
-    { "id": "lesson-1.2", "isPremium": true },
-    // Other locks
-  ]
+"locks": [
+{ "id": "lesson-1.2", "isPremium": true },
+// Other locks
+]
 }
 src/utils/lockLogic.js: Contains logic for handling locks and unlocking content.
 
@@ -229,8 +229,8 @@ Javascript
 
 Apply
 const isSectionLocked = (sectionId) => {
-  const lock = useFetch(`data/locks.json`).find(l => l.id === sectionId);
-  return lock.isPremium && !progressStore.getState().completedLessons.includes(lock.id);
+const lock = useFetch(`data/locks.json`).find(l => l.id === sectionId);
+return lock.isPremium && !progressStore.getState().completedLessons.includes(lock.id);
 };
 export { isSectionLocked };
 Key Files That Control Each Major Feature

@@ -13,6 +13,7 @@ import { getLessonProgress, type LessonProgress } from "../lib/lessonProgress";
 import { getPracticeRewardState } from "../lib/practiceRewards";
 import { getStarProfile } from "../lib/starProfile";
 import type { WarmUpData } from "../types/warmup";
+import { getLessonExperience } from "../data/lessonExperience";
 
 const CURRENT_STUDENT_ID = "default-student";
 
@@ -51,8 +52,7 @@ function getNextStep({
   progress: LessonProgress;
 }): NextLessonStep {
   const practiceRewards = getPracticeRewardState(CURRENT_STUDENT_ID, lessonId);
-  const guidedComplete =
-    practiceRewards.guided?.completed === true || progress.practiceComplete;
+  const guidedComplete = practiceRewards.guided?.completed === true || progress.practiceComplete;
   const independentComplete = practiceRewards.independent?.completed === true;
   const challengeComplete = practiceRewards.challenge?.completed === true;
 
@@ -187,13 +187,7 @@ function getSectionState(
 }
 
 // @SECTION LESSON_CARD_FRAME
-function LessonCardFrame({
-  state,
-  children,
-}: {
-  state: SectionState;
-  children: ReactNode;
-}) {
+function LessonCardFrame({ state, children }: { state: SectionState; children: ReactNode }) {
   const frameClass =
     state === "active"
       ? "bg-[#00AFB9] shadow-[0_0_28px_rgba(0,175,185,0.22)]"
@@ -209,13 +203,7 @@ function LessonCardFrame({
 }
 
 // @SECTION LESSON_ACTION_BAR
-function LessonActionBar({
-  nextStep,
-  words,
-}: {
-  nextStep: NextLessonStep;
-  words: string[];
-}) {
+function LessonActionBar({ nextStep, words }: { nextStep: NextLessonStep; words: string[] }) {
   const navigate = useNavigate();
 
   return (
@@ -234,9 +222,7 @@ function LessonActionBar({
               Next Up: <span className="text-[#0081A7]">{nextStep.title}</span>
             </p>
 
-            <p className="mt-0.5 text-sm font-bold text-[#073B5A]/70">
-              {nextStep.description}
-            </p>
+            <p className="mt-0.5 text-sm font-bold text-[#073B5A]/70">{nextStep.description}</p>
           </div>
 
           <button
@@ -254,9 +240,7 @@ function LessonActionBar({
           </div>
 
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-            <p className="mr-2 text-base font-black text-[#073B5A]">
-              Today’s Words
-            </p>
+            <p className="mr-2 text-base font-black text-[#073B5A]">Today’s Words</p>
 
             {words.map((word) => (
               <span
@@ -279,17 +263,17 @@ function LessonScreen() {
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
   const structuredLesson = lesson as typeof lesson & LessonWithStructuredData;
 
+  // @SECTION LESSON_EXPERIENCE
+  const lessonExperience = lessonId ? getLessonExperience(lessonId) : undefined;
+
   const currentLessonId =
-    lessonId ??
-    `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
+    lessonId ?? `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
 
   const [progress, setProgress] = useState<LessonProgress>(() =>
     getLessonProgress(currentLessonId),
   );
 
-  const [starName, setStarName] = useState(
-    () => getStarProfile(CURRENT_STUDENT_ID).starName,
-  );
+  const [starName, setStarName] = useState(() => getStarProfile(CURRENT_STUDENT_ID).starName);
 
   useEffect(() => {
     setProgress(getLessonProgress(currentLessonId));
@@ -321,14 +305,16 @@ function LessonScreen() {
         <LessonHero
           unitNumber={unit.unit_number}
           weekNumber={week.week_number}
-          dayNumber={weekDayNumber}
-          title={lesson.lesson_title}
+          dayNumber={lessonExperience?.lessonNumber ?? weekDayNumber}
+          title={lessonExperience?.title ?? lesson.lesson_title}
           topic={unit.unit_title}
-          description={lesson.objective}
+          description={lessonExperience?.kidGoal ?? lesson.objective}
           minutes={lesson.lesson_type === "evaluation" ? 35 : 25}
           grade={`${unit.grade_level}rd Grade`}
           lessonType={lesson.lesson_type}
-          quizQuestionCount={lesson.quiz_question_count}
+          quizQuestionCount={
+            lessonExperience?.quickCheck.questions.length ?? lesson.quiz_question_count
+          }
           progress={progress}
           starName={starName}
         />

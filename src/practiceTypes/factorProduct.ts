@@ -1,22 +1,22 @@
-import { takePracticeProblems } from './practiceModeCounts'
-import type { PracticeGenerationOptions, PracticeProblem } from './types'
+import { takePracticeProblems } from "./practiceModeCounts";
+import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeFactorProductProblem({
   id,
   factorA,
   factorB,
 }: {
-  id: string
-  factorA: number
-  factorB: number
+  id: string;
+  factorA: number;
+  factorB: number;
 }): PracticeProblem {
-  const product = factorA * factorB
+  const product = factorA * factorB;
 
   return {
     id,
     questionText: `In the equation ${factorA} × ${factorB} = ${product}, what are the factors and what is the product?`,
     correctAnswer: `${factorA},${factorB},${product}`,
-    visualType: 'factor_product',
+    visualType: "factor_product",
     problemKey: `${factorA}x${factorB}-factor-product`,
     visualData: {
       equation: `${factorA} × ${factorB} = ${product}`,
@@ -28,7 +28,7 @@ function makeFactorProductProblem({
       factorB: String(factorB),
       product: String(product),
     },
-  }
+  };
 }
 
 const factorProductBank = [
@@ -44,7 +44,7 @@ const factorProductBank = [
   [9, 2],
   [7, 3],
   [4, 4],
-] as const
+] as const;
 
 const factorProductChallengeBank = [
   [6, 4],
@@ -57,24 +57,21 @@ const factorProductChallengeBank = [
   [8, 5],
   [7, 4],
   [9, 2],
-] as const
+] as const;
 
 export function generateFactorProductProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
-  const source =
-    options?.mode === 'challenge'
-      ? factorProductChallengeBank
-      : factorProductBank
+  const source = options?.mode === "challenge" ? factorProductChallengeBank : factorProductBank;
 
   return takePracticeProblems(
     source.map(([factorA, factorB], index) =>
       makeFactorProductProblem({
-        id: `factor-product-${options?.mode ?? 'guided'}-${index + 1}`,
+        id: `factor-product-${options?.mode ?? "guided"}-${index + 1}`,
         factorA,
         factorB,
       }),
     ),
     options,
-  )
+  );
 }

@@ -41,14 +41,8 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
   function chooseEquation(equation: string) {
     setSelectedEquation(equation);
 
-    if (
-      equation === currentClue.sneakyEquation &&
-      !foundClues.includes(currentClueIndex)
-    ) {
-      setFoundClues((currentFoundClues) => [
-        ...currentFoundClues,
-        currentClueIndex,
-      ]);
+    if (equation === currentClue.sneakyEquation && !foundClues.includes(currentClueIndex)) {
+      setFoundClues((currentFoundClues) => [...currentFoundClues, currentClueIndex]);
     }
   }
 
@@ -70,11 +64,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
         {Array.from({ length: currentClue.groups }).map((_, groupIndex) => (
           <div key={groupIndex} className="flex items-center gap-3">
             <div className="flex h-20 w-24 items-center justify-center rounded-[1.35rem] border border-[#F7B733]/35 bg-[#FFF9E8] text-4xl shadow-sm">
-              {currentClue.inEach === 0 ? (
-                <span className="text-[#9AB5C7]">∅</span>
-              ) : (
-                "⭐"
-              )}
+              {currentClue.inEach === 0 ? <span className="text-[#9AB5C7]">∅</span> : "⭐"}
             </div>
 
             {groupIndex < currentClue.groups - 1 && (
@@ -111,9 +101,8 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
               </p>
 
               <p className="mt-2 max-w-[620px] text-sm font-bold leading-relaxed text-[#275875]">
-                Look at the picture. One equation is trying to trick Luma. Tap
-                the equation that does{" "}
-                <span className="font-black text-[#0081A7]">NOT</span> match.
+                Look at the picture. One equation is trying to trick Luma. Tap the equation that
+                does <span className="font-black text-[#0081A7]">NOT</span> match.
               </p>
             </div>
           </div>
@@ -142,16 +131,11 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
             <Sparkles size={22} strokeWidth={2.6} className="text-[#00AFB9]" />
           </div>
 
-          <div data-name="see-it-visual-model-groups">
-            {renderGroupVisual()}
-          </div>
+          <div data-name="see-it-visual-model-groups">{renderGroupVisual()}</div>
         </section>
 
         {/* @SECTION SEEIT_EQUATION_CHOICES */}
-        <section
-          data-name="see-it-equation-choice-grid"
-          className="mt-5 grid gap-4 lg:grid-cols-3"
-        >
+        <section data-name="see-it-equation-choice-grid" className="mt-5 grid gap-4 lg:grid-cols-3">
           {currentClue.choices.map((equation) => {
             const isSelected = selectedEquation === equation;
             const isSneakyEquation = equation === currentClue.sneakyEquation;
@@ -195,12 +179,8 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
                   </span>
                 )}
 
-                <span className="absolute left-4 top-4 text-[#00AFB9]/45">
-                  ✦
-                </span>
-                <span className="absolute bottom-4 right-5 text-[#00AFB9]/35">
-                  ✦
-                </span>
+                <span className="absolute left-4 top-4 text-[#00AFB9]/45">✦</span>
+                <span className="absolute bottom-4 right-5 text-[#00AFB9]/35">✦</span>
               </button>
             );
           })}
@@ -221,11 +201,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
             <div className="flex items-center gap-4">
               <div
                 className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-3xl shadow-inner ${
-                  isSneakyFound
-                    ? "bg-[#FFF6D8]"
-                    : hasSelected
-                      ? "bg-white"
-                      : "bg-white"
+                  isSneakyFound ? "bg-[#FFF6D8]" : hasSelected ? "bg-white" : "bg-white"
                 }`}
               >
                 {isSneakyFound ? "🌟" : hasSelected ? "🔎" : "🕵️"}
@@ -282,19 +258,10 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
           className="relative min-h-[165px] overflow-hidden rounded-[1.5rem] border border-[#F7B733]/25 bg-[#FFF3D9] p-5 shadow-sm"
         >
           <div className="relative z-10">
-            <div
-              data-name="see-it-luma-tip-title-row"
-              className="mb-3 flex items-center gap-2"
-            >
-              <Star
-                size={22}
-                strokeWidth={2.7}
-                className="fill-[#F7B733] text-[#F7B733]"
-              />
+            <div data-name="see-it-luma-tip-title-row" className="mb-3 flex items-center gap-2">
+              <Star size={22} strokeWidth={2.7} className="fill-[#F7B733] text-[#F7B733]" />
 
-              <p className="text-lg font-black text-[#C78300]">
-                {starName}'s Tip
-              </p>
+              <p className="text-lg font-black text-[#C78300]">{starName}'s Tip</p>
             </div>
 
             <div
@@ -321,16 +288,12 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
               <span className="rounded-full bg-[#00AFB9] px-2.5 py-1 text-xs font-black text-white">
                 1
               </span>
-              <span className="text-xs font-black text-[#073B5A]/70">
-                Picture
-              </span>
+              <span className="text-xs font-black text-[#073B5A]/70">Picture</span>
               <span className="text-[#9AB5C7]">→</span>
               <span className="rounded-full bg-[#00AFB9] px-2.5 py-1 text-xs font-black text-white">
                 2
               </span>
-              <span className="text-xs font-black text-[#073B5A]/70">
-                Equation
-              </span>
+              <span className="text-xs font-black text-[#073B5A]/70">Equation</span>
             </div>
           </div>
 
@@ -350,9 +313,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
             </div>
 
             <div>
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Pattern Patrol
-              </h2>
+              <h2 className="text-xl font-black text-[#073B5A]">Pattern Patrol</h2>
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 Clues found
               </p>
@@ -361,9 +322,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
 
           <div className="flex items-center gap-3">
             <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-full bg-[#00AFB9] text-white shadow-sm">
-              <p className="text-2xl font-black leading-none">
-                {cluesFoundCount}
-              </p>
+              <p className="text-2xl font-black leading-none">{cluesFoundCount}</p>
               <p className="text-xs font-black">of {clues.length}</p>
             </div>
 
@@ -410,9 +369,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
             </div>
 
             <div>
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Rule Reminder
-              </h2>
+              <h2 className="text-xl font-black text-[#073B5A]">Rule Reminder</h2>
 
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 Two patterns
@@ -423,9 +380,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
           <div className="space-y-3">
             <div
               className={`rounded-2xl bg-white px-4 py-3 shadow-sm ${
-                currentClue.ruleFocus === "identity"
-                  ? "ring-2 ring-[#00AFB9]/20"
-                  : ""
+                currentClue.ruleFocus === "identity" ? "ring-2 ring-[#00AFB9]/20" : ""
               }`}
             >
               <div className="flex items-start gap-3">
@@ -438,18 +393,14 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
                     Any number × 1 = the same number
                   </p>
 
-                  <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
-                    5 × 1 = 5
-                  </p>
+                  <p className="mt-1 text-xs font-bold text-[#073B5A]/65">5 × 1 = 5</p>
                 </div>
               </div>
             </div>
 
             <div
               className={`rounded-2xl bg-white px-4 py-3 shadow-sm ${
-                currentClue.ruleFocus === "zero"
-                  ? "ring-2 ring-[#F07167]/20"
-                  : ""
+                currentClue.ruleFocus === "zero" ? "ring-2 ring-[#F07167]/20" : ""
               }`}
             >
               <div className="flex items-start gap-3">
@@ -458,13 +409,9 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
                 </div>
 
                 <div>
-                  <p className="text-sm font-black text-[#073B5A]">
-                    Any number × 0 = 0
-                  </p>
+                  <p className="text-sm font-black text-[#073B5A]">Any number × 0 = 0</p>
 
-                  <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
-                    5 × 0 = 0
-                  </p>
+                  <p className="mt-1 text-xs font-bold text-[#073B5A]/65">5 × 0 = 0</p>
                 </div>
               </div>
             </div>

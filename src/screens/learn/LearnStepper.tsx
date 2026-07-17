@@ -40,10 +40,7 @@ function LearnStepper({
   const isFirstStep = currentStep === 0;
 
   return (
-    <div
-      data-name="learn-stepper-nav"
-      className="flex items-center justify-end gap-2"
-    >
+    <div data-name="learn-stepper-nav" className="flex items-center justify-end gap-2">
       {/* @SECTION LEARN_STEPPER_PREVIOUS_BUTTON */}
       <button
         type="button"

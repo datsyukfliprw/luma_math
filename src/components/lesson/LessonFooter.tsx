@@ -2,7 +2,7 @@ function LessonFooter() {
   return (
     <footer className="relative mt-5 overflow-hidden rounded-[1.5rem] bg-[#FDFCDC] px-8 py-6 shadow-sm">
       <p className="relative z-10 text-lg font-semibold text-[#073B5A]">
-        ✦ LumaMath makes math make sense—so every child can{' '}
+        ✦ LumaMath makes math make sense—so every child can{" "}
         <span className="font-black text-[#F07167]">shine.</span>
       </p>
 
@@ -18,7 +18,7 @@ function LessonFooter() {
         <div className="absolute right-7 top-12 text-sm text-[#8BCB88]">•</div>
       </div>
     </footer>
-  )
+  );
 }
 
-export default LessonFooter
+export default LessonFooter;

@@ -1,6 +1,7 @@
 // @SECTION PRACTICE_TIME_CARD_IMPORTS
 import { Calculator, Pencil, Sparkles, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
+import { requireLessonExperience } from "../../data/lessonExperience";
 
 type PracticeTimeCardProps = {
   lessonId?: string;
@@ -12,11 +13,9 @@ type PracticeTimeCardProps = {
 };
 
 // @SECTION PRACTICE_TIME_CARD
-function PracticeTimeCard({
-  lessonId,
-  activities: _activities,
-}: PracticeTimeCardProps) {
+function PracticeTimeCard({ lessonId, activities: _activities }: PracticeTimeCardProps) {
   const basePracticePath = lessonId ? `/practice/${lessonId}` : "/practice";
+  const lesson = lessonId ? requireLessonExperience(lessonId) : undefined;
 
   const activities = [
     {
@@ -69,7 +68,7 @@ function PracticeTimeCard({
       </div>
 
       <p className="mb-3 text-sm font-semibold leading-snug text-[#073B5A]">
-        Choose a practice mode and earn a star accessory.
+        {lesson?.practice.description ?? "Choose a practice mode and earn a star accessory."}
       </p>
 
       {/* @SECTION PRACTICE_TIME_MODE_LINKS */}

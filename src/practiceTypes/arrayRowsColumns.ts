@@ -1,23 +1,23 @@
-import { takePracticeProblems } from './practiceModeCounts'
-import type { PracticeGenerationOptions, PracticeProblem } from './types'
+import { takePracticeProblems } from "./practiceModeCounts";
+import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeArrayRowsColumnsProblem({
   id,
   rows,
   columns,
 }: {
-  id: string
-  rows: number
-  columns: number
+  id: string;
+  rows: number;
+  columns: number;
 }): PracticeProblem {
-  const product = rows * columns
+  const product = rows * columns;
 
   return {
     id,
     questionText:
-      'Look at the array. How many rows are there? How many columns are in each row? What is the product?',
+      "Look at the array. How many rows are there? How many columns are in each row? What is the product?",
     correctAnswer: `${rows},${columns},${product}`,
-    visualType: 'array_rows_columns',
+    visualType: "array_rows_columns",
     problemKey: `array-${rows}-rows-${columns}-columns`,
     visualData: {
       rows,
@@ -30,7 +30,7 @@ function makeArrayRowsColumnsProblem({
       columns: String(columns),
       product: String(product),
     },
-  }
+  };
 }
 
 const arrayRowsColumnsBank = [
@@ -46,7 +46,7 @@ const arrayRowsColumnsBank = [
   [2, 7],
   [6, 3],
   [4, 5],
-] as const
+] as const;
 
 const arrayRowsColumnsChallengeBank = [
   [6, 4],
@@ -59,24 +59,22 @@ const arrayRowsColumnsChallengeBank = [
   [7, 4],
   [5, 6],
   [8, 3],
-] as const
+] as const;
 
 export function generateArrayRowsColumnsProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
   const source =
-    options?.mode === 'challenge'
-      ? arrayRowsColumnsChallengeBank
-      : arrayRowsColumnsBank
+    options?.mode === "challenge" ? arrayRowsColumnsChallengeBank : arrayRowsColumnsBank;
 
   return takePracticeProblems(
     source.map(([rows, columns], index) =>
       makeArrayRowsColumnsProblem({
-        id: `array-rows-columns-${options?.mode ?? 'guided'}-${index + 1}`,
+        id: `array-rows-columns-${options?.mode ?? "guided"}-${index + 1}`,
         rows,
         columns,
       }),
     ),
     options,
-  )
+  );
 }

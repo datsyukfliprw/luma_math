@@ -1,19 +1,19 @@
-import LumaAvatar from '../luma/LumaAvatar'
-import type { LessonProgress } from '../../lib/lessonProgress'
+import LumaAvatar from "../luma/LumaAvatar";
+import type { LessonProgress } from "../../lib/lessonProgress";
 
 type LessonGoalLumaCardProps = {
-  lessonType: string
-  quizQuestionCount: number
-  progress: LessonProgress
-  starName: string
-  nextStep: string
-  onContinue?: () => void
-}
+  lessonType: string;
+  quizQuestionCount: number;
+  progress: LessonProgress;
+  starName: string;
+  nextStep: string;
+  onContinue?: () => void;
+};
 
 type GoalItemProps = {
-  label: string
-  complete: boolean
-}
+  label: string;
+  complete: boolean;
+};
 
 function GoalItem({ label, complete }: GoalItemProps) {
   return (
@@ -26,42 +26,36 @@ function GoalItem({ label, complete }: GoalItemProps) {
         <span className="h-6 w-6 shrink-0 rounded-full border-2 border-[#0081A7] bg-white" />
       )}
 
-      <span
-        className={`text-sm font-black ${
-          complete ? 'text-[#073B5A]' : 'text-[#073B5A]/65'
-        }`}
-      >
+      <span className={`text-sm font-black ${complete ? "text-[#073B5A]" : "text-[#073B5A]/65"}`}>
         {label}
       </span>
     </div>
-  )
+  );
 }
 
 function EnergyPips({
   completedCount,
   totalCount,
 }: {
-  completedCount: number
-  totalCount: number
+  completedCount: number;
+  totalCount: number;
 }) {
   return (
     <div className="flex items-center gap-2">
       {Array.from({ length: totalCount }).map((_, index) => {
-        const isCharged = index < completedCount
+        const isCharged = index < completedCount;
 
         return (
           <span
             key={index}
             className={`h-3.5 w-3.5 rounded-full border ${
-              isCharged
-                ? 'border-[#F4C542] bg-[#F7B733]'
-                : 'border-[#073B5A]/15 bg-white'
+              isCharged ? "border-[#F4C542] bg-[#F7B733]" : "border-[#073B5A]/15 bg-white"
             }`}
           />
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 function LessonGoalLumaCard({
@@ -72,7 +66,7 @@ function LessonGoalLumaCard({
   nextStep,
   onContinue,
 }: LessonGoalLumaCardProps) {
-  const isEvaluation = lessonType === 'evaluation'
+  const isEvaluation = lessonType === "evaluation";
 
   const completedCount = isEvaluation
     ? progress.practiceComplete
@@ -83,28 +77,25 @@ function LessonGoalLumaCard({
         progress.learnComplete,
         progress.tryItComplete,
         progress.practiceComplete,
-      ].filter(Boolean).length
+      ].filter(Boolean).length;
 
-  const totalCount = isEvaluation ? 1 : 4
+  const totalCount = isEvaluation ? 1 : 4;
 
-  const lumaState =
-    progress.lessonComplete
-      ? 'celebrate'
-      : completedCount === 0
-        ? 'sleepy'
-        : completedCount >= totalCount
-          ? 'charged'
-          : 'happy'
+  const lumaState = progress.lessonComplete
+    ? "celebrate"
+    : completedCount === 0
+      ? "sleepy"
+      : completedCount >= totalCount
+        ? "charged"
+        : "happy";
 
-  const displayStarName = starName || 'Your star'
+  const displayStarName = starName || "Your star";
 
   return (
     <aside className="relative overflow-hidden rounded-[1.75rem] border border-[#F4D589] bg-[#FEF3D9] p-5 shadow-sm">
       <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-white/50 blur-2xl" />
       <div className="pointer-events-none absolute -bottom-20 left-8 h-56 w-56 rounded-full bg-[#FFF8E9] blur-2xl" />
-      <div className="pointer-events-none absolute right-5 top-4 text-2xl text-[#F7B733]">
-        ✦
-      </div>
+      <div className="pointer-events-none absolute right-5 top-4 text-2xl text-[#F7B733]">✦</div>
 
       <div className="relative z-10 grid h-full gap-4 md:grid-cols-[1fr_210px]">
         <div className="flex min-w-0 flex-col">
@@ -134,19 +125,13 @@ function LessonGoalLumaCard({
             </div>
 
             <div className="mt-2">
-              <EnergyPips
-                completedCount={completedCount}
-                totalCount={totalCount}
-              />
+              <EnergyPips completedCount={completedCount} totalCount={totalCount} />
             </div>
           </div>
 
           <div className="mt-4 grid gap-2 sm:grid-cols-2">
             {isEvaluation ? (
-              <GoalItem
-                label="Evaluation"
-                complete={progress.practiceComplete}
-              />
+              <GoalItem label="Evaluation" complete={progress.practiceComplete} />
             ) : (
               <>
                 <GoalItem label="Warm-Up" complete={progress.warmupComplete} />
@@ -190,7 +175,7 @@ function LessonGoalLumaCard({
         </div>
       </div>
     </aside>
-  )
+  );
 }
 
-export default LessonGoalLumaCard
+export default LessonGoalLumaCard;

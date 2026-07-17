@@ -1,4 +1,4 @@
-import PlaceholderScreen from '../components/ui/PlaceholderScreen'
+import PlaceholderScreen from "../components/ui/PlaceholderScreen";
 
 function ProgressScreen() {
   return (
@@ -7,7 +7,7 @@ function ProgressScreen() {
       title="Progress"
       description="This will show lesson completion, scores, streaks, and skill growth."
     />
-  )
+  );
 }
 
-export default ProgressScreen
+export default ProgressScreen;

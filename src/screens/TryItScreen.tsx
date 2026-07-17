@@ -8,9 +8,9 @@ import LumaAvatar from "../components/luma/LumaAvatar";
 import { getLessonById } from "../lib/lessonLookup";
 import { updateLessonProgress } from "../lib/lessonProgress";
 import { getStarProfile } from "../lib/starProfile";
+import { requireLessonExperience } from "../data/lessonExperience";
 
 const CURRENT_STUDENT_ID = "default-student";
-const REQUIRED_TRY_IT_COUNT = 5;
 
 // @SECTION TRYIT_TYPES
 type TryItStepKey = "groups" | "inEach" | "equation";
@@ -34,92 +34,6 @@ type TryItProblem = {
 };
 
 type ProblemAnswers = Partial<Record<TryItStepKey, string>>;
-
-// @SECTION TRYIT_DATA
-const tryItProblems: TryItProblem[] = [
-  {
-    story: "There are 5 flower pots.",
-    question: "Each pot has 1 sprout. How many sprouts are there in all?",
-    groups: "5",
-    inEach: "1",
-    total: "5",
-    groupLabel: "flower pots",
-    inEachLabel: "1 sprout",
-    visualEmoji: "🌱",
-    equation: "5 × 1 = 5",
-    groupsChoices: ["3", "4", "5"],
-    inEachChoices: ["0", "1", "2"],
-    equationChoices: ["5 × 1 = 5", "5 × 0 = 5", "5 × 1 = 1"],
-    successMessage: "Nice! 5 groups of 1 makes 5 total.",
-    tip: "Use the clues in the story to solve it step by step!",
-  },
-  {
-    story: "There are 4 baskets on a table.",
-    question: "Each basket has 0 apples. How many apples are there in all?",
-    groups: "4",
-    inEach: "0",
-    total: "0",
-    groupLabel: "baskets",
-    inEachLabel: "0 apples",
-    visualEmoji: "🍎",
-    visualEmpty: true,
-    equation: "4 × 0 = 0",
-    groupsChoices: ["0", "4", "5"],
-    inEachChoices: ["0", "1", "4"],
-    equationChoices: ["4 × 1 = 4", "4 × 0 = 0", "0 × 1 = 4"],
-    successMessage: "Correct! 4 empty groups makes 0 total.",
-    tip: "Empty groups still count as groups. There are just 0 in each.",
-  },
-  {
-    story: "Milo has 6 sticker spots.",
-    question: "Each spot has 1 star sticker. How many stickers are there?",
-    groups: "6",
-    inEach: "1",
-    total: "6",
-    groupLabel: "sticker spots",
-    inEachLabel: "1 sticker",
-    visualEmoji: "⭐",
-    equation: "6 × 1 = 6",
-    groupsChoices: ["1", "5", "6"],
-    inEachChoices: ["0", "1", "6"],
-    equationChoices: ["6 × 1 = 6", "6 × 0 = 6", "6 × 1 = 1"],
-    successMessage: "Great! 6 groups of 1 makes 6 total.",
-    tip: "When each group has 1, the total matches the number of groups.",
-  },
-  {
-    story: "Ava sets out 3 empty snack plates.",
-    question: "Each plate has 0 crackers. How many crackers are there?",
-    groups: "3",
-    inEach: "0",
-    total: "0",
-    groupLabel: "plates",
-    inEachLabel: "0 crackers",
-    visualEmoji: "🥨",
-    visualEmpty: true,
-    equation: "3 × 0 = 0",
-    groupsChoices: ["0", "3", "5"],
-    inEachChoices: ["0", "1", "3"],
-    equationChoices: ["3 × 1 = 3", "3 × 0 = 0", "0 × 3 = 3"],
-    successMessage: "You got it! 3 groups of 0 makes 0 total.",
-    tip: "The plates are the groups. The crackers in each plate are 0.",
-  },
-  {
-    story: "There are 7 tiny lanterns.",
-    question: "Each lantern has 1 glowing star. How many stars glow?",
-    groups: "7",
-    inEach: "1",
-    total: "7",
-    groupLabel: "lanterns",
-    inEachLabel: "1 star",
-    visualEmoji: "⭐",
-    equation: "7 × 1 = 7",
-    groupsChoices: ["1", "6", "7"],
-    inEachChoices: ["0", "1", "7"],
-    equationChoices: ["7 × 0 = 7", "7 × 1 = 7", "1 × 1 = 7"],
-    successMessage: "Nice work! 7 groups of 1 makes 7 total.",
-    tip: "For ×1, the product stays the same as the number of groups.",
-  },
-];
 
 // @SECTION TRYIT_LESSON_ID_HELPER
 function getCurrentLessonId({
@@ -151,12 +65,13 @@ function TryItScreen() {
   });
 
   const starName = getStarProfile(CURRENT_STUDENT_ID).starName;
+  const tryItExperience = requireLessonExperience(currentLessonId).tryIt;
+  const tryItProblems: TryItProblem[] = tryItExperience.problems;
+  const REQUIRED_TRY_IT_COUNT = tryItExperience.requiredCount;
 
   // @SECTION TRYIT_STATE
   const [problemIndex, setProblemIndex] = useState(0);
-  const [answersByProblem, setAnswersByProblem] = useState<
-    Record<number, ProblemAnswers>
-  >({});
+  const [answersByProblem, setAnswersByProblem] = useState<Record<number, ProblemAnswers>>({});
 
   const currentProblem = tryItProblems[problemIndex % tryItProblems.length];
   const currentAnswers = answersByProblem[problemIndex] ?? {};
@@ -208,12 +123,7 @@ function TryItScreen() {
     }));
   }
 
-  function getChoiceClass(
-    step: TryItStepKey,
-    choice: string,
-    correct: string,
-    isLocked = false,
-  ) {
+  function getChoiceClass(step: TryItStepKey, choice: string, correct: string, isLocked = false) {
     const selected = currentAnswers[step];
     const isSelected = selected === choice;
     const isCorrect = choice === correct;
@@ -279,9 +189,7 @@ function TryItScreen() {
               className={`relative rounded-2xl border text-center font-black shadow-sm transition ${
                 isLocked ? "" : "hover:scale-[1.02]"
               } ${
-                isEquation
-                  ? "min-w-[120px] px-5 py-3 text-base"
-                  : "min-w-[72px] px-5 py-3 text-lg"
+                isEquation ? "min-w-[120px] px-5 py-3 text-base" : "min-w-[72px] px-5 py-3 text-lg"
               } ${getChoiceClass(step, choice, correct, isLocked)}`}
             >
               {choice}
@@ -309,10 +217,7 @@ function TryItScreen() {
   return (
     <PageLayout>
       {/* @SECTION TRYIT_SCREEN_LAYOUT */}
-      <div
-        data-name="try-it-screen-wrapper"
-        className="flex min-h-0 flex-col gap-4"
-      >
+      <div data-name="try-it-screen-wrapper" className="flex min-h-0 flex-col gap-4">
         {/* @SECTION TRYIT_HEADER */}
         <header
           data-name="try-it-header"
@@ -340,9 +245,7 @@ function TryItScreen() {
 
                   <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
 
-                  <p className="text-sm font-black text-[#00AFB9]">
-                    Guided word problem
-                  </p>
+                  <p className="text-sm font-black text-[#00AFB9]">Guided word problem</p>
 
                   <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
 
@@ -360,42 +263,40 @@ function TryItScreen() {
 
             {/* @SECTION TRYIT_HEADER_STEPPER */}
             <div className="hidden items-center gap-2 xl:flex">
-              {["Warm-Up", "Learn", "Try It", "Practice"].map(
-                (label, index) => {
-                  const isDone = index < 2;
-                  const isActive = index === 2;
+              {["Warm-Up", "Learn", "Try It", "Practice"].map((label, index) => {
+                const isDone = index < 2;
+                const isActive = index === 2;
 
-                  return (
-                    <div key={label} className="flex items-center">
-                      <div className="flex flex-col items-center">
-                        <div
-                          className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${
-                            isActive
-                              ? "border-[#00AFB9] bg-[#00AFB9] text-white shadow-[0_0_16px_rgba(0,175,185,0.38)]"
-                              : isDone
-                                ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]"
-                                : "border-[#9AB5C7]/55 bg-white text-[#275875]"
-                          }`}
-                        >
-                          {isDone ? "✓" : index + 1}
-                        </div>
-
-                        <p
-                          className={`mt-1 whitespace-nowrap text-center text-[0.68rem] font-black ${
-                            isActive ? "text-[#073B5A]" : "text-[#275875]/75"
-                          }`}
-                        >
-                          {label}
-                        </p>
+                return (
+                  <div key={label} className="flex items-center">
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${
+                          isActive
+                            ? "border-[#00AFB9] bg-[#00AFB9] text-white shadow-[0_0_16px_rgba(0,175,185,0.38)]"
+                            : isDone
+                              ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]"
+                              : "border-[#9AB5C7]/55 bg-white text-[#275875]"
+                        }`}
+                      >
+                        {isDone ? "✓" : index + 1}
                       </div>
 
-                      {index < 3 && (
-                        <div className="mt-[-18px] h-0.5 w-10 border-t-2 border-dashed border-[#9AB5C7]/45" />
-                      )}
+                      <p
+                        className={`mt-1 whitespace-nowrap text-center text-[0.68rem] font-black ${
+                          isActive ? "text-[#073B5A]" : "text-[#275875]/75"
+                        }`}
+                      >
+                        {label}
+                      </p>
                     </div>
-                  );
-                },
-              )}
+
+                    {index < 3 && (
+                      <div className="mt-[-18px] h-0.5 w-10 border-t-2 border-dashed border-[#9AB5C7]/45" />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </header>
@@ -418,9 +319,7 @@ function TryItScreen() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-black text-[#073B5A]">
-                    Try It Together
-                  </h2>
+                  <h2 className="text-2xl font-black text-[#073B5A]">Try It Together</h2>
 
                   <p className="mt-1 text-base font-bold leading-relaxed text-[#275875]">
                     Help {starName} solve one word problem at a time.
@@ -435,24 +334,20 @@ function TryItScreen() {
                 </p>
 
                 <div className="flex items-center justify-center gap-2">
-                  {Array.from({ length: REQUIRED_TRY_IT_COUNT }).map(
-                    (_, index) => {
-                      const isComplete = index < completedRequiredCount;
+                  {Array.from({ length: REQUIRED_TRY_IT_COUNT }).map((_, index) => {
+                    const isComplete = index < completedRequiredCount;
 
-                      return (
-                        <div
-                          key={index}
-                          className={`flex h-9 w-9 items-center justify-center rounded-2xl text-xl shadow-inner ${
-                            isComplete
-                              ? "bg-[#FFF3D9] text-[#F7B733]"
-                              : "bg-[#EEF3F5] text-[#C7D6DF]"
-                          }`}
-                        >
-                          ★
-                        </div>
-                      );
-                    },
-                  )}
+                    return (
+                      <div
+                        key={index}
+                        className={`flex h-9 w-9 items-center justify-center rounded-2xl text-xl shadow-inner ${
+                          isComplete ? "bg-[#FFF3D9] text-[#F7B733]" : "bg-[#EEF3F5] text-[#C7D6DF]"
+                        }`}
+                      >
+                        ★
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -481,31 +376,23 @@ function TryItScreen() {
                   <div className="absolute right-8 top-8 h-14 w-24 rounded-full bg-white/55 blur-sm" />
                   <div className="absolute bottom-0 left-0 right-0 h-14 bg-[#FED9B7]/45" />
 
-                  <span className="absolute left-5 top-5 text-xl text-[#F7B733]">
-                    ✦
-                  </span>
-                  <span className="absolute right-7 top-8 text-xl text-[#F7B733]">
-                    ✦
-                  </span>
-                  <span className="absolute bottom-8 left-12 text-lg text-[#F07167]">
-                    ✦
-                  </span>
+                  <span className="absolute left-5 top-5 text-xl text-[#F7B733]">✦</span>
+                  <span className="absolute right-7 top-8 text-xl text-[#F7B733]">✦</span>
+                  <span className="absolute bottom-8 left-12 text-lg text-[#F07167]">✦</span>
 
                   <div className="relative z-10 flex flex-wrap justify-center gap-2.5">
-                    {Array.from({ length: Number(currentProblem.groups) }).map(
-                      (_, index) => (
-                        <div
-                          key={index}
-                          className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#00AFB9]/20 bg-white/92 text-3xl shadow-[0_10px_20px_rgba(7,59,90,0.10)]"
-                        >
-                          {currentProblem.visualEmpty ? (
-                            <span className="text-[#9AB5C7]">∅</span>
-                          ) : (
-                            currentProblem.visualEmoji
-                          )}
-                        </div>
-                      ),
-                    )}
+                    {Array.from({ length: Number(currentProblem.groups) }).map((_, index) => (
+                      <div
+                        key={index}
+                        className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#00AFB9]/20 bg-white/92 text-3xl shadow-[0_10px_20px_rgba(7,59,90,0.10)]"
+                      >
+                        {currentProblem.visualEmpty ? (
+                          <span className="text-[#9AB5C7]">∅</span>
+                        ) : (
+                          currentProblem.visualEmoji
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -521,9 +408,7 @@ function TryItScreen() {
                     </span>
 
                     <div>
-                      <p className="text-base font-black text-[#073B5A]">
-                        How many groups?
-                      </p>
+                      <p className="text-base font-black text-[#073B5A]">How many groups?</p>
 
                       <p className="mt-1 text-sm font-bold leading-relaxed text-[#073B5A]/65">
                         Look for how many equal groups are in the story.
@@ -550,18 +435,14 @@ function TryItScreen() {
                   <div className="flex min-w-[245px] items-start gap-3">
                     <span
                       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg font-black ${
-                        isGroupsCorrect
-                          ? "bg-[#00AFB9] text-white"
-                          : "bg-[#E6EEF2] text-[#6D9AB1]"
+                        isGroupsCorrect ? "bg-[#00AFB9] text-white" : "bg-[#E6EEF2] text-[#6D9AB1]"
                       }`}
                     >
                       2
                     </span>
 
                     <div>
-                      <p className="text-base font-black text-[#073B5A]">
-                        How many in each group?
-                      </p>
+                      <p className="text-base font-black text-[#073B5A]">How many in each group?</p>
 
                       <p className="mt-1 text-sm font-bold leading-relaxed text-[#073B5A]/65">
                         Find the amount inside each group.
@@ -588,18 +469,14 @@ function TryItScreen() {
                   <div className="flex min-w-[245px] items-start gap-3">
                     <span
                       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg font-black ${
-                        isEquationUnlocked
-                          ? "bg-[#00AFB9] text-white"
-                          : "bg-[#6D7C86] text-white"
+                        isEquationUnlocked ? "bg-[#00AFB9] text-white" : "bg-[#6D7C86] text-white"
                       }`}
                     >
                       3
                     </span>
 
                     <div>
-                      <p className="text-base font-black text-[#073B5A]">
-                        Which equation matches?
-                      </p>
+                      <p className="text-base font-black text-[#073B5A]">Which equation matches?</p>
 
                       <p className="mt-1 text-sm font-bold leading-relaxed text-[#073B5A]/65">
                         Match groups × in each = total.
@@ -636,9 +513,7 @@ function TryItScreen() {
                 <div className="flex items-center gap-4">
                   <div
                     className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl font-black shadow-sm ${
-                      isProblemComplete
-                        ? "bg-[#FFF3D9] text-[#F7B733]"
-                        : "bg-white text-[#F7B733]"
+                      isProblemComplete ? "bg-[#FFF3D9] text-[#F7B733]" : "bg-white text-[#F7B733]"
                     }`}
                   >
                     {isProblemComplete ? "🌟" : "⭐"}
@@ -716,9 +591,7 @@ function TryItScreen() {
                     💬
                   </div>
 
-                  <p className="text-lg font-black text-[#C78300]">
-                    {starName} Says
-                  </p>
+                  <p className="text-lg font-black text-[#C78300]">{starName} Says</p>
                 </div>
 
                 <div className="relative w-fit max-w-[210px] rounded-2xl bg-white px-5 py-4 text-lg font-black leading-tight text-[#073B5A] shadow-sm">
@@ -727,7 +600,6 @@ function TryItScreen() {
                   groups, in each,
                   <br />
                   and total.
-
                   <span className="absolute -right-3 top-10 h-6 w-6 rotate-45 bg-white" />
                 </div>
 
@@ -736,12 +608,8 @@ function TryItScreen() {
                 </p>
               </div>
 
-              <span className="absolute right-16 top-10 text-2xl text-[#F7B733]">
-                ✦
-              </span>
-              <span className="absolute right-7 top-20 text-xl text-[#F7B733]">
-                ✦
-              </span>
+              <span className="absolute right-16 top-10 text-2xl text-[#F7B733]">✦</span>
+              <span className="absolute right-7 top-20 text-xl text-[#F7B733]">✦</span>
 
               <div className="absolute bottom-[-35px] right-[-18px] w-40">
                 <LumaAvatar size="lg" state="happy" showEnergy={false} />
@@ -756,9 +624,7 @@ function TryItScreen() {
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-black text-[#073B5A]">
-                    Word Problem Clues
-                  </h2>
+                  <h2 className="text-xl font-black text-[#073B5A]">Word Problem Clues</h2>
                   <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                     Use the story
                   </p>
@@ -782,9 +648,7 @@ function TryItScreen() {
 
                 <div className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm">
                   <span className="text-2xl">⭐</span>
-                  <p className="text-sm font-black text-[#073B5A]">
-                    Total = all together
-                  </p>
+                  <p className="text-sm font-black text-[#073B5A]">Total = all together</p>
                 </div>
               </div>
             </section>
@@ -797,9 +661,7 @@ function TryItScreen() {
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-black text-[#073B5A]">
-                    Math Words
-                  </h2>
+                  <h2 className="text-xl font-black text-[#073B5A]">Math Words</h2>
                   <p className="text-xs font-black uppercase tracking-[0.14em] text-[#7B56D9]">
                     Today’s helpers
                   </p>

@@ -219,7 +219,6 @@ function getLessonThumbnailUrl(lesson: LearnLesson) {
   return "/images/learn/thumbnails/zero-one-rules.webp";
 }
 
-
 // @SECTION BIGIDEA_PAGE
 type BigIdeaPageProps = {
   lesson: LearnLesson;
@@ -250,10 +249,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
           data-name="big-idea-card-header"
           className="mb-4 flex items-start justify-between gap-4"
         >
-          <div
-            data-name="big-idea-title-group"
-            className="flex items-start gap-4"
-          >
+          <div data-name="big-idea-title-group" className="flex items-start gap-4">
             <div
               data-name="big-idea-title-icon"
               className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#FFF3D9] text-[#F7B733]"
@@ -262,9 +258,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
             </div>
 
             <div data-name="big-idea-title-text">
-              <h2 className="text-2xl font-black text-[#073B5A]">
-                Today’s Big Idea
-              </h2>
+              <h2 className="text-2xl font-black text-[#073B5A]">Today’s Big Idea</h2>
 
               <p className="mt-1 text-base font-bold leading-relaxed text-[#275875]">
                 {bigIdeaDescription}
@@ -285,10 +279,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
           data-name="big-idea-video-card"
           className="overflow-hidden rounded-[1.5rem] border border-[#00AFB9]/20 bg-[#073B5A] shadow-sm"
         >
-          <div
-            data-name="big-idea-video-frame"
-            className="aspect-[16/8.4] w-full overflow-hidden"
-          >
+          <div data-name="big-idea-video-frame" className="aspect-[16/8.4] w-full overflow-hidden">
             {isVideoOpen ? (
               <iframe
                 title={`${videoCaption} video`}
@@ -336,9 +327,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
                     Watch first
                   </p>
 
-                  <p className="mt-0.5 text-base font-black text-[#073B5A]">
-                    {videoCaption}
-                  </p>
+                  <p className="mt-0.5 text-base font-black text-[#073B5A]">{videoCaption}</p>
                 </div>
               </button>
             )}
@@ -346,10 +335,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
         </div>
 
         {/* @SECTION BIGIDEA_RULE_CARDS */}
-        <div
-          data-name="big-idea-rule-cards-grid"
-          className="mt-4 grid gap-3 md:grid-cols-2"
-        >
+        <div data-name="big-idea-rule-cards-grid" className="mt-4 grid gap-3 md:grid-cols-2">
           {ruleCards.map((card, index) => {
             const style = RULE_CARD_STYLES[index % RULE_CARD_STYLES.length];
 
@@ -359,16 +345,12 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
                 data-name={`big-idea-rule-card-${index + 1}`}
                 className={`rounded-2xl border p-4 ${style.card}`}
               >
-                <p
-                  className={`text-xs font-black uppercase tracking-[0.14em] ${style.eyebrow}`}
-                >
+                <p className={`text-xs font-black uppercase tracking-[0.14em] ${style.eyebrow}`}>
                   {card.eyebrow}
                 </p>
 
                 <div className="mt-2 flex items-center justify-between gap-3">
-                  <p className="text-2xl font-black text-[#073B5A]">
-                    {card.equation}
-                  </p>
+                  <p className="text-2xl font-black text-[#073B5A]">{card.equation}</p>
 
                   <div
                     className={`rounded-2xl bg-white px-3 py-2 text-sm font-black shadow-sm ${style.badge}`}
@@ -395,15 +377,9 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
         >
           <div className="relative z-10">
             <div className="mb-3 flex items-center gap-2">
-              <Star
-                size={22}
-                strokeWidth={2.7}
-                className="fill-[#F7B733] text-[#F7B733]"
-              />
+              <Star size={22} strokeWidth={2.7} className="fill-[#F7B733] text-[#F7B733]" />
 
-              <p className="text-lg font-black text-[#C78300]">
-                {starName}'s Tip
-              </p>
+              <p className="text-lg font-black text-[#C78300]">{starName}'s Tip</p>
             </div>
 
             <p className="mb-2 text-xs font-black uppercase tracking-[0.16em] text-[#C78300]">
@@ -433,9 +409,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
             </div>
 
             <div>
-              <h2 className="text-xl font-black text-[#073B5A]">
-                Today’s Mission
-              </h2>
+              <h2 className="text-xl font-black text-[#073B5A]">Today’s Mission</h2>
 
               <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
                 One idea, five steps
@@ -453,9 +427,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
                 <div
                   data-name={`big-idea-mission-step-${index + 1}-number`}
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-black ${
-                    index === 0
-                      ? "bg-[#00AFB9] text-white"
-                      : "bg-white text-[#0081A7]"
+                    index === 0 ? "bg-[#00AFB9] text-white" : "bg-white text-[#0081A7]"
                   }`}
                 >
                   {index + 1}
@@ -472,10 +444,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
           data-name="big-idea-core-question-card"
           className="rounded-[1.5rem] border border-[#00AFB9]/20 bg-[#E9F7F8] px-5 py-4 shadow-sm"
         >
-          <div
-            data-name="big-idea-core-question-content"
-            className="flex items-start gap-3"
-          >
+          <div data-name="big-idea-core-question-content" className="flex items-start gap-3">
             <div
               data-name="big-idea-core-question-icon"
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white text-lg font-black text-[#00AFB9] shadow-sm"
@@ -484,9 +453,7 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
             </div>
 
             <div data-name="big-idea-core-question-text">
-              <h2 className="text-lg font-black text-[#073B5A]">
-                Big Question
-              </h2>
+              <h2 className="text-lg font-black text-[#073B5A]">Big Question</h2>
 
               <p className="mt-1 text-sm font-black leading-relaxed text-[#073B5A]">
                 {bigQuestion}

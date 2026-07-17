@@ -1,196 +1,184 @@
-import { useEffect, useState } from 'react'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
-import PageLayout from '../components/layout/PageLayout'
-import { getLessonById } from '../lib/lessonLookup'
-import { updateLessonProgress } from '../lib/lessonProgress'
+import { useEffect, useState } from "react";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import PageLayout from "../components/layout/PageLayout";
+import { getLessonById } from "../lib/lessonLookup";
+import { updateLessonProgress } from "../lib/lessonProgress";
 import {
   getRecommendedNextPracticeMode,
   hasPracticeReward,
   markPracticeReward,
-} from '../lib/practiceRewards'
-import { generateProblemsForPracticeType } from '../practiceTypes/registry'
-import type { PracticeMode } from '../practiceTypes/types'
+} from "../lib/practiceRewards";
+import { generateProblemsForPracticeType } from "../practiceTypes/registry";
+import type { PracticeMode } from "../practiceTypes/types";
 
-const CURRENT_STUDENT_ID = 'default-student'
+const CURRENT_STUDENT_ID = "default-student";
 
 // @SECTION PRACTICE_HELPERS
 function formatPracticeType(practiceType: string) {
   return practiceType
-    .split('_')
+    .split("_")
     .map((word) => word[0].toUpperCase() + word.slice(1))
-    .join(' ')
+    .join(" ");
 }
 
 function normalizeAnswer(answer: string) {
-  return answer
-    .toLowerCase()
-    .replaceAll(' ', '')
-    .replaceAll('×', 'x')
-    .replaceAll('*', 'x')
+  return answer.toLowerCase().replaceAll(" ", "").replaceAll("×", "x").replaceAll("*", "x");
 }
 
 function normalizePracticeMode(mode: string | null): PracticeMode {
-  if (mode === 'independent' || mode === 'challenge') {
-    return mode
+  if (mode === "independent" || mode === "challenge") {
+    return mode;
   }
 
-  return 'guided'
+  return "guided";
 }
 
 // @SECTION PRACTICE_MODE_CONFIG
 const PRACTICE_MODE_CONFIG = {
   guided: {
-    title: 'Guided Practice',
-    eyebrow: 'Step-by-step support',
-    description:
-      'Use hints and visual support while you build confidence with today’s skill.',
-    rewardTitle: 'Earn a Common Accessory',
-    rewardTier: '🎒 Common Reward',
+    title: "Guided Practice",
+    eyebrow: "Step-by-step support",
+    description: "Use hints and visual support while you build confidence with today’s skill.",
+    rewardTitle: "Earn a Common Accessory",
+    rewardTier: "🎒 Common Reward",
     rewardDescription:
-      'Complete Guided Practice to earn a common accessory for your star. Want something rarer? Try Independent Practice for rare rewards or Challenge Yourself for epic rewards.',
-    rewardIcon: '🎒',
-    skillDescription: 'Use equal groups to find the total.',
-    hintTitle: 'Helpful Hint',
-    accentClass: 'border-[#00AFB9]/25 bg-[#E9F7F8]',
-    badgeClass: 'bg-[#E9F7F8] text-[#0081A7]',
+      "Complete Guided Practice to earn a common accessory for your star. Want something rarer? Try Independent Practice for rare rewards or Challenge Yourself for epic rewards.",
+    rewardIcon: "🎒",
+    skillDescription: "Use equal groups to find the total.",
+    hintTitle: "Helpful Hint",
+    accentClass: "border-[#00AFB9]/25 bg-[#E9F7F8]",
+    badgeClass: "bg-[#E9F7F8] text-[#0081A7]",
   },
   independent: {
-    title: 'Independent Practice',
-    eyebrow: 'Solo round',
-    description:
-      'Your turn! Show what you know and power up a rare reward.',
-    rewardTitle: 'Rare Reward',
-    rewardTier: '✨ Rare Reward',
-    rewardDescription:
-      'Finish Independent Practice to unlock a rare accessory for your star.',
-    rewardIcon: '✨',
-    skillDescription: 'Solve the skill on your own with fewer hints.',
-    hintTitle: 'Need a Hint?',
-    accentClass: 'border-[#F7B733]/30 bg-[#FFF3D9]',
-    badgeClass: 'bg-[#FFF3D9] text-[#C78300]',
+    title: "Independent Practice",
+    eyebrow: "Solo round",
+    description: "Your turn! Show what you know and power up a rare reward.",
+    rewardTitle: "Rare Reward",
+    rewardTier: "✨ Rare Reward",
+    rewardDescription: "Finish Independent Practice to unlock a rare accessory for your star.",
+    rewardIcon: "✨",
+    skillDescription: "Solve the skill on your own with fewer hints.",
+    hintTitle: "Need a Hint?",
+    accentClass: "border-[#F7B733]/30 bg-[#FFF3D9]",
+    badgeClass: "bg-[#FFF3D9] text-[#C78300]",
   },
   challenge: {
-    title: 'Challenge Yourself',
-    eyebrow: 'Bonus difficulty',
-    description:
-      'Try a tougher version of the skill with less support and a bigger reward.',
-    rewardTitle: 'Earn an Epic Accessory',
-    rewardTier: '👑 Epic Reward',
+    title: "Challenge Yourself",
+    eyebrow: "Bonus difficulty",
+    description: "Try a tougher version of the skill with less support and a bigger reward.",
+    rewardTitle: "Earn an Epic Accessory",
+    rewardTier: "👑 Epic Reward",
     rewardDescription:
-      'Complete Challenge Practice to earn an epic accessory for your star. Challenge problems ask you to spot mistakes and explain your thinking.',
-    rewardIcon: '👑',
-    skillDescription: 'Solve trickier questions that test your reasoning.',
-    hintTitle: 'Need a Hint?',
-    accentClass: 'border-[#F07167]/25 bg-[#FCE9E5]',
-    badgeClass: 'bg-[#FCE9E5] text-[#F07167]',
+      "Complete Challenge Practice to earn an epic accessory for your star. Challenge problems ask you to spot mistakes and explain your thinking.",
+    rewardIcon: "👑",
+    skillDescription: "Solve trickier questions that test your reasoning.",
+    hintTitle: "Need a Hint?",
+    accentClass: "border-[#F07167]/25 bg-[#FCE9E5]",
+    badgeClass: "bg-[#FCE9E5] text-[#F07167]",
   },
-} as const
-
+} as const;
 
 type CompletionModalState = {
-  firstCompletion: boolean
-  recommendedMode: PracticeMode | null
-}
+  firstCompletion: boolean;
+  recommendedMode: PracticeMode | null;
+};
 
 function getHintText(visualType?: string) {
-  if (visualType === 'fair_sharing') {
-    return 'Fair sharing means splitting items equally so each group gets the same amount.'
+  if (visualType === "fair_sharing") {
+    return "Fair sharing means splitting items equally so each group gets the same amount.";
   }
 
-  if (visualType === 'array_rows_columns') {
-    return 'Rows go across. Columns go up and down. Count both to find the product.'
+  if (visualType === "array_rows_columns") {
+    return "Rows go across. Columns go up and down. Count both to find the product.";
   }
 
-  if (visualType === 'multiple_choice') {
-    return 'The commutative property means you can switch the order of the factors and keep the same product.'
+  if (visualType === "multiple_choice") {
+    return "The commutative property means you can switch the order of the factors and keep the same product.";
   }
 
-  if (visualType === 'repeated_addition') {
-    return 'Repeated addition adds the same number again and again. Count how many times it repeats.'
+  if (visualType === "repeated_addition") {
+    return "Repeated addition adds the same number again and again. Count how many times it repeats.";
   }
 
-  if (visualType === 'factor_product') {
-    return 'Factors are the numbers being multiplied. The product is the answer.'
+  if (visualType === "factor_product") {
+    return "Factors are the numbers being multiplied. The product is the answer.";
   }
 
-  return 'Equal groups have the same number of items in each group.'
+  return "Equal groups have the same number of items in each group.";
 }
 
 function getSmallHintText(visualType?: string) {
-  if (visualType === 'fair_sharing') {
-    return 'Share the items equally into each group.'
+  if (visualType === "fair_sharing") {
+    return "Share the items equally into each group.";
   }
 
-  if (visualType === 'array_rows_columns') {
-    return 'Count the rows, then count the columns.'
+  if (visualType === "array_rows_columns") {
+    return "Count the rows, then count the columns.";
   }
 
-  if (visualType === 'multiple_choice') {
-    return 'Try flipping the two factors around.'
+  if (visualType === "multiple_choice") {
+    return "Try flipping the two factors around.";
   }
 
-  if (visualType === 'repeated_addition') {
-    return 'Count how many times the same number repeats.'
+  if (visualType === "repeated_addition") {
+    return "Count how many times the same number repeats.";
   }
 
-  if (visualType === 'factor_product') {
-    return 'Look at the equation and decide which numbers are factors and which number is the product.'
+  if (visualType === "factor_product") {
+    return "Look at the equation and decide which numbers are factors and which number is the product.";
   }
 
-  return 'Count all the stars to find the total.'
+  return "Count all the stars to find the total.";
 }
 
-
 function buildAnswerChoices(correctAnswer: string, groups?: number) {
-  const correct = Number(correctAnswer)
+  const correct = Number(correctAnswer);
 
   if (Number.isNaN(correct)) {
-    return [correctAnswer]
+    return [correctAnswer];
   }
 
   if (correct === 0) {
-    return Array.from(new Set(['0', '1', String(groups ?? 2)])).slice(0, 3)
+    return Array.from(new Set(["0", "1", String(groups ?? 2)])).slice(0, 3);
   }
 
   if (correct === 1) {
-    return ['0', '1', '2']
+    return ["0", "1", "2"];
   }
 
-  return Array.from(new Set(['0', '1', String(correct)])).slice(0, 3)
+  return Array.from(new Set(["0", "1", String(correct)])).slice(0, 3);
 }
 
 function getRewardChargeLabel(mode: PracticeMode) {
-  if (mode === 'guided') return 'Common Reward Charge'
-  if (mode === 'independent') return 'Rare Reward Charge'
-  return 'Epic Reward Charge'
+  if (mode === "guided") return "Common Reward Charge";
+  if (mode === "independent") return "Rare Reward Charge";
+  return "Epic Reward Charge";
 }
-
 
 function getFactorProductSlotOrder(problemIndex: number) {
   const orders = [
-    ['factorA', 'factorB', 'product'],
-    ['product', 'factorA', 'factorB'],
-    ['factorA', 'product', 'factorB'],
-  ] as const
+    ["factorA", "factorB", "product"],
+    ["product", "factorA", "factorB"],
+    ["factorA", "product", "factorB"],
+  ] as const;
 
-  return orders[problemIndex % orders.length]
+  return orders[problemIndex % orders.length];
 }
 
-
 function getModePath(lessonId: string, mode: PracticeMode) {
-  return `/practice/${lessonId}?mode=${mode}`
+  return `/practice/${lessonId}?mode=${mode}`;
 }
 
 function getModeLabel(mode: PracticeMode) {
-  if (mode === 'guided') return 'Guided Practice'
-  if (mode === 'independent') return 'Independent Practice'
-  return 'Challenge Yourself'
+  if (mode === "guided") return "Guided Practice";
+  if (mode === "independent") return "Independent Practice";
+  return "Challenge Yourself";
 }
 
 function getModeRewardLabel(mode: PracticeMode) {
-  if (mode === 'guided') return 'common accessory'
-  if (mode === 'independent') return 'rare accessory'
-  return 'epic accessory'
+  if (mode === "guided") return "common accessory";
+  if (mode === "independent") return "rare accessory";
+  return "epic accessory";
 }
 
 function getNextLessonPath({
@@ -198,273 +186,259 @@ function getNextLessonPath({
   weekNumber,
   dayNumber,
 }: {
-  unitNumber: number
-  weekNumber: number
-  dayNumber: number
+  unitNumber: number;
+  weekNumber: number;
+  dayNumber: number;
 }) {
-  return `/lesson/unit-${unitNumber}-week-${weekNumber}-day-${dayNumber + 1}`
+  return `/lesson/unit-${unitNumber}-week-${weekNumber}-day-${dayNumber + 1}`;
 }
 
 // @SECTION PRACTICE_SCREEN
 function PracticeScreen() {
-  const { lessonId } = useParams()
-  const [searchParams] = useSearchParams()
-  const practiceMode = normalizePracticeMode(searchParams.get('mode'))
-  const modeConfig = PRACTICE_MODE_CONFIG[practiceMode]
+  const { lessonId } = useParams();
+  const [searchParams] = useSearchParams();
+  const practiceMode = normalizePracticeMode(searchParams.get("mode"));
+  const modeConfig = PRACTICE_MODE_CONFIG[practiceMode];
 
-  const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId)
+  const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
   const currentLessonId =
-    lessonId ??
-    `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`
+    lessonId ?? `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
   const nextLessonPath = getNextLessonPath({
     unitNumber: unit.unit_number,
     weekNumber: week.week_number,
     dayNumber: weekDayNumber,
-  })
+  });
 
   const problems = generateProblemsForPracticeType(lesson.practice_type, {
     mode: practiceMode,
     lesson,
-  })
+  });
 
-  const [currentProblemIndex, setCurrentProblemIndex] = useState(0)
-  const [answer, setAnswer] = useState('')
-  const [factorAAnswer, setFactorAAnswer] = useState('')
-  const [factorBAnswer, setFactorBAnswer] = useState('')
-  const [productAnswer, setProductAnswer] = useState('')
-  const [rowsAnswer, setRowsAnswer] = useState('')
-  const [columnsAnswer, setColumnsAnswer] = useState('')
-  const [quotientAnswer, setQuotientAnswer] = useState('')
-  const [selectedChoice, setSelectedChoice] = useState('')
-  const [mistakeJudgment, setMistakeJudgment] = useState('')
-  const [mistakeReason, setMistakeReason] = useState('')
-  const [showHint, setShowHint] = useState(practiceMode === 'guided')
-  const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null)
-  const [correctProblemIndexes, setCorrectProblemIndexes] = useState<number[]>([])
-  const [currentStreak, setCurrentStreak] = useState(0)
-  const [completionModal, setCompletionModal] =
-    useState<CompletionModalState | null>(null)
+  const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
+  const [answer, setAnswer] = useState("");
+  const [factorAAnswer, setFactorAAnswer] = useState("");
+  const [factorBAnswer, setFactorBAnswer] = useState("");
+  const [productAnswer, setProductAnswer] = useState("");
+  const [rowsAnswer, setRowsAnswer] = useState("");
+  const [columnsAnswer, setColumnsAnswer] = useState("");
+  const [quotientAnswer, setQuotientAnswer] = useState("");
+  const [selectedChoice, setSelectedChoice] = useState("");
+  const [mistakeJudgment, setMistakeJudgment] = useState("");
+  const [mistakeReason, setMistakeReason] = useState("");
+  const [showHint, setShowHint] = useState(practiceMode === "guided");
+  const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(null);
+  const [correctProblemIndexes, setCorrectProblemIndexes] = useState<number[]>([]);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [completionModal, setCompletionModal] = useState<CompletionModalState | null>(null);
 
   useEffect(() => {
-    setCurrentProblemIndex(0)
-    setAnswer('')
-    setFactorAAnswer('')
-    setFactorBAnswer('')
-    setProductAnswer('')
-    setRowsAnswer('')
-    setColumnsAnswer('')
-    setQuotientAnswer('')
-    setSelectedChoice('')
-    setMistakeJudgment('')
-    setMistakeReason('')
-    setShowHint(practiceMode === 'guided')
-    setFeedback(null)
-    setCorrectProblemIndexes([])
-    setCurrentStreak(0)
-    setCompletionModal(null)
-  }, [practiceMode, currentLessonId])
+    setCurrentProblemIndex(0);
+    setAnswer("");
+    setFactorAAnswer("");
+    setFactorBAnswer("");
+    setProductAnswer("");
+    setRowsAnswer("");
+    setColumnsAnswer("");
+    setQuotientAnswer("");
+    setSelectedChoice("");
+    setMistakeJudgment("");
+    setMistakeReason("");
+    setShowHint(practiceMode === "guided");
+    setFeedback(null);
+    setCorrectProblemIndexes([]);
+    setCurrentStreak(0);
+    setCompletionModal(null);
+  }, [practiceMode, currentLessonId]);
 
-  const currentProblem = problems[currentProblemIndex]
-  const visualData = currentProblem?.visualData
+  const currentProblem = problems[currentProblemIndex];
+  const visualData = currentProblem?.visualData;
 
-  const lessonPath = lessonId ? `/lesson/${lessonId}` : '/lesson'
-  const correctCount = correctProblemIndexes.length
-  const rewardChargePercent =
-    problems.length > 0 ? (correctCount / problems.length) * 100 : 0
+  const lessonPath = lessonId ? `/lesson/${lessonId}` : "/lesson";
+  const correctCount = correctProblemIndexes.length;
+  const rewardChargePercent = problems.length > 0 ? (correctCount / problems.length) * 100 : 0;
   const isEqualGroupsChoiceMode =
-    (practiceMode === 'guided' || practiceMode === 'independent') &&
-    currentProblem?.visualType === 'equal_groups'
+    (practiceMode === "guided" || practiceMode === "independent") &&
+    currentProblem?.visualType === "equal_groups";
   const answerChoices = currentProblem
     ? buildAnswerChoices(currentProblem.correctAnswer, visualData?.groups)
-    : []
+    : [];
 
   function openCompletionModal(firstCompletion: boolean) {
     const recommendedMode = getRecommendedNextPracticeMode(
       CURRENT_STUDENT_ID,
       currentLessonId,
       practiceMode,
-    )
+    );
 
     setCompletionModal({
       firstCompletion,
       recommendedMode,
-    })
+    });
   }
 
   function recordFeedback(isCorrect: boolean) {
-    setFeedback(isCorrect ? 'correct' : 'incorrect')
+    setFeedback(isCorrect ? "correct" : "incorrect");
 
     // In Challenge mode, judgment + reason are checked together.
     // If either part is wrong, the streak resets.
     if (!isCorrect) {
-      setCurrentStreak(0)
-      return
+      setCurrentStreak(0);
+      return;
     }
 
-    setCurrentStreak((current) => current + 1)
+    setCurrentStreak((current) => current + 1);
 
     setCorrectProblemIndexes((current) => {
       const nextCorrectIndexes = current.includes(currentProblemIndex)
         ? current
-        : [...current, currentProblemIndex]
+        : [...current, currentProblemIndex];
 
       const justFinishedLastQuestion =
-        currentProblemIndex >= problems.length - 1 &&
-        !current.includes(currentProblemIndex)
+        currentProblemIndex >= problems.length - 1 && !current.includes(currentProblemIndex);
 
       if (justFinishedLastQuestion) {
         const firstCompletion = !hasPracticeReward(
           CURRENT_STUDENT_ID,
           currentLessonId,
           practiceMode,
-        )
+        );
 
-        markPracticeReward(CURRENT_STUDENT_ID, currentLessonId, practiceMode)
+        markPracticeReward(CURRENT_STUDENT_ID, currentLessonId, practiceMode);
         updateLessonProgress(currentLessonId, {
           practiceComplete: true,
-        })
+        });
 
         window.setTimeout(() => {
-          openCompletionModal(firstCompletion)
-        }, 350)
+          openCompletionModal(firstCompletion);
+        }, 350);
       }
 
-      return nextCorrectIndexes
-    })
+      return nextCorrectIndexes;
+    });
   }
   function checkAnswer() {
-    if (!currentProblem) return
+    if (!currentProblem) return;
 
     if (isEqualGroupsChoiceMode) {
       recordFeedback(
-        normalizeAnswer(selectedChoice) ===
-          normalizeAnswer(currentProblem.correctAnswer),
-      )
+        normalizeAnswer(selectedChoice) === normalizeAnswer(currentProblem.correctAnswer),
+      );
 
-      return
+      return;
     }
 
-    if (currentProblem.visualType === 'factor_product') {
-      const expected = currentProblem.answerData
+    if (currentProblem.visualType === "factor_product") {
+      const expected = currentProblem.answerData;
 
       const studentFactors = [
         normalizeAnswer(factorAAnswer),
         normalizeAnswer(factorBAnswer),
-      ].sort()
+      ].sort();
 
       const expectedFactors = [
-        normalizeAnswer(expected?.factorA ?? ''),
-        normalizeAnswer(expected?.factorB ?? ''),
-      ].sort()
+        normalizeAnswer(expected?.factorA ?? ""),
+        normalizeAnswer(expected?.factorB ?? ""),
+      ].sort();
 
       const factorsAreCorrect =
-        studentFactors[0] === expectedFactors[0] &&
-        studentFactors[1] === expectedFactors[1]
+        studentFactors[0] === expectedFactors[0] && studentFactors[1] === expectedFactors[1];
 
       const productIsCorrect =
-        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? '')
+        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? "");
 
-      recordFeedback(factorsAreCorrect && productIsCorrect)
-      return
+      recordFeedback(factorsAreCorrect && productIsCorrect);
+      return;
     }
 
-    if (currentProblem.visualType === 'array_rows_columns') {
-      const expected = currentProblem.answerData
+    if (currentProblem.visualType === "array_rows_columns") {
+      const expected = currentProblem.answerData;
 
-      const rowsAreCorrect =
-        normalizeAnswer(rowsAnswer) === normalizeAnswer(expected?.rows ?? '')
+      const rowsAreCorrect = normalizeAnswer(rowsAnswer) === normalizeAnswer(expected?.rows ?? "");
 
       const columnsAreCorrect =
-        normalizeAnswer(columnsAnswer) === normalizeAnswer(expected?.columns ?? '')
+        normalizeAnswer(columnsAnswer) === normalizeAnswer(expected?.columns ?? "");
 
       const productIsCorrect =
-        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? '')
+        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? "");
 
-      recordFeedback(rowsAreCorrect && columnsAreCorrect && productIsCorrect)
-      return
+      recordFeedback(rowsAreCorrect && columnsAreCorrect && productIsCorrect);
+      return;
     }
 
-    if (currentProblem.visualType === 'mistake_check') {
-      const challengeData = currentProblem.challengeData
+    if (currentProblem.visualType === "mistake_check") {
+      const challengeData = currentProblem.challengeData;
 
       recordFeedback(
         mistakeJudgment === challengeData?.correctJudgment &&
           mistakeReason === challengeData?.correctReason,
-      )
+      );
 
-      return
+      return;
     }
 
-    if (currentProblem.visualType === 'multiple_choice') {
+    if (currentProblem.visualType === "multiple_choice") {
       recordFeedback(
-        normalizeAnswer(selectedChoice) ===
-          normalizeAnswer(currentProblem.correctAnswer),
-      )
+        normalizeAnswer(selectedChoice) === normalizeAnswer(currentProblem.correctAnswer),
+      );
 
-      return
+      return;
     }
 
-    if (currentProblem.visualType === 'fair_sharing') {
-      const expected = currentProblem.answerData
+    if (currentProblem.visualType === "fair_sharing") {
+      const expected = currentProblem.answerData;
 
-      recordFeedback(
-        normalizeAnswer(quotientAnswer) ===
-          normalizeAnswer(expected?.quotient ?? ''),
-      )
+      recordFeedback(normalizeAnswer(quotientAnswer) === normalizeAnswer(expected?.quotient ?? ""));
 
-      return
+      return;
     }
 
-    const userAnswer = normalizeAnswer(answer)
-    const correctAnswer = normalizeAnswer(currentProblem.correctAnswer)
+    const userAnswer = normalizeAnswer(answer);
+    const correctAnswer = normalizeAnswer(currentProblem.correctAnswer);
 
-    recordFeedback(userAnswer === correctAnswer)
+    recordFeedback(userAnswer === correctAnswer);
   }
 
   function goToNextQuestion() {
-    setAnswer('')
-    setFactorAAnswer('')
-    setFactorBAnswer('')
-    setProductAnswer('')
-    setRowsAnswer('')
-    setColumnsAnswer('')
-    setQuotientAnswer('')
-    setSelectedChoice('')
-    setMistakeJudgment('')
-    setMistakeReason('')
-    setShowHint(practiceMode === 'guided')
-    setFeedback(null)
+    setAnswer("");
+    setFactorAAnswer("");
+    setFactorBAnswer("");
+    setProductAnswer("");
+    setRowsAnswer("");
+    setColumnsAnswer("");
+    setQuotientAnswer("");
+    setSelectedChoice("");
+    setMistakeJudgment("");
+    setMistakeReason("");
+    setShowHint(practiceMode === "guided");
+    setFeedback(null);
 
     if (currentProblemIndex < problems.length - 1) {
-      setCurrentProblemIndex((current) => current + 1)
+      setCurrentProblemIndex((current) => current + 1);
     }
   }
 
   function renderHintVisual() {
-    if (currentProblem?.visualType === 'mistake_check') {
+    if (currentProblem?.visualType === "mistake_check") {
       return (
         <div className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-center">
           <p className="text-sm font-black uppercase tracking-[0.14em] text-[#0081A7]">
             Detective clue
           </p>
 
-          <p className="mt-2 text-xl font-black text-[#073B5A]">
-            Check the factor after ×.
-          </p>
+          <p className="mt-2 text-xl font-black text-[#073B5A]">Check the factor after ×.</p>
 
           <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
-            If the equation says ×0, each group has 0.
-            If it says ×1, each group has 1.
+            If the equation says ×0, each group has 0. If it says ×1, each group has 1.
           </p>
         </div>
-      )
+      );
     }
 
-    if (currentProblem?.visualType === 'factor_product') {
+    if (currentProblem?.visualType === "factor_product") {
       return (
         <div className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-center">
           <p className="text-2xl font-black text-[#073B5A]">
-            {visualData?.equation ?? '3 × 4 = 12'}
+            {visualData?.equation ?? "3 × 4 = 12"}
           </p>
 
           <div className="mt-2 flex flex-wrap justify-center gap-2 text-xs font-black">
@@ -477,39 +451,34 @@ function PracticeScreen() {
             </span>
           </div>
         </div>
-      )
+      );
     }
 
-    if (currentProblem?.visualType === 'array_rows_columns') {
+    if (currentProblem?.visualType === "array_rows_columns") {
       return (
         <div className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-center">
           <div className="mx-auto grid w-fit grid-cols-4 gap-1.5 rounded-xl bg-white p-3">
             {Array.from({ length: 12 }).map((_, index) => (
-              <span
-                key={index}
-                className="h-3 w-3 rounded-full bg-[#F07167]"
-              />
+              <span key={index} className="h-3 w-3 rounded-full bg-[#F07167]" />
             ))}
           </div>
 
-          <p className="mt-2 text-xs font-black text-[#073B5A]/70">
-            3 rows × 4 columns
-          </p>
+          <p className="mt-2 text-xs font-black text-[#073B5A]/70">3 rows × 4 columns</p>
         </div>
-      )
+      );
     }
 
-    if (currentProblem?.visualType === 'multiple_choice') {
+    if (currentProblem?.visualType === "multiple_choice") {
       return (
         <div className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-center">
           <p className="text-xl font-black text-[#073B5A]">3 × 4</p>
           <p className="text-sm font-black text-[#0081A7]">flips to</p>
           <p className="text-xl font-black text-[#073B5A]">4 × 3</p>
         </div>
-      )
+      );
     }
 
-    if (currentProblem?.visualType === 'fair_sharing') {
+    if (currentProblem?.visualType === "fair_sharing") {
       return (
         <div className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-center">
           <div className="flex justify-center gap-2">
@@ -524,7 +493,7 @@ function PracticeScreen() {
             ))}
           </div>
         </div>
-      )
+      );
     }
 
     return (
@@ -537,31 +506,24 @@ function PracticeScreen() {
             >
               <div className="grid grid-cols-2 gap-1">
                 {[1, 2, 3, 4].map((dot) => (
-                  <span
-                    key={dot}
-                    className="h-2 w-2 rounded-full bg-[#00AFB9]"
-                  />
+                  <span key={dot} className="h-2 w-2 rounded-full bg-[#00AFB9]" />
                 ))}
               </div>
             </div>
           ))}
         </div>
       </div>
-    )
+    );
   }
 
   function renderProblemVisual() {
-    if (!currentProblem || !visualData) return null
+    if (!currentProblem || !visualData) return null;
 
-    if (currentProblem.visualType === 'factor_product') {
+    if (currentProblem.visualType === "factor_product") {
       return (
         <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
-          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
-            ✦
-          </span>
-          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
-            ✦
-          </span>
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">✦</span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">✦</span>
 
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
             Factor + Product Hunt
@@ -577,41 +539,29 @@ function PracticeScreen() {
 
           <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
-      )
+      );
     }
 
-    if (currentProblem.visualType === 'equal_groups') {
-      const groups = visualData.groups ?? 0
-      const itemsPerGroup = visualData.itemsPerGroup ?? 0
-      const totalItems = groups * itemsPerGroup
-      const shouldUseCompactGroups = groups > 5 || itemsPerGroup > 4 || totalItems > 12
+    if (currentProblem.visualType === "equal_groups") {
+      const groups = visualData.groups ?? 0;
+      const itemsPerGroup = visualData.itemsPerGroup ?? 0;
+      const totalItems = groups * itemsPerGroup;
+      const shouldUseCompactGroups = groups > 5 || itemsPerGroup > 4 || totalItems > 12;
 
       if (shouldUseCompactGroups) {
-        const shouldUseDenseGroupView =
-          itemsPerGroup > 6 || groups > 6 || totalItems > 24
+        const shouldUseDenseGroupView = itemsPerGroup > 6 || groups > 6 || totalItems > 24;
 
-        const starSizeClass =
-          totalItems > 24 ? 'text-[1.1rem]' : 'text-[1.18rem]'
+        const starSizeClass = totalItems > 24 ? "text-[1.1rem]" : "text-[1.18rem]";
 
         const groupCardClass =
-          groups > 5
-            ? 'h-14 min-w-20 px-3 py-2'
-            : 'h-[4.25rem] min-w-24 px-4 py-2'
+          groups > 5 ? "h-14 min-w-20 px-3 py-2" : "h-[4.25rem] min-w-24 px-4 py-2";
 
         return (
           <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-4 pb-4 pt-1">
-            <span className="absolute left-8 top-10 text-xl text-[#00AFB9]/65">
-              ✦
-            </span>
-            <span className="absolute left-16 top-20 text-lg text-[#F7B733]">
-              ✦
-            </span>
-            <span className="absolute right-14 top-14 text-lg text-[#F7B733]">
-              ✦
-            </span>
-            <span className="absolute right-24 top-28 text-sm text-[#00AFB9]/65">
-              ✦
-            </span>
+            <span className="absolute left-8 top-10 text-xl text-[#00AFB9]/65">✦</span>
+            <span className="absolute left-16 top-20 text-lg text-[#F7B733]">✦</span>
+            <span className="absolute right-14 top-14 text-lg text-[#F7B733]">✦</span>
+            <span className="absolute right-24 top-28 text-sm text-[#00AFB9]/65">✦</span>
 
             <div className="mb-3 flex flex-wrap justify-center gap-2 text-xs font-black uppercase tracking-[0.12em]">
               <span className="rounded-full bg-[#E9F7F8] px-3 py-1.5 text-[#0081A7] shadow-sm">
@@ -636,9 +586,7 @@ function PracticeScreen() {
                       ))}
                     </div>
                   ) : (
-                    <div
-                      className={`grid grid-cols-3 gap-1 leading-none ${starSizeClass}`}
-                    >
+                    <div className={`grid grid-cols-3 gap-1 leading-none ${starSizeClass}`}>
                       {Array.from({ length: itemsPerGroup }).map((_, starIndex) => (
                         <span key={starIndex}>⭐</span>
                       ))}
@@ -650,23 +598,15 @@ function PracticeScreen() {
 
             <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
           </div>
-        )
+        );
       }
 
       return (
         <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-4 pb-4 pt-1">
-          <span className="absolute left-8 top-10 text-xl text-[#00AFB9]/65">
-            ✦
-          </span>
-          <span className="absolute left-16 top-20 text-lg text-[#F7B733]">
-            ✦
-          </span>
-          <span className="absolute right-14 top-14 text-lg text-[#F7B733]">
-            ✦
-          </span>
-          <span className="absolute right-24 top-28 text-sm text-[#00AFB9]/65">
-            ✦
-          </span>
+          <span className="absolute left-8 top-10 text-xl text-[#00AFB9]/65">✦</span>
+          <span className="absolute left-16 top-20 text-lg text-[#F7B733]">✦</span>
+          <span className="absolute right-14 top-14 text-lg text-[#F7B733]">✦</span>
+          <span className="absolute right-24 top-28 text-sm text-[#00AFB9]/65">✦</span>
 
           <div className="mb-3 flex flex-wrap justify-center gap-2 text-xs font-black uppercase tracking-[0.12em]">
             <span className="rounded-full bg-[#E9F7F8] px-3 py-1.5 text-[#0081A7] shadow-sm">
@@ -686,9 +626,7 @@ function PracticeScreen() {
               >
                 <div
                   className={`grid gap-1.5 leading-none ${
-                    itemsPerGroup === 3
-                      ? 'grid-cols-3 text-[1.65rem]'
-                      : 'grid-cols-2 text-[1.8rem]'
+                    itemsPerGroup === 3 ? "grid-cols-3 text-[1.65rem]" : "grid-cols-2 text-[1.8rem]"
                   }`}
                 >
                   {Array.from({ length: itemsPerGroup }).map((_, starIndex) => (
@@ -701,18 +639,14 @@ function PracticeScreen() {
 
           <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
-      )
+      );
     }
 
-    if (currentProblem.visualType === 'repeated_addition') {
+    if (currentProblem.visualType === "repeated_addition") {
       return (
         <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
-          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
-            ✦
-          </span>
-          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
-            ✦
-          </span>
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">✦</span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">✦</span>
 
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
             Spot the groups
@@ -728,18 +662,14 @@ function PracticeScreen() {
 
           <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
-      )
+      );
     }
 
-    if (currentProblem.visualType === 'array_rows_columns') {
+    if (currentProblem.visualType === "array_rows_columns") {
       return (
         <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
-          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
-            ✦
-          </span>
-          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
-            ✦
-          </span>
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">✦</span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">✦</span>
 
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
             Array Builder
@@ -754,10 +684,7 @@ function PracticeScreen() {
             {Array.from({
               length: (visualData.rows ?? 0) * (visualData.columns ?? 0),
             }).map((_, index) => (
-              <span
-                key={index}
-                className="h-7 w-7 rounded-full bg-[#F07167] shadow-sm"
-              />
+              <span key={index} className="h-7 w-7 rounded-full bg-[#F07167] shadow-sm" />
             ))}
           </div>
 
@@ -767,18 +694,14 @@ function PracticeScreen() {
 
           <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
-      )
+      );
     }
 
-    if (currentProblem.visualType === 'multiple_choice') {
+    if (currentProblem.visualType === "multiple_choice") {
       return (
         <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
-          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
-            ✦
-          </span>
-          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
-            ✦
-          </span>
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">✦</span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">✦</span>
 
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
             Find the match
@@ -794,18 +717,14 @@ function PracticeScreen() {
 
           <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
-      )
+      );
     }
 
-    if (currentProblem.visualType === 'fair_sharing') {
+    if (currentProblem.visualType === "fair_sharing") {
       return (
         <div className="relative mt-3 overflow-hidden rounded-3xl bg-white px-5 py-5 text-center">
-          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
-            ✦
-          </span>
-          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
-            ✦
-          </span>
+          <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">✦</span>
+          <span className="absolute right-10 top-10 text-xl text-[#F7B733]">✦</span>
 
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
             Fair Sharing
@@ -816,39 +735,36 @@ function PracticeScreen() {
           </p>
 
           <div className="mt-4 flex flex-wrap justify-center gap-3">
-            {Array.from({ length: visualData.groupsToShare ?? 0 }).map(
-              (_, groupIndex) => (
-                <div
-                  key={groupIndex}
-                  className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-4 py-3 shadow-sm"
-                >
-                  <p className="mb-2 text-xs font-black uppercase tracking-wide text-[#0081A7]">
-                    Group {groupIndex + 1}
-                  </p>
+            {Array.from({ length: visualData.groupsToShare ?? 0 }).map((_, groupIndex) => (
+              <div
+                key={groupIndex}
+                className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-4 py-3 shadow-sm"
+              >
+                <p className="mb-2 text-xs font-black uppercase tracking-wide text-[#0081A7]">
+                  Group {groupIndex + 1}
+                </p>
 
-                  <div className="grid grid-cols-2 gap-1.5 text-xl">
-                    {Array.from({
-                      length: visualData.itemsPerGroup ?? 0,
-                    }).map((_, itemIndex) => (
-                      <span key={itemIndex}>🍎</span>
-                    ))}
-                  </div>
+                <div className="grid grid-cols-2 gap-1.5 text-xl">
+                  {Array.from({
+                    length: visualData.itemsPerGroup ?? 0,
+                  }).map((_, itemIndex) => (
+                    <span key={itemIndex}>🍎</span>
+                  ))}
                 </div>
-              ),
-            )}
+              </div>
+            ))}
           </div>
 
           <p className="mx-auto mt-3 max-w-xl text-sm font-bold text-[#073B5A]/70">
-            Share {visualData.items} items equally into{' '}
-            {visualData.groupsToShare} groups.
+            Share {visualData.items} items equally into {visualData.groupsToShare} groups.
           </p>
 
           <div className="mx-auto mt-4 max-w-4xl border-t border-dashed border-[#9AB5C7]/55" />
         </div>
-      )
+      );
     }
 
-    return null
+    return null;
   }
   return (
     <PageLayout>
@@ -862,8 +778,7 @@ function PracticeScreen() {
             <span className="hidden h-4 w-px bg-[#073B5A]/15 sm:block" />
 
             <p className="text-sm font-black text-[#073B5A]/60">
-              Unit {unit.unit_number} · Week {week.week_number} · Day{' '}
-              {weekDayNumber}
+              Unit {unit.unit_number} · Week {week.week_number} · Day {weekDayNumber}
             </p>
           </div>
 
@@ -883,9 +798,7 @@ function PracticeScreen() {
 
           <div>
             <p className="text-xs font-black text-[#073B5A]">Ava Johnson</p>
-            <p className="text-[0.7rem] font-bold text-[#073B5A]/60">
-              3rd Grade
-            </p>
+            <p className="text-[0.7rem] font-bold text-[#073B5A]/60">3rd Grade</p>
           </div>
         </div>
       </div>
@@ -905,63 +818,61 @@ function PracticeScreen() {
 
             <div
               className={`${
-                practiceMode === 'independent'
-                  ? 'mx-auto max-w-3xl text-center'
-                  : 'max-w-3xl'
+                practiceMode === "independent" ? "mx-auto max-w-3xl text-center" : "max-w-3xl"
               }`}
             >
               <h2 className="text-[1.12rem] font-black leading-tight tracking-[-0.01em] text-[#073B5A]">
-                {currentProblem.visualType === 'mistake_check'
-                  ? 'Find the mistake'
+                {currentProblem.visualType === "mistake_check"
+                  ? "Find the mistake"
                   : currentProblem.questionText}
               </h2>
             </div>
 
             {renderProblemVisual()}
 
-            {currentProblem.visualType === 'factor_product' ? (
+            {currentProblem.visualType === "factor_product" ? (
               <div className="mx-auto mt-4 grid max-w-3xl gap-3 md:grid-cols-3">
                 {getFactorProductSlotOrder(currentProblemIndex).map((slot) => {
-                  const isProduct = slot === 'product'
+                  const isProduct = slot === "product";
 
                   const value =
-                    slot === 'factorA'
+                    slot === "factorA"
                       ? factorAAnswer
-                      : slot === 'factorB'
+                      : slot === "factorB"
                         ? factorBAnswer
-                        : productAnswer
+                        : productAnswer;
 
                   const setValue =
-                    slot === 'factorA'
+                    slot === "factorA"
                       ? setFactorAAnswer
-                      : slot === 'factorB'
+                      : slot === "factorB"
                         ? setFactorBAnswer
-                        : setProductAnswer
+                        : setProductAnswer;
 
                   return (
                     <label key={slot} className="block">
                       <span
                         className={`mb-1.5 block text-center text-xs font-black uppercase tracking-wide ${
-                          isProduct ? 'text-[#F07167]' : 'text-[#0081A7]'
+                          isProduct ? "text-[#F07167]" : "text-[#0081A7]"
                         }`}
                       >
-                        {isProduct ? 'Product' : 'Factor'}
+                        {isProduct ? "Product" : "Factor"}
                       </span>
 
                       <input
                         value={value}
                         onChange={(event) => {
-                          setValue(event.target.value)
-                          setFeedback(null)
+                          setValue(event.target.value);
+                          setFeedback(null);
                         }}
                         onKeyDown={(event) => {
-                          if (event.key === 'Enter') checkAnswer()
+                          if (event.key === "Enter") checkAnswer();
                         }}
                         className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                         placeholder="Enter a number"
                       />
                     </label>
-                  )
+                  );
                 })}
 
                 <button
@@ -972,7 +883,7 @@ function PracticeScreen() {
                   ✓ Check Answer
                 </button>
               </div>
-            ) : currentProblem.visualType === 'array_rows_columns' ? (
+            ) : currentProblem.visualType === "array_rows_columns" ? (
               <div className="mx-auto mt-4 grid max-w-3xl gap-3 md:grid-cols-3">
                 <label className="block">
                   <span className="mb-1.5 block text-center text-xs font-black uppercase tracking-wide text-[#0081A7]">
@@ -982,8 +893,8 @@ function PracticeScreen() {
                   <input
                     value={rowsAnswer}
                     onChange={(event) => {
-                      setRowsAnswer(event.target.value)
-                      setFeedback(null)
+                      setRowsAnswer(event.target.value);
+                      setFeedback(null);
                     }}
                     className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                     placeholder="?"
@@ -998,8 +909,8 @@ function PracticeScreen() {
                   <input
                     value={columnsAnswer}
                     onChange={(event) => {
-                      setColumnsAnswer(event.target.value)
-                      setFeedback(null)
+                      setColumnsAnswer(event.target.value);
+                      setFeedback(null);
                     }}
                     className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                     placeholder="?"
@@ -1014,11 +925,11 @@ function PracticeScreen() {
                   <input
                     value={productAnswer}
                     onChange={(event) => {
-                      setProductAnswer(event.target.value)
-                      setFeedback(null)
+                      setProductAnswer(event.target.value);
+                      setFeedback(null);
                     }}
                     onKeyDown={(event) => {
-                      if (event.key === 'Enter') checkAnswer()
+                      if (event.key === "Enter") checkAnswer();
                     }}
                     className="w-full rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                     placeholder="?"
@@ -1033,15 +944,11 @@ function PracticeScreen() {
                   ✓ Check Answer
                 </button>
               </div>
-            ) : currentProblem.visualType === 'mistake_check' ? (
+            ) : currentProblem.visualType === "mistake_check" ? (
               <div className="mx-auto mt-4 max-w-4xl">
                 <div className="relative overflow-hidden rounded-3xl border border-[#F07167]/20 bg-[radial-gradient(circle_at_15%_20%,rgba(255,255,255,0.95),transparent_30%),linear-gradient(90deg,#FFF8E9,#FCE9E5)] px-5 py-4 text-center shadow-sm">
-                  <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">
-                    ✦
-                  </span>
-                  <span className="absolute right-10 top-10 text-xl text-[#F7B733]">
-                    ✦
-                  </span>
+                  <span className="absolute left-8 top-8 text-lg text-[#00AFB9]/65">✦</span>
+                  <span className="absolute right-10 top-10 text-xl text-[#F7B733]">✦</span>
 
                   <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
                     Detective Challenge
@@ -1067,17 +974,17 @@ function PracticeScreen() {
                         key={choice}
                         type="button"
                         onClick={() => {
-                          setMistakeJudgment(choice)
-                          setMistakeReason('')
-                          setFeedback(null)
+                          setMistakeJudgment(choice);
+                          setMistakeReason("");
+                          setFeedback(null);
                         }}
                         className={`rounded-2xl border px-5 py-3 text-lg font-black shadow-sm transition hover:scale-[1.01] ${
                           mistakeJudgment === choice
-                            ? 'border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20'
-                            : 'border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]'
+                            ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20"
+                            : "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]"
                         }`}
                       >
-                        {choice === 'yes' ? 'Yes' : 'No'}
+                        {choice === "yes" ? "Yes" : "No"}
                       </button>
                     ))}
                   </div>
@@ -1095,13 +1002,13 @@ function PracticeScreen() {
                           key={reason}
                           type="button"
                           onClick={() => {
-                            setMistakeReason(reason)
-                            setFeedback(null)
+                            setMistakeReason(reason);
+                            setFeedback(null);
                           }}
                           className={`rounded-2xl border px-4 py-2.5 text-left text-sm font-black shadow-sm transition hover:scale-[1.005] ${
                             mistakeReason === reason
-                              ? 'border-[#00AFB9] bg-white text-[#0081A7] ring-2 ring-[#00AFB9]/20'
-                              : 'border-[#073B5A]/10 bg-white/80 text-[#073B5A] hover:bg-white'
+                              ? "border-[#00AFB9] bg-white text-[#0081A7] ring-2 ring-[#00AFB9]/20"
+                              : "border-[#073B5A]/10 bg-white/80 text-[#073B5A] hover:bg-white"
                           }`}
                         >
                           {reason}
@@ -1117,27 +1024,27 @@ function PracticeScreen() {
                   disabled={!mistakeJudgment || !mistakeReason}
                   className={`mt-2.5 w-full rounded-xl px-6 py-2.5 font-black shadow-sm ${
                     mistakeJudgment && mistakeReason
-                      ? 'bg-[#00AFB9] text-white'
-                      : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                      ? "bg-[#00AFB9] text-white"
+                      : "bg-[#DDEEEF] text-[#073B5A]/55"
                   }`}
                 >
                   ✓ Check Answer
                 </button>
               </div>
-            ) : currentProblem.visualType === 'multiple_choice' ? (
+            ) : currentProblem.visualType === "multiple_choice" ? (
               <div className="mx-auto mt-4 grid max-w-3xl gap-3">
                 {visualData?.choices?.map((choice) => (
                   <button
                     key={choice}
                     type="button"
                     onClick={() => {
-                      setSelectedChoice(choice)
-                      setFeedback(null)
+                      setSelectedChoice(choice);
+                      setFeedback(null);
                     }}
                     className={`rounded-2xl border px-5 py-3 text-left text-lg font-black shadow-sm transition hover:scale-[1.005] ${
                       selectedChoice === choice
-                        ? 'border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]'
-                        : 'border-[#073B5A]/10 bg-white text-[#073B5A] hover:border-[#00AFB9]/40 hover:bg-[#F5FBFC]'
+                        ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]"
+                        : "border-[#073B5A]/10 bg-white text-[#073B5A] hover:border-[#00AFB9]/40 hover:bg-[#F5FBFC]"
                     }`}
                   >
                     {choice}
@@ -1149,24 +1056,22 @@ function PracticeScreen() {
                   onClick={checkAnswer}
                   disabled={!selectedChoice}
                   className={`mt-1 rounded-xl px-6 py-3 font-black shadow-sm ${
-                    selectedChoice
-                      ? 'bg-[#00AFB9] text-white'
-                      : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                    selectedChoice ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/55"
                   }`}
                 >
                   ✓ Check Answer
                 </button>
               </div>
-            ) : currentProblem.visualType === 'fair_sharing' ? (
+            ) : currentProblem.visualType === "fair_sharing" ? (
               <div className="mx-auto mt-5 flex max-w-xl gap-3">
                 <input
                   value={quotientAnswer}
                   onChange={(event) => {
-                    setQuotientAnswer(event.target.value)
-                    setFeedback(null)
+                    setQuotientAnswer(event.target.value);
+                    setFeedback(null);
                   }}
                   onKeyDown={(event) => {
-                    if (event.key === 'Enter') checkAnswer()
+                    if (event.key === "Enter") checkAnswer();
                   }}
                   className="min-w-0 flex-1 rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                   placeholder="How many in each group?"
@@ -1182,26 +1087,24 @@ function PracticeScreen() {
               </div>
             ) : isEqualGroupsChoiceMode ? (
               <div
-                className={`mx-auto max-w-4xl ${
-                  practiceMode === 'independent' ? '-mt-1' : 'mt-4'
-                }`}
+                className={`mx-auto max-w-4xl ${practiceMode === "independent" ? "-mt-1" : "mt-4"}`}
               >
                 <div className="text-center">
                   <p className="text-sm font-black text-[#00AFB9]">
-                    {practiceMode === 'guided' ? 'Complete the sentence:' : 'Solve it:'}
+                    {practiceMode === "guided" ? "Complete the sentence:" : "Solve it:"}
                   </p>
 
                   <p className="mt-1.5 text-[2.8rem] font-black leading-none tracking-wide text-[#073B5A]">
-                    {visualData?.groups} × {visualData?.itemsPerGroup} ={' '}
+                    {visualData?.groups} × {visualData?.itemsPerGroup} ={" "}
                     <span className="inline-flex h-16 min-w-16 translate-y-1 items-center justify-center rounded-2xl border-2 border-dashed border-[#00AFB9]/45 bg-white px-4 text-[#9AB5C7]">
                       ?
                     </span>
                   </p>
 
                   <p className="mt-2 text-sm font-bold text-[#073B5A]/70">
-                    {practiceMode === 'guided'
+                    {practiceMode === "guided"
                       ? `Use the picture: ${visualData?.groups} groups with ${visualData?.itemsPerGroup} in each group.`
-                      : 'Choose the correct answer.'}
+                      : "Choose the correct answer."}
                   </p>
                 </div>
 
@@ -1211,13 +1114,13 @@ function PracticeScreen() {
                       key={choice}
                       type="button"
                       onClick={() => {
-                        setSelectedChoice(choice)
-                        setFeedback(null)
+                        setSelectedChoice(choice);
+                        setFeedback(null);
                       }}
                       className={`rounded-2xl border px-5 py-3 text-2xl font-black shadow-sm transition hover:scale-[1.01] ${
                         selectedChoice === choice
-                          ? 'border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20'
-                          : 'border-[#00AFB9]/55 bg-white text-[#073B5A] hover:bg-[#F8FBFB]'
+                          ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20"
+                          : "border-[#00AFB9]/55 bg-white text-[#073B5A] hover:bg-[#F8FBFB]"
                       }`}
                     >
                       {choice}
@@ -1230,9 +1133,7 @@ function PracticeScreen() {
                   onClick={checkAnswer}
                   disabled={!selectedChoice}
                   className={`mx-auto mt-3 block rounded-xl px-10 py-2.5 font-black shadow-sm ${
-                    selectedChoice
-                      ? 'bg-[#00AFB9] text-white'
-                      : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                    selectedChoice ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/55"
                   }`}
                 >
                   ✓ Check Answer
@@ -1248,17 +1149,17 @@ function PracticeScreen() {
                   <input
                     value={answer}
                     onChange={(event) => {
-                      setAnswer(event.target.value)
-                      setFeedback(null)
+                      setAnswer(event.target.value);
+                      setFeedback(null);
                     }}
                     onKeyDown={(event) => {
-                      if (event.key === 'Enter') checkAnswer()
+                      if (event.key === "Enter") checkAnswer();
                     }}
                     className="min-w-0 flex-1 rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-center text-lg font-black text-[#073B5A] outline-none shadow-sm focus:border-[#00AFB9] focus:ring-2 focus:ring-[#00AFB9]/15"
                     placeholder={
-                      currentProblem.visualType === 'repeated_addition'
-                        ? 'Example: 3 × 5 = 15'
-                        : 'Type your answer'
+                      currentProblem.visualType === "repeated_addition"
+                        ? "Example: 3 × 5 = 15"
+                        : "Type your answer"
                     }
                   />
 
@@ -1267,9 +1168,7 @@ function PracticeScreen() {
                     onClick={checkAnswer}
                     disabled={!answer.trim()}
                     className={`rounded-2xl px-6 py-3 font-black shadow-sm ${
-                      answer.trim()
-                        ? 'bg-[#00AFB9] text-white'
-                        : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                      answer.trim() ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/55"
                     }`}
                   >
                     ✓ Check Answer
@@ -1293,55 +1192,53 @@ function PracticeScreen() {
             {feedback === null && (
               <div className="mx-auto mt-4 flex max-w-4xl items-center gap-4 rounded-3xl border border-[#00AFB9]/25 bg-[#E9F7F8] px-5 py-3 shadow-sm">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#BDEFF2] text-3xl shadow-sm">
-                  {practiceMode === 'challenge'
-                    ? '🕵️'
-                    : practiceMode === 'guided'
-                      ? '🎒'
-                      : '🌟'}
+                  {practiceMode === "challenge" ? "🕵️" : practiceMode === "guided" ? "🎒" : "🌟"}
                 </div>
 
                 <div>
                   <p className="text-base font-black text-[#073B5A]">
-                    {practiceMode === 'challenge'
-                      ? 'Pattern detective mode!'
-                      : practiceMode === 'guided'
-                        ? 'Step-by-step power!'
-                        : 'You’ve got this!'}
+                    {practiceMode === "challenge"
+                      ? "Pattern detective mode!"
+                      : practiceMode === "guided"
+                        ? "Step-by-step power!"
+                        : "You’ve got this!"}
                   </p>
 
                   <p className="text-sm font-bold text-[#073B5A]/70">
-                    {practiceMode === 'challenge'
-                      ? 'Every solved mistake powers up your Epic Reward!'
-                      : practiceMode === 'guided'
-                        ? 'Every correct answer powers up your Common Reward!'
-                        : 'Every correct answer powers up your Rare Reward!'}
+                    {practiceMode === "challenge"
+                      ? "Every solved mistake powers up your Epic Reward!"
+                      : practiceMode === "guided"
+                        ? "Every correct answer powers up your Common Reward!"
+                        : "Every correct answer powers up your Rare Reward!"}
                   </p>
                 </div>
               </div>
             )}
 
-            {feedback === 'correct' && (
+            {feedback === "correct" && (
               <div className="mx-auto mt-2.5 max-w-2xl rounded-2xl border border-[#00AFB9]/30 bg-[#E9F7F8] p-2.5 text-center">
                 <p className="font-black text-[#073B5A]">
-                  {practiceMode === 'independent'
-                    ? 'Nice solo solve! Rare reward charge +1 ⚡'
-                    : practiceMode === 'challenge'
-                      ? 'Great detective work! Epic reward charge +1 👑'
-                      : 'Nice guided solve! Common reward charge +1 🎒'}
+                  {practiceMode === "independent"
+                    ? "Nice solo solve! Rare reward charge +1 ⚡"
+                    : practiceMode === "challenge"
+                      ? "Great detective work! Epic reward charge +1 👑"
+                      : "Nice guided solve! Common reward charge +1 🎒"}
                 </p>
               </div>
             )}
 
-            {feedback === 'incorrect' && (
+            {feedback === "incorrect" && (
               <div className="mx-auto mt-3 max-w-2xl rounded-2xl border border-[#F07167]/25 bg-[#FCE9E5] p-3 text-center">
                 <p className="font-black text-[#073B5A]">
-                  {currentProblem.visualType === 'mistake_check'
-                    ? 'Not quite. The answer and the reason both need to match.'
-                    : 'Not quite. Try again.'}
+                  {currentProblem.visualType === "mistake_check"
+                    ? "Not quite. The answer and the reason both need to match."
+                    : "Not quite. Try again."}
                 </p>
 
                 <p className="mt-1 text-sm font-semibold text-[#073B5A]/70">
-                  {currentProblem.visualType === 'mistake_check' ? currentProblem.challengeData?.feedback : getHintText(currentProblem.visualType)}
+                  {currentProblem.visualType === "mistake_check"
+                    ? currentProblem.challengeData?.feedback
+                    : getHintText(currentProblem.visualType)}
                 </p>
               </div>
             )}
@@ -1360,10 +1257,10 @@ function PracticeScreen() {
                     key={problem.id}
                     className={`flex h-7 w-7 items-center justify-center rounded-full border text-[0.68rem] font-black ${
                       index === currentProblemIndex
-                        ? 'border-[#00AFB9] bg-[#00AFB9] text-white'
+                        ? "border-[#00AFB9] bg-[#00AFB9] text-white"
                         : index < currentProblemIndex
-                          ? 'border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]'
-                          : 'border-[#073B5A]/15 bg-white text-[#073B5A]/45'
+                          ? "border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]"
+                          : "border-[#073B5A]/15 bg-white text-[#073B5A]/45"
                     }`}
                   >
                     {index + 1}
@@ -1374,15 +1271,11 @@ function PracticeScreen() {
               <button
                 type="button"
                 onClick={goToNextQuestion}
-                disabled={
-                  feedback !== 'correct' ||
-                  currentProblemIndex >= problems.length - 1
-                }
+                disabled={feedback !== "correct" || currentProblemIndex >= problems.length - 1}
                 className={`rounded-xl px-4 py-2 text-sm font-black shadow-sm ${
-                  feedback === 'correct' &&
-                  currentProblemIndex < problems.length - 1
-                    ? 'bg-[#00AFB9] text-white'
-                    : 'bg-[#DDEEEF] text-[#073B5A]/55'
+                  feedback === "correct" && currentProblemIndex < problems.length - 1
+                    ? "bg-[#00AFB9] text-white"
+                    : "bg-[#DDEEEF] text-[#073B5A]/55"
                 }`}
               >
                 Next Question →
@@ -1406,20 +1299,24 @@ function PracticeScreen() {
             <>
               <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
                 <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
-                  {practiceMode === 'challenge' ? '👑 Epic Reward' : practiceMode === 'guided' ? '🎒 Common Reward' : '✨ Rare Reward'}
+                  {practiceMode === "challenge"
+                    ? "👑 Epic Reward"
+                    : practiceMode === "guided"
+                      ? "🎒 Common Reward"
+                      : "✨ Rare Reward"}
                 </p>
 
                 <div className="mt-2 flex items-center gap-3">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
-                    {practiceMode === 'challenge' ? '👑' : practiceMode === 'guided' ? '🎒' : '🎁'}
+                    {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
                   </div>
 
                   <p className="text-sm font-black leading-relaxed text-[#073B5A]">
-                    {practiceMode === 'challenge'
-                      ? 'Finish Challenge Practice to unlock an epic accessory!'
-                      : practiceMode === 'guided'
-                        ? 'Finish Guided Practice to unlock a common accessory!'
-                        : 'Finish Independent Practice to unlock a rare accessory!'}
+                    {practiceMode === "challenge"
+                      ? "Finish Challenge Practice to unlock an epic accessory!"
+                      : practiceMode === "guided"
+                        ? "Finish Guided Practice to unlock a common accessory!"
+                        : "Finish Independent Practice to unlock a rare accessory!"}
                   </p>
                 </div>
               </div>
@@ -1443,32 +1340,26 @@ function PracticeScreen() {
                 </div>
               </div>
 
-              {practiceMode !== 'guided' && (
-              <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
-                  🔥 Streak
-                </p>
+              {practiceMode !== "guided" && (
+                <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
+                    🔥 Streak
+                  </p>
 
-                <div className="mt-2 flex items-center justify-between gap-3">
-                  <div>
-                    <p className="text-4xl font-black text-[#F07167]">
-                      {currentStreak}
-                    </p>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-4xl font-black text-[#F07167]">{currentStreak}</p>
 
-                    <p className="text-sm font-black text-[#073B5A]">
-                      in a row
-                    </p>
+                      <p className="text-sm font-black text-[#073B5A]">in a row</p>
 
-                    <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
-                      Keep it going!
-                    </p>
-                  </div>
+                      <p className="mt-1 text-xs font-bold text-[#073B5A]/65">Keep it going!</p>
+                    </div>
 
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
-                    🏅
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
+                      🏅
+                    </div>
                   </div>
                 </div>
-              </div>
               )}
             </>
           )}
@@ -1497,7 +1388,7 @@ function PracticeScreen() {
               onClick={() => setShowHint((current) => !current)}
               className="mt-3 w-full rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2.5 text-sm font-black text-[#0081A7]"
             >
-              {showHint ? 'Hide Hint' : '💡 Show Hint'}
+              {showHint ? "Hide Hint" : "💡 Show Hint"}
             </button>
           </div>
 
@@ -1517,10 +1408,10 @@ function PracticeScreen() {
                     key={problem.id}
                     className={`flex h-9 w-9 items-center justify-center rounded-full border text-xs font-black ${
                       index === currentProblemIndex
-                        ? 'border-[#00AFB9] bg-[#00AFB9] text-white'
+                        ? "border-[#00AFB9] bg-[#00AFB9] text-white"
                         : index < currentProblemIndex
-                          ? 'border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]'
-                          : 'border-[#073B5A]/15 bg-white text-[#073B5A]/45'
+                          ? "border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]"
+                          : "border-[#073B5A]/15 bg-white text-[#073B5A]/45"
                     }`}
                   >
                     {index + 1}
@@ -1532,18 +1423,13 @@ function PracticeScreen() {
                 <div
                   className="h-full rounded-full bg-[#00AFB9]"
                   style={{
-                    width: `${
-                      ((currentProblemIndex + 1) /
-                        Math.max(problems.length, 1)) *
-                      100
-                    }%`,
+                    width: `${((currentProblemIndex + 1) / Math.max(problems.length, 1)) * 100}%`,
                   }}
                 />
               </div>
 
               <p className="mt-4 text-sm font-black text-[#073B5A]/75">
-                Correct answers:{' '}
-                <span className="text-[#0081A7]">{correctCount}</span>
+                Correct answers: <span className="text-[#0081A7]">{correctCount}</span>
               </p>
             </div>
           )}
@@ -1561,15 +1447,16 @@ function PracticeScreen() {
               <div className="space-y-2 text-sm font-bold text-[#073B5A]/80">
                 <p>◎ Finish {problems.length} questions</p>
                 <p>◎ Score 80% or higher</p>
-                <p>◎ Earn {practiceMode === 'challenge' ? 'an' : 'a'} {getModeRewardLabel(practiceMode)}</p>
+                <p>
+                  ◎ Earn {practiceMode === "challenge" ? "an" : "a"}{" "}
+                  {getModeRewardLabel(practiceMode)}
+                </p>
               </div>
             </div>
 
             <div className="mt-4 border-t border-[#F4D589] pt-3">
               <p className="font-black text-[#073B5A]">
-                {practiceMode === 'independent'
-                  ? "You're on your way! ⭐"
-                  : "You've got this! ⭐"}
+                {practiceMode === "independent" ? "You're on your way! ⭐" : "You've got this! ⭐"}
               </p>
             </div>
           </div>
@@ -1591,23 +1478,23 @@ function PracticeScreen() {
               </p>
 
               <h2 className="mt-2 text-3xl font-black text-[#073B5A]">
-                {completionModal.firstCompletion ? 'You did it!' : 'Nice work!'}
+                {completionModal.firstCompletion ? "You did it!" : "Nice work!"}
               </h2>
 
               {completionModal.firstCompletion ? (
                 <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
-                  You completed {modeConfig.title} and earned a{' '}
+                  You completed {modeConfig.title} and earned a{" "}
                   <span className="font-black text-[#0081A7]">
                     {getModeRewardLabel(practiceMode)}
-                  </span>{' '}
+                  </span>{" "}
                   for your star.
                 </p>
               ) : completionModal.recommendedMode ? (
                 <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
-                  You already earned this reward. Try{' '}
+                  You already earned this reward. Try{" "}
                   <span className="font-black text-[#0081A7]">
                     {getModeLabel(completionModal.recommendedMode)}
-                  </span>{' '}
+                  </span>{" "}
                   to unlock more accessories.
                 </p>
               ) : (
@@ -1618,12 +1505,10 @@ function PracticeScreen() {
 
               {completionModal.recommendedMode && (
                 <div className="mx-auto mt-5 rounded-2xl border border-[#00AFB9]/20 bg-[#E9F7F8] p-4">
-                  <p className="text-sm font-black text-[#073B5A]">
-                    Want something rarer?
-                  </p>
+                  <p className="text-sm font-black text-[#073B5A]">Want something rarer?</p>
 
                   <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
-                    {getModeLabel(completionModal.recommendedMode)} can unlock a{' '}
+                    {getModeLabel(completionModal.recommendedMode)} can unlock a{" "}
                     {getModeRewardLabel(completionModal.recommendedMode)}.
                   </p>
                 </div>
@@ -1670,9 +1555,8 @@ function PracticeScreen() {
           </div>
         </div>
       )}
-
     </PageLayout>
-  )
+  );
 }
 
-export default PracticeScreen
+export default PracticeScreen;
