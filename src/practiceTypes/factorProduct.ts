@@ -1,4 +1,4 @@
-import { takePracticeProblems } from "./practiceModeCounts";
+import { generateBankedProblems } from "./generateBankedProblems";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeFactorProductProblem({
@@ -62,16 +62,11 @@ const factorProductChallengeBank = [
 export function generateFactorProductProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
-  const source = options?.mode === "challenge" ? factorProductChallengeBank : factorProductBank;
-
-  return takePracticeProblems(
-    source.map(([factorA, factorB], index) =>
-      makeFactorProductProblem({
-        id: `factor-product-${options?.mode ?? "guided"}-${index + 1}`,
-        factorA,
-        factorB,
-      }),
-    ),
+  return generateBankedProblems<readonly [number, number]>({
+    slug: "factor-product",
+    bank: factorProductBank,
+    challengeBank: factorProductChallengeBank,
     options,
-  );
+    build: ([factorA, factorB], { id }) => makeFactorProductProblem({ id, factorA, factorB }),
+  });
 }

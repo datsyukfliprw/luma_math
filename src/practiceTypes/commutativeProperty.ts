@@ -1,4 +1,4 @@
-import { takePracticeProblems } from "./practiceModeCounts";
+import { generateBankedProblems } from "./generateBankedProblems";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeCommutativeProblem({
@@ -60,18 +60,12 @@ const commutativeChallengeBank = [
 export function generateCommutativePropertyProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
-  const source = options?.mode === "challenge" ? commutativeChallengeBank : commutativeBank;
-
-  return takePracticeProblems(
-    source.map(([factorA, factorB, distractorA, distractorB], index) =>
-      makeCommutativeProblem({
-        id: `commutative-property-${options?.mode ?? "guided"}-${index + 1}`,
-        factorA,
-        factorB,
-        distractorA,
-        distractorB,
-      }),
-    ),
+  return generateBankedProblems<readonly [number, number, string, string]>({
+    slug: "commutative-property",
+    bank: commutativeBank,
+    challengeBank: commutativeChallengeBank,
     options,
-  );
+    build: ([factorA, factorB, distractorA, distractorB], { id }) =>
+      makeCommutativeProblem({ id, factorA, factorB, distractorA, distractorB }),
+  });
 }

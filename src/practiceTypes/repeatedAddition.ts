@@ -1,4 +1,4 @@
-import { takePracticeProblems } from "./practiceModeCounts";
+import { generateBankedProblems } from "./generateBankedProblems";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeRepeatedAdditionProblem({
@@ -60,17 +60,11 @@ const repeatedAdditionChallengeBank = [
 export function generateRepeatedAdditionProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
-  const source =
-    options?.mode === "challenge" ? repeatedAdditionChallengeBank : repeatedAdditionBank;
-
-  return takePracticeProblems(
-    source.map(([groups, addend], index) =>
-      makeRepeatedAdditionProblem({
-        id: `repeated-addition-${options?.mode ?? "guided"}-${index + 1}`,
-        groups,
-        addend,
-      }),
-    ),
+  return generateBankedProblems<readonly [number, number]>({
+    slug: "repeated-addition",
+    bank: repeatedAdditionBank,
+    challengeBank: repeatedAdditionChallengeBank,
     options,
-  );
+    build: ([groups, addend], { id }) => makeRepeatedAdditionProblem({ id, groups, addend }),
+  });
 }

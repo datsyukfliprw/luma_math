@@ -1,4 +1,4 @@
-import { takePracticeProblems } from "./practiceModeCounts";
+import { generateBankedProblems } from "./generateBankedProblems";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeDrawArrayProblem({
@@ -61,16 +61,11 @@ const drawArraysChallengeBank = [
 ] as const;
 
 export function generateDrawArraysProblems(options?: PracticeGenerationOptions): PracticeProblem[] {
-  const source = options?.mode === "challenge" ? drawArraysChallengeBank : drawArraysBank;
-
-  return takePracticeProblems(
-    source.map(([rows, columns], index) =>
-      makeDrawArrayProblem({
-        id: `draw-arrays-${options?.mode ?? "guided"}-${index + 1}`,
-        rows,
-        columns,
-      }),
-    ),
+  return generateBankedProblems<readonly [number, number]>({
+    slug: "draw-arrays",
+    bank: drawArraysBank,
+    challengeBank: drawArraysChallengeBank,
     options,
-  );
+    build: ([rows, columns], { id }) => makeDrawArrayProblem({ id, rows, columns }),
+  });
 }

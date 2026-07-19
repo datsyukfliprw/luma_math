@@ -1,4 +1,5 @@
 import type { PracticeMode } from "../practiceTypes/types";
+import { readJsonFromStorage, writeJsonToStorage } from "./localStorageStore";
 
 type PracticeRewardRecord = {
   completed: boolean;
@@ -19,24 +20,11 @@ const REWARD_IDS: Record<PracticeMode, string> = {
 };
 
 function readAllPracticeRewards(): Record<string, StudentPracticeRewardState> {
-  if (typeof window === "undefined") {
-    return {};
-  }
-
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  return readJsonFromStorage<Record<string, StudentPracticeRewardState>>(STORAGE_KEY, {});
 }
 
 function writeAllPracticeRewards(rewards: Record<string, StudentPracticeRewardState>) {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(rewards));
+  writeJsonToStorage(STORAGE_KEY, rewards);
 }
 
 export function getPracticeRewardState(

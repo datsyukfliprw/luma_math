@@ -1,4 +1,4 @@
-import { takePracticeProblems } from "./practiceModeCounts";
+import { generateBankedProblems } from "./generateBankedProblems";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 type ArrayJudgmentSeed = {
@@ -10,13 +10,9 @@ type ArrayJudgmentSeed = {
   equation: string;
 };
 
-function makeValidInvalidArrayProblem(
-  seed: ArrayJudgmentSeed,
-  index: number,
-  mode: string,
-): PracticeProblem {
+function makeValidInvalidArrayProblem(seed: ArrayJudgmentSeed, id: string): PracticeProblem {
   return {
-    id: `valid-invalid-array-${mode}-${index + 1}`,
+    id,
     questionText: seed.description,
     correctAnswer: seed.correctAnswer,
     visualType: "multiple_choice",
@@ -123,10 +119,10 @@ const validInvalidArraysBank: ArrayJudgmentSeed[] = [
 export function generateValidInvalidArraysProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
-  return takePracticeProblems(
-    validInvalidArraysBank.map((seed, index) =>
-      makeValidInvalidArrayProblem(seed, index, options?.mode ?? "guided"),
-    ),
+  return generateBankedProblems({
+    slug: "valid-invalid-array",
+    bank: validInvalidArraysBank,
     options,
-  );
+    build: (seed, { id }) => makeValidInvalidArrayProblem(seed, id),
+  });
 }

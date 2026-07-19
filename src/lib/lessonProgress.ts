@@ -1,3 +1,5 @@
+import { readJsonFromStorage, writeJsonToStorage } from "./localStorageStore";
+
 export type LessonProgress = {
   lessonId: string;
   warmupComplete: boolean;
@@ -13,21 +15,11 @@ export type LessonProgress = {
 const STORAGE_KEY = "lumamath_lesson_progress";
 
 function getAllProgress(): Record<string, LessonProgress> {
-  const saved = window.localStorage.getItem(STORAGE_KEY);
-
-  if (!saved) {
-    return {};
-  }
-
-  try {
-    return JSON.parse(saved) as Record<string, LessonProgress>;
-  } catch {
-    return {};
-  }
+  return readJsonFromStorage<Record<string, LessonProgress>>(STORAGE_KEY, {});
 }
 
 function saveAllProgress(progress: Record<string, LessonProgress>) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  writeJsonToStorage(STORAGE_KEY, progress);
 }
 
 export function getLessonProgress(lessonId: string): LessonProgress {

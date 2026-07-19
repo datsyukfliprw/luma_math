@@ -1,3 +1,5 @@
+import { readJsonFromStorage, writeJsonToStorage } from "./localStorageStore";
+
 export type StarItemSlot = "hat" | "glasses" | "neck" | "shoes" | "handheld" | "trail";
 
 export type EquippedStarItems = {
@@ -34,21 +36,11 @@ const RANDOM_STAR_NAMES = [
 ];
 
 function getAllStarProfiles(): Record<string, StarProfile> {
-  const saved = window.localStorage.getItem(STORAGE_KEY);
-
-  if (!saved) {
-    return {};
-  }
-
-  try {
-    return JSON.parse(saved) as Record<string, StarProfile>;
-  } catch {
-    return {};
-  }
+  return readJsonFromStorage<Record<string, StarProfile>>(STORAGE_KEY, {});
 }
 
 function saveAllStarProfiles(profiles: Record<string, StarProfile>) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(profiles));
+  writeJsonToStorage(STORAGE_KEY, profiles);
 }
 
 export function getRandomStarName() {

@@ -1,4 +1,4 @@
-import { takePracticeProblems } from "./practiceModeCounts";
+import { generateBankedProblems } from "./generateBankedProblems";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 function makeFairSharingProblem({
@@ -63,17 +63,12 @@ const fairSharingChallengeBank = [
 export function generateFairSharingDivisionProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
-  const source = options?.mode === "challenge" ? fairSharingChallengeBank : fairSharingBank;
-
-  return takePracticeProblems(
-    source.map(([items, groupsToShare, itemName], index) =>
-      makeFairSharingProblem({
-        id: `fair-sharing-${options?.mode ?? "guided"}-${index + 1}`,
-        items,
-        groupsToShare,
-        itemName,
-      }),
-    ),
+  return generateBankedProblems<readonly [number, number, string]>({
+    slug: "fair-sharing",
+    bank: fairSharingBank,
+    challengeBank: fairSharingChallengeBank,
     options,
-  );
+    build: ([items, groupsToShare, itemName], { id }) =>
+      makeFairSharingProblem({ id, items, groupsToShare, itemName }),
+  });
 }

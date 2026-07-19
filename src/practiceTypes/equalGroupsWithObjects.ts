@@ -1,4 +1,4 @@
-import { takePracticeProblems } from "./practiceModeCounts";
+import { generateBankedProblems } from "./generateBankedProblems";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 type ObjectProblemSeed = {
@@ -8,15 +8,11 @@ type ObjectProblemSeed = {
   pluralItem: string;
 };
 
-function makeObjectGroupsProblem(
-  seed: ObjectProblemSeed,
-  index: number,
-  mode: string,
-): PracticeProblem {
+function makeObjectGroupsProblem(seed: ObjectProblemSeed, id: string): PracticeProblem {
   const total = seed.groups * seed.itemsPerGroup;
 
   return {
-    id: `equal-groups-objects-${mode}-${index + 1}`,
+    id,
     questionText: `You arrange ${seed.groups} piles of ${seed.pluralItem} with ${seed.itemsPerGroup} ${seed.itemsPerGroup === 1 ? seed.item : seed.pluralItem} in each pile. How many ${seed.pluralItem} are there in all?`,
     correctAnswer: String(total),
     visualType: "equal_groups",
@@ -60,10 +56,11 @@ const objectGroupsChallengeBank: ObjectProblemSeed[] = [
 export function generateEqualGroupsWithObjectsProblems(
   options?: PracticeGenerationOptions,
 ): PracticeProblem[] {
-  const source = options?.mode === "challenge" ? objectGroupsChallengeBank : objectGroupsBank;
-
-  return takePracticeProblems(
-    source.map((seed, index) => makeObjectGroupsProblem(seed, index, options?.mode ?? "guided")),
+  return generateBankedProblems({
+    slug: "equal-groups-objects",
+    bank: objectGroupsBank,
+    challengeBank: objectGroupsChallengeBank,
     options,
-  );
+    build: (seed, { id }) => makeObjectGroupsProblem(seed, id),
+  });
 }
