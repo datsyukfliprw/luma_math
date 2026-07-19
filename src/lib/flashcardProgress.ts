@@ -1,3 +1,5 @@
+import { readStoredJson, writeStoredJson } from "./storage";
+
 export type FlashcardAnswerState = "known" | "review_again";
 
 export type FlashcardDeckProgress = {
@@ -14,26 +16,13 @@ export type FlashcardDeckProgress = {
 const STORAGE_KEY = "lumamath.flashcardProgress";
 
 function readAllFlashcardProgress(): Record<string, Record<string, FlashcardDeckProgress>> {
-  if (typeof window === "undefined") {
-    return {};
-  }
-
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  return readStoredJson<Record<string, Record<string, FlashcardDeckProgress>>>(STORAGE_KEY, {});
 }
 
 function writeAllFlashcardProgress(
   progress: Record<string, Record<string, FlashcardDeckProgress>>,
 ) {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  writeStoredJson(STORAGE_KEY, progress);
 }
 
 function unique(values: string[]) {
