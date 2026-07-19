@@ -8,14 +8,15 @@ import TryItCard from "../components/lesson/TryItCard";
 import WarmUpCard from "../components/lesson/WarmUpCard";
 import { getLessonById } from "../lib/lessonLookup";
 import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
-import { getFlashcardDeckProgress } from "../lib/flashcardProgress";
-import { getLessonProgress, type LessonProgress } from "../lib/lessonProgress";
-import { getPracticeRewardState } from "../lib/practiceRewards";
-import { getStarProfile } from "../lib/starProfile";
+import { getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
+import {
+  useStudentProgress,
+  type LessonProgress,
+  type LessonPracticeRewardState,
+  type FlashcardDeckProgress,
+} from "../contexts/StudentProgressContext";
 import type { WarmUpData } from "../types/warmup";
 import { getLessonExperience } from "../data/lessonExperience";
-
-const CURRENT_STUDENT_ID = "default-student";
 
 type LessonWithStructuredData = {
   warmup?: WarmUpData;
@@ -31,38 +32,43 @@ type NextLessonStep = {
 };
 
 function getFlashcardDeckIdForLesson(lessonId: string) {
-  const deckMap: Record<string, string> = {
-    "unit-1-week-1-day-1": "lesson-g3-u1-w1-d1-zero-identity",
-    "unit-1-week-1-day-2": "lesson-g3-u1-w1-d2-repeated-addition",
-    "unit-1-week-1-day-3": "lesson-g3-u1-w1-d3-factors-products",
-    "unit-1-week-1-day-4": "lesson-g3-u1-w1-d4-object-groups",
-    "unit-1-week-1-day-5": "lesson-g3-u1-w1-d5-week-review",
-  };
+  // Parse lesson ID to extract week and day numbers
+  // Format: g{grade}-u{unit}-w{week}-l{lessonNumber}
+  const match = lessonId.match(/g\d+-u\d+-w(\d+)-l(\d+)/);
+  if (match) {
+    const weekNumber = Number.parseInt(match[1], 10);
+    const dayNumber = Number.parseInt(match[2], 10);
+    const deckId = getFlashcardDeckIdFromCurriculum(weekNumber, dayNumber);
+    if (deckId) return deckId;
+  }
 
-  return deckMap[lessonId] ?? `lesson-${lessonId}`;
+  // Fallback for lessons not in curriculum yet
+  return `lesson-${lessonId}`;
 }
 
 function getNextStep({
   lessonId,
   nextLessonId,
   progress,
+  getPracticeRewardState: getRewards,
+  getFlashcardDeckProgress: getDeckProgress,
+  flashcardDeckId,
+  flashcardCardIds,
 }: {
   lessonId: string;
   nextLessonId?: string;
   progress: LessonProgress;
+  getPracticeRewardState: (lessonId: string) => LessonPracticeRewardState;
+  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress;
+  flashcardDeckId: string;
+  flashcardCardIds: string[];
 }): NextLessonStep {
-  const practiceRewards = getPracticeRewardState(CURRENT_STUDENT_ID, lessonId);
+  const practiceRewards = getRewards(lessonId);
   const guidedComplete = practiceRewards.guided?.completed === true || progress.practiceComplete;
   const independentComplete = practiceRewards.independent?.completed === true;
   const challengeComplete = practiceRewards.challenge?.completed === true;
 
-  const flashcardDeckId = getFlashcardDeckIdForLesson(lessonId);
-  const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
-  const flashcardProgress = getFlashcardDeckProgress(
-    CURRENT_STUDENT_ID,
-    flashcardDeckId,
-    flashcardCardIds,
-  );
+  const flashcardProgress = getDeckProgress(flashcardDeckId, flashcardCardIds);
 
   if (!progress.warmupComplete) {
     return {
@@ -228,7 +234,7 @@ function LessonActionBar({ nextStep, words }: { nextStep: NextLessonStep; words:
           <button
             type="button"
             onClick={() => navigate(nextStep.to)}
-            className="ml-auto hidden shrink-0 rounded-xl bg-[#00AFB9] px-6 py-2.5 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7] md:block"
+            className="ml-auto hidden shrink-0 rounded-xl bg-[#00AFB9] px-6 py-2.5 text-sm lg:px-8 lg:py-3.5 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7] md:block"
           >
             {nextStep.buttonLabel}
           </button>
@@ -263,22 +269,31 @@ function LessonScreen() {
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
   const structuredLesson = lesson as typeof lesson & LessonWithStructuredData;
 
+  // Use context for state management
+  const {
+    getLessonProgress,
+    getPracticeRewardState,
+    getFlashcardDeckProgress,
+    studentState,
+  } = useStudentProgress();
+
   // @SECTION LESSON_EXPERIENCE
   const lessonExperience = lessonId ? getLessonExperience(lessonId) : undefined;
 
   const currentLessonId =
-    lessonId ?? `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
+    lessonId ?? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`;
 
-  const [progress, setProgress] = useState<LessonProgress>(() =>
-    getLessonProgress(currentLessonId),
-  );
+  const progress = getLessonProgress(currentLessonId);
 
-  const [starName, setStarName] = useState(() => getStarProfile(CURRENT_STUDENT_ID).starName);
+  const [starName, setStarName] = useState(() => studentState.starProfile.starName);
+
+  const currentStarName = studentState.starProfile.starName;
 
   useEffect(() => {
-    setProgress(getLessonProgress(currentLessonId));
-    setStarName(getStarProfile(CURRENT_STUDENT_ID).starName);
-  }, [currentLessonId]);
+    // Sync starName when it changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setStarName(currentStarName);
+  }, [currentStarName]);
 
   const currentWeekIndex = unit.weeks.findIndex(
     (unitWeek) => unitWeek.week_number === week.week_number,
@@ -286,15 +301,22 @@ function LessonScreen() {
   const nextLessonInSameWeek = week.lessons[weekDayNumber];
   const nextWeek = unit.weeks[currentWeekIndex + 1];
   const nextLessonId = nextLessonInSameWeek
-    ? `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber + 1}`
+    ? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber + 1}`
     : nextWeek
-      ? `unit-${unit.unit_number}-week-${nextWeek.week_number}-day-1`
+      ? `g3-u${unit.unit_number}-w${nextWeek.week_number}-l1`
       : undefined;
+
+  const flashcardDeckId = getFlashcardDeckIdForLesson(currentLessonId);
+  const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
 
   const nextStep = getNextStep({
     lessonId: currentLessonId,
     nextLessonId,
     progress,
+    getPracticeRewardState,
+    getFlashcardDeckProgress,
+    flashcardDeckId,
+    flashcardCardIds,
   });
   const todaysWords = getTodaysWords(lesson.lesson_title, lesson.practice_type);
 

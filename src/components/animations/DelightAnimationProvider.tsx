@@ -602,6 +602,7 @@ export function DelightAnimationProvider({ children }: DelightAnimationProviderP
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useDelightAnimation() {
   const context = useContext(DelightAnimationContext);
 

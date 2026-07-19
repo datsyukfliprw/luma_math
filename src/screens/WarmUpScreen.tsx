@@ -4,12 +4,9 @@ import PageLayout from "../components/layout/PageLayout";
 import LumaAvatar from "../components/luma/LumaAvatar";
 import { useDelightAnimation } from "../components/animations/DelightAnimationProvider";
 import { getLessonById } from "../lib/lessonLookup";
-import { updateLessonProgress } from "../lib/lessonProgress";
-import { getStarProfile } from "../lib/starProfile";
+import { useStudentProgress } from "../contexts/StudentProgressContext";
 import type { WarmUpData, WarmUpQuestion } from "../types/warmup";
 import { getWarmUpRounds } from "../types/warmup";
-
-const CURRENT_STUDENT_ID = "default-student";
 
 type LessonWithWarmUp = {
   warmup?: WarmUpData;
@@ -76,7 +73,7 @@ function WarmUpScreen() {
   const structuredLesson = lesson as typeof lesson & LessonWithWarmUp;
 
   const currentLessonId =
-    lessonId ?? `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
+    lessonId ?? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`;
 
   const warmup = structuredLesson.warmup ?? getFallbackWarmup();
   const rounds = getWarmUpRounds(warmup);
@@ -86,6 +83,7 @@ function WarmUpScreen() {
   const starTargetRef = useRef<HTMLDivElement | null>(null);
 
   const { registerStarTarget, sendSparkleToStar } = useDelightAnimation();
+  const { updateLessonProgress, studentState } = useStudentProgress();
 
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState("");
@@ -93,7 +91,7 @@ function WarmUpScreen() {
   const [showHint, setShowHint] = useState(false);
   const [starPower, setStarPower] = useState(0);
 
-  const starName = getStarProfile(CURRENT_STUDENT_ID).starName || "Your star";
+  const starName = studentState.starProfile.starName || "Your star";
 
   const activeQuestion = questions[questionIndex] as
     | (WarmUpQuestion & {
@@ -171,7 +169,7 @@ function WarmUpScreen() {
           <button
             type="button"
             onClick={backToLesson}
-            className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm"
+            className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm lg:px-6 lg:py-4 lg:text-base"
           >
             ← Back to Lesson
           </button>
@@ -183,7 +181,7 @@ function WarmUpScreen() {
             </h1>
           </div>
 
-          <div className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm">
+          <div className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm lg:px-6 lg:py-4 lg:text-base">
             ◷ {warmup.estimated_minutes ?? 5}:00
           </div>
         </header>
@@ -259,11 +257,11 @@ function WarmUpScreen() {
 
               <div className="flex flex-col justify-center">
                 <div className="mb-5 flex items-center justify-between gap-3">
-                  <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-black text-[#073B5A] shadow-sm">
+                  <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-black text-[#073B5A] shadow-sm lg:px-5 lg:py-3 lg:text-base">
                     Question {questionIndex + 1} of {totalQuestions}
                   </span>
 
-                  <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-black text-[#0081A7] shadow-sm">
+                  <span className="rounded-full bg-white/80 px-4 py-2 text-sm font-black text-[#0081A7] shadow-sm lg:px-5 lg:py-3 lg:text-base">
                     {activeQuestion?.skill.replaceAll("_", " ") ?? currentRound?.title}
                   </span>
                 </div>
@@ -288,7 +286,7 @@ function WarmUpScreen() {
                         checkAnswer();
                       }
                     }}
-                    className="mx-auto mt-7 block w-full max-w-[420px] rounded-2xl border-2 border-[#00AFB9] bg-white px-5 py-4 text-center text-xl font-black text-[#073B5A] outline-none focus:border-[#F07167]"
+                    className="mx-auto mt-7 block w-full max-w-[420px] rounded-2xl border-2 border-[#00AFB9] bg-white px-5 py-4 text-center text-xl font-black text-[#073B5A] outline-none focus:border-[#F07167] lg:max-w-[520px] lg:px-6 lg:py-5 lg:text-2xl"
                     placeholder="Type your answer"
                     autoFocus
                   />
@@ -298,7 +296,7 @@ function WarmUpScreen() {
                     type="button"
                     onClick={checkAnswer}
                     disabled={answer.trim().length === 0}
-                    className={`mt-5 rounded-2xl px-8 py-3 text-base font-black shadow-sm ${
+                    className={`mt-5 rounded-2xl px-8 py-3 text-base font-black shadow-sm lg:px-10 lg:py-4 lg:text-lg ${
                       answer.trim().length === 0
                         ? "bg-[#DDEEEF] text-[#073B5A]/45"
                         : "bg-[#00AFB9] text-white"
@@ -323,7 +321,7 @@ function WarmUpScreen() {
                     <button
                       type="button"
                       onClick={() => setShowHint(true)}
-                      className="rounded-xl border border-[#073B5A]/10 bg-white px-4 py-2 text-sm font-black text-[#073B5A] shadow-sm"
+                      className="rounded-xl border border-[#073B5A]/10 bg-white px-4 py-2 text-sm font-black text-[#073B5A] shadow-sm lg:px-5 lg:py-3 lg:text-base"
                     >
                       Show Hint
                     </button>
@@ -345,7 +343,7 @@ function WarmUpScreen() {
                   return (
                     <div key={round.id} className="flex items-center gap-3">
                       <span
-                        className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm font-black ${
+                        className={`flex h-10 w-10 items-center justify-center rounded-full border text-sm font-black lg:h-12 lg:w-12 lg:text-base ${
                           isActive
                             ? "border-[#00AFB9] bg-[#00AFB9] text-white"
                             : isDone
@@ -388,7 +386,7 @@ function WarmUpScreen() {
                 </div>
               </div>
 
-              <div className="mt-4 h-3 overflow-hidden rounded-full bg-[#DDEEEF]">
+              <div className="mt-4 h-3 overflow-hidden rounded-full bg-[#DDEEEF] lg:h-4">
                 <div
                   className="h-full rounded-full bg-[#F7B733] transition-all"
                   style={{ width: `${progressPercent}%` }}

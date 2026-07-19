@@ -4,40 +4,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Clock3 } from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
-import { updateLessonProgress } from "../lib/lessonProgress";
-import { getStarProfile } from "../lib/starProfile";
+import { useStudentProgress } from "../contexts/StudentProgressContext";
 import type { LearnLesson } from "../lib/learnContent";
 import BigIdeaPage from "./learn/BigIdeaPage";
 import BuildItPage from "./learn/BuildItPage";
 import SeeItPage from "./learn/SeeItPage";
 import WordsPage from "./learn/WordsPage";
 import QuickCheckPage from "./learn/QuickCheckPage";
-
-// @SECTION LEARN_SCREEN_CONSTANTS
-const CURRENT_STUDENT_ID = "default-student";
-
-const learnSteps = [
-  {
-    label: "Big Idea",
-    nextLabel: "Next: Build It",
-  },
-  {
-    label: "Build It",
-    nextLabel: "Next: See It",
-  },
-  {
-    label: "See It",
-    nextLabel: "Next: Words",
-  },
-  {
-    label: "Words",
-    nextLabel: "Next: Quick Check",
-  },
-  {
-    label: "Quick Check",
-    nextLabel: "Finish Learn",
-  },
-];
+import { learnSteps } from "./learn/LearnStepper";
 
 // @SECTION LEARN_SCREEN_HELPERS
 function getCurrentLessonId({
@@ -51,7 +25,7 @@ function getCurrentLessonId({
   weekNumber: number;
   dayNumber: number;
 }) {
-  return lessonId ?? `unit-${unitNumber}-week-${weekNumber}-day-${dayNumber}`;
+  return lessonId ?? `g3-u${unitNumber}-w${weekNumber}-l${dayNumber}`;
 }
 
 // @SECTION LEARN_STEPPER
@@ -166,6 +140,7 @@ function LearnScreen() {
   const navigate = useNavigate();
   const { lessonId } = useParams();
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
+  const { updateLessonProgress, studentState } = useStudentProgress();
 
   const currentLessonId = getCurrentLessonId({
     lessonId,
@@ -175,7 +150,7 @@ function LearnScreen() {
   });
 
   const lessonPath = `/lesson/${currentLessonId}`;
-  const starName = getStarProfile(CURRENT_STUDENT_ID).starName;
+  const starName = studentState.starProfile.starName;
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompactHeader, setIsCompactHeader] = useState(false);
@@ -186,6 +161,8 @@ function LearnScreen() {
   const learnLesson = lesson as LearnLesson;
 
   useEffect(() => {
+    // Reset step when lesson changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentStep(0);
   }, [currentLessonId]);
 
@@ -276,7 +253,7 @@ function LearnScreen() {
     }
 
     return <QuickCheckPage lessonId={currentLessonId} starName={starName} />;
-  }, [currentLessonId, currentStep, learnLesson, starName]);
+  }, [currentLessonId, currentStep, learnLesson, starName, updateLessonProgress]);
 
   function backToLesson() {
     navigate(lessonPath);
@@ -320,7 +297,7 @@ function LearnScreen() {
                 type="button"
                 onClick={backToLesson}
                 data-name="back-to-lesson-button"
-                className={`inline-flex shrink-0 items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#E9F7F8] ${
+                className={`inline-flex shrink-0 items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#E9F7F8] lg:px-5 lg:py-3 lg:text-base ${
                   isCompactHeader ? "px-3 py-1.5" : "px-4 py-2"
                 }`}
               >
@@ -408,7 +385,7 @@ function LearnScreen() {
             type="button"
             onClick={goBack}
             disabled={currentStep === 0}
-            className={`rounded-xl px-4 py-2 text-sm font-black ${
+            className={`rounded-xl px-4 py-2 text-sm font-black lg:px-6 lg:py-3 lg:text-base ${
               currentStep === 0 ? "bg-[#F1F5F7] text-[#9AB5C7]" : "bg-[#E9F7F8] text-[#0081A7]"
             }`}
           >
@@ -423,7 +400,7 @@ function LearnScreen() {
           <button
             type="button"
             onClick={goNext}
-            className="rounded-xl bg-[#00AFB9] px-4 py-2 text-sm font-black text-white"
+            className="rounded-xl bg-[#00AFB9] px-4 py-2 text-sm font-black text-white lg:px-6 lg:py-3 lg:text-base"
           >
             {currentStep === learnSteps.length - 1 ? "Finish" : "Next →"}
           </button>

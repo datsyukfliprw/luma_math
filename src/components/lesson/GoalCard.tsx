@@ -1,4 +1,4 @@
-import type { LessonProgress } from "../../lib/lessonProgress";
+import type { LessonProgress } from "../../contexts/StudentProgressContext";
 
 type GoalCardProps = {
   lessonType: string;

@@ -22,6 +22,7 @@
       "weekly_focus": "Students learn that multiplication means counting equal groups. They begin with 0s and 1s facts and connect equal groups to repeated addition and multiplication equations.",
       "lessons": [
         {
+          "lesson_id": "g3-u1-w1-l1",
           "day_number": 1,
           "day_name": "Monday",
           "lesson_title": "Zero and Identity Rules",
@@ -123,10 +124,39 @@
             "title": "0s and 1s Fact Fluency",
             "type": "zero_one_facts",
             "card_count": 10,
-            "instructions": "Practice ×0 and ×1 facts when you want extra fluency review."
+            "instructions": "Practice ×0 and ×1 facts when you want extra fluency review.",
+            "deckId": "lesson-g3-u1-w1-d1-zero-identity"
+          },
+          "bigIdea": {
+            "title": "Zero and One in Multiplication",
+            "subtitle": "Learn the special rules for multiplying by 0 and 1",
+            "thumbnail": "/images/learn/thumbnails/zero-one-rules.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Multiplication is about counting equal groups. Sometimes the groups are special - they might have 0 items or 1 item in each group.",
+            "bigQuestion": "What happens when you multiply by 0 or 1?",
+            "starTip": {
+              "title": "Use the rule",
+              "lines": ["×1 keeps it", "×0 makes 0"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Multiplying by 1",
+                "equation": "4 × 1 = 4",
+                "badge": "Same number",
+                "description": "One in each group keeps the total the same as the number of groups."
+              },
+              {
+                "eyebrow": "Multiplying by 0",
+                "equation": "4 × 0 = 0",
+                "badge": "Zero total",
+                "description": "Zero in each group means there are no items to count."
+              }
+            ]
           }
         },
         {
+          "lesson_id": "g3-u1-w1-l2",
           "day_number": 2,
           "day_name": "Tuesday",
           "lesson_title": "Repeated Addition to Multiplication",
@@ -139,9 +169,46 @@
           "skills": ["repeated_addition", "equal_groups", "multiplication_expressions"],
           "lesson_video_url": "",
           "worksheet_url": "",
-          "quiz_question_count": 5
+          "quiz_question_count": 5,
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "0s and 1s Fact Fluency",
+            "type": "zero_one_facts",
+            "card_count": 10,
+            "instructions": "Practice ×0 and ×1 facts when you want extra fluency review.",
+            "deckId": "lesson-g3-u1-w1-d2-repeated-addition"
+          },
+          "bigIdea": {
+            "title": "Repeated Addition to Multiplication",
+            "subtitle": "Turn adding the same number into multiplication",
+            "thumbnail": "/images/learn/thumbnails/repeated-addition.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you add the same number over and over, there's a faster way to write it - multiplication!",
+            "bigQuestion": "How can repeated addition become multiplication?",
+            "starTip": {
+              "title": "Math shortcut",
+              "lines": ["Groups × in each", "= product"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Repeated addition",
+                "equation": "5 + 5 + 5 = 15",
+                "badge": "Add groups",
+                "description": "When the same number repeats, you can add each group to find the total."
+              },
+              {
+                "eyebrow": "Multiplication match",
+                "equation": "3 × 5 = 15",
+                "badge": "Same total",
+                "description": "Three groups of 5 can be written faster as 3 × 5."
+              }
+            ]
+          }
         },
         {
+          "lesson_id": "g3-u1-w1-l3",
           "day_number": 3,
           "day_name": "Wednesday",
           "lesson_title": "Factors and Products",
@@ -154,9 +221,46 @@
           "skills": ["factors", "products", "multiplication_vocabulary", "word_problems"],
           "lesson_video_url": "",
           "worksheet_url": "",
-          "quiz_question_count": 5
+          "quiz_question_count": 5,
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "0s and 1s Fact Fluency",
+            "type": "zero_one_facts",
+            "card_count": 10,
+            "instructions": "Practice ×0 and ×1 facts when you want extra fluency review.",
+            "deckId": "lesson-g3-u1-w1-d3-factors-products"
+          },
+          "bigIdea": {
+            "title": "Factors and Products",
+            "subtitle": "Name the parts of a multiplication problem",
+            "thumbnail": "/images/learn/thumbnails/repeated-addition.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Every multiplication problem has special names for its parts. The numbers you multiply are called factors, and the answer is called the product.",
+            "bigQuestion": "What are factors and products?",
+            "starTip": {
+              "title": "Name the parts",
+              "lines": ["Factors make", "the product"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Factors",
+                "equation": "3 × 5",
+                "badge": "Numbers multiplied",
+                "description": "Factors are the numbers being multiplied together."
+              },
+              {
+                "eyebrow": "Product",
+                "equation": "3 × 5 = 15",
+                "badge": "Answer",
+                "description": "The product is the answer to a multiplication problem."
+              }
+            ]
+          }
         },
         {
+          "lesson_id": "g3-u1-w1-l4",
           "day_number": 4,
           "day_name": "Thursday",
           "lesson_title": "Equal Groups With Objects",
@@ -174,9 +278,46 @@
           ],
           "lesson_video_url": "",
           "worksheet_url": "",
-          "quiz_question_count": 5
+          "quiz_question_count": 5,
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "0s and 1s Fact Fluency",
+            "type": "zero_one_facts",
+            "card_count": 10,
+            "instructions": "Practice ×0 and ×1 facts when you want extra fluency review.",
+            "deckId": "lesson-g3-u1-w1-d4-object-groups"
+          },
+          "bigIdea": {
+            "title": "Equal Groups With Objects",
+            "subtitle": "Build equal groups with real objects",
+            "thumbnail": "/images/learn/thumbnails/zero-one-rules.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "You can use real objects like buttons, blocks, or toys to build equal groups and see multiplication in action.",
+            "bigQuestion": "How can objects help show equal groups?",
+            "starTip": {
+              "title": "Look closely",
+              "lines": ["Count groups", "then in each"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Groups",
+                "equation": "4 groups",
+                "badge": "How many groups?",
+                "description": "First count how many equal groups there are."
+              },
+              {
+                "eyebrow": "In each group",
+                "equation": "4 × 3 = 12",
+                "badge": "Find total",
+                "description": "Then count how many are in each group and multiply."
+              }
+            ]
+          }
         },
         {
+          "lesson_id": "g3-u1-w1-eval",
           "day_number": 5,
           "day_name": "Friday",
           "lesson_title": "Week 1 Evaluation",
@@ -208,6 +349,15 @@
             "title": "3-Minute Fluency Drill",
             "duration_minutes": 3,
             "facts": ["×0", "×1"]
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "0s and 1s Fact Fluency",
+            "type": "zero_one_facts",
+            "card_count": 10,
+            "instructions": "Practice ×0 and ×1 facts when you want extra fluency review.",
+            "deckId": "lesson-g3-u1-w1-d5-week-review"
           }
         }
       ]

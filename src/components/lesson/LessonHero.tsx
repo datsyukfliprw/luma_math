@@ -1,6 +1,6 @@
 import LumaAvatar from "../luma/LumaAvatar";
 import { useDelightAnimation } from "../animations/DelightAnimationProvider";
-import type { LessonProgress } from "../../lib/lessonProgress";
+import type { LessonProgress } from "../../contexts/StudentProgressContext";
 
 type LessonHeroProps = {
   unitNumber: number;

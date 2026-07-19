@@ -282,10 +282,10 @@ function WordsPage({ lesson, starName }: WordsPageProps) {
                     onClick={() => chooseVisual(card.id, card.correctWord)}
                     disabled={isMatched}
                     data-name={`words-matching-visual-card-${index + 1}`}
-                    className={`min-h-[118px] rounded-[1.35rem] border ${card.border} ${card.color} p-3 text-left shadow-sm transition ${
+                    className={`min-h-[118px] rounded-[1.35rem] border ${card.border} ${card.color} p-3 lg:p-4 text-left shadow-sm transition ${
                       isMatched
                         ? "cursor-default ring-2 ring-[#00AFB9]/25"
-                        : "hover:scale-[1.01] hover:shadow-md"
+                        : "hover:shadow-md"
                     }`}
                   >
                     <div className="mb-2 flex items-start justify-between gap-3">

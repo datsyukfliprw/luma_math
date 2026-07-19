@@ -157,7 +157,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
                   .replaceAll("×", "x")
                   .replaceAll("+", "plus")
                   .replaceAll("=", "equals")}`}
-                className={`relative min-h-[128px] rounded-[1.5rem] border p-5 text-center text-2xl font-black shadow-sm transition hover:scale-[1.015] ${
+                className={`relative min-h-[128px] rounded-[1.5rem] border p-5 lg:min-h-[148px] lg:p-6 text-center text-2xl font-black shadow-sm transition hover:shadow-md ${
                   isCorrectSneakyPick
                     ? "border-[#7CCB5B]/70 bg-[#EEF9EA] text-[#2F7D32] ring-2 ring-[#7CCB5B]/25"
                     : isMatchingEquationMiss

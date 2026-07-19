@@ -1,20 +1,21 @@
 import { useState } from "react";
-import { cleanStarName, getRandomStarName, updateStarProfile } from "../../lib/starProfile";
+import { getRandomStarName } from "../../lib/starProfile";
+import { useStudentProgress } from "../../contexts/StudentProgressContext";
 
 type StarNamePromptProps = {
-  studentId: string;
   onSaved: () => void;
 };
 
-function StarNamePrompt({ studentId, onSaved }: StarNamePromptProps) {
+function StarNamePrompt({ onSaved }: StarNamePromptProps) {
+  const { updateStarProfile } = useStudentProgress();
   const [starName, setStarName] = useState(getRandomStarName());
-  const cleanedName = cleanStarName(starName);
+  const cleanedName = starName.trim().slice(0, 16);
   const canSave = cleanedName.length > 0;
 
   function saveName() {
     if (!canSave) return;
 
-    updateStarProfile(studentId, {
+    updateStarProfile({
       starName: cleanedName,
     });
 
@@ -89,7 +90,7 @@ function StarNamePrompt({ studentId, onSaved }: StarNamePromptProps) {
               <div className="absolute inset-4 rounded-full bg-[#FEF3D9] blur-2xl" />
 
               <img
-                src="/images/luma/luma_base.png"
+                src="/images/luma/star_idle.png"
                 alt="Learning star mascot"
                 className="relative h-full w-full object-contain drop-shadow-sm"
                 onError={(event) => {

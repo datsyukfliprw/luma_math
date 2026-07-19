@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { requireLessonExperience } from "../../data/lessonExperience";
+import { getLessonExperience } from "../../data/lessonExperience";
+import { LessonFallbackScreen } from "../ui/LessonFallbackScreen";
 
 type LearnCardProps = {
   lessonId: string;
@@ -9,7 +10,12 @@ type LearnCardProps = {
 
 function LearnCard({ lessonId, concept, isComplete }: LearnCardProps) {
   const navigate = useNavigate();
-  const lesson = requireLessonExperience(lessonId);
+  const lesson = getLessonExperience(lessonId);
+
+  // Show fallback if lesson experience is missing
+  if (!lesson) {
+    return <LessonFallbackScreen lessonId={lessonId} contentType="experience" />;
+  }
 
   function startLearn() {
     navigate(`/learn/${lessonId}`);
@@ -61,7 +67,7 @@ function LearnCard({ lessonId, concept, isComplete }: LearnCardProps) {
         <button
           type="button"
           onClick={startLearn}
-          className={`mt-4 w-fit rounded-xl px-5 py-2.5 text-sm font-black shadow-sm ${
+          className={`mt-4 w-fit rounded-xl px-5 py-2.5 text-sm lg:px-7 lg:py-3.5 lg:text-base font-black shadow-sm ${
             isComplete ? "bg-[#E9F7F8] text-[#0081A7]" : "bg-[#00AFB9] text-white"
           }`}
         >

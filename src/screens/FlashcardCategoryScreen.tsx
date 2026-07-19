@@ -7,14 +7,17 @@ import {
   getFlashcardCatalogCategory,
 } from "../flashcards/deckRegistry";
 import type { FlashcardDeck } from "../flashcards/types";
-import { getFlashcardDeckProgress } from "../lib/flashcardProgress";
-
-const CURRENT_STUDENT_ID = "default-student";
+import {
+  useStudentProgress,
+  type FlashcardDeckProgress,
+} from "../contexts/StudentProgressContext";
 
 // @SECTION FLASHCARD_CATEGORY_HELPERS
-function getDeckProgressSummary(deck: FlashcardDeck) {
+function getDeckProgressSummary(
+  deck: FlashcardDeck,
+  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
+) {
   const progress = getFlashcardDeckProgress(
-    CURRENT_STUDENT_ID,
     deck.deckId,
     deck.cards.map((card) => card.id),
   );
@@ -40,13 +43,19 @@ function getKindLabel(kind: FlashcardDeck["kind"]) {
 }
 
 // @SECTION FLASHCARD_DECK_LIBRARY_CARD
-function FlashcardDeckLibraryCard({ deck }: { deck: FlashcardDeck }) {
-  const progress = getDeckProgressSummary(deck);
+function FlashcardDeckLibraryCard({
+  deck,
+  getFlashcardDeckProgress,
+}: {
+  deck: FlashcardDeck;
+  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress;
+}) {
+  const progress = getDeckProgressSummary(deck, getFlashcardDeckProgress);
 
   return (
     <Link
       to={`/flashcards/deck/${deck.deckId}`}
-      className="group relative overflow-hidden rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+      className="group relative overflow-hidden rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 lg:p-5 text-left shadow-sm transition hover:shadow-md"
     >
       <div className="absolute right-4 top-4 text-[#00AFB9] opacity-0 transition group-hover:opacity-100">
         <ChevronRight size={22} strokeWidth={3} />
@@ -143,6 +152,7 @@ function FlashcardDeckLibraryCard({ deck }: { deck: FlashcardDeck }) {
 // @SECTION FLASHCARD_CATEGORY_SCREEN
 function FlashcardCategoryScreen() {
   const { categoryType, categoryId } = useParams();
+  const { getFlashcardDeckProgress } = useStudentProgress();
   const category = getFlashcardCatalogCategory(categoryType, categoryId);
   const decks = getDecksForFlashcardCatalogCategory(categoryType, categoryId);
 
@@ -219,7 +229,11 @@ function FlashcardCategoryScreen() {
           {decks.length > 0 ? (
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {decks.map((deck) => (
-                <FlashcardDeckLibraryCard key={deck.deckId} deck={deck} />
+                <FlashcardDeckLibraryCard
+                  key={deck.deckId}
+                  deck={deck}
+                  getFlashcardDeckProgress={getFlashcardDeckProgress}
+                />
               ))}
             </div>
           ) : (
@@ -237,7 +251,7 @@ function FlashcardCategoryScreen() {
 
               <Link
                 to="/flashcards"
-                className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-[#00AFB9] px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                className="mt-5 inline-flex items-center gap-2 rounded-2xl bg-[#00AFB9] px-5 py-3 lg:px-7 lg:py-4 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
               >
                 Back to Flashcards
                 <ChevronRight size={17} strokeWidth={3} />

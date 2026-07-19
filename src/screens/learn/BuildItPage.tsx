@@ -142,7 +142,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                 className={`flex h-28 items-center justify-center rounded-[1.35rem] border-2 transition ${
                   isZeroRound
                     ? "cursor-default border-[#42C8DC]/75 bg-white shadow-[0_10px_20px_rgba(0,129,167,0.08)]"
-                    : "border-[#42C8DC] bg-white shadow-[0_10px_20px_rgba(0,129,167,0.08)] hover:scale-[1.02]"
+                    : "border-[#42C8DC] bg-white shadow-[0_10px_20px_rgba(0,129,167,0.08)]"
                 }`}
               >
                 {count === currentRound.targetCount && !isZeroRound ? (

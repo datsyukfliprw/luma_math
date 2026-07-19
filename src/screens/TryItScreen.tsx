@@ -6,11 +6,9 @@ import { ArrowLeft, CheckCircle2, Clock3, Lightbulb, Lock } from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
 import LumaAvatar from "../components/luma/LumaAvatar";
 import { getLessonById } from "../lib/lessonLookup";
-import { updateLessonProgress } from "../lib/lessonProgress";
-import { getStarProfile } from "../lib/starProfile";
-import { requireLessonExperience } from "../data/lessonExperience";
-
-const CURRENT_STUDENT_ID = "default-student";
+import { useStudentProgress } from "../contexts/StudentProgressContext";
+import { getLessonExperience } from "../data/lessonExperience";
+import { LessonFallbackScreen } from "../components/ui/LessonFallbackScreen";
 
 // @SECTION TRYIT_TYPES
 type TryItStepKey = "groups" | "inEach" | "equation";
@@ -47,7 +45,88 @@ function getCurrentLessonId({
   weekNumber: number;
   dayNumber: number;
 }) {
-  return lessonId ?? `unit-${unitNumber}-week-${weekNumber}-day-${dayNumber}`;
+  return lessonId ?? `g3-u${unitNumber}-w${weekNumber}-l${dayNumber}`;
+}
+
+// @SECTION TRYIT_CHOICE_GROUP
+type ChoiceGroupProps = {
+  step: TryItStepKey;
+  correct: string;
+  choices: string[];
+  isEquation?: boolean;
+  isLocked?: boolean;
+  currentAnswers: ProblemAnswers;
+  chooseAnswer: (step: TryItStepKey, value: string) => void;
+};
+
+function getChoiceClass(step: TryItStepKey, choice: string, correct: string, isLocked = false, currentAnswers: ProblemAnswers) {
+  const selected = currentAnswers[step];
+  const isSelected = selected === choice;
+  const isCorrect = choice === correct;
+
+  if (isLocked) {
+    return "cursor-not-allowed border-[#073B5A]/10 bg-[#F8FBFB] text-[#073B5A]/45";
+  }
+
+  if (isSelected && isCorrect) {
+    return "border-[#00AFB9] bg-[#E9F7F8] text-[#073B5A] ring-2 ring-[#00AFB9]/20";
+  }
+
+  if (isSelected && !isCorrect) {
+    return "border-[#F07167] bg-[#FCE9E5] text-[#F07167] ring-2 ring-[#F07167]/15";
+  }
+
+  return "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]";
+}
+
+function ChoiceGroup({
+  step,
+  correct,
+  choices,
+  isEquation = false,
+  isLocked = false,
+  currentAnswers,
+  chooseAnswer,
+}: ChoiceGroupProps) {
+  return (
+    <div className="flex flex-wrap justify-end gap-2.5 lg:gap-3.5">
+      {choices.map((choice) => {
+        const isSelected = currentAnswers[step] === choice;
+        const isCorrectSelected = isSelected && choice === correct;
+        const isWrongSelected = isSelected && choice !== correct;
+
+        return (
+          <button
+            key={choice}
+            type="button"
+            onClick={() => chooseAnswer(step, choice)}
+            disabled={isLocked}
+            className={`relative rounded-2xl border text-center font-black shadow-sm transition ${
+              isEquation
+                ? "min-w-[120px] px-5 py-3 text-base lg:min-w-[144px] lg:px-6 lg:py-4 lg:text-lg"
+                : "min-w-[72px] px-5 py-3 text-lg lg:min-w-[88px] lg:px-6 lg:py-4 lg:text-xl"
+            } ${getChoiceClass(step, choice, correct, isLocked, currentAnswers)}`}
+          >
+            {choice}
+
+            {isCorrectSelected && (
+              <CheckCircle2
+                size={17}
+                strokeWidth={3}
+                className="absolute -right-1 -top-1 rounded-full bg-[#7CCB5B] text-white"
+              />
+            )}
+
+            {isWrongSelected && (
+              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#F07167] text-xs text-white">
+                ×
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
 // @SECTION TRYIT_SCREEN
@@ -56,6 +135,7 @@ function TryItScreen() {
   const { lessonId } = useParams();
 
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
+  const { updateLessonProgress, studentState } = useStudentProgress();
 
   const currentLessonId = getCurrentLessonId({
     lessonId,
@@ -64,8 +144,15 @@ function TryItScreen() {
     dayNumber: weekDayNumber,
   });
 
-  const starName = getStarProfile(CURRENT_STUDENT_ID).starName;
-  const tryItExperience = requireLessonExperience(currentLessonId).tryIt;
+  const starName = studentState.starProfile.starName;
+  const lessonExperience = getLessonExperience(currentLessonId);
+
+  // Show fallback screen if lesson experience is missing
+  if (!lessonExperience) {
+    return <LessonFallbackScreen lessonId={currentLessonId} contentType="experience" />;
+  }
+
+  const tryItExperience = lessonExperience.tryIt;
   const tryItProblems: TryItProblem[] = tryItExperience.problems;
   const REQUIRED_TRY_IT_COUNT = tryItExperience.requiredCount;
 
@@ -74,7 +161,7 @@ function TryItScreen() {
   const [answersByProblem, setAnswersByProblem] = useState<Record<number, ProblemAnswers>>({});
 
   const currentProblem = tryItProblems[problemIndex % tryItProblems.length];
-  const currentAnswers = answersByProblem[problemIndex] ?? {};
+  const currentAnswers = useMemo(() => answersByProblem[problemIndex] ?? {}, [answersByProblem, problemIndex]);
 
   const isRequiredRound = problemIndex < REQUIRED_TRY_IT_COUNT;
   const isFinalRequiredProblem = problemIndex >= REQUIRED_TRY_IT_COUNT - 1;
@@ -123,26 +210,6 @@ function TryItScreen() {
     }));
   }
 
-  function getChoiceClass(step: TryItStepKey, choice: string, correct: string, isLocked = false) {
-    const selected = currentAnswers[step];
-    const isSelected = selected === choice;
-    const isCorrect = choice === correct;
-
-    if (isLocked) {
-      return "cursor-not-allowed border-[#073B5A]/10 bg-[#F8FBFB] text-[#073B5A]/45";
-    }
-
-    if (isSelected && isCorrect) {
-      return "border-[#00AFB9] bg-[#E9F7F8] text-[#073B5A] ring-2 ring-[#00AFB9]/20";
-    }
-
-    if (isSelected && !isCorrect) {
-      return "border-[#F07167] bg-[#FCE9E5] text-[#F07167] ring-2 ring-[#F07167]/15";
-    }
-
-    return "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]";
-  }
-
   function goToNextProblem() {
     setProblemIndex((current) => current + 1);
   }
@@ -157,61 +224,6 @@ function TryItScreen() {
 
   function backToLesson() {
     navigate(`/lesson/${currentLessonId}`);
-  }
-
-  // @SECTION TRYIT_CHOICE_GROUP
-  function ChoiceGroup({
-    step,
-    correct,
-    choices,
-    isEquation = false,
-    isLocked = false,
-  }: {
-    step: TryItStepKey;
-    correct: string;
-    choices: string[];
-    isEquation?: boolean;
-    isLocked?: boolean;
-  }) {
-    return (
-      <div className="flex flex-wrap justify-end gap-2.5">
-        {choices.map((choice) => {
-          const isSelected = currentAnswers[step] === choice;
-          const isCorrectSelected = isSelected && choice === correct;
-          const isWrongSelected = isSelected && choice !== correct;
-
-          return (
-            <button
-              key={choice}
-              type="button"
-              onClick={() => chooseAnswer(step, choice)}
-              disabled={isLocked}
-              className={`relative rounded-2xl border text-center font-black shadow-sm transition ${
-                isLocked ? "" : "hover:scale-[1.02]"
-              } ${
-                isEquation ? "min-w-[120px] px-5 py-3 text-base" : "min-w-[72px] px-5 py-3 text-lg"
-              } ${getChoiceClass(step, choice, correct, isLocked)}`}
-            >
-              {choice}
-
-              {isCorrectSelected && (
-                <CheckCircle2
-                  size={17}
-                  strokeWidth={3}
-                  className="absolute -right-1 -top-1 rounded-full bg-[#7CCB5B] text-white"
-                />
-              )}
-
-              {isWrongSelected && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#F07167] text-xs text-white">
-                  ×
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-    );
   }
 
   return (
@@ -229,7 +241,7 @@ function TryItScreen() {
                 type="button"
                 onClick={backToLesson}
                 data-name="try-it-back-button"
-                className="inline-flex shrink-0 items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-2 text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#E9F7F8]"
+                className="inline-flex shrink-0 items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white px-4 py-2 text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#E9F7F8] lg:px-5 lg:py-3 lg:text-base"
               >
                 <ArrowLeft size={18} strokeWidth={3} />
                 Back to Lesson
@@ -420,6 +432,8 @@ function TryItScreen() {
                     step="groups"
                     correct={currentProblem.groups}
                     choices={currentProblem.groupsChoices}
+                    currentAnswers={currentAnswers}
+                    chooseAnswer={chooseAnswer}
                   />
                 </div>
               </div>
@@ -454,6 +468,8 @@ function TryItScreen() {
                     step="inEach"
                     correct={currentProblem.inEach}
                     choices={currentProblem.inEachChoices}
+                    currentAnswers={currentAnswers}
+                    chooseAnswer={chooseAnswer}
                   />
                 </div>
               </div>
@@ -491,6 +507,8 @@ function TryItScreen() {
                       choices={currentProblem.equationChoices}
                       isEquation
                       isLocked={!isEquationUnlocked}
+                      currentAnswers={currentAnswers}
+                      chooseAnswer={chooseAnswer}
                     />
 
                     {!isEquationUnlocked && (
@@ -541,7 +559,7 @@ function TryItScreen() {
                         <button
                           type="button"
                           onClick={continueToPractice}
-                          className="rounded-2xl bg-[#00AFB9] px-6 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                          className="rounded-2xl bg-[#00AFB9] px-6 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7] lg:px-8 lg:py-4 lg:text-base"
                         >
                           Continue to Practice ›
                         </button>
@@ -549,7 +567,7 @@ function TryItScreen() {
                         <button
                           type="button"
                           onClick={goToNextProblem}
-                          className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#F8FBFB]"
+                          className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#F8FBFB] lg:px-7 lg:py-4 lg:text-base"
                         >
                           ↻ Try Another
                         </button>
@@ -559,7 +577,7 @@ function TryItScreen() {
                         <button
                           type="button"
                           onClick={goToNextProblem}
-                          className="rounded-2xl bg-[#00AFB9] px-8 py-3 text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                          className="rounded-2xl bg-[#00AFB9] px-8 py-3 text-base font-black text-white shadow-sm transition hover:bg-[#0081A7] lg:px-10 lg:py-4 lg:text-lg"
                         >
                           Next ›
                         </button>
@@ -567,7 +585,7 @@ function TryItScreen() {
                         <button
                           type="button"
                           onClick={goToNextProblem}
-                          className="rounded-2xl border border-transparent bg-transparent px-3 py-2 text-sm font-black text-[#0081A7] transition hover:bg-white/55"
+                          className="rounded-2xl border border-transparent bg-transparent px-3 py-2 text-sm font-black text-[#0081A7] transition hover:bg-white/55 lg:px-5 lg:py-3 lg:text-base"
                         >
                           ↻ Try Another
                         </button>
@@ -594,7 +612,7 @@ function TryItScreen() {
                   <p className="text-lg font-black text-[#C78300]">{starName} Says</p>
                 </div>
 
-                <div className="relative w-fit max-w-[210px] rounded-2xl bg-white px-5 py-4 text-lg font-black leading-tight text-[#073B5A] shadow-sm">
+                <div className="relative w-fit max-w-[210px] rounded-2xl bg-white px-5 py-4 text-lg font-black leading-tight text-[#073B5A] shadow-sm lg:max-w-[260px] lg:px-6 lg:py-5 lg:text-xl">
                   Look for
                   <br />
                   groups, in each,
@@ -603,7 +621,7 @@ function TryItScreen() {
                   <span className="absolute -right-3 top-10 h-6 w-6 rotate-45 bg-white" />
                 </div>
 
-                <p className="mt-4 max-w-[230px] text-sm font-bold leading-relaxed text-[#073B5A]/75">
+                <p className="mt-4 max-w-[230px] text-sm font-bold leading-relaxed text-[#073B5A]/75 lg:max-w-[280px] lg:text-base">
                   {currentProblem.tip}
                 </p>
               </div>

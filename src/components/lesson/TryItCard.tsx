@@ -1,6 +1,7 @@
 // @SECTION TRYIT_CARD_TYPES
 import { useNavigate } from "react-router-dom";
-import { requireLessonExperience } from "../../data/lessonExperience";
+import { getLessonExperience } from "../../data/lessonExperience";
+import { LessonFallbackScreen } from "../ui/LessonFallbackScreen";
 
 type TryItCardProps = {
   lessonId: string;
@@ -12,12 +13,16 @@ type TryItCardProps = {
 // @SECTION TRYIT_CARD
 function TryItCard({
   lessonId,
-  practice: _practice,
-  practiceType: _practiceType,
   isComplete = false,
 }: TryItCardProps) {
   const navigate = useNavigate();
-  const lesson = requireLessonExperience(lessonId);
+  const lesson = getLessonExperience(lessonId);
+
+  // Show fallback if lesson experience is missing
+  if (!lesson) {
+    return <LessonFallbackScreen lessonId={lessonId} contentType="experience" />;
+  }
+
   const preview = lesson.tryIt.problems[0];
 
   return (
@@ -25,7 +30,7 @@ function TryItCard({
       type="button"
       onClick={() => navigate(`/try-it/${lessonId}`)}
       data-name="lesson-try-it-launch-card"
-      className="flex h-full w-full flex-col rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FDFDFC] p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#00AFB9]/30 hover:shadow-md"
+      className="flex h-full w-full flex-col rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FDFDFC] p-4 lg:p-5 text-left shadow-sm transition hover:border-[#00AFB9]/30 hover:shadow-md"
     >
       {/* @SECTION TRYIT_CARD_HEADER */}
       <div className="mb-4 flex items-start justify-between gap-3">
@@ -78,7 +83,7 @@ function TryItCard({
       {/* @SECTION TRYIT_CARD_ACTION */}
       <div className="mt-auto pt-4">
         <div
-          className={`inline-flex rounded-xl px-5 py-2 text-sm font-black shadow-sm ${
+          className={`inline-flex rounded-xl px-5 py-2 text-sm lg:px-7 lg:py-3 lg:text-base font-black shadow-sm ${
             isComplete ? "bg-[#E9F7F8] text-[#0081A7]" : "bg-[#00AFB9] text-white"
           }`}
         >

@@ -2,16 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
-import { updateLessonProgress } from "../lib/lessonProgress";
-import {
-  getRecommendedNextPracticeMode,
-  hasPracticeReward,
-  markPracticeReward,
-} from "../lib/practiceRewards";
+import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { generateProblemsForPracticeType } from "../practiceTypes/registry";
 import type { PracticeMode } from "../practiceTypes/types";
-
-const CURRENT_STUDENT_ID = "default-student";
 
 // @SECTION PRACTICE_HELPERS
 function formatPracticeType(practiceType: string) {
@@ -107,30 +100,6 @@ function getHintText(visualType?: string) {
   return "Equal groups have the same number of items in each group.";
 }
 
-function getSmallHintText(visualType?: string) {
-  if (visualType === "fair_sharing") {
-    return "Share the items equally into each group.";
-  }
-
-  if (visualType === "array_rows_columns") {
-    return "Count the rows, then count the columns.";
-  }
-
-  if (visualType === "multiple_choice") {
-    return "Try flipping the two factors around.";
-  }
-
-  if (visualType === "repeated_addition") {
-    return "Count how many times the same number repeats.";
-  }
-
-  if (visualType === "factor_product") {
-    return "Look at the equation and decide which numbers are factors and which number is the product.";
-  }
-
-  return "Count all the stars to find the total.";
-}
-
 function buildAnswerChoices(correctAnswer: string, groups?: number) {
   const correct = Number(correctAnswer);
 
@@ -190,7 +159,7 @@ function getNextLessonPath({
   weekNumber: number;
   dayNumber: number;
 }) {
-  return `/lesson/unit-${unitNumber}-week-${weekNumber}-day-${dayNumber + 1}`;
+  return `/lesson/g3-u${unitNumber}-w${weekNumber}-l${dayNumber + 1}`;
 }
 
 // @SECTION PRACTICE_SCREEN
@@ -201,8 +170,15 @@ function PracticeScreen() {
   const modeConfig = PRACTICE_MODE_CONFIG[practiceMode];
 
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
+  const {
+    updateLessonProgress,
+    getRecommendedNextPracticeMode,
+    hasPracticeReward,
+    markPracticeReward,
+  } = useStudentProgress();
+
   const currentLessonId =
-    lessonId ?? `unit-${unit.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
+    lessonId ?? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`;
   const nextLessonPath = getNextLessonPath({
     unitNumber: unit.unit_number,
     weekNumber: week.week_number,
@@ -232,6 +208,8 @@ function PracticeScreen() {
   const [completionModal, setCompletionModal] = useState<CompletionModalState | null>(null);
 
   useEffect(() => {
+    // Reset state when practiceMode or currentLessonId changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentProblemIndex(0);
     setAnswer("");
     setFactorAAnswer("");
@@ -265,7 +243,6 @@ function PracticeScreen() {
 
   function openCompletionModal(firstCompletion: boolean) {
     const recommendedMode = getRecommendedNextPracticeMode(
-      CURRENT_STUDENT_ID,
       currentLessonId,
       practiceMode,
     );
@@ -298,12 +275,11 @@ function PracticeScreen() {
 
       if (justFinishedLastQuestion) {
         const firstCompletion = !hasPracticeReward(
-          CURRENT_STUDENT_ID,
           currentLessonId,
           practiceMode,
         );
 
-        markPracticeReward(CURRENT_STUDENT_ID, currentLessonId, practiceMode);
+        markPracticeReward(currentLessonId, practiceMode);
         updateLessonProgress(currentLessonId, {
           practiceComplete: true,
         });
@@ -878,7 +854,7 @@ function PracticeScreen() {
                 <button
                   type="button"
                   onClick={checkAnswer}
-                  className="mx-auto rounded-2xl bg-[#00AFB9] px-8 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7] md:col-span-3"
+                  className="mx-auto rounded-2xl bg-[#00AFB9] px-8 py-3 lg:px-10 lg:py-4 font-black text-white shadow-sm transition hover:bg-[#0081A7] md:col-span-3"
                 >
                   ✓ Check Answer
                 </button>
@@ -939,7 +915,7 @@ function PracticeScreen() {
                 <button
                   type="button"
                   onClick={checkAnswer}
-                  className="mx-auto rounded-2xl bg-[#00AFB9] px-8 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7] md:col-span-3"
+                  className="mx-auto rounded-2xl bg-[#00AFB9] px-8 py-3 lg:px-10 lg:py-4 font-black text-white shadow-sm transition hover:bg-[#0081A7] md:col-span-3"
                 >
                   ✓ Check Answer
                 </button>
@@ -978,7 +954,7 @@ function PracticeScreen() {
                           setMistakeReason("");
                           setFeedback(null);
                         }}
-                        className={`rounded-2xl border px-5 py-3 text-lg font-black shadow-sm transition hover:scale-[1.01] ${
+                        className={`rounded-2xl border px-5 py-3 lg:px-6 lg:py-4 text-lg lg:text-xl font-black shadow-sm transition hover:shadow-md ${
                           mistakeJudgment === choice
                             ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20"
                             : "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]"
@@ -1005,7 +981,7 @@ function PracticeScreen() {
                             setMistakeReason(reason);
                             setFeedback(null);
                           }}
-                          className={`rounded-2xl border px-4 py-2.5 text-left text-sm font-black shadow-sm transition hover:scale-[1.005] ${
+                          className={`rounded-2xl border px-4 py-2.5 text-left text-sm lg:px-5 lg:py-3.5 lg:text-base font-black shadow-sm transition hover:shadow-md ${
                             mistakeReason === reason
                               ? "border-[#00AFB9] bg-white text-[#0081A7] ring-2 ring-[#00AFB9]/20"
                               : "border-[#073B5A]/10 bg-white/80 text-[#073B5A] hover:bg-white"
@@ -1041,7 +1017,7 @@ function PracticeScreen() {
                       setSelectedChoice(choice);
                       setFeedback(null);
                     }}
-                    className={`rounded-2xl border px-5 py-3 text-left text-lg font-black shadow-sm transition hover:scale-[1.005] ${
+                    className={`rounded-2xl border px-5 py-3 text-left text-lg lg:px-6 lg:py-4 font-black shadow-sm transition hover:shadow-md ${
                       selectedChoice === choice
                         ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]"
                         : "border-[#073B5A]/10 bg-white text-[#073B5A] hover:border-[#00AFB9]/40 hover:bg-[#F5FBFC]"
@@ -1055,7 +1031,7 @@ function PracticeScreen() {
                   type="button"
                   onClick={checkAnswer}
                   disabled={!selectedChoice}
-                  className={`mt-1 rounded-xl px-6 py-3 font-black shadow-sm ${
+                  className={`mt-1 rounded-xl px-6 py-3 lg:px-8 lg:py-4 font-black shadow-sm ${
                     selectedChoice ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/55"
                   }`}
                 >
@@ -1080,7 +1056,7 @@ function PracticeScreen() {
                 <button
                   type="button"
                   onClick={checkAnswer}
-                  className="rounded-2xl bg-[#00AFB9] px-6 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                  className="rounded-2xl bg-[#00AFB9] px-6 py-3 lg:px-8 lg:py-4 font-black text-white shadow-sm transition hover:bg-[#0081A7]"
                 >
                   ✓ Check Answer
                 </button>
@@ -1117,7 +1093,7 @@ function PracticeScreen() {
                         setSelectedChoice(choice);
                         setFeedback(null);
                       }}
-                      className={`rounded-2xl border px-5 py-3 text-2xl font-black shadow-sm transition hover:scale-[1.01] ${
+                      className={`rounded-2xl border px-5 py-3 text-2xl lg:px-6 lg:py-4 font-black shadow-sm transition hover:shadow-md ${
                         selectedChoice === choice
                           ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7] ring-2 ring-[#00AFB9]/20"
                           : "border-[#00AFB9]/55 bg-white text-[#073B5A] hover:bg-[#F8FBFB]"
@@ -1132,7 +1108,7 @@ function PracticeScreen() {
                   type="button"
                   onClick={checkAnswer}
                   disabled={!selectedChoice}
-                  className={`mx-auto mt-3 block rounded-xl px-10 py-2.5 font-black shadow-sm ${
+                  className={`mx-auto mt-3 block rounded-xl px-10 py-2.5 lg:px-12 lg:py-3.5 font-black shadow-sm ${
                     selectedChoice ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/55"
                   }`}
                 >
@@ -1167,7 +1143,7 @@ function PracticeScreen() {
                     type="button"
                     onClick={checkAnswer}
                     disabled={!answer.trim()}
-                    className={`rounded-2xl px-6 py-3 font-black shadow-sm ${
+                    className={`rounded-2xl px-6 py-3 lg:px-8 lg:py-4 font-black shadow-sm ${
                       answer.trim() ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/55"
                     }`}
                   >
@@ -1177,17 +1153,6 @@ function PracticeScreen() {
               </div>
             )}
 
-            {false && (
-              <div className="mx-auto mt-3 flex max-w-3xl items-center gap-3 rounded-2xl border border-[#00AFB9]/25 bg-[#E9F7F8] p-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-lg text-white">
-                  ★
-                </div>
-
-                <p className="text-sm font-bold leading-relaxed text-[#073B5A]">
-                  {getSmallHintText(currentProblem.visualType)}
-                </p>
-              </div>
-            )}
 
             {feedback === null && (
               <div className="mx-auto mt-4 flex max-w-4xl items-center gap-4 rounded-3xl border border-[#00AFB9]/25 bg-[#E9F7F8] px-5 py-3 shadow-sm">
@@ -1246,7 +1211,7 @@ function PracticeScreen() {
             <div className="mt-2.5 grid items-center gap-3 border-t border-[#073B5A]/10 pt-2.5 md:grid-cols-[auto_1fr_auto]">
               <Link
                 to={lessonPath}
-                className="rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2 text-sm font-black text-[#0081A7]"
+                className="rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2 text-sm lg:px-6 lg:py-3 lg:text-base font-black text-[#0081A7]"
               >
                 ← Back to Lesson
               </Link>
@@ -1255,7 +1220,7 @@ function PracticeScreen() {
                 {problems.map((problem, index) => (
                   <div
                     key={problem.id}
-                    className={`flex h-7 w-7 items-center justify-center rounded-full border text-[0.68rem] font-black ${
+                    className={`flex h-7 w-7 items-center justify-center rounded-full border text-[0.68rem] lg:h-9 lg:w-9 lg:text-xs font-black ${
                       index === currentProblemIndex
                         ? "border-[#00AFB9] bg-[#00AFB9] text-white"
                         : index < currentProblemIndex
@@ -1272,7 +1237,7 @@ function PracticeScreen() {
                 type="button"
                 onClick={goToNextQuestion}
                 disabled={feedback !== "correct" || currentProblemIndex >= problems.length - 1}
-                className={`rounded-xl px-4 py-2 text-sm font-black shadow-sm ${
+                className={`rounded-xl px-4 py-2 text-sm lg:px-6 lg:py-3 lg:text-base font-black shadow-sm ${
                   feedback === "correct" && currentProblemIndex < problems.length - 1
                     ? "bg-[#00AFB9] text-white"
                     : "bg-[#DDEEEF] text-[#073B5A]/55"
@@ -1295,172 +1260,126 @@ function PracticeScreen() {
         )}
 
         <aside className="space-y-3">
-          {true && (
-            <>
-              <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
-                  {practiceMode === "challenge"
-                    ? "👑 Epic Reward"
-                    : practiceMode === "guided"
-                      ? "🎒 Common Reward"
-                      : "✨ Rare Reward"}
-                </p>
-
-                <div className="mt-2 flex items-center gap-3">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
-                    {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
-                  </div>
-
-                  <p className="text-sm font-black leading-relaxed text-[#073B5A]">
-                    {practiceMode === "challenge"
-                      ? "Finish Challenge Practice to unlock an epic accessory!"
-                      : practiceMode === "guided"
-                        ? "Finish Guided Practice to unlock a common accessory!"
-                        : "Finish Independent Practice to unlock a rare accessory!"}
-                  </p>
-                </div>
-              </div>
-
-              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-                  {getRewardChargeLabel(practiceMode)}
-                </p>
-
-                <div className="mt-3 flex items-center gap-3">
-                  <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#073B5A]/10">
-                    <div
-                      className="h-full rounded-full bg-[#00AFB9]"
-                      style={{ width: `${rewardChargePercent}%` }}
-                    />
-                  </div>
-
-                  <p className="text-xs font-black text-[#073B5A]/70">
-                    {correctCount}/{problems.length} correct
-                  </p>
-                </div>
-              </div>
-
-              {practiceMode !== "guided" && (
-                <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
-                  <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
-                    🔥 Streak
-                  </p>
-
-                  <div className="mt-2 flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-4xl font-black text-[#F07167]">{currentStreak}</p>
-
-                      <p className="text-sm font-black text-[#073B5A]">in a row</p>
-
-                      <p className="mt-1 text-xs font-bold text-[#073B5A]/65">Keep it going!</p>
-                    </div>
-
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
-                      🏅
-                    </div>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-
-          <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FFFDF7] p-4 shadow-sm">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              {modeConfig.hintTitle}
+          <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
+              {practiceMode === "challenge"
+                ? "👑 Epic Reward"
+                : practiceMode === "guided"
+                  ? "🎒 Common Reward"
+                  : "✨ Rare Reward"}
             </p>
 
-            {showHint ? (
-              <>
-                {renderHintVisual()}
-
-                <p className="mt-3 rounded-2xl bg-white p-3 text-sm font-bold leading-relaxed text-[#073B5A]/80">
-                  {getHintText(currentProblem?.visualType)}
-                </p>
-              </>
-            ) : (
-              <p className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-sm font-bold leading-relaxed text-[#073B5A]/60">
-                Use a hint if you get stuck.
-              </p>
-            )}
-
-            <button
-              type="button"
-              onClick={() => setShowHint((current) => !current)}
-              className="mt-3 w-full rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2.5 text-sm font-black text-[#0081A7]"
-            >
-              {showHint ? "Hide Hint" : "💡 Show Hint"}
-            </button>
-          </div>
-
-          {false && (
-            <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-                Progress
-              </p>
-
-              <p className="mt-1 text-xs font-bold text-[#073B5A]/70">
-                Question {currentProblemIndex + 1} of {problems.length}
-              </p>
-
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                {problems.map((problem, index) => (
-                  <div
-                    key={problem.id}
-                    className={`flex h-9 w-9 items-center justify-center rounded-full border text-xs font-black ${
-                      index === currentProblemIndex
-                        ? "border-[#00AFB9] bg-[#00AFB9] text-white"
-                        : index < currentProblemIndex
-                          ? "border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]"
-                          : "border-[#073B5A]/15 bg-white text-[#073B5A]/45"
-                    }`}
-                  >
-                    {index + 1}
-                  </div>
-                ))}
+            <div className="mt-2 flex items-center gap-3">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
+                {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
               </div>
 
-              <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-[#073B5A]/10">
+              <p className="text-sm font-black leading-relaxed text-[#073B5A]">
+                {practiceMode === "challenge"
+                  ? "Finish Challenge Practice to unlock an epic accessory!"
+                  : practiceMode === "guided"
+                    ? "Finish Guided Practice to unlock a common accessory!"
+                    : "Finish Independent Practice to unlock a rare accessory!"}
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+              {getRewardChargeLabel(practiceMode)}
+            </p>
+
+            <div className="mt-3 flex items-center gap-3">
+              <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#073B5A]/10">
                 <div
                   className="h-full rounded-full bg-[#00AFB9]"
-                  style={{
-                    width: `${((currentProblemIndex + 1) / Math.max(problems.length, 1)) * 100}%`,
-                  }}
+                  style={{ width: `${rewardChargePercent}%` }}
                 />
               </div>
 
-              <p className="mt-4 text-sm font-black text-[#073B5A]/75">
-                Correct answers: <span className="text-[#0081A7]">{correctCount}</span>
-              </p>
-            </div>
-          )}
-
-          <div className="rounded-[1.5rem] border border-[#F4D589] bg-[#FEF3D9] p-4 shadow-sm">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              Today&apos;s Goals
-            </p>
-
-            <div className="mt-4 flex items-center gap-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
-                🎯
-              </div>
-
-              <div className="space-y-2 text-sm font-bold text-[#073B5A]/80">
-                <p>◎ Finish {problems.length} questions</p>
-                <p>◎ Score 80% or higher</p>
-                <p>
-                  ◎ Earn {practiceMode === "challenge" ? "an" : "a"}{" "}
-                  {getModeRewardLabel(practiceMode)}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-4 border-t border-[#F4D589] pt-3">
-              <p className="font-black text-[#073B5A]">
-                {practiceMode === "independent" ? "You're on your way! ⭐" : "You've got this! ⭐"}
+              <p className="text-xs font-black text-[#073B5A]/70">
+                {correctCount}/{problems.length} correct
               </p>
             </div>
           </div>
+
+          {practiceMode !== "guided" && (
+            <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
+                🔥 Streak
+              </p>
+
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-4xl font-black text-[#F07167]">{currentStreak}</p>
+
+                  <p className="text-sm font-black text-[#073B5A]">in a row</p>
+
+                  <p className="mt-1 text-xs font-bold text-[#073B5A]/65">Keep it going!</p>
+                </div>
+
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
+                  🏅
+                </div>
+              </div>
+            </div>
+          )}
         </aside>
+
+        <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FFFDF7] p-4 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+            {modeConfig.hintTitle}
+          </p>
+
+          {showHint ? (
+            <>
+              {renderHintVisual()}
+
+              <p className="mt-3 rounded-2xl bg-white p-3 text-sm font-bold leading-relaxed text-[#073B5A]/80">
+                {getHintText(currentProblem?.visualType)}
+              </p>
+            </>
+          ) : (
+            <p className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-sm font-bold leading-relaxed text-[#073B5A]/60">
+              Use a hint if you get stuck.
+            </p>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setShowHint((current) => !current)}
+            className="mt-3 w-full rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2.5 text-sm lg:px-6 lg:py-3.5 lg:text-base font-black text-[#0081A7]"
+          >
+            {showHint ? "Hide Hint" : "💡 Show Hint"}
+          </button>
+        </div>
+
+        <div className="rounded-[1.5rem] border border-[#F4D589] bg-[#FEF3D9] p-4 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+            Today&apos;s Goals
+          </p>
+
+          <div className="mt-4 flex items-center gap-3">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
+              🎯
+            </div>
+
+            <div className="space-y-2 text-sm font-bold text-[#073B5A]/80">
+              <p>◎ Finish {problems.length} questions</p>
+              <p>◎ Score 80% or higher</p>
+              <p>
+                ◎ Earn {practiceMode === "challenge" ? "an" : "a"}{" "}
+                {getModeRewardLabel(practiceMode)}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 border-t border-[#F4D589] pt-3">
+            <p className="font-black text-[#073B5A]">
+              {practiceMode === "independent" ? "You're on your way! ⭐" : "You've got this! ⭐"}
+            </p>
+          </div>
+        </div>
       </section>
 
       {completionModal && (
@@ -1519,7 +1438,7 @@ function PracticeScreen() {
                   <Link
                     to={getModePath(currentLessonId, completionModal.recommendedMode)}
                     onClick={() => setCompletionModal(null)}
-                    className="rounded-2xl bg-[#00AFB9] px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                    className="rounded-2xl bg-[#00AFB9] px-5 py-3 lg:px-7 lg:py-4 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
                   >
                     Try {getModeLabel(completionModal.recommendedMode)} ›
                   </Link>
@@ -1527,7 +1446,7 @@ function PracticeScreen() {
                   <Link
                     to={nextLessonPath}
                     onClick={() => setCompletionModal(null)}
-                    className="rounded-2xl bg-[#00AFB9] px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                    className="rounded-2xl bg-[#00AFB9] px-5 py-3 lg:px-7 lg:py-4 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
                   >
                     Next Lesson ›
                   </Link>
@@ -1536,7 +1455,7 @@ function PracticeScreen() {
                 <Link
                   to={lessonPath}
                   onClick={() => setCompletionModal(null)}
-                  className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB]"
+                  className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 lg:px-7 lg:py-4 lg:text-base font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB]"
                 >
                   Back to Lesson
                 </Link>
@@ -1546,7 +1465,7 @@ function PracticeScreen() {
                 <Link
                   to={nextLessonPath}
                   onClick={() => setCompletionModal(null)}
-                  className="mt-3 inline-flex text-sm font-black text-[#0081A7]"
+                  className="mt-3 inline-flex text-sm lg:text-base font-black text-[#0081A7]"
                 >
                   Continue to next lesson instead ›
                 </Link>

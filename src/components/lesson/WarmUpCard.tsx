@@ -88,7 +88,7 @@ function WarmUpCard({ factDrill, warmup, lessonId, isComplete }: WarmUpCardProps
         <button
           type="button"
           onClick={startWarmUp}
-          className={`mt-4 w-fit rounded-xl px-5 py-2.5 text-sm font-black shadow-sm ${
+          className={`mt-4 w-fit rounded-xl px-5 py-2.5 text-sm lg:px-7 lg:py-3.5 lg:text-base font-black shadow-sm ${
             isComplete ? "bg-[#E9F7F8] text-[#0081A7]" : "bg-[#00AFB9] text-white"
           }`}
         >

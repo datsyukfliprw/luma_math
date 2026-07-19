@@ -8,6 +8,7 @@
 // away from hardcoded Lesson 1 content.
 
 import { getLessonExperience, type LessonExperience } from "../data/lessonExperience";
+import type { CurriculumLearnLesson } from "./curriculumLoader";
 
 // @SECTION LEARN_CONTENT_TYPES
 export type LearnExample = {
@@ -119,14 +120,17 @@ function getLessonIdFromLesson(lesson: LearnLesson) {
     return undefined;
   }
 
-  // Current curriculum IDs use day_number globally, but Week 1 routes use
-  // unit-1-week-1-day-1 through unit-1-week-1-day-5.
-  // This adapter intentionally only maps Week 1 for now.
-  if (lesson.day_number >= 1 && lesson.day_number <= 5) {
-    return `unit-1-week-1-day-${lesson.day_number}`;
+  // Week-aware lesson ID mapping
+  // Format: g{grade}-u{unit}-w{week}-l{lessonNumber}
+  const weekNumber = (lesson as CurriculumLearnLesson).week_number ?? 1; // Default to week 1 if not specified
+  const lessonNumber = lesson.day_number; // Day number maps to lesson number
+
+  // Evaluation lessons use a different ID format
+  if ((lesson as any).lesson_type === "evaluation") {
+    return `g3-u1-w${weekNumber}-eval`;
   }
 
-  return undefined;
+  return `g3-u1-w${weekNumber}-l${lessonNumber}`;
 }
 
 export function getLessonExperienceForLearnLesson(lesson: LearnLesson) {
@@ -206,6 +210,10 @@ export function getRuleCards(lesson: LearnLesson) {
       badgeClass: isWarm ? "text-[#F07167]" : "text-[#0081A7]",
     };
   });
+}
+
+export function getTopicTip(lesson: LearnLesson) {
+  return requireExperience(lesson).bigIdea.starTip;
 }
 
 // @SECTION LEARN_CONTENT_PAGE_DATA

@@ -1,5 +1,5 @@
 import LumaAvatar from "../luma/LumaAvatar";
-import type { LessonProgress } from "../../lib/lessonProgress";
+import type { LessonProgress } from "../../contexts/StudentProgressContext";
 
 type LessonGoalLumaCardProps = {
   lessonType: string;

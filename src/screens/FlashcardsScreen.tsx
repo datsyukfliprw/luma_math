@@ -404,7 +404,7 @@ function SectionHeader({
 
       <button
         type="button"
-        className="inline-flex items-center gap-1 text-sm font-black text-[#0081A7]"
+        className="inline-flex items-center gap-1 rounded-xl px-2 py-1.5 text-sm lg:px-3 lg:py-2 lg:text-base font-black text-[#0081A7] transition hover:bg-[#E9F7F8]"
       >
         {actionLabel}
         <ChevronRight size={16} strokeWidth={3} />
@@ -417,7 +417,7 @@ function ContinueDeckCard({ deck }: { deck: ReviewDeck }) {
   return (
     <button
       type="button"
-      className="group flex min-w-[245px] flex-1 items-center gap-3 rounded-2xl border border-[#073B5A]/10 bg-white p-2.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+      className="group flex min-w-[245px] flex-1 items-center gap-3 rounded-2xl border border-[#073B5A]/10 bg-white p-2.5 lg:p-3.5 text-left shadow-sm transition hover:shadow-md"
     >
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl shadow-sm">
         <ImagePlaceholder image={deck.image} className="h-14 w-14 rounded-2xl object-cover">
@@ -449,7 +449,7 @@ function BrowseTile({ card }: { card: BrowseCard }) {
   return (
     <button
       type="button"
-      className={`relative min-h-[88px] overflow-hidden rounded-2xl border p-3 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${card.className} ${
+      className={`relative min-h-[88px] overflow-hidden rounded-2xl border p-3 lg:p-4 text-left shadow-sm transition hover:shadow-md ${card.className} ${
         card.active ? "ring-2 ring-[#00AFB9]/20" : ""
       }`}
     >
@@ -543,10 +543,18 @@ function FlashcardsScreen() {
           </div>
 
           {/* Hero art fills the right side like a background layer, then fades into the teal card. */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] overflow-hidden lg:block">
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 hidden w-[48%] overflow-hidden lg:block"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.68) 22%, black 42%, black 100%)",
+              maskImage:
+                "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.68) 22%, black 42%, black 100%)",
+            }}
+          >
             <ImagePlaceholder
               image={recommendedDeck.image}
-              className="h-full w-full border-0 bg-transparent object-cover object-right-center [mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.68)_22%,black_42%,black_100%)]"
+              className="h-full w-full border-0 bg-transparent object-cover object-right-center"
             >
               <div className="flex h-full w-full items-center justify-center bg-white/10 text-center text-sm font-black uppercase tracking-[0.16em] text-white/45">
                 Hero Art
@@ -610,8 +618,8 @@ function FlashcardsScreen() {
 
             <div className="mt-3 flex flex-wrap gap-3">
               <Link
-                to="/flashcards/unit-1-week-1-day-1"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[#00AFB9] px-5 py-2.5 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                to="/flashcards/g3-u1-w1-l1"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#00AFB9] px-5 py-2.5 lg:px-7 lg:py-3.5 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
               >
                 <Play size={18} fill="currentColor" />
                 Start Flashcards
@@ -619,7 +627,7 @@ function FlashcardsScreen() {
 
               <button
                 type="button"
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/25 bg-white/10 px-5 py-2.5 text-sm font-black text-white shadow-sm backdrop-blur transition hover:bg-white/20"
+                className="inline-flex items-center gap-2 rounded-2xl border border-white/25 bg-white/10 px-5 py-2.5 lg:px-7 lg:py-3.5 lg:text-base font-black text-white shadow-sm backdrop-blur transition hover:bg-white/20"
               >
                 <RotateCcw size={18} />
                 Review Missed

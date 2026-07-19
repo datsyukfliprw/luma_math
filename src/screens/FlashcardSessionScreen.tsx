@@ -4,18 +4,13 @@ import type { FormEvent, KeyboardEvent } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, BookOpen, Check, CheckCircle2, RotateCcw, Star } from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
-import {
-  getFlashcardDeckProgress,
-  getNextUnansweredCardIndex,
-  recordFlashcardAnswer,
-  resetFlashcardDeckProgress,
-} from "../lib/flashcardProgress";
+import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { getFlashcardDeck, recommendedFlashcardDeckId } from "../flashcards/deckRegistry";
+import { getNextUnansweredCardIndex } from "../lib/flashcardProgress";
 import type { Flashcard } from "../flashcards/types";
 
 // @SECTION FLASHCARD_SESSION_ASSETS
 const MASCOT_ASSET_VERSION = "v1";
-const CURRENT_STUDENT_ID = "default-student";
 const DEFAULT_DECK_ID = recommendedFlashcardDeckId;
 
 function mascotAsset(filename: string) {
@@ -72,11 +67,16 @@ function getCardVisual(card: Flashcard) {
 function FlashcardSessionScreen() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { deckId: routeDeckId } = useParams();
+  const {
+    getFlashcardDeckProgress,
+    recordFlashcardAnswer,
+    resetFlashcardDeckProgress,
+  } = useStudentProgress();
   const deck = getFlashcardDeck(routeDeckId ?? DEFAULT_DECK_ID);
   const deckId = deck.deckId;
   const cards = deck.cards;
   const cardIds = cards.map((card) => card.id);
-  const savedProgress = getFlashcardDeckProgress(CURRENT_STUDENT_ID, deckId, cardIds);
+  const savedProgress = getFlashcardDeckProgress(deckId, cardIds);
 
   const [currentCardIndex, setCurrentCardIndex] = useState(savedProgress.currentCardIndex);
   const [typedAnswer, setTypedAnswer] = useState("");
@@ -111,15 +111,16 @@ function FlashcardSessionScreen() {
     }
 
     const answerIsCorrect = isAnswerCorrect(currentCard, typedAnswer);
-    const nextProgress = recordFlashcardAnswer({
-      studentId: CURRENT_STUDENT_ID,
+    recordFlashcardAnswer(
       deckId,
-      cardId: currentCard.id,
-      answerState: answerIsCorrect ? "known" : "review_again",
+      currentCard.id,
+      answerIsCorrect ? "known" : "review_again",
       cardIds,
       currentCardIndex,
-    });
+    );
 
+    // Re-fetch progress to get updated state
+    const nextProgress = getFlashcardDeckProgress(deckId, cardIds);
     setResult(answerIsCorrect ? "correct" : "incorrect");
     setKnownCardIds(nextProgress.knownCardIds);
     setReviewAgainCardIds(nextProgress.reviewAgainCardIds);
@@ -156,7 +157,7 @@ function FlashcardSessionScreen() {
   }
 
   function restartDeck() {
-    resetFlashcardDeckProgress(CURRENT_STUDENT_ID, deckId);
+    resetFlashcardDeckProgress(deckId);
 
     setCurrentCardIndex(0);
     setTypedAnswer("");
@@ -253,7 +254,7 @@ function FlashcardSessionScreen() {
                   onClick={restartDeck}
                   aria-label="Restart this flashcard deck"
                   title="Restart this deck"
-                  className={`inline-flex items-center justify-center border-l border-[#00AFB9]/20 px-3 transition hover:bg-white hover:text-[#073B5A] ${
+                  className={`inline-flex items-center justify-center border-l border-[#00AFB9]/20 px-3 py-2.5 lg:px-4 lg:py-3 transition hover:bg-white hover:text-[#073B5A] ${
                     isDeckComplete
                       ? "bg-[#FFF8E9] text-[#C78300] shadow-[0_0_14px_rgba(247,183,51,0.38)] ring-2 ring-[#F7B733]/25"
                       : "bg-white/55 text-[#0081A7]"

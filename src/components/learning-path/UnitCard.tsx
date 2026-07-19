@@ -24,16 +24,16 @@ type UnitCardProps = {
 
 function UnitCard({ unitNumber, title, description, progress, weeks }: UnitCardProps) {
   return (
-    <article className="rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 shadow-sm">
+    <article className="rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 lg:p-8 shadow-sm">
       <div className="mb-5 flex items-start justify-between gap-4">
         <div>
           <p className="text-sm font-black uppercase tracking-[0.2em] text-[#00AFB9]">
             Unit {unitNumber}
           </p>
 
-          <h2 className="mt-2 text-3xl font-black">{title}</h2>
+          <h2 className="mt-2 text-2xl font-black lg:text-3xl">{title}</h2>
 
-          <p className="mt-3 max-w-2xl font-medium leading-relaxed text-[#073B5A]/70">
+          <p className="mt-3 max-w-2xl text-sm lg:text-base font-medium leading-relaxed text-[#073B5A]/70">
             {description}
           </p>
         </div>
@@ -61,7 +61,7 @@ function UnitCard({ unitNumber, title, description, progress, weeks }: UnitCardP
                 <Link
                   key={lesson.id}
                   to={lesson.status === "locked" ? "#" : `/lesson/${lesson.id}`}
-                  className={`rounded-2xl border bg-white/75 p-4 text-left transition ${
+                  className={`rounded-2xl border bg-white/75 p-4 lg:p-5 text-left transition hover:shadow-md ${
                     lesson.status === "complete"
                       ? "border-[#00AFB9]/35"
                       : lesson.status === "current"
@@ -83,7 +83,7 @@ function UnitCard({ unitNumber, title, description, progress, weeks }: UnitCardP
                     </span>
                   </div>
 
-                  <h4 className="text-sm font-black leading-snug">{lesson.title}</h4>
+                  <h4 className="text-sm lg:text-base font-black leading-snug">{lesson.title}</h4>
                 </Link>
               ))}
             </div>

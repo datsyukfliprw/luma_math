@@ -1,4 +1,5 @@
 import unitOne from "../data/curriculum/grade_3/unit_01_multiplication_division_foundations.json";
+import type { CurriculumLesson } from "./curriculumLoader";
 
 export function getLessonById(lessonId?: string) {
   if (!lessonId) {
@@ -15,7 +16,12 @@ export function getLessonById(lessonId?: string) {
       const lesson = week.lessons[lessonIndex];
       const weekDayNumber = lessonIndex + 1;
 
-      const id = `unit-${unitOne.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
+      // Use lesson_id from curriculum JSON if available, otherwise fall back to generated ID
+      const curriculumLessonId = (lesson as CurriculumLesson).lesson_id;
+      const generatedId = lesson.lesson_type === "evaluation"
+        ? `g3-u${unitOne.unit_number}-w${week.week_number}-eval`
+        : `g3-u${unitOne.unit_number}-w${week.week_number}-l${weekDayNumber}`;
+      const id = curriculumLessonId || generatedId;
 
       if (id === lessonId) {
         return {

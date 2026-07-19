@@ -25,6 +25,9 @@ body {
   background: #fefdf6;
 }
 
-button {
+button,
+a,
+[role="button"] {
   font-family: inherit;
+  touch-action: manipulation;
 }

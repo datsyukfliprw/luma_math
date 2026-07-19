@@ -1,7 +1,8 @@
 // @SECTION PRACTICE_TIME_CARD_IMPORTS
 import { Calculator, Pencil, Sparkles, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
-import { requireLessonExperience } from "../../data/lessonExperience";
+import { getLessonExperience } from "../../data/lessonExperience";
+import { LessonFallbackScreen } from "../ui/LessonFallbackScreen";
 
 type PracticeTimeCardProps = {
   lessonId?: string;
@@ -13,9 +14,14 @@ type PracticeTimeCardProps = {
 };
 
 // @SECTION PRACTICE_TIME_CARD
-function PracticeTimeCard({ lessonId, activities: _activities }: PracticeTimeCardProps) {
+function PracticeTimeCard({ lessonId }: PracticeTimeCardProps) {
   const basePracticePath = lessonId ? `/practice/${lessonId}` : "/practice";
-  const lesson = lessonId ? requireLessonExperience(lessonId) : undefined;
+  const lesson = lessonId ? getLessonExperience(lessonId) : undefined;
+
+  // Show fallback if lesson experience is missing
+  if (lessonId && !lesson) {
+    return <LessonFallbackScreen lessonId={lessonId} contentType="experience" />;
+  }
 
   const activities = [
     {
@@ -80,7 +86,7 @@ function PracticeTimeCard({ lessonId, activities: _activities }: PracticeTimeCar
             <Link
               key={activity.title}
               to={activity.to}
-              className={`flex w-full items-center gap-2.5 rounded-xl p-2.5 text-left transition hover:scale-[1.01] ${activity.rowClass}`}
+              className={`flex w-full items-center gap-2.5 rounded-xl p-2.5 lg:p-3.5 text-left transition hover:shadow-md ${activity.rowClass}`}
             >
               <span
                 className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${activity.iconClass}`}

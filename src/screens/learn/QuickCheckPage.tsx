@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { CheckCircle2, Sparkles, Star } from "lucide-react";
 import LumaAvatar from "../../components/luma/LumaAvatar";
-import { requireLessonExperience } from "../../data/lessonExperience";
+import { getLessonExperience } from "../../data/lessonExperience";
+import { LessonFallbackScreen } from "../../components/ui/LessonFallbackScreen";
 
 // @SECTION QUICKCHECK_TYPES
 type QuickCheckPageProps = {
@@ -13,7 +14,13 @@ type QuickCheckPageProps = {
 // @SECTION QUICKCHECK_PAGE
 function QuickCheckPage({ lessonId, starName }: QuickCheckPageProps) {
   // @SECTION QUICKCHECK_DATA
-  const lessonExperience = requireLessonExperience(lessonId);
+  const lessonExperience = getLessonExperience(lessonId);
+
+  // Show fallback screen if lesson experience is missing
+  if (!lessonExperience) {
+    return <LessonFallbackScreen lessonId={lessonId} contentType="experience" />;
+  }
+
   const quickCheckQuestions = lessonExperience.quickCheck.questions;
 
   // @SECTION QUICKCHECK_STATE
@@ -248,7 +255,7 @@ function QuickCheckPage({ lessonId, starName }: QuickCheckPageProps) {
                   key={choice}
                   type="button"
                   onClick={() => chooseAnswer(choice)}
-                  className={`relative rounded-2xl border px-4 py-5 text-2xl font-black shadow-sm transition hover:scale-[1.02] ${
+                  className={`relative rounded-2xl border px-4 py-5 text-2xl font-black shadow-sm transition hover:shadow-md lg:px-5 lg:py-6 ${
                     isSelected && isCorrectChoice
                       ? "border-[#00AFB9] bg-[#00AFB9] text-white"
                       : isSelected

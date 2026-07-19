@@ -16,111 +16,70 @@ import LearnScreen from "./screens/LearnScreen";
 import TryItScreen from "./screens/TryItScreen";
 import FlashcardSessionScreen from "./screens/FlashcardSessionScreen";
 import FlashcardCategoryScreen from "./screens/FlashcardCategoryScreen";
-import { hasNamedStar } from "./lib/starProfile";
+import { StudentProgressProvider, useStudentProgress } from "./contexts/StudentProgressContext";
 
 const CURRENT_STUDENT_ID = "default-student";
 
-const APP_STAGE_WIDTH = 1540;
-const APP_STAGE_HEIGHT = 900;
-const APP_STAGE_MIN_SCALE = 0.88;
-const APP_STAGE_MAX_SCALE = 1.14;
+// Inner component that uses the context
+function AppContent() {
+  const { studentState } = useStudentProgress();
+  const [starNameReady, setStarNameReady] = useState(() => studentState.starProfile.starName.trim().length > 0);
 
-function getAppStageScale() {
-  if (typeof window === "undefined") {
-    return 1;
-  }
-
-  if (window.innerWidth < 1024) {
-    return 1;
-  }
-
-  const availableWidth = window.innerWidth - 72;
-  const availableHeight = window.innerHeight - 72;
-
-  const widthScale = availableWidth / APP_STAGE_WIDTH;
-  const heightScale = availableHeight / APP_STAGE_HEIGHT;
-  const nextScale = Math.min(widthScale, heightScale);
-
-  return Math.min(APP_STAGE_MAX_SCALE, Math.max(APP_STAGE_MIN_SCALE, nextScale));
-}
-
-function App() {
-  const [starNameReady, setStarNameReady] = useState(() => hasNamedStar(CURRENT_STUDENT_ID));
-  const [appStageScale, setAppStageScale] = useState(getAppStageScale);
-
+  // Update starNameReady when star profile changes
   useEffect(() => {
-    const updateAppStageScale = () => {
-      setAppStageScale(getAppStageScale());
-    };
-
-    updateAppStageScale();
-    window.addEventListener("resize", updateAppStageScale);
-
-    return () => {
-      window.removeEventListener("resize", updateAppStageScale);
-    };
-  }, []);
+    setStarNameReady(studentState.starProfile.starName.trim().length > 0);
+  }, [studentState.starProfile.starName]);
 
   return (
     <DelightAnimationProvider>
-      <main className="flex h-screen items-start justify-center overflow-hidden bg-[#faf9f4] p-0 text-[#073B5A] lg:items-center lg:p-6">
+      <main className="flex min-h-screen min-h-[100dvh] w-full flex-col items-center justify-center bg-[#faf9f4] text-[#073B5A]">
         {!starNameReady && (
-          <StarNamePrompt studentId={CURRENT_STUDENT_ID} onSaved={() => setStarNameReady(true)} />
+          <StarNamePrompt onSaved={() => setStarNameReady(true)} />
         )}
 
-        <div
-          className="h-full w-full lg:h-auto lg:w-auto"
-          style={{
-            width:
-              appStageScale === 1 && typeof window !== "undefined" && window.innerWidth < 1024
-                ? undefined
-                : `${APP_STAGE_WIDTH * appStageScale}px`,
-            height:
-              appStageScale === 1 && typeof window !== "undefined" && window.innerWidth < 1024
-                ? undefined
-                : `${APP_STAGE_HEIGHT * appStageScale}px`,
-          }}
-        >
-          <div
-            className="mx-auto h-full w-full overflow-visible lg:h-[900px] lg:w-[1540px] lg:origin-top lg:scale-[var(--app-stage-scale)]"
-            style={
-              {
-                "--app-stage-scale": appStageScale,
-              } as React.CSSProperties
-            }
-          >
-            <div className="flex h-full w-full gap-7 overflow-visible p-1">
-              <Sidebar />
+        {/* Constrained app shell: max 1366x1024, centered, sidebar fixed, content scrolls */}
+        <div className="flex h-screen h-[100dvh] max-h-[1024px] w-full max-w-[1366px] flex-col overflow-hidden bg-[#faf9f4] lg:flex-row lg:gap-7">
+          <div className="hidden h-full lg:block lg:w-[245px] lg:shrink-0">
+            <Sidebar />
+          </div>
 
-              <Routes>
-                <Route path="/" element={<HomeScreen />} />
-                <Route path="/learning-path" element={<LearningPathScreen />} />
-                <Route path="/lesson" element={<LessonScreen />} />
-                <Route path="/lesson/:lessonId" element={<LessonScreen />} />
-                <Route path="/learn" element={<LearnScreen />} />
-                <Route path="/learn/:lessonId" element={<LearnScreen />} />
-                <Route path="/try-it" element={<TryItScreen />} />
-                <Route path="/try-it/:lessonId" element={<TryItScreen />} />
-                <Route path="/warmup" element={<WarmUpScreen />} />
-                <Route path="/warmup/:lessonId" element={<WarmUpScreen />} />
-                <Route path="/flashcards" element={<FlashcardsScreen />} />
-                <Route path="/practice" element={<PracticeScreen />} />
-                <Route
-                  path="/flashcards/category/:categoryType/:categoryId"
-                  element={<FlashcardCategoryScreen />}
-                />
-                <Route path="/flashcards/deck/:deckId" element={<FlashcardSessionScreen />} />
-                <Route path="/flashcards/:deckId" element={<FlashcardSessionScreen />} />
-                <Route path="/practice/:lessonId" element={<PracticeScreen />} />
-                <Route path="/progress" element={<ProgressScreen />} />
-                <Route path="/parent-area" element={<ParentAreaScreen />} />
-                <Route path="/settings" element={<SettingsScreen />} />
-              </Routes>
-            </div>
+          <div className="h-full flex-1 overflow-y-auto overflow-x-hidden p-4 lg:p-0">
+            <Routes>
+              <Route path="/" element={<HomeScreen />} />
+              <Route path="/learning-path" element={<LearningPathScreen />} />
+              <Route path="/lesson" element={<LessonScreen />} />
+              <Route path="/lesson/:lessonId" element={<LessonScreen />} />
+              <Route path="/learn" element={<LearnScreen />} />
+              <Route path="/learn/:lessonId" element={<LearnScreen />} />
+              <Route path="/try-it" element={<TryItScreen />} />
+              <Route path="/try-it/:lessonId" element={<TryItScreen />} />
+              <Route path="/warmup" element={<WarmUpScreen />} />
+              <Route path="/warmup/:lessonId" element={<WarmUpScreen />} />
+              <Route path="/flashcards" element={<FlashcardsScreen />} />
+              <Route path="/practice" element={<PracticeScreen />} />
+              <Route
+                path="/flashcards/category/:categoryType/:categoryId"
+                element={<FlashcardCategoryScreen />}
+              />
+              <Route path="/flashcards/deck/:deckId" element={<FlashcardSessionScreen />} />
+              <Route path="/flashcards/:deckId" element={<FlashcardSessionScreen />} />
+              <Route path="/practice/:lessonId" element={<PracticeScreen />} />
+              <Route path="/progress" element={<ProgressScreen />} />
+              <Route path="/parent-area" element={<ParentAreaScreen />} />
+              <Route path="/settings" element={<SettingsScreen />} />
+            </Routes>
           </div>
         </div>
       </main>
     </DelightAnimationProvider>
+  );
+}
+
+function App() {
+  return (
+    <StudentProgressProvider studentId={CURRENT_STUDENT_ID}>
+      <AppContent />
+    </StudentProgressProvider>
   );
 }
 

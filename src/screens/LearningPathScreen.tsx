@@ -2,34 +2,37 @@ import PageLayout from "../components/layout/PageLayout";
 import UnitCard from "../components/learning-path/UnitCard";
 import unitOne from "../data/curriculum/grade_3/unit_01_multiplication_division_foundations.json";
 import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
-import { getFlashcardDeckProgress } from "../lib/flashcardProgress";
-import { getLessonProgress } from "../lib/lessonProgress";
-import { getPracticeRewardState } from "../lib/practiceRewards";
-
-const CURRENT_STUDENT_ID = "default-student";
+import { getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
+import {
+  useStudentProgress,
+  type LessonProgress,
+  type LessonPracticeRewardState,
+  type FlashcardDeckProgress,
+} from "../contexts/StudentProgressContext";
 
 function getFlashcardDeckIdForLesson(lessonId: string) {
-  const deckMap: Record<string, string> = {
-    "unit-1-week-1-day-1": "lesson-g3-u1-w1-d1-zero-identity",
-    "unit-1-week-1-day-2": "lesson-g3-u1-w1-d2-repeated-addition",
-    "unit-1-week-1-day-3": "lesson-g3-u1-w1-d3-factors-products",
-    "unit-1-week-1-day-4": "lesson-g3-u1-w1-d4-object-groups",
-    "unit-1-week-1-day-5": "lesson-g3-u1-w1-d5-week-review",
-  };
-
-  return deckMap[lessonId] ?? `lesson-${lessonId}`;
+  const match = lessonId.match(/g\d+-u\d+-w(\d+)-l(\d+)/);
+  if (match) {
+    const weekNumber = Number.parseInt(match[1], 10);
+    const dayNumber = Number.parseInt(match[2], 10);
+    const deckId = getFlashcardDeckIdFromCurriculum(weekNumber, dayNumber);
+    if (deckId) return deckId;
+  }
+  return `lesson-${lessonId}`;
 }
 
-function getLessonCompletionPercent(lessonId: string, lessonType: string) {
+function getLessonCompletionPercent(
+  lessonId: string,
+  lessonType: string,
+  getLessonProgress: (id: string) => LessonProgress,
+  getPracticeRewardState: (id: string) => LessonPracticeRewardState,
+  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
+) {
   const progress = getLessonProgress(lessonId);
-  const practiceRewards = getPracticeRewardState(CURRENT_STUDENT_ID, lessonId);
+  const practiceRewards = getPracticeRewardState(lessonId);
   const flashcardDeckId = getFlashcardDeckIdForLesson(lessonId);
   const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
-  const flashcardProgress = getFlashcardDeckProgress(
-    CURRENT_STUDENT_ID,
-    flashcardDeckId,
-    flashcardCardIds,
-  );
+  const flashcardProgress = getFlashcardDeckProgress(flashcardDeckId, flashcardCardIds);
 
   if (lessonType === "evaluation") {
     const items = [
@@ -53,10 +56,11 @@ function getLessonCompletionPercent(lessonId: string, lessonType: string) {
 }
 
 function LearningPathScreen() {
-  let hasFoundCurrentLesson = false;
+  const { getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress } = useStudentProgress();
 
   const weeks = unitOne.weeks.map((week) => {
     const weekIsAvailable = week.week_number === 1;
+    let hasFoundCurrentLesson = false;
 
     return {
       weekNumber: week.week_number,
@@ -64,9 +68,15 @@ function LearningPathScreen() {
       status: weekIsAvailable ? ("current" as const) : ("locked" as const),
       lessons: week.lessons.map((lesson, lessonIndex) => {
         const weekDayNumber = lessonIndex + 1;
-        const lessonId = `unit-${unitOne.unit_number}-week-${week.week_number}-day-${weekDayNumber}`;
+        const lessonId = `g3-u${unitOne.unit_number}-w${week.week_number}-l${weekDayNumber}`;
         const percentComplete = weekIsAvailable
-          ? getLessonCompletionPercent(lessonId, lesson.lesson_type)
+          ? getLessonCompletionPercent(
+              lessonId,
+              lesson.lesson_type,
+              getLessonProgress,
+              getPracticeRewardState,
+              getFlashcardDeckProgress,
+            )
           : 0;
 
         let status: "complete" | "current" | "locked" = "locked";
@@ -95,12 +105,12 @@ function LearningPathScreen() {
 
   return (
     <PageLayout>
-      <div className="mb-6 rounded-[2rem] bg-white p-8 shadow-sm">
+      <div className="mb-6 rounded-[2rem] bg-white p-6 lg:p-8 shadow-sm">
         <p className="text-sm font-black uppercase tracking-[0.2em] text-[#00AFB9]">Your journey</p>
 
-        <h1 className="mt-3 text-4xl font-black">Learning Path</h1>
+        <h1 className="mt-3 text-3xl font-black lg:text-4xl">Learning Path</h1>
 
-        <p className="mt-3 max-w-3xl text-lg font-medium leading-relaxed text-[#073B5A]/70">
+        <p className="mt-3 max-w-3xl text-base lg:text-lg font-medium leading-relaxed text-[#073B5A]/70">
           Follow each unit one week at a time. Complete daily lessons, practice new skills, and
           finish each week with a review quiz.
         </p>

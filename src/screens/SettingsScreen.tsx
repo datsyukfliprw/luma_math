@@ -1,42 +1,35 @@
 import { useState } from "react";
 import PageLayout from "../components/layout/PageLayout";
-import {
-  cleanStarName,
-  getRandomStarName,
-  getStarProfile,
-  updateStarProfile,
-} from "../lib/starProfile";
-
-const CURRENT_STUDENT_ID = "default-student";
+import { getRandomStarName } from "../lib/starProfile";
+import { useStudentProgress } from "../contexts/StudentProgressContext";
 
 function SettingsScreen() {
-  const [starProfile, setStarProfile] = useState(() => getStarProfile(CURRENT_STUDENT_ID));
+  const { studentState, updateStarProfile } = useStudentProgress();
 
-  const [starNameInput, setStarNameInput] = useState(starProfile.starName);
-  const cleanedName = cleanStarName(starNameInput);
+  const [starNameInput, setStarNameInput] = useState(studentState.starProfile.starName);
+  const cleanedName = starNameInput.trim().slice(0, 16);
   const canSave = cleanedName.length > 0;
 
   function saveStarName() {
     if (!canSave) return;
 
-    const nextProfile = updateStarProfile(CURRENT_STUDENT_ID, {
+    updateStarProfile({
       starName: cleanedName,
     });
 
-    setStarProfile(nextProfile);
-    setStarNameInput(nextProfile.starName);
+    setStarNameInput(cleanedName);
   }
 
   return (
     <PageLayout>
-      <div className="mb-6 rounded-[2rem] bg-white p-8 shadow-sm">
+      <div className="mb-6 rounded-[2rem] bg-white p-6 lg:p-8 shadow-sm">
         <p className="text-sm font-black uppercase tracking-[0.22em] text-[#00AFB9]">
           App Settings
         </p>
 
-        <h1 className="mt-3 text-4xl font-black tracking-[-0.03em] text-[#073B5A]">Settings</h1>
+        <h1 className="mt-3 text-3xl font-black tracking-[-0.03em] text-[#073B5A] lg:text-4xl">Settings</h1>
 
-        <p className="mt-3 max-w-3xl text-lg font-bold leading-relaxed text-[#073B5A]/65">
+        <p className="mt-3 max-w-3xl text-base font-bold leading-relaxed text-[#073B5A]/65 lg:text-lg">
           Manage student settings, star companion details, and learning preferences.
         </p>
       </div>
@@ -89,7 +82,7 @@ function SettingsScreen() {
                   if (event.key === "Enter") saveStarName();
                 }}
                 maxLength={16}
-                className="w-full rounded-2xl border border-[#073B5A]/15 bg-white px-5 py-4 text-xl font-black text-[#073B5A] outline-none focus:border-[#00AFB9]"
+                className="w-full rounded-2xl border border-[#073B5A]/15 bg-white px-5 py-4 text-xl font-black text-[#073B5A] outline-none focus:border-[#00AFB9] lg:py-5 lg:text-2xl"
                 placeholder="Name your star"
               />
             </label>
@@ -98,7 +91,7 @@ function SettingsScreen() {
               <button
                 type="button"
                 onClick={() => setStarNameInput(getRandomStarName())}
-                className="rounded-xl border border-[#00AFB9]/35 bg-white px-5 py-3 font-black text-[#0081A7]"
+                className="rounded-xl border border-[#00AFB9]/35 bg-white px-5 py-3 font-black text-[#0081A7] lg:px-7 lg:py-4 lg:text-base"
               >
                 Random Name
               </button>
@@ -107,7 +100,7 @@ function SettingsScreen() {
                 type="button"
                 onClick={saveStarName}
                 disabled={!canSave}
-                className={`rounded-xl px-5 py-3 font-black shadow-sm ${
+                className={`rounded-xl px-5 py-3 font-black shadow-sm lg:px-7 lg:py-4 lg:text-base ${
                   canSave ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/45"
                 }`}
               >
@@ -118,7 +111,7 @@ function SettingsScreen() {
             <div className="mt-5 rounded-2xl bg-[#E9F7F8] p-4">
               <p className="text-sm font-bold text-[#073B5A]/70">Current star name</p>
               <p className="mt-1 text-2xl font-black text-[#073B5A]">
-                {starProfile.starName || "Not named yet"}
+                {studentState.starProfile.starName || "Not named yet"}
               </p>
             </div>
           </div>
@@ -134,7 +127,7 @@ function SettingsScreen() {
               <div className="absolute inset-5 rounded-full bg-[#FEF3D9] blur-2xl" />
 
               <img
-                src="/images/luma/luma_base.png"
+                src="/images/luma/star_idle.png"
                 alt="Learning star mascot"
                 className="relative h-full w-full object-contain drop-shadow-sm"
                 onError={(event) => {
@@ -149,7 +142,7 @@ function SettingsScreen() {
           <div className="mt-5 rounded-2xl bg-[#FEF3D9] p-4 text-center">
             <p className="text-sm font-bold text-[#073B5A]/70">Your star is named</p>
             <p className="mt-1 text-3xl font-black text-[#073B5A]">
-              {starProfile.starName || "???"}
+              {studentState.starProfile.starName || "???"}
             </p>
           </div>
 
