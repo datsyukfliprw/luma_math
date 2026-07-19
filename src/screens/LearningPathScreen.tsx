@@ -53,7 +53,19 @@ function getLessonCompletionPercent(lessonId: string, lessonType: string) {
 }
 
 function LearningPathScreen() {
-  let hasFoundCurrentLesson = false;
+  const availableLessons = unitOne.weeks
+    .filter((week) => week.week_number === 1)
+    .flatMap((week) =>
+      week.lessons.map((lesson, lessonIndex) => ({
+        lessonId: `unit-${unitOne.unit_number}-week-${week.week_number}-day-${lessonIndex + 1}`,
+        lessonType: lesson.lesson_type,
+      })),
+    );
+
+  const currentLessonId =
+    availableLessons.find(
+      ({ lessonId, lessonType }) => getLessonCompletionPercent(lessonId, lessonType) < 100,
+    )?.lessonId ?? null;
 
   const weeks = unitOne.weeks.map((week) => {
     const weekIsAvailable = week.week_number === 1;
@@ -73,9 +85,8 @@ function LearningPathScreen() {
 
         if (weekIsAvailable && percentComplete >= 100) {
           status = "complete";
-        } else if (weekIsAvailable && !hasFoundCurrentLesson) {
+        } else if (weekIsAvailable && lessonId === currentLessonId) {
           status = "current";
-          hasFoundCurrentLesson = true;
         }
 
         const progressLabel =

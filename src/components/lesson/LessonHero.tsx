@@ -1,5 +1,5 @@
 import LumaAvatar from "../luma/LumaAvatar";
-import { useDelightAnimation } from "../animations/DelightAnimationProvider";
+import { useDelightAnimation } from "../animations/delightAnimationContext";
 import type { LessonProgress } from "../../lib/lessonProgress";
 
 type LessonHeroProps = {

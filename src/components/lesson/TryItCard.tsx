@@ -4,18 +4,11 @@ import { requireLessonExperience } from "../../data/lessonExperience";
 
 type TryItCardProps = {
   lessonId: string;
-  practice: string;
-  practiceType: string;
   isComplete?: boolean;
 };
 
 // @SECTION TRYIT_CARD
-function TryItCard({
-  lessonId,
-  practice: _practice,
-  practiceType: _practiceType,
-  isComplete = false,
-}: TryItCardProps) {
+function TryItCard({ lessonId, isComplete = false }: TryItCardProps) {
   const navigate = useNavigate();
   const lesson = requireLessonExperience(lessonId);
   const preview = lesson.tryIt.problems[0];

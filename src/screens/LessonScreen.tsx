@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import LearnCard from "../components/lesson/LearnCard";
@@ -275,10 +275,13 @@ function LessonScreen() {
 
   const [starName, setStarName] = useState(() => getStarProfile(CURRENT_STUDENT_ID).starName);
 
-  useEffect(() => {
+  const [activeLessonId, setActiveLessonId] = useState(currentLessonId);
+
+  if (activeLessonId !== currentLessonId) {
+    setActiveLessonId(currentLessonId);
     setProgress(getLessonProgress(currentLessonId));
     setStarName(getStarProfile(CURRENT_STUDENT_ID).starName);
-  }, [currentLessonId]);
+  }
 
   const currentWeekIndex = unit.weeks.findIndex(
     (unitWeek) => unitWeek.week_number === week.week_number,
@@ -344,35 +347,11 @@ function LessonScreen() {
           </LessonCardFrame>
 
           <LessonCardFrame state={getSectionState("tryIt", progress)}>
-            <TryItCard
-              lessonId={currentLessonId}
-              practice={lesson.practice}
-              practiceType={lesson.practice_type}
-              isComplete={progress.tryItComplete}
-            />
+            <TryItCard lessonId={currentLessonId} isComplete={progress.tryItComplete} />
           </LessonCardFrame>
 
           <LessonCardFrame state={getSectionState("practice", progress)}>
-            <PracticeTimeCard
-              lessonId={currentLessonId}
-              activities={[
-                {
-                  icon: "🧮",
-                  title: "Guided Practice",
-                  subtitle: lesson.practice,
-                },
-                {
-                  icon: "✏️",
-                  title: "Independent Practice",
-                  subtitle: "Solve on your own",
-                },
-                {
-                  icon: "🏆",
-                  title: "Challenge Yourself",
-                  subtitle: "Take it up a notch!",
-                },
-              ]}
-            />
+            <PracticeTimeCard lessonId={currentLessonId} />
           </LessonCardFrame>
         </section>
       </div>

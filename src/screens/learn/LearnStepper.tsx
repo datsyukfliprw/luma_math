@@ -2,7 +2,7 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 // @SECTION LEARN_STEPPER_DATA
-export const learnSteps = [
+const learnSteps = [
   {
     label: "Big Idea",
     nextLabel: "Next: Build It",

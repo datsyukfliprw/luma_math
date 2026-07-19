@@ -50,6 +50,94 @@ function getCurrentLessonId({
   return lessonId ?? `unit-${unitNumber}-week-${weekNumber}-day-${dayNumber}`;
 }
 
+// @SECTION TRYIT_CHOICE_CLASS
+function getChoiceClass(
+  currentAnswers: ProblemAnswers,
+  step: TryItStepKey,
+  choice: string,
+  correct: string,
+  isLocked = false,
+) {
+  const selected = currentAnswers[step];
+  const isSelected = selected === choice;
+  const isCorrect = choice === correct;
+
+  if (isLocked) {
+    return "cursor-not-allowed border-[#073B5A]/10 bg-[#F8FBFB] text-[#073B5A]/45";
+  }
+
+  if (isSelected && isCorrect) {
+    return "border-[#00AFB9] bg-[#E9F7F8] text-[#073B5A] ring-2 ring-[#00AFB9]/20";
+  }
+
+  if (isSelected && !isCorrect) {
+    return "border-[#F07167] bg-[#FCE9E5] text-[#F07167] ring-2 ring-[#F07167]/15";
+  }
+
+  return "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]";
+}
+
+// @SECTION TRYIT_CHOICE_GROUP
+type ChoiceGroupProps = {
+  step: TryItStepKey;
+  correct: string;
+  choices: string[];
+  currentAnswers: ProblemAnswers;
+  onChoose: (step: TryItStepKey, choice: string) => void;
+  isEquation?: boolean;
+  isLocked?: boolean;
+};
+
+function ChoiceGroup({
+  step,
+  correct,
+  choices,
+  currentAnswers,
+  onChoose,
+  isEquation = false,
+  isLocked = false,
+}: ChoiceGroupProps) {
+  return (
+    <div className="flex flex-wrap justify-end gap-2.5">
+      {choices.map((choice) => {
+        const isSelected = currentAnswers[step] === choice;
+        const isCorrectSelected = isSelected && choice === correct;
+        const isWrongSelected = isSelected && choice !== correct;
+
+        return (
+          <button
+            key={choice}
+            type="button"
+            onClick={() => onChoose(step, choice)}
+            disabled={isLocked}
+            className={`relative rounded-2xl border text-center font-black shadow-sm transition ${
+              isLocked ? "" : "hover:scale-[1.02]"
+            } ${
+              isEquation ? "min-w-[120px] px-5 py-3 text-base" : "min-w-[72px] px-5 py-3 text-lg"
+            } ${getChoiceClass(currentAnswers, step, choice, correct, isLocked)}`}
+          >
+            {choice}
+
+            {isCorrectSelected && (
+              <CheckCircle2
+                size={17}
+                strokeWidth={3}
+                className="absolute -right-1 -top-1 rounded-full bg-[#7CCB5B] text-white"
+              />
+            )}
+
+            {isWrongSelected && (
+              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#F07167] text-xs text-white">
+                ×
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 // @SECTION TRYIT_SCREEN
 function TryItScreen() {
   const navigate = useNavigate();
@@ -74,7 +162,10 @@ function TryItScreen() {
   const [answersByProblem, setAnswersByProblem] = useState<Record<number, ProblemAnswers>>({});
 
   const currentProblem = tryItProblems[problemIndex % tryItProblems.length];
-  const currentAnswers = answersByProblem[problemIndex] ?? {};
+  const currentAnswers = useMemo(
+    () => answersByProblem[problemIndex] ?? {},
+    [answersByProblem, problemIndex],
+  );
 
   const isRequiredRound = problemIndex < REQUIRED_TRY_IT_COUNT;
   const isFinalRequiredProblem = problemIndex >= REQUIRED_TRY_IT_COUNT - 1;
@@ -123,26 +214,6 @@ function TryItScreen() {
     }));
   }
 
-  function getChoiceClass(step: TryItStepKey, choice: string, correct: string, isLocked = false) {
-    const selected = currentAnswers[step];
-    const isSelected = selected === choice;
-    const isCorrect = choice === correct;
-
-    if (isLocked) {
-      return "cursor-not-allowed border-[#073B5A]/10 bg-[#F8FBFB] text-[#073B5A]/45";
-    }
-
-    if (isSelected && isCorrect) {
-      return "border-[#00AFB9] bg-[#E9F7F8] text-[#073B5A] ring-2 ring-[#00AFB9]/20";
-    }
-
-    if (isSelected && !isCorrect) {
-      return "border-[#F07167] bg-[#FCE9E5] text-[#F07167] ring-2 ring-[#F07167]/15";
-    }
-
-    return "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]";
-  }
-
   function goToNextProblem() {
     setProblemIndex((current) => current + 1);
   }
@@ -157,61 +228,6 @@ function TryItScreen() {
 
   function backToLesson() {
     navigate(`/lesson/${currentLessonId}`);
-  }
-
-  // @SECTION TRYIT_CHOICE_GROUP
-  function ChoiceGroup({
-    step,
-    correct,
-    choices,
-    isEquation = false,
-    isLocked = false,
-  }: {
-    step: TryItStepKey;
-    correct: string;
-    choices: string[];
-    isEquation?: boolean;
-    isLocked?: boolean;
-  }) {
-    return (
-      <div className="flex flex-wrap justify-end gap-2.5">
-        {choices.map((choice) => {
-          const isSelected = currentAnswers[step] === choice;
-          const isCorrectSelected = isSelected && choice === correct;
-          const isWrongSelected = isSelected && choice !== correct;
-
-          return (
-            <button
-              key={choice}
-              type="button"
-              onClick={() => chooseAnswer(step, choice)}
-              disabled={isLocked}
-              className={`relative rounded-2xl border text-center font-black shadow-sm transition ${
-                isLocked ? "" : "hover:scale-[1.02]"
-              } ${
-                isEquation ? "min-w-[120px] px-5 py-3 text-base" : "min-w-[72px] px-5 py-3 text-lg"
-              } ${getChoiceClass(step, choice, correct, isLocked)}`}
-            >
-              {choice}
-
-              {isCorrectSelected && (
-                <CheckCircle2
-                  size={17}
-                  strokeWidth={3}
-                  className="absolute -right-1 -top-1 rounded-full bg-[#7CCB5B] text-white"
-                />
-              )}
-
-              {isWrongSelected && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#F07167] text-xs text-white">
-                  ×
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-    );
   }
 
   return (
@@ -420,6 +436,8 @@ function TryItScreen() {
                     step="groups"
                     correct={currentProblem.groups}
                     choices={currentProblem.groupsChoices}
+                    currentAnswers={currentAnswers}
+                    onChoose={chooseAnswer}
                   />
                 </div>
               </div>
@@ -454,6 +472,8 @@ function TryItScreen() {
                     step="inEach"
                     correct={currentProblem.inEach}
                     choices={currentProblem.inEachChoices}
+                    currentAnswers={currentAnswers}
+                    onChoose={chooseAnswer}
                   />
                 </div>
               </div>
@@ -491,6 +511,8 @@ function TryItScreen() {
                       choices={currentProblem.equationChoices}
                       isEquation
                       isLocked={!isEquationUnlocked}
+                      currentAnswers={currentAnswers}
+                      onChoose={chooseAnswer}
                     />
 
                     {!isEquationUnlocked && (

@@ -1,6 +1,7 @@
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { DelightAnimationContext, type SendSparkleOptions } from "./delightAnimationContext";
 
 export type SparkleTrailId = "golden_sparkle" | "teal_magic" | "comet_blue" | "rainbow_glow";
 
@@ -92,19 +93,6 @@ type BurstParticle = {
 };
 
 type BurstParticleSeed = Omit<BurstParticle, "id" | "x" | "y" | "trailId">;
-
-type SendSparkleOptions = {
-  fromElement: HTMLElement | null;
-  trailId?: SparkleTrailId;
-};
-
-type DelightAnimationContextValue = {
-  registerStarTarget: (element: HTMLElement | null) => void;
-  sendSparkleToStar: (options: SendSparkleOptions) => void;
-  starReaction: DelightStarReaction;
-};
-
-const DelightAnimationContext = createContext<DelightAnimationContextValue | null>(null);
 
 function getCenterPoint(element: HTMLElement) {
   const rect = element.getBoundingClientRect();
@@ -600,14 +588,4 @@ export function DelightAnimationProvider({ children }: DelightAnimationProviderP
       />
     </DelightAnimationContext.Provider>
   );
-}
-
-export function useDelightAnimation() {
-  const context = useContext(DelightAnimationContext);
-
-  if (!context) {
-    throw new Error("useDelightAnimation must be used inside DelightAnimationProvider");
-  }
-
-  return context;
 }

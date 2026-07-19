@@ -185,9 +185,12 @@ function LearnScreen() {
 
   const learnLesson = lesson as LearnLesson;
 
-  useEffect(() => {
+  const [activeLessonId, setActiveLessonId] = useState(currentLessonId);
+
+  if (activeLessonId !== currentLessonId) {
+    setActiveLessonId(currentLessonId);
     setCurrentStep(0);
-  }, [currentLessonId]);
+  }
 
   useEffect(() => {
     const sentinel = topSentinelRef.current;

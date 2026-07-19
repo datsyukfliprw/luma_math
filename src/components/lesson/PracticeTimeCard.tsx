@@ -5,15 +5,10 @@ import { requireLessonExperience } from "../../data/lessonExperience";
 
 type PracticeTimeCardProps = {
   lessonId?: string;
-  activities: {
-    icon: string;
-    title: string;
-    subtitle: string;
-  }[];
 };
 
 // @SECTION PRACTICE_TIME_CARD
-function PracticeTimeCard({ lessonId, activities: _activities }: PracticeTimeCardProps) {
+function PracticeTimeCard({ lessonId }: PracticeTimeCardProps) {
   const basePracticePath = lessonId ? `/practice/${lessonId}` : "/practice";
   const lesson = lessonId ? requireLessonExperience(lessonId) : undefined;
 

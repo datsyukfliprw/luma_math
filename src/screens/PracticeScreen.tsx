@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
@@ -107,30 +107,6 @@ function getHintText(visualType?: string) {
   return "Equal groups have the same number of items in each group.";
 }
 
-function getSmallHintText(visualType?: string) {
-  if (visualType === "fair_sharing") {
-    return "Share the items equally into each group.";
-  }
-
-  if (visualType === "array_rows_columns") {
-    return "Count the rows, then count the columns.";
-  }
-
-  if (visualType === "multiple_choice") {
-    return "Try flipping the two factors around.";
-  }
-
-  if (visualType === "repeated_addition") {
-    return "Count how many times the same number repeats.";
-  }
-
-  if (visualType === "factor_product") {
-    return "Look at the equation and decide which numbers are factors and which number is the product.";
-  }
-
-  return "Count all the stars to find the total.";
-}
-
 function buildAnswerChoices(correctAnswer: string, groups?: number) {
   const correct = Number(correctAnswer);
 
@@ -231,7 +207,11 @@ function PracticeScreen() {
   const [currentStreak, setCurrentStreak] = useState(0);
   const [completionModal, setCompletionModal] = useState<CompletionModalState | null>(null);
 
-  useEffect(() => {
+  const sessionKey = `${practiceMode}:${currentLessonId}`;
+  const [activeSessionKey, setActiveSessionKey] = useState(sessionKey);
+
+  if (activeSessionKey !== sessionKey) {
+    setActiveSessionKey(sessionKey);
     setCurrentProblemIndex(0);
     setAnswer("");
     setFactorAAnswer("");
@@ -248,7 +228,7 @@ function PracticeScreen() {
     setCorrectProblemIndexes([]);
     setCurrentStreak(0);
     setCompletionModal(null);
-  }, [practiceMode, currentLessonId]);
+  }
 
   const currentProblem = problems[currentProblemIndex];
   const visualData = currentProblem?.visualData;
@@ -1177,18 +1157,6 @@ function PracticeScreen() {
               </div>
             )}
 
-            {false && (
-              <div className="mx-auto mt-3 flex max-w-3xl items-center gap-3 rounded-2xl border border-[#00AFB9]/25 bg-[#E9F7F8] p-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-lg text-white">
-                  ★
-                </div>
-
-                <p className="text-sm font-bold leading-relaxed text-[#073B5A]">
-                  {getSmallHintText(currentProblem.visualType)}
-                </p>
-              </div>
-            )}
-
             {feedback === null && (
               <div className="mx-auto mt-4 flex max-w-4xl items-center gap-4 rounded-3xl border border-[#00AFB9]/25 bg-[#E9F7F8] px-5 py-3 shadow-sm">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#BDEFF2] text-3xl shadow-sm">
@@ -1295,73 +1263,69 @@ function PracticeScreen() {
         )}
 
         <aside className="space-y-3">
-          {true && (
-            <>
-              <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
-                <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
-                  {practiceMode === "challenge"
-                    ? "👑 Epic Reward"
-                    : practiceMode === "guided"
-                      ? "🎒 Common Reward"
-                      : "✨ Rare Reward"}
-                </p>
+          <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
+              {practiceMode === "challenge"
+                ? "👑 Epic Reward"
+                : practiceMode === "guided"
+                  ? "🎒 Common Reward"
+                  : "✨ Rare Reward"}
+            </p>
 
-                <div className="mt-2 flex items-center gap-3">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
-                    {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
-                  </div>
-
-                  <p className="text-sm font-black leading-relaxed text-[#073B5A]">
-                    {practiceMode === "challenge"
-                      ? "Finish Challenge Practice to unlock an epic accessory!"
-                      : practiceMode === "guided"
-                        ? "Finish Guided Practice to unlock a common accessory!"
-                        : "Finish Independent Practice to unlock a rare accessory!"}
-                  </p>
-                </div>
+            <div className="mt-2 flex items-center gap-3">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
+                {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
               </div>
 
-              <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
-                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-                  {getRewardChargeLabel(practiceMode)}
-                </p>
+              <p className="text-sm font-black leading-relaxed text-[#073B5A]">
+                {practiceMode === "challenge"
+                  ? "Finish Challenge Practice to unlock an epic accessory!"
+                  : practiceMode === "guided"
+                    ? "Finish Guided Practice to unlock a common accessory!"
+                    : "Finish Independent Practice to unlock a rare accessory!"}
+              </p>
+            </div>
+          </div>
 
-                <div className="mt-3 flex items-center gap-3">
-                  <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#073B5A]/10">
-                    <div
-                      className="h-full rounded-full bg-[#00AFB9]"
-                      style={{ width: `${rewardChargePercent}%` }}
-                    />
-                  </div>
+          <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+              {getRewardChargeLabel(practiceMode)}
+            </p>
 
-                  <p className="text-xs font-black text-[#073B5A]/70">
-                    {correctCount}/{problems.length} correct
-                  </p>
-                </div>
+            <div className="mt-3 flex items-center gap-3">
+              <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#073B5A]/10">
+                <div
+                  className="h-full rounded-full bg-[#00AFB9]"
+                  style={{ width: `${rewardChargePercent}%` }}
+                />
               </div>
 
-              {practiceMode !== "guided" && (
-                <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
-                  <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
-                    🔥 Streak
-                  </p>
+              <p className="text-xs font-black text-[#073B5A]/70">
+                {correctCount}/{problems.length} correct
+              </p>
+            </div>
+          </div>
 
-                  <div className="mt-2 flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-4xl font-black text-[#F07167]">{currentStreak}</p>
+          {practiceMode !== "guided" && (
+            <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
+                🔥 Streak
+              </p>
 
-                      <p className="text-sm font-black text-[#073B5A]">in a row</p>
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-4xl font-black text-[#F07167]">{currentStreak}</p>
 
-                      <p className="mt-1 text-xs font-bold text-[#073B5A]/65">Keep it going!</p>
-                    </div>
+                  <p className="text-sm font-black text-[#073B5A]">in a row</p>
 
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
-                      🏅
-                    </div>
-                  </div>
+                  <p className="mt-1 text-xs font-bold text-[#073B5A]/65">Keep it going!</p>
                 </div>
-              )}
-            </>
+
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-4xl shadow-sm">
+                  🏅
+                </div>
+              </div>
+            </div>
           )}
 
           <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FFFDF7] p-4 shadow-sm">
@@ -1391,48 +1355,6 @@ function PracticeScreen() {
               {showHint ? "Hide Hint" : "💡 Show Hint"}
             </button>
           </div>
-
-          {false && (
-            <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-                Progress
-              </p>
-
-              <p className="mt-1 text-xs font-bold text-[#073B5A]/70">
-                Question {currentProblemIndex + 1} of {problems.length}
-              </p>
-
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                {problems.map((problem, index) => (
-                  <div
-                    key={problem.id}
-                    className={`flex h-9 w-9 items-center justify-center rounded-full border text-xs font-black ${
-                      index === currentProblemIndex
-                        ? "border-[#00AFB9] bg-[#00AFB9] text-white"
-                        : index < currentProblemIndex
-                          ? "border-[#00AFB9]/30 bg-[#E9F7F8] text-[#0081A7]"
-                          : "border-[#073B5A]/15 bg-white text-[#073B5A]/45"
-                    }`}
-                  >
-                    {index + 1}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-[#073B5A]/10">
-                <div
-                  className="h-full rounded-full bg-[#00AFB9]"
-                  style={{
-                    width: `${((currentProblemIndex + 1) / Math.max(problems.length, 1)) * 100}%`,
-                  }}
-                />
-              </div>
-
-              <p className="mt-4 text-sm font-black text-[#073B5A]/75">
-                Correct answers: <span className="text-[#0081A7]">{correctCount}</span>
-              </p>
-            </div>
-          )}
 
           <div className="rounded-[1.5rem] border border-[#F4D589] bg-[#FEF3D9] p-4 shadow-sm">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">

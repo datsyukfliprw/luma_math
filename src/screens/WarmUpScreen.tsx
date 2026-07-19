@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import LumaAvatar from "../components/luma/LumaAvatar";
-import { useDelightAnimation } from "../components/animations/DelightAnimationProvider";
+import { useDelightAnimation } from "../components/animations/delightAnimationContext";
 import { getLessonById } from "../lib/lessonLookup";
 import { updateLessonProgress } from "../lib/lessonProgress";
 import { getStarProfile } from "../lib/starProfile";
