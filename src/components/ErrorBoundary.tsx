@@ -40,8 +40,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex min-h-screen w-full items-center justify-center bg-[#faf9f4] p-8">
-          <div className="max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <div className="flex min-h-[100dvh] w-full items-center justify-center bg-[#faf9f4] p-4 sm:p-8">
+          <div className="max-w-md rounded-2xl bg-white p-6 shadow-lg sm:p-8">
             {/* LumaMath mascot branding */}
             <div className="mb-6 flex justify-center">
               <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#F4D589] bg-[#FEF3D9] text-4xl">
@@ -52,7 +52,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
             <h1 className="mb-3 text-center text-2xl font-black text-[#073B5A]">
               Oops! Something went wrong
             </h1>
-            
+
             <p className="mb-6 text-center text-base font-semibold text-[#073B5A]/75">
               Don't worry, your progress is safe. Let's get you back to learning.
             </p>
@@ -65,7 +65,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
               >
                 Go to Home
               </button>
-              
+
               <button
                 onClick={this.handleRefresh}
                 className="rounded-xl border-2 border-[#073B5A] px-6 py-3 text-base font-black text-[#073B5A] transition-colors hover:bg-[#073B5A]/5"
@@ -81,9 +81,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
                   Development Error Details
                 </summary>
                 <div className="mt-3 overflow-auto rounded-lg bg-[#F5FBFC] p-4">
-                  <pre className="text-xs text-[#073B5A]">
-                    {this.state.error.toString()}
-                  </pre>
+                  <pre className="text-xs text-[#073B5A]">{this.state.error.toString()}</pre>
                 </div>
               </details>
             )}

@@ -67,11 +67,8 @@ function getCardVisual(card: Flashcard) {
 function FlashcardSessionScreen() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { deckId: routeDeckId } = useParams();
-  const {
-    getFlashcardDeckProgress,
-    recordFlashcardAnswer,
-    resetFlashcardDeckProgress,
-  } = useStudentProgress();
+  const { getFlashcardDeckProgress, recordFlashcardAnswer, resetFlashcardDeckProgress } =
+    useStudentProgress();
   const deck = getFlashcardDeck(routeDeckId ?? DEFAULT_DECK_ID);
   const deckId = deck.deckId;
   const cards = deck.cards;
@@ -221,7 +218,7 @@ function FlashcardSessionScreen() {
             data-name="flashcard-session-meta"
             className="mb-4 flex flex-wrap items-center justify-between gap-4"
           >
-            <div className="flex min-w-[335px] flex-1 items-center gap-4">
+            <div className="flex min-w-0 flex-1 items-center gap-4 sm:min-w-[335px]">
               <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#073B5A]/10">
                 <div
                   className="h-full rounded-full bg-[#00AFB9]"
@@ -351,7 +348,7 @@ function FlashcardSessionScreen() {
           <form
             data-name="flashcard-input-controls"
             onSubmit={submitAnswer}
-            className="mx-auto mb-3 flex max-w-[645px] items-center gap-3"
+            className="mx-auto mb-3 flex max-w-[645px] flex-wrap items-center gap-3"
           >
             <input
               ref={inputRef}
@@ -386,7 +383,7 @@ function FlashcardSessionScreen() {
               <button
                 type="button"
                 onClick={nextCard}
-                className="hidden h-16 rounded-2xl bg-[#073B5A] px-5 text-sm font-black text-white shadow-sm transition hover:bg-[#052E46] md:inline-flex md:items-center"
+                className="inline-flex h-16 w-full items-center justify-center rounded-2xl bg-[#073B5A] px-5 text-sm font-black text-white shadow-sm transition hover:bg-[#052E46] md:w-auto"
               >
                 Next Card
               </button>

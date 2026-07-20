@@ -21,14 +21,6 @@ const navItems = [
   { icon: Users, label: "Parent Area", to: "/parent-area" },
 ];
 
-const mobileNavItems = [
-  { icon: House, label: "Home", to: "/" },
-  { icon: Map, label: "Path", to: "/learning-path" },
-  { icon: BookOpen, label: "Lesson", to: "/lesson" },
-  { icon: Pencil, label: "Practice", to: "/practice" },
-  { icon: ChartNoAxesColumnIncreasing, label: "Progress", to: "/progress" },
-];
-
 function Sidebar() {
   return (
     <>
@@ -131,9 +123,9 @@ function Sidebar() {
         </div>
       </aside>
 
-      <nav className="fixed bottom-3 left-3 right-3 z-50 rounded-[1.5rem] border border-[#073B5A]/10 bg-white/95 px-2 py-2 shadow-2xl backdrop-blur lg:hidden">
-        <div className="grid grid-cols-5 gap-1">
-          {mobileNavItems.map((item) => {
+      <nav className="fixed bottom-0 left-0 right-0 z-50 rounded-t-[1.5rem] border border-[#073B5A]/10 border-b-0 bg-white/95 px-2 pb-safe pt-2 shadow-2xl backdrop-blur lg:hidden">
+        <div className="flex snap-x snap-mandatory overflow-x-auto scrollbar-hide">
+          {navItems.map((item) => {
             const Icon = item.icon;
 
             return (
@@ -141,7 +133,7 @@ function Sidebar() {
                 key={item.label}
                 to={item.to}
                 className={({ isActive }) =>
-                  `flex min-w-0 flex-col items-center justify-center rounded-2xl px-2 py-2 text-[11px] font-black transition ${
+                  `flex min-w-[4.5rem] flex-1 snap-start flex-col items-center justify-center rounded-2xl px-2 py-2 text-[11px] font-black transition ${
                     isActive
                       ? "bg-[#00AFB9] text-white shadow-[0_0_18px_rgba(0,175,185,0.45)]"
                       : "text-[#073B5A]/70 hover:bg-[#E9F7F8]"

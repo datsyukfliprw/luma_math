@@ -27,14 +27,16 @@ function SettingsScreen() {
           App Settings
         </p>
 
-        <h1 className="mt-3 text-3xl font-black tracking-[-0.03em] text-[#073B5A] lg:text-4xl">Settings</h1>
+        <h1 className="mt-3 text-3xl font-black tracking-[-0.03em] text-[#073B5A] lg:text-4xl">
+          Settings
+        </h1>
 
         <p className="mt-3 max-w-3xl text-base font-bold leading-relaxed text-[#073B5A]/65 lg:text-lg">
           Manage student settings, star companion details, and learning preferences.
         </p>
       </div>
 
-      <section className="grid gap-5 xl:grid-cols-[1fr_360px]">
+      <section className="grid gap-5 lg:grid-cols-[1fr_280px] xl:grid-cols-[1fr_360px]">
         <div className="space-y-5">
           <div className="rounded-[1.75rem] border border-[#073B5A]/10 bg-white p-6 shadow-sm">
             <p className="text-sm font-black uppercase tracking-[0.2em] text-[#0081A7]">
@@ -123,7 +125,7 @@ function SettingsScreen() {
           </p>
 
           <div className="mt-6 flex justify-center">
-            <div className="relative flex h-56 w-56 items-center justify-center">
+            <div className="relative flex h-44 w-44 items-center justify-center lg:h-56 lg:w-56">
               <div className="absolute inset-5 rounded-full bg-[#FEF3D9] blur-2xl" />
 
               <img
@@ -135,7 +137,7 @@ function SettingsScreen() {
                 }}
               />
 
-              <div className="absolute text-9xl">⭐</div>
+              <div className="absolute text-7xl lg:text-9xl">⭐</div>
             </div>
           </div>
 

@@ -417,7 +417,7 @@ function ContinueDeckCard({ deck }: { deck: ReviewDeck }) {
   return (
     <button
       type="button"
-      className="group flex min-w-[245px] flex-1 items-center gap-3 rounded-2xl border border-[#073B5A]/10 bg-white p-2.5 lg:p-3.5 text-left shadow-sm transition hover:shadow-md"
+      className="group flex min-w-0 flex-1 items-center gap-3 rounded-2xl border border-[#073B5A]/10 bg-white p-2.5 text-left shadow-sm transition hover:shadow-md sm:min-w-[245px] lg:p-3.5"
     >
       <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-2xl shadow-sm">
         <ImagePlaceholder image={deck.image} className="h-14 w-14 rounded-2xl object-cover">

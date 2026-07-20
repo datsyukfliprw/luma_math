@@ -23,8 +23,8 @@ function StarNamePrompt({ onSaved }: StarNamePromptProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/55 p-6 backdrop-blur-sm">
-      <div className="relative w-full max-w-2xl overflow-hidden rounded-[2rem] border border-[#F4D589] bg-[#FFFDF7] p-8 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/55 p-4 backdrop-blur-sm sm:p-6">
+      <div className="relative w-full max-w-2xl overflow-hidden rounded-[2rem] border border-[#F4D589] bg-[#FFFDF7] p-6 shadow-2xl sm:p-8">
         <div className="pointer-events-none absolute right-8 top-8 text-3xl text-[#F7B733]">✦</div>
 
         <div className="grid gap-7 md:grid-cols-[1fr_190px] md:items-center">
@@ -33,7 +33,7 @@ function StarNamePrompt({ onSaved }: StarNamePromptProps) {
               Meet your learning star
             </p>
 
-            <h2 className="mt-3 text-4xl font-black leading-tight tracking-[-0.03em] text-[#073B5A]">
+            <h2 className="mt-3 text-3xl font-black leading-tight tracking-[-0.03em] text-[#073B5A] sm:text-4xl">
               What should we call your star?
             </h2>
 
@@ -98,7 +98,7 @@ function StarNamePrompt({ onSaved }: StarNamePromptProps) {
                 }}
               />
 
-              <div className="absolute text-8xl">⭐</div>
+              <div className="absolute text-7xl sm:text-8xl">⭐</div>
 
               <div className="absolute -right-1 top-6 text-2xl text-[#F7B733]">✦</div>
 

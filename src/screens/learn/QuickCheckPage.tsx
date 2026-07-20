@@ -15,17 +15,16 @@ type QuickCheckPageProps = {
 function QuickCheckPage({ lessonId, starName }: QuickCheckPageProps) {
   // @SECTION QUICKCHECK_DATA
   const lessonExperience = getLessonExperience(lessonId);
+  const quickCheckQuestions = lessonExperience?.quickCheck.questions ?? [];
+
+  // @SECTION QUICKCHECK_STATE
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
 
   // Show fallback screen if lesson experience is missing
   if (!lessonExperience) {
     return <LessonFallbackScreen lessonId={lessonId} contentType="experience" />;
   }
-
-  const quickCheckQuestions = lessonExperience.quickCheck.questions;
-
-  // @SECTION QUICKCHECK_STATE
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
 
   const currentQuestion = quickCheckQuestions[currentQuestionIndex];
   const selectedAnswer = selectedAnswers[currentQuestionIndex];

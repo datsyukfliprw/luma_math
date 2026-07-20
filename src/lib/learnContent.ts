@@ -23,6 +23,7 @@ export type LearnLesson = {
   day_number?: number;
   day_name?: string;
   lesson_title?: string;
+  lesson_type?: "lesson" | "evaluation";
   objective?: string;
   concept?: string;
   practice?: string;
@@ -126,7 +127,7 @@ function getLessonIdFromLesson(lesson: LearnLesson) {
   const lessonNumber = lesson.day_number; // Day number maps to lesson number
 
   // Evaluation lessons use a different ID format
-  if ((lesson as any).lesson_type === "evaluation") {
+  if (lesson.lesson_type === "evaluation") {
     return `g3-u1-w${weekNumber}-eval`;
   }
 

@@ -218,13 +218,13 @@ function LessonActionBar({ nextStep, words }: { nextStep: NextLessonStep; words:
       className="mb-4 overflow-hidden rounded-[1.5rem] border border-[#073B5A]/10 bg-white shadow-sm"
     >
       <div className="grid items-stretch lg:grid-cols-[1fr_auto]">
-        <div className="flex items-center gap-4 px-5 py-3.5">
+        <div className="flex flex-wrap items-center gap-4 px-5 py-3.5">
           <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#FFF3D9] text-2xl">
             🚀
           </div>
 
-          <div className="min-w-0">
-            <p className="text-xl font-black text-[#073B5A]">
+          <div className="min-w-0 flex-1">
+            <p className="text-lg font-black text-[#073B5A] sm:text-xl">
               Next Up: <span className="text-[#0081A7]">{nextStep.title}</span>
             </p>
 
@@ -234,7 +234,7 @@ function LessonActionBar({ nextStep, words }: { nextStep: NextLessonStep; words:
           <button
             type="button"
             onClick={() => navigate(nextStep.to)}
-            className="ml-auto hidden shrink-0 rounded-xl bg-[#00AFB9] px-6 py-2.5 text-sm lg:px-8 lg:py-3.5 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7] md:block"
+            className="w-full shrink-0 rounded-xl bg-[#00AFB9] px-6 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7] md:ml-auto md:w-auto lg:px-8 lg:py-3.5 lg:text-base"
           >
             {nextStep.buttonLabel}
           </button>
@@ -270,12 +270,8 @@ function LessonScreen() {
   const structuredLesson = lesson as typeof lesson & LessonWithStructuredData;
 
   // Use context for state management
-  const {
-    getLessonProgress,
-    getPracticeRewardState,
-    getFlashcardDeckProgress,
-    studentState,
-  } = useStudentProgress();
+  const { getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress, studentState } =
+    useStudentProgress();
 
   // @SECTION LESSON_EXPERIENCE
   const lessonExperience = lessonId ? getLessonExperience(lessonId) : undefined;

@@ -24,17 +24,17 @@ export function validateCurriculum(data: unknown): Curriculum {
  * @param filePath - Path to the curriculum JSON file
  * @returns The validated curriculum data
  */
-export async function loadAndValidateCurriculum(
-  filePath: string
-): Promise<Curriculum> {
+export async function loadAndValidateCurriculum(filePath: string): Promise<Curriculum> {
   try {
     // Dynamic import to avoid bundling issues
     const data = await import(filePath);
     return validateCurriculum(data.default || data);
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`Failed to load curriculum from ${filePath}: ${error.message}`);
+      throw new Error(`Failed to load curriculum from ${filePath}: ${error.message}`, {
+        cause: error,
+      });
     }
-    throw new Error(`Failed to load curriculum from ${filePath}`);
+    throw new Error(`Failed to load curriculum from ${filePath}`, { cause: error });
   }
 }

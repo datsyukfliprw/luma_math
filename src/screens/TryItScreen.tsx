@@ -59,7 +59,13 @@ type ChoiceGroupProps = {
   chooseAnswer: (step: TryItStepKey, value: string) => void;
 };
 
-function getChoiceClass(step: TryItStepKey, choice: string, correct: string, isLocked = false, currentAnswers: ProblemAnswers) {
+function getChoiceClass(
+  step: TryItStepKey,
+  choice: string,
+  correct: string,
+  isLocked = false,
+  currentAnswers: ProblemAnswers,
+) {
   const selected = currentAnswers[step];
   const isSelected = selected === choice;
   const isCorrect = choice === correct;
@@ -147,21 +153,18 @@ function TryItScreen() {
   const starName = studentState.starProfile.starName;
   const lessonExperience = getLessonExperience(currentLessonId);
 
-  // Show fallback screen if lesson experience is missing
-  if (!lessonExperience) {
-    return <LessonFallbackScreen lessonId={currentLessonId} contentType="experience" />;
-  }
-
-  const tryItExperience = lessonExperience.tryIt;
-  const tryItProblems: TryItProblem[] = tryItExperience.problems;
-  const REQUIRED_TRY_IT_COUNT = tryItExperience.requiredCount;
+  const tryItExperience = lessonExperience?.tryIt;
+  const tryItProblems: TryItProblem[] = tryItExperience?.problems ?? [];
+  const REQUIRED_TRY_IT_COUNT = tryItExperience?.requiredCount ?? 1;
 
   // @SECTION TRYIT_STATE
   const [problemIndex, setProblemIndex] = useState(0);
   const [answersByProblem, setAnswersByProblem] = useState<Record<number, ProblemAnswers>>({});
 
-  const currentProblem = tryItProblems[problemIndex % tryItProblems.length];
-  const currentAnswers = useMemo(() => answersByProblem[problemIndex] ?? {}, [answersByProblem, problemIndex]);
+  const currentAnswers = useMemo(
+    () => answersByProblem[problemIndex] ?? {},
+    [answersByProblem, problemIndex],
+  );
 
   const isRequiredRound = problemIndex < REQUIRED_TRY_IT_COUNT;
   const isFinalRequiredProblem = problemIndex >= REQUIRED_TRY_IT_COUNT - 1;
@@ -173,7 +176,14 @@ function TryItScreen() {
     ? `Problem ${displayProblemNumber} of ${REQUIRED_TRY_IT_COUNT}`
     : `Extra Problem ${problemIndex - REQUIRED_TRY_IT_COUNT + 1}`;
 
-  const correctStepCount = useMemo(() => {
+  // Show fallback screen if lesson experience is missing
+  if (!lessonExperience) {
+    return <LessonFallbackScreen lessonId={currentLessonId} contentType="experience" />;
+  }
+
+  const currentProblem = tryItProblems[problemIndex % tryItProblems.length];
+
+  const correctStepCount = (() => {
     const requiredAnswers: Record<TryItStepKey, string> = {
       groups: currentProblem.groups,
       inEach: currentProblem.inEach,
@@ -183,7 +193,7 @@ function TryItScreen() {
     return (Object.keys(requiredAnswers) as TryItStepKey[]).filter(
       (step) => currentAnswers[step] === requiredAnswers[step],
     ).length;
-  }, [currentAnswers, currentProblem]);
+  })();
 
   const isGroupsCorrect = currentAnswers.groups === currentProblem.groups;
   const isInEachCorrect = currentAnswers.inEach === currentProblem.inEach;
@@ -340,7 +350,7 @@ function TryItScreen() {
               </div>
 
               {/* @SECTION TRYIT_PROGRESS_STRIP */}
-              <div className="min-w-[260px] rounded-full border border-[#073B5A]/10 bg-white px-4 py-2 shadow-sm">
+              <div className="min-w-0 rounded-full border border-[#073B5A]/10 bg-white px-4 py-2 shadow-sm sm:min-w-[260px]">
                 <p className="mb-1 text-center text-sm font-black text-[#0081A7]">
                   Try It Progress
                 </p>
@@ -414,7 +424,7 @@ function TryItScreen() {
             <section className="mt-4 grid gap-3">
               <div className="rounded-[1.5rem] border border-[#00AFB9]/20 bg-[#F5FCFD] px-4 py-4 shadow-sm">
                 <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex min-w-[245px] items-start gap-3">
+                  <div className="flex min-w-0 items-start gap-3 sm:min-w-[245px]">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-lg font-black text-white">
                       1
                     </span>
@@ -446,7 +456,7 @@ function TryItScreen() {
                 }`}
               >
                 <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex min-w-[245px] items-start gap-3">
+                  <div className="flex min-w-0 items-start gap-3 sm:min-w-[245px]">
                     <span
                       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg font-black ${
                         isGroupsCorrect ? "bg-[#00AFB9] text-white" : "bg-[#E6EEF2] text-[#6D9AB1]"
@@ -482,7 +492,7 @@ function TryItScreen() {
                 }`}
               >
                 <div className="flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex min-w-[245px] items-start gap-3">
+                  <div className="flex min-w-0 items-start gap-3 sm:min-w-[245px]">
                     <span
                       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg font-black ${
                         isEquationUnlocked ? "bg-[#00AFB9] text-white" : "bg-[#6D7C86] text-white"

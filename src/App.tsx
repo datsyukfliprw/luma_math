@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { DelightAnimationProvider } from "./components/animations/DelightAnimationProvider";
 import Sidebar from "./components/layout/Sidebar";
@@ -23,27 +22,20 @@ const CURRENT_STUDENT_ID = "default-student";
 // Inner component that uses the context
 function AppContent() {
   const { studentState } = useStudentProgress();
-  const [starNameReady, setStarNameReady] = useState(() => studentState.starProfile.starName.trim().length > 0);
-
-  // Update starNameReady when star profile changes
-  useEffect(() => {
-    setStarNameReady(studentState.starProfile.starName.trim().length > 0);
-  }, [studentState.starProfile.starName]);
+  const starNameReady = studentState.starProfile.starName.trim().length > 0;
 
   return (
     <DelightAnimationProvider>
-      <main className="flex min-h-screen min-h-[100dvh] w-full flex-col items-center justify-center bg-[#faf9f4] text-[#073B5A]">
-        {!starNameReady && (
-          <StarNamePrompt onSaved={() => setStarNameReady(true)} />
-        )}
+      <main className="flex min-h-[100dvh] w-full flex-col items-center justify-center bg-[#faf9f4] text-[#073B5A]">
+        {!starNameReady && <StarNamePrompt onSaved={() => {}} />}
 
-        {/* Constrained app shell: max 1366x1024, centered, sidebar fixed, content scrolls */}
-        <div className="flex h-screen h-[100dvh] max-h-[1024px] w-full max-w-[1366px] flex-col overflow-hidden bg-[#faf9f4] lg:flex-row lg:gap-7">
+        {/* Constrained app shell: tablet-first, centered on large screens, phone-safe */}
+        <div className="flex h-[100dvh] min-h-[100dvh] w-full max-w-[1366px] flex-col overflow-hidden bg-[#faf9f4] lg:max-h-[1024px] lg:flex-row lg:gap-7">
           <div className="hidden h-full lg:block lg:w-[245px] lg:shrink-0">
             <Sidebar />
           </div>
 
-          <div className="h-full flex-1 overflow-y-auto overflow-x-hidden p-4 lg:p-0">
+          <div className="h-full flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 lg:p-0">
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/learning-path" element={<LearningPathScreen />} />
