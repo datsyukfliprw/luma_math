@@ -101,7 +101,7 @@ const TimedTestSchema = z.object({
 
 // Lesson schema
 const LessonSchema = z.object({
-  lesson_id: z.string(),
+  lesson_id: z.string().optional(),
   day_number: z.number(),
   day_name: z.string(),
   lesson_title: z.string(),
