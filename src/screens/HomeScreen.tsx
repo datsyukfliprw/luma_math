@@ -1,6 +1,6 @@
 // @SECTION IMPORTS
 import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { BookOpen, Layers, Pencil, Sparkles, Star, Zap } from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
@@ -174,27 +174,18 @@ function StarField() {
 }
 
 // @SECTION PLANET_BUTTON
-const MotionLink = motion(Link);
-
 type PlanetButtonProps = {
   to?: string;
   icon: ReactNode;
   label: string;
   gradient: string;
-  onClick?: () => void;
   disabled?: boolean;
   reduced: boolean;
 };
 
-function PlanetButton({
-  to,
-  icon,
-  label,
-  gradient,
-  onClick,
-  disabled,
-  reduced,
-}: PlanetButtonProps) {
+function PlanetButton({ to, icon, label, gradient, disabled, reduced }: PlanetButtonProps) {
+  const navigate = useNavigate();
+
   const buttonContent = (
     <>
       <div
@@ -211,7 +202,6 @@ function PlanetButton({
       <motion.button
         type="button"
         disabled
-        onClick={onClick}
         whileHover={reduced ? undefined : { scale: 1.05 }}
         whileTap={reduced ? undefined : { scale: 0.95 }}
         className="flex flex-col items-center opacity-60"
@@ -222,22 +212,26 @@ function PlanetButton({
   }
 
   return (
-    <MotionLink
-      to={to}
+    <motion.button
+      type="button"
+      onClick={() => navigate(to)}
       whileHover={reduced ? undefined : { scale: 1.08, y: -4 }}
       whileTap={reduced ? undefined : { scale: 0.95 }}
       className="flex flex-col items-center"
     >
       {buttonContent}
-    </MotionLink>
+    </motion.button>
   );
 }
 
 // @SECTION BIG_CTA
 function BigCta({ action, reduced }: { action: NextAction; reduced: boolean }) {
+  const navigate = useNavigate();
+
   return (
-    <MotionLink
-      to={action.to}
+    <motion.button
+      type="button"
+      onClick={() => navigate(action.to)}
       whileHover={reduced ? undefined : { scale: 1.05 }}
       whileTap={reduced ? undefined : { scale: 0.98 }}
       animate={reduced ? { scale: 1 } : { scale: [1, 1.04, 1] }}
@@ -246,7 +240,7 @@ function BigCta({ action, reduced }: { action: NextAction; reduced: boolean }) {
     >
       {action.label}
       <Sparkles size={20} strokeWidth={3} />
-    </MotionLink>
+    </motion.button>
   );
 }
 
@@ -360,7 +354,6 @@ function DailyChest({ reduced }: { reduced: boolean }) {
 
 // @SECTION HOMESCREEN
 function HomeScreen() {
-  const navigate = useNavigate();
   const reduced = useReducedMotion();
   const { studentState, getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress } =
     useStudentProgress();
@@ -418,7 +411,7 @@ function HomeScreen() {
             transition={
               reduced ? { duration: 0 } : { duration: 3, repeat: Infinity, ease: "easeInOut" }
             }
-            whileHover={reduced ? undefined : { scale: 1.05, rotate: [0, -5, 5, 0] }}
+            whileHover={reduced ? undefined : { scale: 1.05 }}
             className="h-36 w-auto object-contain drop-shadow-[0_12px_32px_rgba(0,0,0,0.25)] sm:h-44 lg:h-52"
           />
 
@@ -449,7 +442,6 @@ function HomeScreen() {
               label="Closet"
               gradient="bg-gradient-to-br from-[#9AB5C7] to-[#6D8EA0]"
               disabled
-              onClick={() => navigate("/settings")}
               reduced={reduced}
             />
           </div>
