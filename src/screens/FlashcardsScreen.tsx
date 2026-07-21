@@ -399,7 +399,7 @@ function SectionHeader({
   actionLabel?: string;
 }) {
   return (
-    <div className="mb-2 flex items-center justify-between">
+    <div className="mb-3 flex items-center justify-between">
       <h2 className="text-lg font-black tracking-[-0.02em] text-[#073B5A]">{title}</h2>
 
       <button
@@ -499,7 +499,7 @@ function FlashcardsScreen() {
     <PageLayout>
       <div className="flex min-h-0 flex-col">
         {/* @SECTION FLASHCARDS_HEADER */}
-        <header className="mb-3 flex items-start justify-between gap-4">
+        <header className="mb-5 flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.24em] text-[#00AFB9]">
               Quick Review
@@ -534,7 +534,7 @@ function FlashcardsScreen() {
         </header>
 
         {/* @SECTION FLASHCARDS_HERO */}
-        <section className="relative mb-3 min-h-[235px] overflow-hidden rounded-[1.75rem] border border-[#073B5A]/10 bg-[radial-gradient(circle_at_74%_28%,rgba(0,175,185,0.32),transparent_30%),linear-gradient(115deg,#073B5A_0%,#075A78_58%,#0081A7_100%)] p-5 text-white shadow-sm">
+        <section className="relative mb-5 min-h-[235px] overflow-hidden rounded-[1.75rem] border border-[#073B5A]/10 bg-[radial-gradient(circle_at_74%_28%,rgba(0,175,185,0.32),transparent_30%),linear-gradient(115deg,#073B5A_0%,#075A78_58%,#0081A7_100%)] p-5 text-white shadow-sm">
           <div className="absolute inset-0 opacity-35">
             <div className="absolute left-[53%] top-8 h-48 w-48 rounded-full border border-white/20" />
             <div className="absolute left-[62%] top-[-30px] h-72 w-72 rounded-full border border-white/10" />
@@ -637,7 +637,7 @@ function FlashcardsScreen() {
         </section>
 
         {/* @SECTION FLASHCARDS_LIBRARY */}
-        <div className="space-y-3 pb-2">
+        <div className="space-y-5 pb-2">
           <section>
             <SectionHeader title="Continue Reviewing" />
 
