@@ -1,5 +1,12 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { PracticeMode } from "../practiceTypes/types";
+import type { MasteryStatus, SkillEvidence, SkillProgress } from "../types/mastery";
+import { EvidenceTypeValues } from "../types/mastery";
+import {
+  getInitialRefreshDueDate,
+  recordRetentionAttempt,
+} from "../services/retention/retentionSchedule";
+import { getAllSkills, getSkillsForLesson } from "../data/curriculum/curriculumGraph";
 
 // Types from existing files
 export type LessonProgress = {
@@ -56,6 +63,7 @@ export type StarProfile = {
 // Combined student state
 export type StudentState = {
   lessonProgress: Record<string, LessonProgress>;
+  skillProgress: Record<string, SkillProgress>;
   flashcardProgress: Record<string, FlashcardDeckProgress>;
   practiceRewards: Record<string, LessonPracticeRewardState>;
   starProfile: StarProfile;
@@ -68,6 +76,9 @@ type StudentProgressContextValue = {
   updateLessonProgress: (lessonId: string, updates: Partial<Omit<LessonProgress, "lessonId" | "updatedAt">>) => void;
   getLessonProgress: (lessonId: string) => LessonProgress;
   resetLessonProgress: (lessonId: string) => void;
+  getSkillProgress: (skillId: string) => SkillProgress;
+  recordSkillEvidence: (skillId: string, evidence: Omit<SkillEvidence, "skillId" | "timestamp">) => void;
+  updateSkillStatus: (skillId: string, status: MasteryStatus) => void;
   getFlashcardDeckProgress: (deckId: string, cardIds?: string[]) => FlashcardDeckProgress;
   saveFlashcardDeckProgress: (deckId: string, progress: FlashcardDeckProgress) => void;
   recordFlashcardAnswer: (deckId: string, cardId: string, answerState: FlashcardAnswerState, cardIds: string[], currentCardIndex: number) => void;
@@ -85,6 +96,7 @@ const StudentProgressContext = createContext<StudentProgressContextValue | undef
 // Storage keys
 const STORAGE_KEYS = {
   lessonProgress: "lumamath_lesson_progress",
+  skillProgress: "lumamath.skill_progress",
   flashcardProgress: "lumamath.flashcardProgress",
   practiceRewards: "lumamath.practiceRewards",
   starProfile: "lumamath_star_profiles",
@@ -129,6 +141,66 @@ function getNextUnansweredCardIndex(
   return cardIds.length - 1;
 }
 
+function createEmptySkillProgress(skillId: string): SkillProgress {
+  const evidenceCounts = Object.fromEntries(
+    EvidenceTypeValues.map((evidenceType) => [evidenceType, 0]),
+  ) as Record<"conceptual" | "procedural" | "transfer" | "retention", number>;
+
+  return {
+    skillId,
+    status: "not_started",
+    evidenceCounts,
+    totalCorrect: 0,
+    totalAttempts: 0,
+    currentStreak: 0,
+    bestStreak: 0,
+    masteryCheckAttempts: 0,
+    masteryCheckPassed: false,
+    successfulRetentionCount: 0,
+  };
+}
+
+function deriveSkillProgressFromLegacy(
+  lessonProgress: Record<string, LessonProgress>,
+): Record<string, SkillProgress> {
+  const skillProgress: Record<string, SkillProgress> = {};
+
+  for (const skill of getAllSkills()) {
+    skillProgress[skill.id] = createEmptySkillProgress(skill.id);
+  }
+
+  for (const [lessonId, progress] of Object.entries(lessonProgress)) {
+    const skills = getSkillsForLesson(lessonId);
+    if (skills.length === 0) continue;
+
+    if (progress.lessonComplete) {
+      for (const skill of skills) {
+        const current = skillProgress[skill.id] ?? createEmptySkillProgress(skill.id);
+        current.status = "developing";
+        current.lastWorkedAt = progress.updatedAt;
+        if (!current.introducedAt) {
+          current.introducedAt = progress.updatedAt;
+        }
+        skillProgress[skill.id] = current;
+      }
+    } else if (progress.learnComplete || progress.warmupComplete || progress.tryItComplete) {
+      for (const skill of skills) {
+        const current = skillProgress[skill.id] ?? createEmptySkillProgress(skill.id);
+        if (current.status === "not_started") {
+          current.status = "introduced";
+        }
+        if (!current.introducedAt) {
+          current.introducedAt = progress.updatedAt;
+        }
+        current.lastWorkedAt = progress.updatedAt;
+        skillProgress[skill.id] = current;
+      }
+    }
+  }
+
+  return skillProgress;
+}
+
 // Provider component
 type StudentProgressProviderProps = {
   studentId: string;
@@ -150,13 +222,34 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       STORAGE_KEYS.practiceRewards,
       {},
     );
+    const allSkillProgress = readFromLocalStorage<Record<string, Record<string, SkillProgress>>>(
+      STORAGE_KEYS.skillProgress,
+      {},
+    );
     const allStarProfiles = readFromLocalStorage<Record<string, StarProfile>>(
       STORAGE_KEYS.starProfile,
       {},
     );
 
+    const savedLessonProgress = allLessonProgress[studentId] ?? {};
+    const savedSkillProgress = allSkillProgress[studentId] ?? {};
+
+    const skillProgress: Record<string, SkillProgress> =
+      Object.keys(savedSkillProgress).length === 0
+        ? deriveSkillProgressFromLegacy(savedLessonProgress)
+        : (() => {
+            const hydrated: Record<string, SkillProgress> = { ...savedSkillProgress };
+            for (const skill of getAllSkills()) {
+              if (!hydrated[skill.id]) {
+                hydrated[skill.id] = createEmptySkillProgress(skill.id);
+              }
+            }
+            return hydrated;
+          })();
+
     return {
-      lessonProgress: allLessonProgress[studentId] ?? {},
+      lessonProgress: savedLessonProgress,
+      skillProgress,
       flashcardProgress: allFlashcardProgress[studentId] ?? {},
       practiceRewards: allPracticeRewards[studentId] ?? {},
       starProfile: allStarProfiles[studentId] ?? {
@@ -182,6 +275,10 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       STORAGE_KEYS.practiceRewards,
       {},
     );
+    const allSkillProgress = readFromLocalStorage<Record<string, Record<string, SkillProgress>>>(
+      STORAGE_KEYS.skillProgress,
+      {},
+    );
     const allStarProfiles = readFromLocalStorage<Record<string, StarProfile>>(
       STORAGE_KEYS.starProfile,
       {},
@@ -190,6 +287,10 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     writeToLocalStorage(STORAGE_KEYS.lessonProgress, {
       ...allLessonProgress,
       [studentId]: studentState.lessonProgress,
+    });
+    writeToLocalStorage(STORAGE_KEYS.skillProgress, {
+      ...allSkillProgress,
+      [studentId]: studentState.skillProgress,
     });
     writeToLocalStorage(STORAGE_KEYS.flashcardProgress, {
       ...allFlashcardProgress,
@@ -268,6 +369,110 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       return {
         ...prev,
         lessonProgress: newLessonProgress,
+      };
+    });
+  };
+
+  // Skill progress functions
+  const getSkillProgress = (skillId: string): SkillProgress => {
+    return studentState.skillProgress[skillId] ?? createEmptySkillProgress(skillId);
+  };
+
+  const recordSkillEvidence = (
+    skillId: string,
+    evidence: Omit<SkillEvidence, "skillId" | "timestamp">,
+  ) => {
+    setStudentState((prev) => {
+      const current = prev.skillProgress[skillId] ?? createEmptySkillProgress(skillId);
+      const timestamp = new Date().toISOString();
+
+      const nextCorrect = current.totalCorrect + (evidence.correct ? 1 : 0);
+      const nextAttempts = current.totalAttempts + 1;
+      const nextCurrentStreak = evidence.correct ? current.currentStreak + 1 : 0;
+      const nextBestStreak = Math.max(current.bestStreak, nextCurrentStreak);
+
+      const nextEvidenceCounts = { ...current.evidenceCounts };
+      nextEvidenceCounts[evidence.evidenceType] =
+        (nextEvidenceCounts[evidence.evidenceType] ?? 0) + 1;
+
+      let nextProgress: SkillProgress = {
+        ...current,
+        skillId,
+        lastWorkedAt: timestamp,
+        evidenceCounts: nextEvidenceCounts,
+        totalCorrect: nextCorrect,
+        totalAttempts: nextAttempts,
+        currentStreak: nextCurrentStreak,
+        bestStreak: nextBestStreak,
+        status: current.status === "not_started" ? "introduced" : current.status,
+      };
+
+      if (!nextProgress.introducedAt) {
+        nextProgress.introducedAt = timestamp;
+      }
+
+      // Retention reviews for mastered skills reschedule the next review or
+      // drop the skill back to developing on a failed review.
+      if (
+        evidence.evidenceType === "retention" &&
+        (current.status === "mastered" || current.status === "refresh_scheduled")
+      ) {
+        const attempt = recordRetentionAttempt(current, evidence.correct, timestamp);
+        nextProgress = {
+          ...nextProgress,
+          status: attempt.status,
+          refreshDueAt: attempt.refreshDueAt,
+          successfulRetentionCount: attempt.successfulRetentionCount,
+          masteredAt: attempt.masteredAt,
+        };
+      }
+
+      return {
+        ...prev,
+        skillProgress: {
+          ...prev.skillProgress,
+          [skillId]: nextProgress,
+        },
+      };
+    });
+  };
+
+  const updateSkillStatus = (skillId: string, status: MasteryStatus) => {
+    setStudentState((prev) => {
+      const current = prev.skillProgress[skillId] ?? createEmptySkillProgress(skillId);
+      const timestamp = new Date().toISOString();
+
+      const nextProgress: SkillProgress = {
+        ...current,
+        skillId,
+        status,
+        lastWorkedAt: timestamp,
+      };
+
+      if (status === "mastered") {
+        nextProgress.masteredAt = timestamp;
+        nextProgress.successfulRetentionCount = 0;
+        nextProgress.refreshDueAt = getInitialRefreshDueDate(timestamp);
+      } else if (status === "refresh_scheduled") {
+        if (!nextProgress.masteredAt) {
+          nextProgress.masteredAt = timestamp;
+        }
+      } else {
+        nextProgress.masteredAt = undefined;
+        nextProgress.refreshDueAt = undefined;
+        nextProgress.successfulRetentionCount = 0;
+      }
+
+      if (!nextProgress.introducedAt) {
+        nextProgress.introducedAt = timestamp;
+      }
+
+      return {
+        ...prev,
+        skillProgress: {
+          ...prev.skillProgress,
+          [skillId]: nextProgress,
+        },
       };
     });
   };
@@ -475,6 +680,9 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     updateLessonProgress,
     getLessonProgress,
     resetLessonProgress,
+    getSkillProgress,
+    recordSkillEvidence,
+    updateSkillStatus,
     getFlashcardDeckProgress,
     saveFlashcardDeckProgress,
     recordFlashcardAnswer,

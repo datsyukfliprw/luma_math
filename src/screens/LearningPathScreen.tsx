@@ -95,7 +95,7 @@ function LearningPathScreen() {
 
         return {
           id: lessonId,
-          day: `Day ${weekDayNumber}`,
+          day: "",
           title: `${lesson.lesson_title}${progressLabel}`,
           status,
         };
@@ -111,8 +111,8 @@ function LearningPathScreen() {
         <h1 className="mt-3 text-3xl font-black lg:text-4xl">Learning Path</h1>
 
         <p className="mt-3 max-w-3xl text-base lg:text-lg font-medium leading-relaxed text-[#073B5A]/70">
-          Follow each unit one week at a time. Complete daily lessons, practice new skills, and
-          finish each week with a review quiz.
+          Follow each pathway one concept at a time. Complete missions, practice new skills, and
+          prove mastery with a review quiz.
         </p>
       </div>
 

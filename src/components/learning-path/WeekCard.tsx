@@ -1,11 +1,10 @@
 type WeekCardProps = {
-  weekNumber: number;
   title: string;
   status: "complete" | "current" | "locked";
   children: React.ReactNode;
 };
 
-function WeekCard({ weekNumber, title, status, children }: WeekCardProps) {
+function WeekCard({ title, status, children }: WeekCardProps) {
   return (
     <section
       className={`rounded-[1.75rem] border p-5 ${
@@ -18,11 +17,7 @@ function WeekCard({ weekNumber, title, status, children }: WeekCardProps) {
     >
       <div className="mb-4 flex items-center justify-between gap-4">
         <div>
-          <p className="text-sm font-black uppercase tracking-[0.2em] text-[#073B5A]/60">
-            Week {weekNumber}
-          </p>
-
-          <h3 className="mt-1 text-2xl font-black">{title}</h3>
+          <h3 className="text-2xl font-black">{title}</h3>
         </div>
 
         <span className="text-2xl">

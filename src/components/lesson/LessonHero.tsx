@@ -4,8 +4,8 @@ import type { LessonProgress } from "../../contexts/StudentProgressContext";
 
 type LessonHeroProps = {
   unitNumber: number;
-  weekNumber: number;
-  dayNumber: number;
+  chapterTitle?: string;
+  conceptTitle?: string;
   title: string;
   topic: string;
   description: string;
@@ -58,8 +58,8 @@ function GoalProgressBar({
 
 function LessonHero({
   unitNumber,
-  weekNumber,
-  dayNumber,
+  chapterTitle,
+  conceptTitle,
   title,
   description,
   minutes,
@@ -99,9 +99,17 @@ function LessonHero({
         <div className="grid gap-6 px-7 py-6 lg:grid-cols-[minmax(0,1fr)_280px]">
           <div>
             <p className="text-sm font-black text-[#426B82]">
-              Grade 3 <span className="mx-2 text-[#073B5A]/30">›</span> Unit {unitNumber}{" "}
-              <span className="mx-2 text-[#073B5A]/30">›</span> Week {weekNumber}{" "}
-              <span className="mx-2 text-[#073B5A]/30">›</span> Day {dayNumber}
+              Grade 3 <span className="mx-2 text-[#073B5A]/30">›</span> Unit {unitNumber}
+              {chapterTitle && (
+                <>
+                  <span className="mx-2 text-[#073B5A]/30">›</span> {chapterTitle}
+                </>
+              )}
+              {conceptTitle && (
+                <>
+                  <span className="mx-2 text-[#073B5A]/30">›</span> {conceptTitle}
+                </>
+              )}
             </p>
 
             <h1 className="mt-4 text-[2.35rem] font-black leading-tight tracking-[-0.03em] text-[#073B5A]">

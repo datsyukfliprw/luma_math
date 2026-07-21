@@ -17,6 +17,10 @@ import {
 } from "../contexts/StudentProgressContext";
 import type { WarmUpData } from "../types/warmup";
 import { getLessonExperience } from "../data/lessonExperience";
+import {
+  getChapterForConcept,
+  getConceptByLessonId,
+} from "../data/curriculum/curriculumGraph";
 
 type LessonWithStructuredData = {
   warmup?: WarmUpData;
@@ -305,6 +309,9 @@ function LessonScreen() {
   const flashcardDeckId = getFlashcardDeckIdForLesson(currentLessonId);
   const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
 
+  const concept = getConceptByLessonId(currentLessonId);
+  const chapter = concept ? getChapterForConcept(concept.id) : undefined;
+
   const nextStep = getNextStep({
     lessonId: currentLessonId,
     nextLessonId,
@@ -322,8 +329,8 @@ function LessonScreen() {
       <div data-name="lesson-overview-stack" className="flex min-h-0 flex-col">
         <LessonHero
           unitNumber={unit.unit_number}
-          weekNumber={week.week_number}
-          dayNumber={lessonExperience?.lessonNumber ?? weekDayNumber}
+          chapterTitle={chapter?.title}
+          conceptTitle={concept?.title}
           title={lessonExperience?.title ?? lesson.lesson_title}
           topic={unit.unit_title}
           description={lessonExperience?.kidGoal ?? lesson.objective}

@@ -52,7 +52,6 @@ function UnitCard({ unitNumber, title, description, progress, weeks }: UnitCardP
         {weeks.map((week) => (
           <WeekCard
             key={week.weekNumber}
-            weekNumber={week.weekNumber}
             title={week.title}
             status={week.status}
           >
@@ -69,11 +68,7 @@ function UnitCard({ unitNumber, title, description, progress, weeks }: UnitCardP
                         : "pointer-events-none border-[#073B5A]/10 opacity-70"
                   }`}
                 >
-                  <div className="mb-2 flex items-center justify-between">
-                    <p className="text-xs font-black uppercase tracking-wide text-[#073B5A]/65">
-                      {lesson.day}
-                    </p>
-
+                  <div className="mb-2 flex items-center justify-end">
                     <span className="font-black">
                       {lesson.status === "complete"
                         ? "✓"

@@ -26,16 +26,25 @@ function AppContent() {
 
   return (
     <DelightAnimationProvider>
-      <main className="flex min-h-[100dvh] w-full flex-col items-center justify-center bg-[#faf9f4] text-[#073B5A]">
+      <main
+        data-name="lumamath-app-viewport"
+        className="flex min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#F0EEE7] text-[#073B5A]"
+      >
         {!starNameReady && <StarNamePrompt onSaved={() => {}} />}
 
-        {/* Constrained app shell: tablet-first, centered on large screens, phone-safe */}
-        <div className="flex h-[100dvh] min-h-[100dvh] w-full max-w-[1366px] flex-col overflow-hidden bg-[#faf9f4] lg:max-h-[1024px] lg:flex-row lg:gap-7">
-          <div className="hidden h-full lg:block lg:w-[245px] lg:shrink-0">
+        {/* @SECTION Centered tablet-first application stage */}
+        <div
+          data-name="lumamath-tablet-stage"
+          className="flex h-[100dvh] w-full max-w-[1366px] flex-col overflow-hidden bg-[#FAF9F4] lg:max-h-[1024px] lg:flex-row lg:gap-5 lg:p-5 min-[1440px]:rounded-[2rem] min-[1440px]:shadow-[0_28px_80px_rgba(7,59,90,0.14)]"
+        >
+          <div className="hidden h-full shrink-0 lg:block">
             <Sidebar />
           </div>
 
-          <div className="h-full flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-4 lg:p-0">
+          <div
+            data-name="app-route-scroll-region"
+            className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain"
+          >
             <Routes>
               <Route path="/" element={<HomeScreen />} />
               <Route path="/learning-path" element={<LearningPathScreen />} />
