@@ -154,26 +154,6 @@ function getNextStep({
   };
 }
 
-function getTodaysWords(lessonTitle: string, practiceType: string) {
-  if (practiceType === "factor_product_identification") {
-    return ["factor", "product", "equation"];
-  }
-
-  if (practiceType === "array_rows_columns") {
-    return ["array", "row", "column"];
-  }
-
-  if (practiceType === "repeated_addition_to_multiplication") {
-    return ["repeated addition", "groups", "multiply"];
-  }
-
-  if (lessonTitle.toLowerCase().includes("zero")) {
-    return ["zero rule", "identity rule", "product"];
-  }
-
-  return ["equal groups", "factor", "product"];
-}
-
 function getSectionState(
   section: "warmup" | "learn" | "tryIt" | "practice",
   progress: LessonProgress,
@@ -213,55 +193,35 @@ function LessonCardFrame({ state, children }: { state: SectionState; children: R
 }
 
 // @SECTION LESSON_ACTION_BAR
-function LessonActionBar({ nextStep, words }: { nextStep: NextLessonStep; words: string[] }) {
+function LessonActionBar({ nextStep }: { nextStep: NextLessonStep }) {
   const navigate = useNavigate();
 
   return (
     <section
       data-name="lesson-action-bar"
-      className="mb-4 overflow-hidden rounded-[1.5rem] border border-[#073B5A]/10 bg-white shadow-sm"
+      className="mb-4 rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm"
     >
-      <div className="grid items-stretch lg:grid-cols-[1fr_auto]">
-        <div className="flex flex-wrap items-center gap-4 px-5 py-3.5">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#FFF3D9] text-2xl">
-            🚀
-          </div>
-
-          <div className="min-w-0 flex-1">
-            <p className="text-lg font-black text-[#073B5A] sm:text-xl">
-              Next Up: <span className="text-[#0081A7]">{nextStep.title}</span>
-            </p>
-
-            <p className="mt-0.5 text-sm font-bold text-[#073B5A]/70">{nextStep.description}</p>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => navigate(nextStep.to)}
-            className="w-full shrink-0 rounded-xl bg-[#00AFB9] px-6 py-3 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7] md:ml-auto md:w-auto lg:px-8 lg:py-3.5 lg:text-base"
-          >
-            {nextStep.buttonLabel}
-          </button>
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FFF3D9] text-xl">
+          🚀
         </div>
 
-        <div className="flex items-center gap-3 border-t border-[#073B5A]/10 px-5 py-3.5 lg:border-l lg:border-t-0">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-xl">
-            📖
-          </div>
-
-          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
-            <p className="mr-2 text-base font-black text-[#073B5A]">Today’s Words</p>
-
-            {words.map((word) => (
-              <span
-                key={word}
-                className="rounded-xl border border-[#073B5A]/10 bg-[#F8FBFB] px-4 py-2 text-sm font-bold text-[#275875]"
-              >
-                {word}
-              </span>
-            ))}
-          </div>
+        <div className="min-w-0 flex-1">
+          <p className="text-base font-black text-[#073B5A]">
+            Next Up: <span className="text-[#0081A7]">{nextStep.title}</span>
+          </p>
+          <p className="mt-0.5 line-clamp-1 text-[13px] font-bold text-[#073B5A]/65">
+            {nextStep.description}
+          </p>
         </div>
+
+        <button
+          type="button"
+          onClick={() => navigate(nextStep.to)}
+          className="min-h-11 shrink-0 rounded-xl bg-[#00AFB9] px-6 text-sm font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+        >
+          {nextStep.buttonLabel}
+        </button>
       </div>
     </section>
   );
@@ -321,7 +281,6 @@ function LessonScreen() {
     flashcardDeckId,
     flashcardCardIds,
   });
-  const todaysWords = getTodaysWords(lesson.lesson_title, lesson.practice_type);
 
   return (
     <PageLayout>
@@ -344,12 +303,12 @@ function LessonScreen() {
           starName={starName}
         />
 
-        <LessonActionBar nextStep={nextStep} words={todaysWords} />
+        <LessonActionBar nextStep={nextStep} />
 
         {/* @SECTION LESSON_STAGE_GRID */}
         <section
           data-name="lesson-stage-grid"
-          className="grid min-h-0 items-stretch gap-4 lg:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1.12fr]"
+          className="grid min-h-0 items-stretch gap-3 lg:grid-cols-2 xl:grid-cols-[0.95fr_0.95fr_1fr_1.08fr]"
         >
           <LessonCardFrame state={getSectionState("warmup", progress)}>
             <WarmUpCard

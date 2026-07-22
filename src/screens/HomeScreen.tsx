@@ -4,7 +4,6 @@ import {
   BookOpen,
   Check,
   CircleGauge,
-  Flame,
   Layers3,
   LockKeyhole,
   Map,
@@ -14,6 +13,7 @@ import {
   Trophy,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { useDailyMission } from "../services/mission/useDailyMission";
 import type { JourneyStepStatus } from "../services/mission/dailyMissionPlanner";
 
@@ -32,7 +32,7 @@ type QuickAction = {
 const quickActions: QuickAction[] = [
   {
     title: "Learn",
-    description: "Explore ideas with stories, models, and guided discovery.",
+    description: "Explore new ideas with guided stories and models.",
     buttonLabel: "Start Learning",
     to: "/lesson",
     icon: BookOpen,
@@ -43,7 +43,7 @@ const quickActions: QuickAction[] = [
   },
   {
     title: "Practice",
-    description: "Build confidence with focused, just-right practice.",
+    description: "Build confidence with focused practice.",
     buttonLabel: "Go to Practice",
     to: "/practice",
     icon: PencilLine,
@@ -54,7 +54,7 @@ const quickActions: QuickAction[] = [
   },
   {
     title: "Flashcards",
-    description: "Strengthen memory with quick, friendly review.",
+    description: "Strengthen memory with quick review.",
     buttonLabel: "Review Cards",
     to: "/flashcards",
     icon: Layers3,
@@ -65,7 +65,7 @@ const quickActions: QuickAction[] = [
   },
   {
     title: "Progress",
-    description: "See the concepts you have grown and what comes next.",
+    description: "See what you have learned and what comes next.",
     buttonLabel: "View Progress",
     to: "/progress",
     icon: Trophy,
@@ -152,17 +152,37 @@ function JourneyNode({ step }: { step: { title: string; status: JourneyStepStatu
   );
 }
 
+const GARDEN_REWARD_TARGET = 150;
+
 function HomeScreen() {
+    const { studentState } = useStudentProgress();
     const { currentMission, journeySteps, progress, summary, pathway } = useDailyMission();
 
-    const currentConceptCount = currentMission ? 1 : 0;
+    const studentName = studentState.starProfile.studentName || "Explorer";
+
+    const starsCollected = Object.values(studentState.practiceRewards)
+      .flatMap((lessonReward) => Object.values(lessonReward))
+      .filter((reward) => reward.completed).length;
+
+    const currentConceptCount = journeySteps.filter((step) => step.status === "current").length;
+
+    const currentStepIndex = Math.max(
+      0,
+      journeySteps.findIndex((step) => step.status === "current"),
+    );
+    const journeyWindowStart = Math.max(0, Math.min(currentStepIndex - 1, journeySteps.length - 3));
+    const visibleJourneySteps = journeySteps.slice(journeyWindowStart, journeyWindowStart + 3);
+    const gardenProgress = Math.min(
+      100,
+      Math.round((starsCollected / GARDEN_REWARD_TARGET) * 100),
+    );
 
     return (
     <main
       data-name="home-screen"
-      className="min-h-full w-full min-w-0 overflow-x-hidden bg-[#FDFBF6] px-4 pb-28 pt-5 sm:px-5 lg:px-6 lg:pb-6 lg:pt-6"
+      className="h-full min-h-0 w-full min-w-0 overflow-hidden bg-[#FDFBF6] px-4 pb-28 pt-5 sm:px-5 lg:px-6 lg:pb-6 lg:pt-6"
     >
-      <div className="mx-auto w-full max-w-[1080px]">
+      <div className="mx-auto flex h-full min-h-0 w-full max-w-[1080px] flex-col">
         {/* @SECTION Home header */}
         <header
           data-name="home-header"
@@ -173,7 +193,7 @@ function HomeScreen() {
               Today&apos;s adventure
             </p>
             <h1 className="text-3xl font-black tracking-tight text-[#062E50] sm:text-4xl">
-              Welcome back, [STUDENT_NAME]!
+              Welcome back, {studentName}!
             </h1>
             <p className="mt-2 text-base font-bold text-[#5A7188] sm:text-lg">
               Your next math mission is ready when you are.
@@ -183,11 +203,11 @@ function HomeScreen() {
           <div className="flex flex-wrap gap-3">
             <div className="flex min-w-[150px] items-center gap-3 rounded-2xl border border-[#DCE6EA] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(7,59,90,0.06)]">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#E8FAF7] text-[#00A9A5]">
-                <Flame className="h-5 w-5" strokeWidth={2.8} />
+                <CircleGauge className="h-5 w-5" strokeWidth={2.8} />
               </div>
               <div>
                 <p className="text-lg font-black leading-none text-[#073B5A]">{summary.streakDays}</p>
-                <p className="mt-1 text-xs font-bold text-[#6B7F91]">Learning days</p>
+                <p className="mt-1 text-xs font-bold text-[#6B7F91]">Learning sessions</p>
               </div>
             </div>
 
@@ -196,7 +216,7 @@ function HomeScreen() {
                 <Star className="h-5 w-5 fill-[#FFC61A]" strokeWidth={2.4} />
               </div>
               <div>
-                <p className="text-lg font-black leading-none text-[#073B5A]">120</p>
+                <p className="text-lg font-black leading-none text-[#073B5A]">{starsCollected}</p>
                 <p className="mt-1 text-xs font-bold text-[#6B7F91]">Stars collected</p>
               </div>
             </div>
@@ -206,7 +226,7 @@ function HomeScreen() {
         {/* @SECTION Mission and journey */}
         <section
           data-name="home-primary-grid"
-          className="grid items-stretch gap-4 xl:grid-cols-[285px_minmax(0,1fr)]"
+          className="grid items-stretch gap-4 xl:grid-cols-[305px_minmax(0,1fr)]"
         >
           <article className="relative overflow-hidden rounded-[2rem] border border-[#DBE5E8] bg-white shadow-[0_16px_38px_rgba(7,59,90,0.10)]">
             <div className="relative min-h-[300px] overflow-hidden bg-gradient-to-b from-white via-white to-[#F3FBF8] px-6 pb-24 pt-6">
@@ -220,17 +240,17 @@ function HomeScreen() {
               <p className="relative text-sm font-black uppercase tracking-[0.12em] text-[#00A9B4]">
                 Current mission
               </p>
-              <h2 className="relative mt-6 max-w-[230px] text-3xl font-black leading-tight text-[#062E50]">
+              <h2 className="relative mt-6 max-w-[250px] text-[1.8rem] font-black leading-tight text-[#062E50]">
                 {currentMission?.title ?? "No mission available"}
               </h2>
-              <p className="relative mt-4 max-w-[230px] text-sm font-bold leading-6 text-[#60758A]">
+              <p className="relative mt-4 max-w-[250px] text-sm font-bold leading-6 text-[#60758A]">
                 {currentMission?.subtitle ?? "Check back soon for your next mission."}
               </p>
             </div>
 
             <div className="space-y-3 border-t border-[#E4ECEE] bg-white p-5">
               <Link
-                to={currentMission?.to ?? "/lesson"}
+                to={currentMission?.to ?? "/learning-path"}
                 className="flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-[#00AFB9] px-5 text-base font-black text-white shadow-[0_12px_24px_rgba(0,175,185,0.24)] transition hover:-translate-y-0.5 hover:bg-[#009DA7] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#00AFB9]/20"
               >
                 {currentMission ? "Continue Mission" : "Go to Learning Path"}
@@ -266,13 +286,13 @@ function HomeScreen() {
               </Link>
             </div>
 
-            <div className="mt-8 overflow-x-auto pb-3">
-              <div className="flex min-w-max items-start px-1 pb-2">
-                {journeySteps.map((step, index) => (
-                  <div key={step.id} className="flex items-start">
+            <div className="mt-8 min-w-0 overflow-hidden pb-3">
+              <div className="grid grid-cols-[126px_minmax(24px,1fr)_126px_minmax(24px,1fr)_126px] items-start justify-center px-1 pb-2">
+                {visibleJourneySteps.map((step, index) => (
+                  <div key={step.id} className="contents">
                     <JourneyNode step={step} />
-                    {index < journeySteps.length - 1 && (
-                      <div className="mt-10 w-12 border-t-[3px] border-dashed border-[#B8C0C7] sm:w-16 xl:w-20" />
+                    {index < visibleJourneySteps.length - 1 && (
+                      <div className="mt-10 w-full border-t-[3px] border-dashed border-[#B8C0C7]" />
                     )}
                   </div>
                 ))}
@@ -308,7 +328,7 @@ function HomeScreen() {
         {/* @SECTION Quick action cards */}
         <section
           data-name="home-quick-actions"
-          className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-[repeat(4,minmax(0,1fr))_210px]"
+          className="mt-4 grid min-h-0 flex-1 gap-4 md:grid-cols-2 xl:grid-cols-[repeat(4,minmax(0,1fr))_225px]"
         >
           {quickActions.map((action) => {
             const Icon = action.icon;
@@ -316,7 +336,7 @@ function HomeScreen() {
             return (
               <article
                 key={action.title}
-                className={`flex min-h-[250px] flex-col rounded-[2rem] border ${action.borderColor} ${action.cardBackground} p-5 shadow-[0_12px_30px_rgba(7,59,90,0.07)]`}
+                className={`flex min-h-[240px] flex-col rounded-[2rem] border ${action.borderColor} ${action.cardBackground} p-5 shadow-[0_12px_30px_rgba(7,59,90,0.07)]`}
               >
                 <div
                   className={`flex h-14 w-14 items-center justify-center rounded-full ${action.iconBackground} text-white shadow-[0_10px_22px_rgba(7,59,90,0.16)]`}
@@ -349,15 +369,18 @@ function HomeScreen() {
               <CompanionOrb size="small" />
             </div>
 
-            <p className="mt-3 text-xl font-black text-[#073B5A]">150 Stars</p>
+            <p className="mt-3 text-xl font-black text-[#073B5A]">{GARDEN_REWARD_TARGET} Stars</p>
             <p className="mx-auto mt-2 max-w-[180px] text-sm font-bold leading-5 text-[#647A8D]">
               Keep learning to grow a new star-garden surprise.
             </p>
 
             <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-[#E4EBEE]">
-              <div className="h-full w-[80%] rounded-full bg-[#00AFB9]" />
+              <div
+                className="h-full rounded-full bg-[#00AFB9]"
+                style={{ width: `${gardenProgress}%` }}
+              />
             </div>
-            <p className="mt-2 text-right text-xs font-black text-[#587086]">120 / 150</p>
+            <p className="mt-2 text-right text-xs font-black text-[#587086]">{starsCollected} / {GARDEN_REWARD_TARGET}</p>
           </article>
         </section>
       </div>

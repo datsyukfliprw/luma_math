@@ -3,21 +3,52 @@ import PageLayout from "../components/layout/PageLayout";
 import { getRandomStarName } from "../lib/starProfile";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
 
+const GRADE_OPTIONS = [
+  { value: "0", label: "Kindergarten" },
+  { value: "1", label: "1st Grade" },
+  { value: "2", label: "2nd Grade" },
+  { value: "3", label: "3rd Grade" },
+  { value: "4", label: "4th Grade" },
+  { value: "5", label: "5th Grade" },
+  { value: "6", label: "6th Grade" },
+];
+
 function SettingsScreen() {
   const { studentState, updateStarProfile } = useStudentProgress();
 
   const [starNameInput, setStarNameInput] = useState(studentState.starProfile.starName);
-  const cleanedName = starNameInput.trim().slice(0, 16);
-  const canSave = cleanedName.length > 0;
+  const [studentNameInput, setStudentNameInput] = useState(
+    studentState.starProfile.studentName ?? "",
+  );
+  const [gradeInput, setGradeInput] = useState(
+    String(studentState.starProfile.grade ?? 3),
+  );
+
+  const cleanedStarName = starNameInput.trim().slice(0, 16);
+  const canSaveStarName = cleanedStarName.length > 0;
+
+  const cleanedStudentName = studentNameInput.trim().slice(0, 32);
+  const canSaveProfile = cleanedStudentName.length > 0;
 
   function saveStarName() {
-    if (!canSave) return;
+    if (!canSaveStarName) return;
 
     updateStarProfile({
-      starName: cleanedName,
+      starName: cleanedStarName,
     });
 
-    setStarNameInput(cleanedName);
+    setStarNameInput(cleanedStarName);
+  }
+
+  function saveProfile() {
+    if (!canSaveProfile) return;
+
+    updateStarProfile({
+      studentName: cleanedStudentName,
+      grade: Number(gradeInput),
+    });
+
+    setStudentNameInput(cleanedStudentName);
   }
 
   return (
@@ -44,19 +75,54 @@ function SettingsScreen() {
             </p>
 
             <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <div className="rounded-2xl bg-[#F5FBFC] p-4">
-                <p className="text-xs font-black uppercase tracking-wide text-[#073B5A]/55">
-                  Student
-                </p>
-                <p className="mt-1 text-xl font-black text-[#073B5A]">Ava Johnson</p>
-              </div>
+              <label className="rounded-2xl bg-[#F5FBFC] p-4">
+                <span className="block text-xs font-black uppercase tracking-wide text-[#073B5A]/55">
+                  Student Name
+                </span>
+                <input
+                  value={studentNameInput}
+                  onChange={(event) => setStudentNameInput(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") saveProfile();
+                  }}
+                  maxLength={32}
+                  className="mt-2 w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-xl font-black text-[#073B5A] outline-none focus:border-[#00AFB9]"
+                  placeholder="Student name"
+                />
+              </label>
 
-              <div className="rounded-2xl bg-[#F5FBFC] p-4">
-                <p className="text-xs font-black uppercase tracking-wide text-[#073B5A]/55">
+              <label className="rounded-2xl bg-[#F5FBFC] p-4">
+                <span className="block text-xs font-black uppercase tracking-wide text-[#073B5A]/55">
                   Grade
-                </p>
-                <p className="mt-1 text-xl font-black text-[#073B5A]">3rd Grade</p>
-              </div>
+                </span>
+                <select
+                  value={gradeInput}
+                  onChange={(event) => {
+                    setGradeInput(event.target.value);
+                    updateStarProfile({ grade: Number(event.target.value) });
+                  }}
+                  className="mt-2 w-full rounded-xl border border-[#073B5A]/15 bg-white px-4 py-3 text-xl font-black text-[#073B5A] outline-none focus:border-[#00AFB9]"
+                >
+                  {GRADE_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={saveProfile}
+                disabled={!canSaveProfile}
+                className={`rounded-xl px-5 py-3 font-black shadow-sm lg:px-7 lg:py-4 lg:text-base ${
+                  canSaveProfile ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/45"
+                }`}
+              >
+                Save Profile
+              </button>
             </div>
           </div>
 
@@ -101,9 +167,9 @@ function SettingsScreen() {
               <button
                 type="button"
                 onClick={saveStarName}
-                disabled={!canSave}
+                disabled={!canSaveStarName}
                 className={`rounded-xl px-5 py-3 font-black shadow-sm lg:px-7 lg:py-4 lg:text-base ${
-                  canSave ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/45"
+                  canSaveStarName ? "bg-[#00AFB9] text-white" : "bg-[#DDEEEF] text-[#073B5A]/45"
                 }`}
               >
                 Save Name

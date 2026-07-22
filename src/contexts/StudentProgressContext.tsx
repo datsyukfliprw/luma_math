@@ -54,6 +54,8 @@ export type EquippedStarItems = {
 };
 
 export type StarProfile = {
+  studentName: string;
+  grade: number;
   starName: string;
   ownedItemIds: string[];
   equipped: EquippedStarItems;
@@ -253,6 +255,8 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       flashcardProgress: allFlashcardProgress[studentId] ?? {},
       practiceRewards: allPracticeRewards[studentId] ?? {},
       starProfile: allStarProfiles[studentId] ?? {
+        studentName: "",
+        grade: 3,
         starName: "",
         ownedItemIds: [],
         equipped: {},
@@ -646,6 +650,14 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       const nextProfile: StarProfile = {
         ...currentProfile,
         ...updates,
+        studentName:
+          (updates.studentName !== undefined
+            ? updates.studentName.trim().slice(0, 32)
+            : currentProfile.studentName) ?? "",
+        grade:
+          (updates.grade !== undefined
+            ? Math.max(0, Math.min(6, Math.floor(updates.grade)))
+            : currentProfile.grade) ?? 3,
         starName:
           updates.starName !== undefined ? updates.starName.trim().slice(0, 16) : currentProfile.starName,
         equipped: {
@@ -666,6 +678,8 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     setStudentState((prev) => ({
       ...prev,
       starProfile: {
+        studentName: "",
+        grade: 3,
         starName: "",
         ownedItemIds: [],
         equipped: {},

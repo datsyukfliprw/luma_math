@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { DelightAnimationProvider } from "./components/animations/DelightAnimationProvider";
 import Sidebar from "./components/layout/Sidebar";
 import StarNamePrompt from "./components/luma/StarNamePrompt";
@@ -19,31 +19,36 @@ import { StudentProgressProvider, useStudentProgress } from "./contexts/StudentP
 
 const CURRENT_STUDENT_ID = "default-student";
 
-// Inner component that uses the context
 function AppContent() {
   const { studentState } = useStudentProgress();
+  const location = useLocation();
+  const isHomeScreen = location.pathname === "/";
   const starNameReady = studentState.starProfile.starName.trim().length > 0;
 
   return (
     <DelightAnimationProvider>
       <main
         data-name="lumamath-app-viewport"
-        className="flex min-h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#F0EEE7] text-[#073B5A]"
+        className="fixed inset-0 flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#F0EEE7] text-[#073B5A]"
       >
         {!starNameReady && <StarNamePrompt onSaved={() => {}} />}
 
         {/* @SECTION Centered tablet-first application stage */}
         <div
           data-name="lumamath-tablet-stage"
-          className="flex h-[100dvh] w-full max-w-[1366px] flex-col overflow-hidden bg-[#FAF9F4] lg:max-h-[1024px] lg:flex-row lg:gap-5 lg:p-5 min-[1440px]:rounded-[2rem] min-[1440px]:shadow-[0_28px_80px_rgba(7,59,90,0.14)]"
+          className="flex h-full min-h-0 w-full max-w-[1366px] flex-col overflow-hidden bg-[#FAF9F4] lg:max-h-[1024px] lg:flex-row lg:gap-8 lg:p-5 xl:gap-9 min-[1440px]:rounded-[2rem] min-[1440px]:shadow-[0_28px_80px_rgba(7,59,90,0.14)]"
         >
-          <div className="hidden h-full shrink-0 lg:block">
+          <div className="hidden h-full min-h-0 shrink-0 lg:block">
             <Sidebar />
           </div>
 
           <div
             data-name="app-route-scroll-region"
-            className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain"
+            className={`min-h-0 min-w-0 flex-1 overflow-x-hidden ${
+              isHomeScreen
+                ? "overflow-y-hidden"
+                : "app-scroll-region overflow-y-auto overscroll-contain"
+            }`}
           >
             <Routes>
               <Route path="/" element={<HomeScreen />} />
