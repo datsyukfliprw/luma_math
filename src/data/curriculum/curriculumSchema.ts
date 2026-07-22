@@ -1,19 +1,50 @@
 import { z } from "zod";
 
-// Warmup question schema
-const WarmupQuestionSchema = z.object({
-  id: z.string(),
-  prompt: z.string(),
-  correct_answer: z.string(),
-  hint: z.string(),
-  skill: z.string(),
+const markdownDigitRegex = /__[0-9][0-9,]*__/;
+const underlinedDigitRegex = /underlined digits?/i;
+
+function hasInvalidPlaceValueMarkup(value: string): boolean {
+  return markdownDigitRegex.test(value) || underlinedDigitRegex.test(value);
+}
+
+const PlaceValuePrompt = z.string().refine((value) => !hasInvalidPlaceValueMarkup(value), {
+  message: `Prompt/instructions contain Markdown-style digit markup (__4__) or the phrase 'underlined digit'. Use question_type 'target_digit_value' instead.`,
 });
+
+// Warmup question schema
+const WarmupQuestionSchema = z
+  .object({
+    id: z.string(),
+    question_type: z.enum(["text", "target_digit_value"]).optional(),
+    number: z.string().optional(),
+    target_digit_index: z.number().optional(),
+    prompt: PlaceValuePrompt,
+    correct_answer: z.string(),
+    hint: z.string(),
+    skill: z.string(),
+  })
+  .refine(
+    (data) => {
+      if (data.question_type === "target_digit_value") {
+        return (
+          data.number !== undefined &&
+          data.target_digit_index !== undefined &&
+          data.target_digit_index >= 0 &&
+          data.target_digit_index < data.number.length
+        );
+      }
+      return true;
+    },
+    {
+      message: "target_digit_value questions require a valid number and target_digit_index",
+    },
+  );
 
 const WarmupSchema = z.object({
   title: z.string(),
   type: z.string(),
   question_count: z.number(),
-  instructions: z.string(),
+  instructions: PlaceValuePrompt,
   questions: z.array(WarmupQuestionSchema),
 });
 
@@ -42,7 +73,7 @@ const TryItVisualDataSchema = z.object({
 const TryItSchema = z.object({
   title: z.string(),
   type: z.string(),
-  prompt: z.string(),
+  prompt: PlaceValuePrompt,
   correct_answer: z.string(),
   hint: z.string(),
   visual_data: TryItVisualDataSchema,
@@ -53,7 +84,7 @@ const PracticeBlockSchema = z.object({
   title: z.string(),
   type: z.string(),
   question_count: z.number(),
-  instructions: z.string(),
+  instructions: PlaceValuePrompt,
 });
 
 // Flashcards schema
@@ -100,32 +131,48 @@ const TimedTestSchema = z.object({
 });
 
 // Lesson schema
-const LessonSchema = z.object({
-  lesson_id: z.string().optional(),
-  day_number: z.number(),
-  day_name: z.string(),
-  lesson_title: z.string(),
-  lesson_type: z.enum(["lesson", "evaluation"]),
-  fact_drill: z.string(),
-  concept: z.string(),
-  practice: z.string(),
-  objective: z.string(),
-  practice_type: z.string(),
-  skills: z.array(z.string()),
-  lesson_video_url: z.string(),
-  worksheet_url: z.string(),
-  quiz_question_count: z.number(),
-  // Optional sections
-  warmup: WarmupSchema.optional(),
-  learn: LearnSchema.optional(),
-  try_it: TryItSchema.optional(),
-  practice_block: PracticeBlockSchema.optional(),
-  flashcards: FlashcardsSchema.optional(),
-  bigIdea: BigIdeaSchema.optional(),
-  timed_test: TimedTestSchema.optional(),
-  evaluation_scope: z.string().optional(),
-  review_types: z.array(z.string()).optional(),
-});
+const LessonSchema = z
+  .object({
+    lesson_id: z.string().optional(),
+    day_number: z.number(),
+    day_name: z.string(),
+    lesson_title: z.string(),
+    lesson_type: z.enum(["lesson", "evaluation"]),
+    fact_drill: z.string(),
+    concept: z.string(),
+    practice: z.string(),
+    objective: z.string(),
+    practice_type: z.string(),
+    skills: z.array(z.string()),
+    lesson_video_url: z.string(),
+    worksheet_url: z.string(),
+    quiz_question_count: z.number(),
+    // Instructional lessons require these via the refine below.
+    warmup: WarmupSchema.optional(),
+    learn: LearnSchema.optional(),
+    try_it: TryItSchema.optional(),
+    practice_block: PracticeBlockSchema.optional(),
+    flashcards: FlashcardsSchema.optional(),
+    bigIdea: BigIdeaSchema.optional(),
+    timed_test: TimedTestSchema.optional(),
+    evaluation_scope: z.string().optional(),
+    review_types: z.array(z.string()).optional(),
+  })
+  .refine(
+    (lesson) => {
+      if (lesson.lesson_type !== "lesson") return true;
+      return (
+        lesson.warmup !== undefined &&
+        lesson.learn !== undefined &&
+        lesson.try_it !== undefined &&
+        lesson.practice_block !== undefined
+      );
+    },
+    {
+      message:
+        "Instructional lessons (lesson_type: 'lesson') must include warmup, learn, try_it, and practice_block. Use lesson_type: 'evaluation' for non-instructional lessons.",
+    },
+  );
 
 // Week schema
 const WeekSchema = z.object({
@@ -150,3 +197,13 @@ export const CurriculumSchema = z.object({
 export type Curriculum = z.infer<typeof CurriculumSchema>;
 export type Lesson = z.infer<typeof LessonSchema>;
 export type Week = z.infer<typeof WeekSchema>;
+
+export function isInstructionalLessonAvailable(lesson: Lesson): boolean {
+  if (lesson.lesson_type !== "lesson") return true;
+  return (
+    lesson.warmup !== undefined &&
+    lesson.learn !== undefined &&
+    lesson.try_it !== undefined &&
+    lesson.practice_block !== undefined
+  );
+}

@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "curriculum:check": "vitest run src/data/curriculum/curriculumCompleteness.test.ts"
   },
   "dependencies": {
     "@rive-app/react-webgl2": "^4.28.6",

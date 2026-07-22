@@ -1,5 +1,6 @@
 import type { CurriculumLessonExperience, LessonExperience } from "../data/lessonExperience/types";
 import { findCurriculumLessonById } from "./curriculumLoader";
+import { isInstructionalLessonAvailable } from "../data/curriculum";
 import { isRegisteredPracticeType } from "../practiceTypes/registry";
 
 // Map curriculum visual_type values to the authored BuildIt activityType union.
@@ -128,7 +129,9 @@ function buildCompletion(
   found: NonNullable<ReturnType<typeof findCurriculumLessonById>>,
 ): CurriculumLessonExperience["completion"] {
   const { unit, week, lesson, weekDayNumber } = found;
-  const normalLessons = week.lessons.filter((l) => l.lesson_type === "lesson");
+  const normalLessons = week.lessons.filter(
+    (l) => l.lesson_type === "lesson" && isInstructionalLessonAvailable(l),
+  );
   const maxDay = normalLessons.length;
   const nextLessonId =
     lesson.lesson_type === "lesson" && weekDayNumber < maxDay

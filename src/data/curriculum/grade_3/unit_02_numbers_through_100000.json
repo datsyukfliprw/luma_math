@@ -29,12 +29,7 @@
           "practice": "Name the value of each digit in numbers through 100,000.",
           "objective": "Understand the value of each digit in numbers through 100,000.",
           "practice_type": "large_digit_value",
-          "skills": [
-            "place_value",
-            "digit_value",
-            "numbers_to_100000",
-            "base_ten"
-          ],
+          "skills": ["place_value", "digit_value", "numbers_to_100000", "base_ten"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -42,18 +37,24 @@
             "title": "Luma Charge",
             "type": "place_value_warmup",
             "question_count": 3,
-            "instructions": "Warm up by naming the value of the underlined digit.",
+            "instructions": "Warm up by naming the value of the bold digit.",
             "questions": [
               {
                 "id": "g3-u2-w1-d1-warmup-1",
-                "prompt": "In 23__,456__, what is the value of the underlined digits?",
+                "question_type": "target_digit_value",
+                "number": "32456",
+                "target_digit_index": 0,
+                "prompt": "What is the value of the bold digit?",
                 "correct_answer": "30000",
                 "hint": "The 3 is in the ten-thousands place.",
                 "skill": "digit_value"
               },
               {
                 "id": "g3-u2-w1-d1-warmup-2",
-                "prompt": "In 7__1__,029, what is the value of the underlined digit?",
+                "question_type": "target_digit_value",
+                "number": "71029",
+                "target_digit_index": 1,
+                "prompt": "What is the value of the bold digit?",
                 "correct_answer": "1000",
                 "hint": "The 1 is in the thousands place.",
                 "skill": "digit_value"
@@ -98,7 +99,7 @@
             "title": "Practice Time",
             "type": "digit_value_large",
             "question_count": 6,
-            "instructions": "Name the value of each underlined digit in numbers through 100,000."
+            "instructions": "Name the value of each bold digit in numbers through 100,000."
           },
           "flashcards": {
             "enabled": true,
@@ -148,12 +149,7 @@
           "practice": "Match written numbers to digits and read numbers aloud.",
           "objective": "Read and identify numbers through 100,000.",
           "practice_type": "reading_large_numbers",
-          "skills": [
-            "reading_large_numbers",
-            "number_words",
-            "place_value",
-            "numbers_to_100000"
-          ],
+          "skills": ["reading_large_numbers", "number_words", "place_value", "numbers_to_100000"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -267,12 +263,7 @@
           "practice": "Convert between standard and expanded form for numbers through 100,000.",
           "objective": "Write numbers through 100,000 in expanded form.",
           "practice_type": "expanded_form_large",
-          "skills": [
-            "expanded_form",
-            "standard_form",
-            "place_value",
-            "numbers_to_100000"
-          ],
+          "skills": ["expanded_form", "standard_form", "place_value", "numbers_to_100000"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -386,12 +377,7 @@
           "practice": "Solve place-value riddles and build numbers from clues.",
           "objective": "Use place-value clues to build and name numbers.",
           "practice_type": "place_value_puzzles",
-          "skills": [
-            "place_value_puzzles",
-            "digit_value",
-            "standard_form",
-            "numbers_to_100000"
-          ],
+          "skills": ["place_value_puzzles", "digit_value", "standard_form", "numbers_to_100000"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,

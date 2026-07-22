@@ -1,4 +1,4 @@
-import { getCurriculum } from "../data/curriculum";
+import { getCurriculum, isInstructionalLessonAvailable } from "../data/curriculum";
 import type { Curriculum, Lesson, Week } from "../data/curriculum";
 
 const DEFAULT_GRADE = 3;
@@ -51,7 +51,7 @@ export function getLessonById(lessonId?: string) {
     }
   } else if (dayNumber !== undefined) {
     const found = week.lessons.find((l) => l.day_number === dayNumber);
-    if (found) {
+    if (found && isInstructionalLessonAvailable(found)) {
       lesson = found;
       weekDayNumber = dayNumber;
     }

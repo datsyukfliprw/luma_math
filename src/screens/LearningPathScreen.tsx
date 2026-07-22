@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import PageLayout from "../components/layout/PageLayout";
 import UnitCard from "../components/learning-path/UnitCard";
+import { isInstructionalLessonAvailable, type Curriculum } from "../data/curriculum";
 import { getAllCurricula, getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
 import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
 import {
@@ -57,20 +58,7 @@ function getLessonCompletionPercent(
 }
 
 function getUnitCardData(
-  unit: {
-    unit_number: number;
-    unit_title: string;
-    unit_description?: string;
-    weeks: {
-      week_number: number;
-      week_title: string;
-      lessons: {
-        day_number: number;
-        lesson_title: string;
-        lesson_type: "lesson" | "evaluation";
-      }[];
-    }[];
-  },
+  unit: Curriculum,
   getLessonProgress: (id: string) => LessonProgress,
   getPracticeRewardState: (id: string) => LessonPracticeRewardState,
   getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
@@ -82,11 +70,13 @@ function getUnitCardData(
     const weekIsAvailable = week.week_number === 1;
     let hasFoundCurrentLesson = false;
 
+    const availableLessons = week.lessons.filter(isInstructionalLessonAvailable);
+
     return {
       weekNumber: week.week_number,
       title: week.week_title,
       status: weekIsAvailable ? ("current" as const) : ("locked" as const),
-      lessons: week.lessons.map((lesson) => {
+      lessons: availableLessons.map((lesson) => {
         const weekDayNumber = lesson.day_number;
         const lessonId =
           lesson.lesson_type === "evaluation"

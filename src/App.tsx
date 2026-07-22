@@ -12,7 +12,6 @@ import ProgressScreen from "./screens/ProgressScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import WarmUpScreen from "./screens/WarmUpScreen";
 import LearnScreen from "./screens/LearnScreen";
-import TryItScreen from "./screens/TryItScreen";
 import FlashcardSessionScreen from "./screens/FlashcardSessionScreen";
 import FlashcardCategoryScreen from "./screens/FlashcardCategoryScreen";
 import { StudentProgressProvider, useStudentProgress } from "./contexts/StudentProgressContext";
@@ -59,8 +58,6 @@ function AppContent() {
               <Route path="/lesson/:lessonId" element={<LessonScreen />} />
               <Route path="/learn" element={<LearnScreen />} />
               <Route path="/learn/:lessonId" element={<LearnScreen />} />
-              <Route path="/try-it" element={<TryItScreen />} />
-              <Route path="/try-it/:lessonId" element={<TryItScreen />} />
               <Route path="/warmup" element={<WarmUpScreen />} />
               <Route path="/warmup/:lessonId" element={<WarmUpScreen />} />
               <Route path="/flashcards" element={<FlashcardsScreen />} />

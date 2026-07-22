@@ -29,12 +29,7 @@
           "practice": "Match digits in a number to their place-value labels and tell the value of each digit.",
           "objective": "Understand that a digit's value depends on its place in a number.",
           "practice_type": "place_value_digits",
-          "skills": [
-            "place_value",
-            "digit_value",
-            "base_ten",
-            "number_sense"
-          ],
+          "skills": ["place_value", "digit_value", "base_ten", "number_sense"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -42,18 +37,24 @@
             "title": "Luma Charge",
             "type": "place_value_warmup",
             "question_count": 3,
-            "instructions": "Warm up by naming the value of the underlined digit.",
+            "instructions": "Warm up by naming the value of the bold digit.",
             "questions": [
               {
                 "id": "g3-u1-w1-d1-warmup-1",
-                "prompt": "In 45__6__, what is the value of the underlined digit?",
+                "question_type": "target_digit_value",
+                "number": "456",
+                "target_digit_index": 0,
+                "prompt": "What is the value of the bold digit?",
                 "correct_answer": "400",
                 "hint": "The 4 is in the hundreds place.",
                 "skill": "digit_value"
               },
               {
                 "id": "g3-u1-w1-d1-warmup-2",
-                "prompt": "In __3__72, what is the value of the underlined digit?",
+                "question_type": "target_digit_value",
+                "number": "3721",
+                "target_digit_index": 0,
+                "prompt": "What is the value of the bold digit?",
                 "correct_answer": "3000",
                 "hint": "The 3 is in the thousands place.",
                 "skill": "digit_value"
@@ -98,7 +99,7 @@
             "title": "Practice Time",
             "type": "digit_value",
             "question_count": 6,
-            "instructions": "Name the value of each underlined digit."
+            "instructions": "Name the value of each bold digit."
           },
           "flashcards": {
             "enabled": true,
@@ -148,12 +149,7 @@
           "practice": "Build a number with base-ten blocks and write it in standard form.",
           "objective": "Use base-ten models to represent numbers.",
           "practice_type": "base_ten_models",
-          "skills": [
-            "base_ten_models",
-            "place_value",
-            "standard_form",
-            "number_sense"
-          ],
+          "skills": ["base_ten_models", "place_value", "standard_form", "number_sense"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -268,12 +264,7 @@
           "practice": "Convert numbers between standard and expanded form.",
           "objective": "Write numbers in standard and expanded form.",
           "practice_type": "expanded_form",
-          "skills": [
-            "expanded_form",
-            "standard_form",
-            "place_value",
-            "number_sense"
-          ],
+          "skills": ["expanded_form", "standard_form", "place_value", "number_sense"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -387,12 +378,7 @@
           "practice": "Convert numbers to words and words to numbers.",
           "objective": "Read and write numbers using words.",
           "practice_type": "number_words",
-          "skills": [
-            "number_words",
-            "standard_form",
-            "place_value",
-            "number_sense"
-          ],
+          "skills": ["number_words", "standard_form", "place_value", "number_sense"],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,

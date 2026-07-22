@@ -127,4 +127,5 @@ export {
   hasCurriculum,
   registerCurriculum,
 };
+export { isInstructionalLessonAvailable } from "./curriculumSchema";
 export type { Curriculum, Lesson, Week } from "./curriculumSchema";

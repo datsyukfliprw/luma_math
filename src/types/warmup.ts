@@ -1,5 +1,8 @@
 export type WarmUpQuestion = {
   id: string;
+  question_type?: "text" | "target_digit_value";
+  number?: string;
+  target_digit_index?: number;
   prompt: string;
   correct_answer: string;
   hint: string;
