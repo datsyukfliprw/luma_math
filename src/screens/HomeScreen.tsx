@@ -173,7 +173,7 @@ function HomeScreen() {
               Today&apos;s adventure
             </p>
             <h1 className="text-3xl font-black tracking-tight text-[#062E50] sm:text-4xl">
-              Welcome back, Ava!
+              Welcome back, [STUDENT_NAME]!
             </h1>
             <p className="mt-2 text-base font-bold text-[#5A7188] sm:text-lg">
               Your next math mission is ready when you are.
