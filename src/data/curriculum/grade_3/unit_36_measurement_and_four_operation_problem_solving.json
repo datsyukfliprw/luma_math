@@ -1,0 +1,622 @@
+{
+  "grade_level": 3,
+  "unit_number": 36,
+  "unit_title": "Measurement and Four-Operation Problem Solving",
+  "unit_slug": "measurement_and_four_operation_problem_solving",
+  "unit_description": "This is the culminating Grade 3 unit. Students solve length, weight, and liquid-volume problems, solve mixed measurement problems in the same units, write and solve two-step equations with unknowns, and estimate, solve, and evaluate reasonableness. The unit ends with a cumulative evaluation.",
+  "unit_goals": [
+    "Solve length, weight, and liquid-volume problems.",
+    "Solve mixed measurement problems in the same units.",
+    "Write and solve two-step equations with unknowns.",
+    "Estimate, solve, and evaluate reasonableness.",
+    "Apply all four operations in real-world measurement contexts."
+  ],
+  "fact_focus": [
+    "measurement",
+    "word_problems",
+    "four_operations",
+    "3.GM.B.8",
+    "3.RA.D.9",
+    "3.RA.D.10"
+  ],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Measurement and Four-Operation Problem Solving",
+      "weekly_focus": "Students apply the four operations to solve measurement problems, write two-step equations, and reason about answers.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u36-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Solve Length, Weight, and Liquid-Volume Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by identifying whether a problem uses length, weight, or volume and which operation to use.",
+          "concept": "Measurement word problems use the four operations. Use the same units within a problem. Add to combine, subtract to compare, multiply for equal groups, and divide to share.",
+          "practice": "Solve one-step word problems involving length, weight, and liquid volume.",
+          "objective": "Solve length, weight, and liquid-volume problems.",
+          "practice_type": "measurement_problems",
+          "skills": [
+            "measurement",
+            "word_problems",
+            "length",
+            "weight",
+            "volume",
+            "four_operations"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "measurement_problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with measurement problems.",
+            "questions": [
+              {
+                "id": "g3-u36-w1-d1-warmup-1",
+                "prompt": "A bottle holds 2 liters. If you pour out 500 milliliters, how much is left?",
+                "correct_answer": "1500 milliliters",
+                "hint": "2 liters = 2000 milliliters; 2000 - 500.",
+                "skill": "measurement_problems"
+              },
+              {
+                "id": "g3-u36-w1-d1-warmup-2",
+                "prompt": "A rope is 18 feet long. You cut off 7 feet. How long is it now?",
+                "correct_answer": "11 feet",
+                "hint": "18 - 7.",
+                "skill": "measurement_problems"
+              },
+              {
+                "id": "g3-u36-w1-d1-warmup-3",
+                "prompt": "Four water bottles hold 1 liter each. How many liters total?",
+                "correct_answer": "4 liters",
+                "hint": "4 × 1.",
+                "skill": "measurement_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Solve Length, Weight, and Liquid-Volume Problems",
+            "teaching_points": [
+              "Read the problem to find the measurement type.",
+              "Use the same units.",
+              "Choose the right operation."
+            ],
+            "example": {
+              "prompt": "A box weighs 12 pounds. Another box weighs 8 pounds. What is the total weight?",
+              "visual_type": "word_problem",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "12 + 8 = 20 pounds"
+            },
+            "vocabulary": ["length", "weight", "volume", "measurement", "word problem"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "measurement_problems",
+            "prompt": "A jug holds 3 liters. You pour it into 6 equal cups. How much is in each cup?",
+            "correct_answer": "500 milliliters",
+            "hint": "3 liters = 3000 milliliters; 3000 ÷ 6 = 500.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "measurement_problems",
+            "question_count": 6,
+            "instructions": "Solve each measurement word problem. Make sure units match."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Measurement Problems",
+            "type": "measurement_terms",
+            "card_count": 6,
+            "instructions": "Review measurement problem vocabulary.",
+            "deckId": "lesson-g3-u36-w1-d1-measurement-problems"
+          },
+          "bigIdea": {
+            "title": "Solve Length, Weight, and Liquid-Volume Problems",
+            "subtitle": "Use the right unit and operation",
+            "thumbnail": "/images/learn/thumbnails/measurement.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Measurement problems can be solved with addition, subtraction, multiplication, or division. The key is to use the same units and pick the operation that matches the situation.",
+            "bigQuestion": "Why must units match before you add or subtract?",
+            "starTip": {
+              "title": "Same units",
+              "lines": ["Convert if needed", "Then operate"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same units",
+                "equation": "feet + feet",
+                "badge": "Combine",
+                "description": "Only add or subtract measurements with the same unit."
+              },
+              {
+                "eyebrow": "Choose operation",
+                "equation": "add, subtract, multiply, or divide",
+                "badge": "Match story",
+                "description": "Use the operation that fits the problem."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u36-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Solve Mixed Measurement Problems in the Same Units",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by converting between units within the same system before solving.",
+          "concept": "Sometimes a problem gives measurements in different units. Convert to the same unit before adding, subtracting, multiplying, or dividing.",
+          "practice": "Convert measurements and solve mixed measurement problems.",
+          "objective": "Solve mixed measurement problems in the same units.",
+          "practice_type": "mixed_measurement_problems",
+          "skills": ["measurement", "conversion", "same_units", "word_problems"],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "conversion_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by converting units.",
+            "questions": [
+              {
+                "id": "g3-u36-w1-d2-warmup-1",
+                "prompt": "2 liters = how many milliliters?",
+                "correct_answer": "2000",
+                "hint": "1 liter = 1000 milliliters.",
+                "skill": "conversion"
+              },
+              {
+                "id": "g3-u36-w1-d2-warmup-2",
+                "prompt": "3 feet = how many inches?",
+                "correct_answer": "36",
+                "hint": "1 foot = 12 inches.",
+                "skill": "conversion"
+              },
+              {
+                "id": "g3-u36-w1-d2-warmup-3",
+                "prompt": "5000 grams = how many kilograms?",
+                "correct_answer": "5",
+                "hint": "1000 grams = 1 kilogram.",
+                "skill": "conversion"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Solve Mixed Measurement Problems in the Same Units",
+            "teaching_points": [
+              "Convert to the same unit first.",
+              "Use known relationships: 1000 mL = 1 L, 1000 g = 1 kg, 12 in = 1 ft.",
+              "Then solve as usual."
+            ],
+            "example": {
+              "prompt": "A jug has 1.5 liters of water. You add 500 milliliters. How many liters total?",
+              "visual_type": "word_problem",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "1500 mL + 500 mL = 2000 mL = 2 L"
+            },
+            "vocabulary": ["convert", "same unit", "liters", "milliliters", "grams", "kilograms"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "mixed_measurement_problems",
+            "prompt": "A ribbon is 2 feet long. Another ribbon is 18 inches long. What is the total length in inches?",
+            "correct_answer": "42 inches",
+            "hint": "2 feet = 24 inches; 24 + 18.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "mixed_measurement_problems",
+            "question_count": 6,
+            "instructions": "Convert to the same unit, then solve each problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Measurement Conversions",
+            "type": "measurement_terms",
+            "card_count": 6,
+            "instructions": "Review common measurement conversions.",
+            "deckId": "lesson-g3-u36-w1-d2-conversions"
+          },
+          "bigIdea": {
+            "title": "Solve Mixed Measurement Problems in the Same Units",
+            "subtitle": "Convert before you compute",
+            "thumbnail": "/images/learn/thumbnails/measurement.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When measurements use different units, convert them to the same unit before solving. It is like making sure you are comparing apples to apples.",
+            "bigQuestion": "Why is it important to convert before adding?",
+            "starTip": {
+              "title": "Common units",
+              "lines": ["Convert to same", "Then add or subtract"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Convert",
+                "equation": "1.5 L = 1500 mL",
+                "badge": "Same unit",
+                "description": "Change one unit to match the other."
+              },
+              {
+                "eyebrow": "Solve",
+                "equation": "1500 mL + 500 mL = 2000 mL",
+                "badge": "Add",
+                "description": "Now you can add because the units match."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u36-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Write and Solve Two-Step Equations With Unknowns",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing equations for one-step word problems before moving to two steps.",
+          "concept": "Two-step word problems may need two operations and an unknown. Write an equation with a letter for the unknown and solve it step by step.",
+          "practice": "Write and solve two-step equations for word problems.",
+          "objective": "Write and solve two-step equations with unknowns.",
+          "practice_type": "two_step_measurement_equations",
+          "skills": ["word_problems", "two_step", "equations", "unknowns", "four_operations"],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "equation_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with two-step equations.",
+            "questions": [
+              {
+                "id": "g3-u36-w1-d3-warmup-1",
+                "prompt": "Jill had 5 liters. She bought 2 more liters and poured 3 liters out. Write an equation for how much she has now, l.",
+                "correct_answer": "l = 5 + 2 - 3",
+                "hint": "Start with 5, add 2, subtract 3.",
+                "skill": "two_step_measurement_equations"
+              },
+              {
+                "id": "g3-u36-w1-d3-warmup-2",
+                "prompt": "A tank holds 10 gallons. 3 gallons leak out each hour. How many gallons are left after 2 hours?",
+                "correct_answer": "4 gallons",
+                "hint": "10 - 3 - 3.",
+                "skill": "two_step_measurement_equations"
+              },
+              {
+                "id": "g3-u36-w1-d3-warmup-3",
+                "prompt": "A piece of wood is cut into 3 equal parts. Each part is 18 inches. What was the original length?",
+                "correct_answer": "54 inches",
+                "hint": "3 × 18.",
+                "skill": "two_step_measurement_equations"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Write and Solve Two-Step Equations With Unknowns",
+            "teaching_points": [
+              "Use a letter for the unknown.",
+              "Write the operations in the order they happen.",
+              "Solve step by step."
+            ],
+            "example": {
+              "prompt": "A bucket had 4 liters. You add 2 liters, then pour out 3 liters. How much is left?",
+              "visual_type": "word_problem",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "w = 4 + 2 - 3; w = 3 liters"
+            },
+            "vocabulary": ["equation", "unknown", "variable", "two-step"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "two_step_measurement_equations",
+            "prompt": "A box weighs 6 pounds. You put in two 4-pound bags. What is the total weight?",
+            "correct_answer": "14 pounds",
+            "hint": "6 + 4 + 4 or 6 + 2×4.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "two_step_measurement_equations",
+            "question_count": 6,
+            "instructions": "Write an equation with an unknown and solve each two-step problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Two-Step Equations",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review two-step equation vocabulary.",
+            "deckId": "lesson-g3-u36-w1-d3-two-step"
+          },
+          "bigIdea": {
+            "title": "Write and Solve Two-Step Equations With Unknowns",
+            "subtitle": "Use a letter for the unknown",
+            "thumbnail": "/images/learn/thumbnails/measurement.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Two-step problems often have an unknown. Use a letter like w or x for the unknown, write the operations that happen, and solve one step at a time.",
+            "bigQuestion": "How does writing an equation help solve a two-step problem?",
+            "starTip": {
+              "title": "Step by step",
+              "lines": ["First operation", "Second operation"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Unknown",
+                "equation": "use a letter",
+                "badge": "Variable",
+                "description": "A letter stands for the unknown amount."
+              },
+              {
+                "eyebrow": "Two steps",
+                "equation": "w = 6 + 2×4",
+                "badge": "Order matters",
+                "description": "Write the operations in the order they happen in the story."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u36-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Estimate, Solve, and Evaluate Reasonableness",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by estimating an answer before computing.",
+          "concept": "Estimation helps you check if an answer makes sense. Round numbers, solve, then compare the exact answer to the estimate to evaluate reasonableness.",
+          "practice": "Estimate, solve, and check reasonableness for measurement and operation problems.",
+          "objective": "Estimate, solve, and evaluate reasonableness.",
+          "practice_type": "estimate_reasonableness",
+          "skills": ["estimation", "reasonableness", "word_problems", "four_operations"],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "reasonableness_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with estimation.",
+            "questions": [
+              {
+                "id": "g3-u36-w1-d4-warmup-1",
+                "prompt": "Estimate 48 + 27.",
+                "correct_answer": "75",
+                "hint": "50 + 25 = 75.",
+                "skill": "estimate_reasonableness"
+              },
+              {
+                "id": "g3-u36-w1-d4-warmup-2",
+                "prompt": "A watermelon weighs 4 pounds. Is 8 ounces a reasonable weight?",
+                "correct_answer": "no",
+                "hint": "8 ounces is half a pound; a watermelon is much heavier.",
+                "skill": "estimate_reasonableness"
+              },
+              {
+                "id": "g3-u36-w1-d4-warmup-3",
+                "prompt": "Estimate 21 × 4.",
+                "correct_answer": "80",
+                "hint": "20 × 4 = 80.",
+                "skill": "estimate_reasonableness"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Estimate, Solve, and Evaluate Reasonableness",
+            "teaching_points": [
+              "Estimate before you solve.",
+              "Solve exactly.",
+              "Compare the exact answer to the estimate."
+            ],
+            "example": {
+              "prompt": "A crate weighs 49 pounds. Another weighs 52 pounds. Estimate and find the total.",
+              "visual_type": "word_problem",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "Estimate 50 + 50 = 100; Exact 49 + 52 = 101; reasonable"
+            },
+            "vocabulary": ["estimate", "reasonable", "exact", "compare"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "estimate_reasonableness",
+            "prompt": "A road is 198 miles long. You drive 103 miles. Estimate and find how many miles are left.",
+            "correct_answer": "about 100 miles, 95 miles exact",
+            "hint": "200 - 100 = 100; 198 - 103 = 95.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "estimate_reasonableness",
+            "question_count": 6,
+            "instructions": "Estimate, solve, and decide if each answer is reasonable."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Estimation and Reasonableness",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review estimation and reasonableness.",
+            "deckId": "lesson-g3-u36-w1-d4-estimation"
+          },
+          "bigIdea": {
+            "title": "Estimate, Solve, and Evaluate Reasonableness",
+            "subtitle": "Check if your answer makes sense",
+            "thumbnail": "/images/learn/thumbnails/measurement.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Estimation gives you a quick answer to compare against. If your exact answer is far from your estimate, you may have made a mistake. Reasonableness helps catch errors.",
+            "bigQuestion": "How does estimation help you evaluate reasonableness?",
+            "starTip": {
+              "title": "Estimate first",
+              "lines": ["Round", "Solve", "Compare"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Estimate",
+                "equation": "round numbers",
+                "badge": "Quick check",
+                "description": "Use rounded numbers to find an approximate answer."
+              },
+              {
+                "eyebrow": "Reasonable",
+                "equation": "exact ≈ estimate",
+                "badge": "Makes sense",
+                "description": "If exact and estimate are close, the answer is reasonable."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u36-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Cumulative Grade 3 Evaluation",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of all Grade 3 topics for the cumulative evaluation.",
+          "concept": "This cumulative evaluation reviews key topics from across Grade 3, with a focus on measurement and four-operation problem solving.",
+          "practice": "Complete the cumulative Grade 3 evaluation.",
+          "objective": "Show what you have learned in Grade 3.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "grade",
+          "review_types": [
+            "measurement_problems",
+            "mixed_measurement_problems",
+            "two_step_measurement_equations",
+            "estimate_reasonableness"
+          ],
+          "skills": [
+            "measurement",
+            "word_problems",
+            "four_operations",
+            "two_step",
+            "estimation",
+            "reasonableness"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 10,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u36-w1-d5-warmup-1",
+                "prompt": "A jar has 2 liters of juice. You pour 800 milliliters. How many milliliters are left?",
+                "correct_answer": "1200",
+                "hint": "2 liters = 2000 mL; 2000 - 800.",
+                "skill": "mixed_measurement_problems"
+              },
+              {
+                "id": "g3-u36-w1-d5-warmup-2",
+                "prompt": "A rope 42 inches long is cut into 6 equal pieces. How long is each piece?",
+                "correct_answer": "7 inches",
+                "hint": "42 ÷ 6.",
+                "skill": "measurement_problems"
+              },
+              {
+                "id": "g3-u36-w1-d5-warmup-3",
+                "prompt": "A book weighs 1 pound. Is 20 ounces a reasonable guess for its weight?",
+                "correct_answer": "no",
+                "hint": "1 pound = 16 ounces; 20 ounces is more than a pound.",
+                "skill": "estimate_reasonableness"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "This is the final Grade 3 evaluation.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "measurement + mixed units + two-step equations + reasonableness = Grade 3 readiness"
+            },
+            "vocabulary": ["evaluation", "review", "cumulative"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A fish tank holds 10 liters. You add 3 liters and then pour out 2 liters. How much is left?",
+            "correct_answer": "11 liters",
+            "hint": "10 + 3 - 2.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Cumulative Grade 3 Evaluation",
+            "type": "evaluation",
+            "question_count": 10,
+            "instructions": "Answer all questions carefully to show your understanding of Grade 3."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 36 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 36 before the evaluation.",
+            "deckId": "lesson-g3-u36-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Cumulative Grade 3 Evaluation",
+            "subtitle": "Show what you have learned",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This cumulative evaluation checks your understanding of the big ideas from this unit and across Grade 3. Take your time, read carefully, and show your thinking.",
+            "bigQuestion": "What have you learned in Grade 3?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Measurement",
+                "equation": "same units before computing",
+                "badge": "Convert if needed",
+                "description": "Make sure units match before adding or subtracting."
+              },
+              {
+                "eyebrow": "Reasonableness",
+                "equation": "estimate, then check",
+                "badge": "Makes sense",
+                "description": "Use an estimate to see if the exact answer is reasonable."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

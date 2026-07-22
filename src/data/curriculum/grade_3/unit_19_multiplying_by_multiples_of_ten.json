@@ -1,0 +1,627 @@
+{
+  "grade_level": 3,
+  "unit_number": 19,
+  "unit_title": "Multiplying by Multiples of Ten",
+  "unit_slug": "multiplying_by_multiples_of_ten",
+  "unit_description": "This unit connects basic multiplication facts to multiples of ten. Students multiply one-digit numbers by multiples of ten, solve real-world problems, and explain place-value patterns.",
+  "unit_goals": [
+    "Connect basic facts to multiples of ten.",
+    "Multiply one-digit numbers by multiples of ten.",
+    "Solve real-world problems with multiples of ten.",
+    "Explain place-value and multiplication patterns.",
+    "Use patterns to multiply by 10, 20, 30, and so on."
+  ],
+  "fact_focus": ["multiplication", "place value", "3.NBT.A.4", "3.RA.E.11"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Multiplying by Multiples of Ten",
+      "weekly_focus": "Students use basic facts and place value to multiply by multiples of ten and apply this to real-world problems.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u19-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Connect Basic Facts to Multiples of Ten",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with basic × facts and their ×10 versions.",
+          "concept": "Multiplying by a multiple of ten uses the same basic fact as multiplying by the one-digit number, then adding a zero. 3 × 40 is the same as 3 × 4 with a zero.",
+          "practice": "Connect basic facts to ×10, ×20, ×30, and ×40.",
+          "objective": "Connect basic facts to multiples of ten.",
+          "practice_type": "multiples_of_ten_basic_facts",
+          "skills": [
+            "multiplication",
+            "multiples_of_ten",
+            "place_value",
+            "patterns"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "multiples_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by matching facts.",
+            "questions": [
+              {
+                "id": "g3-u19-w1-d1-warmup-1",
+                "prompt": "3 × 4 = 12, so 3 × 40 = ?",
+                "correct_answer": "120",
+                "hint": "Add a zero to 12.",
+                "skill": "multiples_of_ten"
+              },
+              {
+                "id": "g3-u19-w1-d1-warmup-2",
+                "prompt": "5 × 6 = 30, so 5 × 60 = ?",
+                "correct_answer": "300",
+                "hint": "Add a zero to 30.",
+                "skill": "multiples_of_ten"
+              },
+              {
+                "id": "g3-u19-w1-d1-warmup-3",
+                "prompt": "2 × 7 = 14, so 2 × 70 = ?",
+                "correct_answer": "140",
+                "hint": "Add a zero to 14.",
+                "skill": "multiples_of_ten"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Connect Basic Facts to Multiples of Ten",
+            "teaching_points": [
+              "Solve the basic fact first.",
+              "Multiplying by ten adds a zero.",
+              "Multiplying by 20, 30, etc. uses the same idea."
+            ],
+            "example": {
+              "prompt": "What is 4 × 50?",
+              "visual_type": "place_value",
+              "groups": 4,
+              "items_per_group": 50,
+              "equation": "4 × 5 = 20, so 4 × 50 = 200"
+            },
+            "vocabulary": ["multiple of ten", "basic fact", "place value", "zero"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiples_of_ten_basic_facts",
+            "prompt": "What is 6 × 30?",
+            "correct_answer": "180",
+            "hint": "6 × 3 = 18, add a zero.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 30
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiples_of_ten_basic_facts",
+            "question_count": 6,
+            "instructions": "Use the basic fact and add a zero to multiply by multiples of ten."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Multiples of Ten",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review multiplying by multiples of ten.",
+            "deckId": "lesson-g3-u19-w1-d1-multiples-of-ten"
+          },
+          "bigIdea": {
+            "title": "Connect Basic Facts to Multiples of Ten",
+            "subtitle": "Use the basic fact, then add a zero",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you multiply by 10, 20, 30, or any multiple of ten, you can use the basic fact and then add the zero from the ten.",
+            "bigQuestion": "Why does multiplying by 10 add a zero?",
+            "starTip": {
+              "title": "Basic fact first",
+              "lines": ["4 × 5 = 20", "4 × 50 = 200"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Basic fact",
+                "equation": "4 × 5 = 20",
+                "badge": "Start here",
+                "description": "Solve the basic fact with the one-digit numbers."
+              },
+              {
+                "eyebrow": "Add the zero",
+                "equation": "4 × 50 = 200",
+                "badge": "Ten times bigger",
+                "description": "The multiple of ten makes the product ten times bigger."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u19-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Multiply One-Digit Numbers by Multiples of Ten",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with 6 × 10, 6 × 20, 6 × 30, etc.",
+          "concept": "To multiply a one-digit number by a multiple of ten, multiply the basic facts and then count the zeros. 7 × 60 = 7 × 6 = 42, then add one zero = 420.",
+          "practice": "Multiply one-digit numbers by multiples of ten.",
+          "objective": "Multiply one-digit numbers by multiples of ten.",
+          "practice_type": "one_digit_by_multiples_of_ten",
+          "skills": [
+            "multiplication",
+            "multiples_of_ten",
+            "place_value",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "multiples_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by multiplying.",
+            "questions": [
+              {
+                "id": "g3-u19-w1-d2-warmup-1",
+                "prompt": "7 × 10 = ?",
+                "correct_answer": "70",
+                "hint": "Add a zero to 7.",
+                "skill": "multiply_by_10"
+              },
+              {
+                "id": "g3-u19-w1-d2-warmup-2",
+                "prompt": "7 × 60 = ?",
+                "correct_answer": "420",
+                "hint": "7 × 6 = 42, add a zero.",
+                "skill": "multiples_of_ten"
+              },
+              {
+                "id": "g3-u19-w1-d2-warmup-3",
+                "prompt": "9 × 90 = ?",
+                "correct_answer": "810",
+                "hint": "9 × 9 = 81, add a zero.",
+                "skill": "multiples_of_ten"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply One-Digit Numbers by Multiples of Ten",
+            "teaching_points": [
+              "Ignore the zero first and multiply the basic facts.",
+              "Count the zeros in the multiple of ten.",
+              "Put that many zeros on the product."
+            ],
+            "example": {
+              "prompt": "What is 8 × 70?",
+              "visual_type": "place_value",
+              "groups": 8,
+              "items_per_group": 70,
+              "equation": "8 × 7 = 56, so 8 × 70 = 560"
+            },
+            "vocabulary": ["multiple of ten", "zero", "product", "place value"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "one_digit_by_multiples_of_ten",
+            "prompt": "What is 5 × 80?",
+            "correct_answer": "400",
+            "hint": "5 × 8 = 40, add a zero.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 80
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "one_digit_by_multiples_of_ten",
+            "question_count": 6,
+            "instructions": "Multiply each one-digit number by a multiple of ten."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "One-Digit × Multiples of Ten",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review multiplying one-digit numbers by multiples of ten.",
+            "deckId": "lesson-g3-u19-w1-d2-one-digit-times-tens"
+          },
+          "bigIdea": {
+            "title": "Multiply One-Digit Numbers by Multiples of Ten",
+            "subtitle": "Multiply the basic facts, then add zeros",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When one factor is a multiple of ten, you can ignore the zero, multiply the basic facts, and then put the zero back on the answer.",
+            "bigQuestion": "How do you know how many zeros to add?",
+            "starTip": {
+              "title": "Count the zeros",
+              "lines": ["7 × 60", "7 × 6 = 42, add one zero"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Basic facts",
+                "equation": "8 × 7 = 56",
+                "badge": "Ignore the zero",
+                "description": "Multiply the one-digit numbers first."
+              },
+              {
+                "eyebrow": "Put the zero back",
+                "equation": "8 × 70 = 560",
+                "badge": "One zero",
+                "description": "The multiple of ten has one zero, so the product has one extra zero."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u19-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Solve Real-World Problems with Multiples of Ten",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by estimating products with multiples of ten.",
+          "concept": "Multiples of ten are common in real-world measurements: dimes, tens of minutes, packages of ten. Use the basic fact and add a zero to solve these problems.",
+          "practice": "Solve word problems involving multiples of ten.",
+          "objective": "Solve real-world problems with multiples of ten.",
+          "practice_type": "multiples_of_ten_word_problems",
+          "skills": [
+            "word_problems",
+            "multiplication",
+            "multiples_of_ten",
+            "place_value"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "word_problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with real-world problems.",
+            "questions": [
+              {
+                "id": "g3-u19-w1-d3-warmup-1",
+                "prompt": "A box holds 10 crayons. How many crayons in 7 boxes?",
+                "correct_answer": "70",
+                "hint": "7 × 10.",
+                "skill": "multiples_of_ten_word_problems"
+              },
+              {
+                "id": "g3-u19-w1-d3-warmup-2",
+                "prompt": "A pack has 30 stickers. How many stickers in 4 packs?",
+                "correct_answer": "120",
+                "hint": "4 × 30.",
+                "skill": "multiples_of_ten_word_problems"
+              },
+              {
+                "id": "g3-u19-w1-d3-warmup-3",
+                "prompt": "A dime is 10 cents. How many cents in 8 dimes?",
+                "correct_answer": "80",
+                "hint": "8 × 10.",
+                "skill": "multiples_of_ten_word_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Solve Real-World Problems with Multiples of Ten",
+            "teaching_points": [
+              "Find the basic fact in the problem.",
+              "Use the multiple of ten to add zeros.",
+              "Check that the answer makes sense."
+            ],
+            "example": {
+              "prompt": "A classroom has 6 tables. Each table seats 20 students. How many students?",
+              "visual_type": "place_value",
+              "groups": 6,
+              "items_per_group": 20,
+              "equation": "6 × 2 = 12, so 6 × 20 = 120"
+            },
+            "vocabulary": ["dime", "pack", "multiple of ten", "real-world"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiples_of_ten_word_problems",
+            "prompt": "A baker makes 8 trays of 40 cookies. How many cookies?",
+            "correct_answer": "320",
+            "hint": "8 × 4 = 32, add a zero.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 40
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiples_of_ten_word_problems",
+            "question_count": 6,
+            "instructions": "Solve each real-world problem with multiples of ten."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Multiples of Ten in the World",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review real-world multiples of ten vocabulary.",
+            "deckId": "lesson-g3-u19-w1-d3-real-world-tens"
+          },
+          "bigIdea": {
+            "title": "Solve Real-World Problems with Multiples of Ten",
+            "subtitle": "Use place value in stories",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Real-world problems often use tens, twenties, thirties, and so on. Use the basic fact and then think about the place value to find the total.",
+            "bigQuestion": "Where do you see multiples of ten in everyday life?",
+            "starTip": {
+              "title": "Find the basic fact",
+              "lines": ["6 × 2 = 12", "6 × 20 = 120"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Real-world groups",
+                "equation": "8 trays of 40 cookies",
+                "badge": "40 is 4 tens",
+                "description": "Find the basic fact and the number of tens."
+              },
+              {
+                "eyebrow": "Add the zero",
+                "equation": "8 × 40 = 320",
+                "badge": "320 cookies",
+                "description": "The product is ten times bigger than the basic fact."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u19-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Explain Place-Value and Multiplication Patterns",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by listing products of 3 × 10, 3 × 20, 3 × 30, and describing the pattern.",
+          "concept": "When one factor is ten times bigger, the product is ten times bigger. This is a place-value pattern. Multiplying by 10 shifts each digit one place to the left.",
+          "practice": "Explain and use place-value patterns to multiply by multiples of ten.",
+          "objective": "Explain place-value and multiplication patterns with multiples of ten.",
+          "practice_type": "place_value_patterns",
+          "skills": [
+            "multiplication",
+            "place_value",
+            "patterns",
+            "multiples_of_ten"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "pattern_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding patterns.",
+            "questions": [
+              {
+                "id": "g3-u19-w1-d4-warmup-1",
+                "prompt": "5 × 10 = 50, 5 × 20 = 100, 5 × 30 = 150. What is 5 × 40?",
+                "correct_answer": "200",
+                "hint": "Add 50 each time.",
+                "skill": "place_value_patterns"
+              },
+              {
+                "id": "g3-u19-w1-d4-warmup-2",
+                "prompt": "When you multiply by 10, what happens to the digits?",
+                "correct_answer": "shift left",
+                "hint": "Each digit moves one place to the left.",
+                "skill": "place_value_patterns"
+              },
+              {
+                "id": "g3-u19-w1-d4-warmup-3",
+                "prompt": "3 × 70 = ?",
+                "correct_answer": "210",
+                "hint": "3 × 7 = 21, add a zero.",
+                "skill": "multiples_of_ten"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Explain Place-Value and Multiplication Patterns",
+            "teaching_points": [
+              "Multiplying by 10 shifts digits one place left.",
+              "Multiplying by 20 is like multiplying by 2 and then by 10.",
+              "Patterns help you predict products."
+            ],
+            "example": {
+              "prompt": "Explain the pattern in 4 × 10, 4 × 20, 4 × 30, 4 × 40.",
+              "visual_type": "place_value",
+              "groups": 4,
+              "items_per_group": 10,
+              "equation": "40, 80, 120, 160 — each product increases by 40"
+            },
+            "vocabulary": ["place value", "pattern", "shift", "ten times bigger"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "place_value_patterns",
+            "prompt": "Describe the pattern and find 6 × 50.",
+            "correct_answer": "300",
+            "hint": "6 × 5 = 30, add a zero.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 50
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "place_value_patterns",
+            "question_count": 6,
+            "instructions": "Explain the pattern, then find each product."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Place-Value Patterns",
+            "type": "place_value_terms",
+            "card_count": 6,
+            "instructions": "Review place-value and multiplication patterns.",
+            "deckId": "lesson-g3-u19-w1-d4-place-value-patterns"
+          },
+          "bigIdea": {
+            "title": "Explain Place-Value and Multiplication Patterns",
+            "subtitle": "Multiplying by ten shifts digits",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Multiplying by ten makes each digit worth ten times more, so the digits shift one place to the left. This explains why a zero appears at the end.",
+            "bigQuestion": "Why does multiplying by 10 add a zero?",
+            "starTip": {
+              "title": "Digits move left",
+              "lines": ["Tens become hundreds", "Ones become tens"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "×10 pattern",
+                "equation": "35 × 10 = 350",
+                "badge": "Shift left",
+                "description": "Each digit moves to the next higher place value."
+              },
+              {
+                "eyebrow": "×20 pattern",
+                "equation": "35 × 20 = 700",
+                "badge": "×2 then ×10",
+                "description": "Multiply by 2, then multiply by 10."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u19-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Multiples of Ten",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of basic facts to multiples of ten, multiplying one-digit numbers by multiples of ten, word problems, and place-value patterns.",
+          "concept": "Review the four big ideas from this unit: connecting basic facts to multiples of ten, multiplying one-digit numbers by multiples of ten, solving real-world problems, and explaining place-value patterns.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about multiplying by multiples of ten.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "multiples_of_ten_basic_facts",
+            "one_digit_by_multiples_of_ten",
+            "multiples_of_ten_word_problems",
+            "place_value_patterns"
+          ],
+          "skills": [
+            "multiplication",
+            "multiples_of_ten",
+            "place_value",
+            "patterns",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u19-w1-d5-warmup-1",
+                "prompt": "7 × 40 = ?",
+                "correct_answer": "280",
+                "hint": "7 × 4 = 28, add a zero.",
+                "skill": "multiples_of_ten"
+              },
+              {
+                "id": "g3-u19-w1-d5-warmup-2",
+                "prompt": "A box has 20 pencils. How many pencils in 9 boxes?",
+                "correct_answer": "180",
+                "hint": "9 × 20.",
+                "skill": "word_problems"
+              },
+              {
+                "id": "g3-u19-w1-d5-warmup-3",
+                "prompt": "What is 5 × 70?",
+                "correct_answer": "350",
+                "hint": "5 × 7 = 35, add a zero.",
+                "skill": "multiples_of_ten"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "basic facts to tens + one-digit × tens + real-world problems + place-value patterns = multiples of ten"
+            },
+            "vocabulary": ["evaluation", "review", "multiples of ten"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "What is 8 × 60?",
+            "correct_answer": "480",
+            "hint": "8 × 6 = 48, add a zero.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 60
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 19 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 19 before the evaluation.",
+            "deckId": "lesson-g3-u19-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Multiples of Ten",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: connecting basic facts to multiples of ten, multiplying one-digit numbers by multiples of ten, solving real-world problems, and explaining place-value patterns.",
+            "bigQuestion": "What do you know about multiplying by multiples of ten?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Basic fact",
+                "equation": "6 × 40 = 6 × 4 × 10",
+                "badge": "Break it apart",
+                "description": "Use the basic fact, then multiply by 10."
+              },
+              {
+                "eyebrow": "Place value",
+                "equation": "Multiplying by 10 shifts digits left",
+                "badge": "Why it works",
+                "description": "The zero comes from shifting each digit to a larger place."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

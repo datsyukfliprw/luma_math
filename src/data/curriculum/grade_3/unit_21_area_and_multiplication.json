@@ -1,0 +1,634 @@
+{
+  "grade_level": 3,
+  "unit_number": 21,
+  "unit_title": "Area and Multiplication",
+  "unit_slug": "area_and_multiplication",
+  "unit_description": "This unit connects area to multiplication. Students tile rectangles with unit squares, connect rows and columns to multiplication, find the area of rectangles and squares, and solve area word problems.",
+  "unit_goals": [
+    "Tile rectangles with unit squares.",
+    "Connect rows and columns to multiplication.",
+    "Find the area of rectangles and squares.",
+    "Solve area word problems.",
+    "Understand the area formula for rectangles."
+  ],
+  "fact_focus": ["area", "multiplication", "3.GM.C.11", "3.GM.C.12"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Area and Multiplication",
+      "weekly_focus": "Students connect tiling rectangles to multiplication and use multiplication to find the area of rectangles and squares.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u21-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Tile Rectangles with Unit Squares",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by matching multiplication facts to arrays.",
+          "concept": "A rectangle can be covered with unit squares in rows and columns. The number of rows times the number of columns tells how many unit squares fit.",
+          "practice": "Tile rectangles with unit squares and write the multiplication equation.",
+          "objective": "Tile rectangles with unit squares and connect to multiplication.",
+          "practice_type": "tile_rectangles",
+          "skills": [
+            "area",
+            "tiling",
+            "rectangles",
+            "multiplication"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "tiling_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by tiling rectangles.",
+            "questions": [
+              {
+                "id": "g3-u21-w1-d1-warmup-1",
+                "prompt": "A rectangle is 4 squares long and 3 squares wide. How many squares cover it?",
+                "correct_answer": "12",
+                "hint": "4 × 3 = 12.",
+                "skill": "tile_rectangles"
+              },
+              {
+                "id": "g3-u21-w1-d1-warmup-2",
+                "prompt": "How many rows are in a 5 by 2 rectangle?",
+                "correct_answer": "5",
+                "hint": "The first number is the number of rows.",
+                "skill": "tile_rectangles"
+              },
+              {
+                "id": "g3-u21-w1-d1-warmup-3",
+                "prompt": "A square has 6 rows and 6 columns. How many unit squares?",
+                "correct_answer": "36",
+                "hint": "6 × 6.",
+                "skill": "tile_rectangles"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Tile Rectangles with Unit Squares",
+            "teaching_points": [
+              "Cover the rectangle with unit squares.",
+              "Count the rows and columns.",
+              "Multiply rows times columns to find the total."
+            ],
+            "example": {
+              "prompt": "Tile a 5 by 4 rectangle.",
+              "visual_type": "grid",
+              "groups": 5,
+              "items_per_group": 4,
+              "equation": "5 rows of 4 = 20 square units"
+            },
+            "vocabulary": ["tile", "rectangle", "rows", "columns", "unit square"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "tile_rectangles",
+            "prompt": "Tile a 3 by 7 rectangle. What is the area?",
+            "correct_answer": "21",
+            "hint": "3 × 7 = 21.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "tile_rectangles",
+            "question_count": 6,
+            "instructions": "Tile each rectangle and write the multiplication equation for the area."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Tiling Rectangles",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review tiling rectangles with unit squares.",
+            "deckId": "lesson-g3-u21-w1-d1-tiling-rectangles"
+          },
+          "bigIdea": {
+            "title": "Tile Rectangles with Unit Squares",
+            "subtitle": "Rows and columns cover the rectangle",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you tile a rectangle with unit squares, the squares line up in rows and columns. The total number of squares is the area.",
+            "bigQuestion": "How is tiling a rectangle like building an array?",
+            "starTip": {
+              "title": "Cover in rows",
+              "lines": ["Count rows", "Count columns", "Multiply"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Rows",
+                "equation": "5 rows",
+                "badge": "Across",
+                "description": "Count how many rows of unit squares fit."
+              },
+              {
+                "eyebrow": "Columns",
+                "equation": "4 columns",
+                "badge": "Down",
+                "description": "Count how many squares fit in each row."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u21-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Connect Rows and Columns to Multiplication",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing multiplication equations for rows and columns.",
+          "concept": "The area of a rectangle is the number of rows times the number of columns. This is the same as length times width. Area = rows × columns.",
+          "practice": "Use multiplication to find the area of rectangles from rows and columns.",
+          "objective": "Connect rows and columns to multiplication to find area.",
+          "practice_type": "rows_columns_multiplication",
+          "skills": [
+            "area",
+            "multiplication",
+            "rows",
+            "columns",
+            "rectangles"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "multiplication_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with rows and columns.",
+            "questions": [
+              {
+                "id": "g3-u21-w1-d2-warmup-1",
+                "prompt": "A rectangle has 4 rows and 9 columns. What is the area?",
+                "correct_answer": "36",
+                "hint": "4 × 9.",
+                "skill": "rows_columns_multiplication"
+              },
+              {
+                "id": "g3-u21-w1-d2-warmup-2",
+                "prompt": "What multiplication equation gives the area of a 7 by 5 rectangle?",
+                "correct_answer": "7 x 5 = 35",
+                "hint": "7 × 5 = 35.",
+                "skill": "rows_columns_multiplication"
+              },
+              {
+                "id": "g3-u21-w1-d2-warmup-3",
+                "prompt": "6 rows × 6 columns = ?",
+                "correct_answer": "36",
+                "hint": "6 × 6.",
+                "skill": "rows_columns_multiplication"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Connect Rows and Columns to Multiplication",
+            "teaching_points": [
+              "The number of rows is one factor.",
+              "The number of columns is the other factor.",
+              "The product is the area."
+            ],
+            "example": {
+              "prompt": "Find the area of a rectangle with 6 rows and 8 columns.",
+              "visual_type": "grid",
+              "groups": 6,
+              "items_per_group": 8,
+              "equation": "6 × 8 = 48 square units"
+            },
+            "vocabulary": ["area", "rows", "columns", "multiply", "rectangle"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "rows_columns_multiplication",
+            "prompt": "A rectangle has 5 rows and 8 columns. What is the area?",
+            "correct_answer": "40",
+            "hint": "5 × 8 = 40.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "rows_columns_multiplication",
+            "question_count": 6,
+            "instructions": "Multiply rows by columns to find the area of each rectangle."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Rows × Columns",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review rows, columns, and area.",
+            "deckId": "lesson-g3-u21-w1-d2-rows-columns"
+          },
+          "bigIdea": {
+            "title": "Connect Rows and Columns to Multiplication",
+            "subtitle": "Area is rows times columns",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A rectangle's area can be found by multiplying the number of rows by the number of columns. This is the same as length times width.",
+            "bigQuestion": "Why does rows × columns give the area?",
+            "starTip": {
+              "title": "Area = rows × columns",
+              "lines": ["Rows", "Columns", "Multiply"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Rows",
+                "equation": "6",
+                "badge": "One factor",
+                "description": "The number of rows is one factor in the area."
+              },
+              {
+                "eyebrow": "Columns",
+                "equation": "8",
+                "badge": "Other factor",
+                "description": "The number of columns is the other factor."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u21-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Find the Area of Rectangles and Squares",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by multiplying side lengths to find areas.",
+          "concept": "The area of a rectangle is length times width. A square has equal length and width, so area is side × side.",
+          "practice": "Find the area of rectangles and squares using multiplication.",
+          "objective": "Find the area of rectangles and squares using length and width.",
+          "practice_type": "area_rectangles_squares",
+          "skills": [
+            "area",
+            "rectangles",
+            "squares",
+            "length",
+            "width",
+            "multiplication"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "area_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with length and width.",
+            "questions": [
+              {
+                "id": "g3-u21-w1-d3-warmup-1",
+                "prompt": "A rectangle is 7 units long and 4 units wide. What is the area?",
+                "correct_answer": "28",
+                "hint": "7 × 4.",
+                "skill": "area_rectangles_squares"
+              },
+              {
+                "id": "g3-u21-w1-d3-warmup-2",
+                "prompt": "A square has sides of 5 units. What is the area?",
+                "correct_answer": "25",
+                "hint": "5 × 5.",
+                "skill": "area_rectangles_squares"
+              },
+              {
+                "id": "g3-u21-w1-d3-warmup-3",
+                "prompt": "Length 9, width 3. Area?",
+                "correct_answer": "27",
+                "hint": "9 × 3.",
+                "skill": "area_rectangles_squares"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find the Area of Rectangles and Squares",
+            "teaching_points": [
+              "Area of a rectangle = length × width.",
+              "Area of a square = side × side.",
+              "Label the answer in square units."
+            ],
+            "example": {
+              "prompt": "Find the area of a rectangle with length 8 and width 6.",
+              "visual_type": "grid",
+              "groups": 8,
+              "items_per_group": 6,
+              "equation": "8 × 6 = 48 square units"
+            },
+            "vocabulary": ["length", "width", "side", "area", "rectangle", "square"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "area_rectangles_squares",
+            "prompt": "Find the area of a square with side length 9.",
+            "correct_answer": "81",
+            "hint": "9 × 9.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "area_rectangles_squares",
+            "question_count": 6,
+            "instructions": "Find the area of each rectangle or square."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Area of Rectangles and Squares",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review length, width, side, and area.",
+            "deckId": "lesson-g3-u21-w1-d3-area-rectangles-squares"
+          },
+          "bigIdea": {
+            "title": "Find the Area of Rectangles and Squares",
+            "subtitle": "Length × width = area",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "For any rectangle, you can multiply length times width to find the area. For a square, length and width are the same, so side times side gives the area.",
+            "bigQuestion": "How is a square a special kind of rectangle?",
+            "starTip": {
+              "title": "Use length and width",
+              "lines": ["Rectangle: l × w", "Square: s × s"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Rectangle",
+                "equation": "Area = length × width",
+                "badge": "l × w",
+                "description": "Multiply the two side lengths."
+              },
+              {
+                "eyebrow": "Square",
+                "equation": "Area = side × side",
+                "badge": "s × s",
+                "description": "A square has all sides equal."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u21-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Solve Area Word Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by identifying length and width in word problems.",
+          "concept": "Area word problems give the length and width or ask for one of them. Write a multiplication or division equation to solve. Area = length × width, so length = area ÷ width.",
+          "practice": "Solve word problems about the area of rectangles and squares.",
+          "objective": "Solve area word problems.",
+          "practice_type": "area_word_problems",
+          "skills": [
+            "area",
+            "word_problems",
+            "multiplication",
+            "division",
+            "rectangles"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "word_problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with area word problems.",
+            "questions": [
+              {
+                "id": "g3-u21-w1-d4-warmup-1",
+                "prompt": "A rug is 6 feet long and 4 feet wide. What is the area?",
+                "correct_answer": "24 square feet",
+                "hint": "6 × 4.",
+                "skill": "area_word_problems"
+              },
+              {
+                "id": "g3-u21-w1-d4-warmup-2",
+                "prompt": "A garden has an area of 36 square meters and a width of 4 meters. What is the length?",
+                "correct_answer": "9",
+                "hint": "36 ÷ 4.",
+                "skill": "area_word_problems"
+              },
+              {
+                "id": "g3-u21-w1-d4-warmup-3",
+                "prompt": "A poster is 5 inches by 9 inches. What is the area?",
+                "correct_answer": "45 square inches",
+                "hint": "5 × 9.",
+                "skill": "area_word_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Solve Area Word Problems",
+            "teaching_points": [
+              "Find the length and width in the problem.",
+              "Multiply to find area.",
+              "Divide if you know the area and one side."
+            ],
+            "example": {
+              "prompt": "A desk is 8 feet long and 3 feet wide. What is the area?",
+              "visual_type": "grid",
+              "groups": 8,
+              "items_per_group": 3,
+              "equation": "8 × 3 = 24 square feet"
+            },
+            "vocabulary": ["area", "length", "width", "word problem", "square units"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "area_word_problems",
+            "prompt": "A room is 10 feet long and 8 feet wide. What is the area?",
+            "correct_answer": "80 square feet",
+            "hint": "10 × 8.",
+            "visual_data": {
+              "groups": 10,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "area_word_problems",
+            "question_count": 6,
+            "instructions": "Solve each area word problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Area Word Problem Words",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review area word problem vocabulary.",
+            "deckId": "lesson-g3-u21-w1-d4-area-word-words"
+          },
+          "bigIdea": {
+            "title": "Solve Area Word Problems",
+            "subtitle": "Use length × width",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Area word problems are about real spaces. Find the length and width, multiply them, and use the right square unit label.",
+            "bigQuestion": "What do you do if a word problem gives the area and one side?",
+            "starTip": {
+              "title": "Find the missing side",
+              "lines": ["Area ÷ known side", "= missing side"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Find area",
+                "equation": "length × width = area",
+                "badge": "Multiply",
+                "description": "Multiply the two side lengths to find area."
+              },
+              {
+                "eyebrow": "Find a side",
+                "equation": "area ÷ length = width",
+                "badge": "Divide",
+                "description": "Divide the area by the known side to find the missing side."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u21-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Multiplying to Find Area",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of tiling rectangles, rows and columns, area of rectangles and squares, and area word problems.",
+          "concept": "Review the four big ideas from this unit: tiling rectangles with unit squares, connecting rows and columns to multiplication, finding the area of rectangles and squares, and solving area word problems.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about multiplying to find area.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "tile_rectangles",
+            "rows_columns_multiplication",
+            "area_rectangles_squares",
+            "area_word_problems"
+          ],
+          "skills": [
+            "area",
+            "multiplication",
+            "rectangles",
+            "squares",
+            "word_problems",
+            "length",
+            "width",
+            "geometry"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u21-w1-d5-warmup-1",
+                "prompt": "A rectangle is 8 by 7. What is the area?",
+                "correct_answer": "56 square units",
+                "hint": "8 × 7.",
+                "skill": "area_rectangles_squares"
+              },
+              {
+                "id": "g3-u21-w1-d5-warmup-2",
+                "prompt": "A square has side length 6. What is the area?",
+                "correct_answer": "36 square units",
+                "hint": "6 × 6.",
+                "skill": "area_rectangles_squares"
+              },
+              {
+                "id": "g3-u21-w1-d5-warmup-3",
+                "prompt": "A rug is 9 feet by 5 feet. What is the area?",
+                "correct_answer": "45 square feet",
+                "hint": "9 × 5.",
+                "skill": "area_word_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "tiling + rows/columns + rectangles/squares + word problems = multiplying to find area"
+            },
+            "vocabulary": ["evaluation", "review", "area"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A rectangle has 6 rows and 7 columns. What is the area?",
+            "correct_answer": "42 square units",
+            "hint": "6 × 7.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 21 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 21 before the evaluation.",
+            "deckId": "lesson-g3-u21-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Multiplying to Find Area",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: tiling rectangles with unit squares, connecting rows and columns to multiplication, finding the area of rectangles and squares, and solving area word problems.",
+            "bigQuestion": "What do you know about multiplying to find area?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Area formula",
+                "equation": "Area = length × width",
+                "badge": "Rectangle",
+                "description": "Multiply the side lengths to find the area of a rectangle."
+              },
+              {
+                "eyebrow": "Square",
+                "equation": "Area = side × side",
+                "badge": "All sides equal",
+                "description": "A square has equal length and width."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

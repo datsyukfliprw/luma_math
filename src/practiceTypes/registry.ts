@@ -13,7 +13,7 @@ import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 type PracticeGenerator = (options?: PracticeGenerationOptions) => PracticeProblem[];
 
-const practiceRegistry: Record<string, PracticeGenerator> = {
+export const practiceRegistry: Record<string, PracticeGenerator> = {
   equal_groups: generateEqualGroupsProblems,
   repeated_addition_to_multiplication: generateRepeatedAdditionProblems,
   factor_product_identification: generateFactorProductProblems,
@@ -31,6 +31,12 @@ const practiceRegistry: Record<string, PracticeGenerator> = {
 
   fair_sharing_division: generateFairSharingDivisionProblems,
 };
+
+export type RegisteredPracticeType = keyof typeof practiceRegistry;
+
+export function isRegisteredPracticeType(type: string): type is RegisteredPracticeType {
+  return Object.prototype.hasOwnProperty.call(practiceRegistry, type);
+}
 
 export function generateProblemsForPracticeType(
   practiceType: string,

@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 16,
+  "unit_title": "Facts for 8 and 9",
+  "unit_slug": "facts_for_8_and_9",
+  "unit_description": "This unit develops multiplication and division fact fluency for 8 and 9. Students multiply by 8 using repeated doubling, multiply by 9 using patterns, and practice dividing by 8 and 9.",
+  "unit_goals": [
+    "Multiply by 8 using doubles.",
+    "Divide by 8.",
+    "Multiply by 9 using patterns.",
+    "Divide by 9 and practice related facts.",
+    "Build fluency with facts for 8 and 9."
+  ],
+  "fact_focus": ["multiplication", "division", "3.RA.B.6", "3.RA.C.7"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Facts for 8 and 9",
+      "weekly_focus": "Students use doubling and patterns to learn the 8 and 9 multiplication and division facts.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u16-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Multiply by 8 Using Doubles",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by doubling numbers twice.",
+          "concept": "Multiplying by 8 is doubling three times. 8 × 3: double 3 = 6, double 6 = 12, double 12 = 24. Or double 3 = 6 (×2), double 6 = 12 (×4), double 12 = 24 (×8).",
+          "practice": "Multiply by 8 by doubling three times.",
+          "objective": "Multiply by 8 using doubles.",
+          "practice_type": "multiply_by_8",
+          "skills": [
+            "multiplication",
+            "multiply_by_8",
+            "doubles",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "doubles_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by doubling.",
+            "questions": [
+              {
+                "id": "g3-u16-w1-d1-warmup-1",
+                "prompt": "Double 4, then double it again, then double it again.",
+                "correct_answer": "32",
+                "hint": "4 → 8 → 16 → 32.",
+                "skill": "multiply_by_8"
+              },
+              {
+                "id": "g3-u16-w1-d1-warmup-2",
+                "prompt": "8 × 5 = ?",
+                "correct_answer": "40",
+                "hint": "Double 5 = 10, double 10 = 20, double 20 = 40.",
+                "skill": "multiply_by_8"
+              },
+              {
+                "id": "g3-u16-w1-d1-warmup-3",
+                "prompt": "8 × 7 = ?",
+                "correct_answer": "56",
+                "hint": "Double 7 = 14, double 14 = 28, double 28 = 56.",
+                "skill": "multiply_by_8"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply by 8 Using Doubles",
+            "teaching_points": [
+              "8 is 2 × 2 × 2.",
+              "Double the number three times.",
+              "This works for any factor."
+            ],
+            "example": {
+              "prompt": "What is 8 × 4?",
+              "visual_type": "groups",
+              "groups": 8,
+              "items_per_group": 4,
+              "equation": "4 → 8 → 16 → 32, so 8 × 4 = 32"
+            },
+            "vocabulary": ["multiply by 8", "double", "three times", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_8",
+            "prompt": "What is 8 × 9?",
+            "correct_answer": "72",
+            "hint": "9 → 18 → 36 → 72.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_8",
+            "question_count": 6,
+            "instructions": "Use doubling three times to multiply each number by 8."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 8 Facts",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review strategies for multiplying by 8.",
+            "deckId": "lesson-g3-u16-w1-d1-times-8"
+          },
+          "bigIdea": {
+            "title": "Multiply by 8 Using Doubles",
+            "subtitle": "Double three times",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Eight is two times two times two. That means to multiply by 8, you can double the number three times.",
+            "bigQuestion": "Why is multiplying by 8 like doubling three times?",
+            "starTip": {
+              "title": "Triple double",
+              "lines": ["×2", "×2", "×2"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "First double",
+                "equation": "7 × 2 = 14",
+                "badge": "×2",
+                "description": "Double the number once."
+              },
+              {
+                "eyebrow": "Double again and again",
+                "equation": "14 → 28 → 56",
+                "badge": "×4 then ×8",
+                "description": "Double two more times to multiply by 8."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u16-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Divide by 8",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with the related ×8 facts.",
+          "concept": "Dividing by 8 uses the related ×8 facts. 64 ÷ 8 = ? means 8 × ? = 64. If 8 × 8 = 64, then 64 ÷ 8 = 8.",
+          "practice": "Divide by 8 using related multiplication facts.",
+          "objective": "Divide by 8 using related multiplication facts.",
+          "practice_type": "divide_by_8",
+          "skills": [
+            "division",
+            "divide_by_8",
+            "multiplication",
+            "fact_families"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "division_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with ÷8 facts.",
+            "questions": [
+              {
+                "id": "g3-u16-w1-d2-warmup-1",
+                "prompt": "8 × __ = 56",
+                "correct_answer": "7",
+                "hint": "56 ÷ 8 = 7.",
+                "skill": "divide_by_8"
+              },
+              {
+                "id": "g3-u16-w1-d2-warmup-2",
+                "prompt": "64 ÷ 8 = ?",
+                "correct_answer": "8",
+                "hint": "8 × 8 = 64.",
+                "skill": "divide_by_8"
+              },
+              {
+                "id": "g3-u16-w1-d2-warmup-3",
+                "prompt": "72 ÷ 8 = ?",
+                "correct_answer": "9",
+                "hint": "8 × 9 = 72.",
+                "skill": "divide_by_8"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Divide by 8",
+            "teaching_points": [
+              "Division is the inverse of multiplication.",
+              "Ask: 8 times what equals the dividend?",
+              "Use the ×8 facts you built."
+            ],
+            "example": {
+              "prompt": "Solve 48 ÷ 8.",
+              "visual_type": "groups",
+              "groups": 8,
+              "items_per_group": 6,
+              "equation": "8 × 6 = 48, so 48 ÷ 8 = 6"
+            },
+            "vocabulary": ["divide by 8", "inverse", "quotient", "fact family"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "divide_by_8",
+            "prompt": "Solve 40 ÷ 8.",
+            "correct_answer": "5",
+            "hint": "8 × 5 = 40.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "divide_by_8",
+            "question_count": 6,
+            "instructions": "Use the related ×8 fact to find each quotient."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Divide by 8",
+            "type": "division_facts",
+            "card_count": 6,
+            "instructions": "Review dividing by 8.",
+            "deckId": "lesson-g3-u16-w1-d2-divide-by-8"
+          },
+          "bigIdea": {
+            "title": "Divide by 8",
+            "subtitle": "Use the ×8 facts",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Dividing by 8 is asking what times 8 equals the total. The ×8 doubling facts help you divide.",
+            "bigQuestion": "How do ×8 facts help with ÷8?",
+            "starTip": {
+              "title": "Inverse thinking",
+              "lines": ["8 × ? = total", "? = total ÷ 8"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Known fact",
+                "equation": "8 × 6 = 48",
+                "badge": "Use it",
+                "description": "A known multiplication fact gives the related division fact."
+              },
+              {
+                "eyebrow": "Division",
+                "equation": "48 ÷ 8 = 6",
+                "badge": "Quotient",
+                "description": "The missing factor is the quotient."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u16-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Multiply by 9 Using Patterns",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by looking at the 9s pattern in products.",
+          "concept": "Multiples of 9 have a digit pattern: the digits add to 9. 9 × 4 = 36 (3+6=9). You can also use 10 × n - n. 9 × 7 = 70 - 7 = 63.",
+          "practice": "Multiply by 9 using the 10-minus-1 strategy and digit patterns.",
+          "objective": "Multiply by 9 using patterns and strategies.",
+          "practice_type": "multiply_by_9",
+          "skills": [
+            "multiplication",
+            "multiply_by_9",
+            "patterns",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "patterns_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with 9s patterns.",
+            "questions": [
+              {
+                "id": "g3-u16-w1-d3-warmup-1",
+                "prompt": "9 × 4 = ?",
+                "correct_answer": "36",
+                "hint": "10 × 4 = 40, minus 4.",
+                "skill": "multiply_by_9"
+              },
+              {
+                "id": "g3-u16-w1-d3-warmup-2",
+                "prompt": "9 × 7 = ?",
+                "correct_answer": "63",
+                "hint": "10 × 7 = 70, minus 7.",
+                "skill": "multiply_by_9"
+              },
+              {
+                "id": "g3-u16-w1-d3-warmup-3",
+                "prompt": "The digits of 9 × 6 = 54 add to what number?",
+                "correct_answer": "9",
+                "hint": "5 + 4 = 9.",
+                "skill": "patterns"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply by 9 Using Patterns",
+            "teaching_points": [
+              "9 × n is 10 × n - n.",
+              "The digits of ×9 products add to 9 (or a multiple of 9).",
+              "Use the strategy that is easiest for you."
+            ],
+            "example": {
+              "prompt": "What is 9 × 8?",
+              "visual_type": "groups",
+              "groups": 9,
+              "items_per_group": 8,
+              "equation": "10 × 8 = 80, minus 8 = 72, so 9 × 8 = 72"
+            },
+            "vocabulary": ["multiply by 9", "pattern", "ten minus one", "digit sum"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_9",
+            "prompt": "What is 9 × 6?",
+            "correct_answer": "54",
+            "hint": "10 × 6 = 60, minus 6.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_9",
+            "question_count": 6,
+            "instructions": "Use the 10-minus-1 strategy or pattern to multiply by 9."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 9 Facts",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review patterns for multiplying by 9.",
+            "deckId": "lesson-g3-u16-w1-d3-times-9"
+          },
+          "bigIdea": {
+            "title": "Multiply by 9 Using Patterns",
+            "subtitle": "Use the 10-minus-1 trick",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Nine is one less than ten. So 9 groups is the same as 10 groups minus 1 group. 9 × 6 = 10 × 6 - 6 = 54.",
+            "bigQuestion": "Why do the digits of ×9 products add to 9?",
+            "starTip": {
+              "title": "10 minus 1",
+              "lines": ["9 × n", "= 10 × n - n"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "10 minus 1",
+                "equation": "9 × 7 = 70 - 7 = 63",
+                "badge": "Shortcut",
+                "description": "Multiply by 10, then subtract the original number."
+              },
+              {
+                "eyebrow": "Digit pattern",
+                "equation": "9 × 6 = 54, 5 + 4 = 9",
+                "badge": "Check",
+                "description": "The digits of ×9 products add up to 9."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u16-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Divide by 9 and Practice Related Facts",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with the related ×9 facts.",
+          "concept": "Dividing by 9 uses the related ×9 facts. 81 ÷ 9 = ? means 9 × ? = 81. If 9 × 9 = 81, then 81 ÷ 9 = 9.",
+          "practice": "Divide by 9 and practice the related ×9 and ÷9 facts.",
+          "objective": "Divide by 9 and practice related facts.",
+          "practice_type": "divide_by_9",
+          "skills": [
+            "division",
+            "divide_by_9",
+            "multiplication",
+            "fact_families"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "division_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with ÷9 facts.",
+            "questions": [
+              {
+                "id": "g3-u16-w1-d4-warmup-1",
+                "prompt": "9 × __ = 63",
+                "correct_answer": "7",
+                "hint": "63 ÷ 9 = 7.",
+                "skill": "divide_by_9"
+              },
+              {
+                "id": "g3-u16-w1-d4-warmup-2",
+                "prompt": "81 ÷ 9 = ?",
+                "correct_answer": "9",
+                "hint": "9 × 9 = 81.",
+                "skill": "divide_by_9"
+              },
+              {
+                "id": "g3-u16-w1-d4-warmup-3",
+                "prompt": "54 ÷ 9 = ?",
+                "correct_answer": "6",
+                "hint": "9 × 6 = 54.",
+                "skill": "divide_by_9"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Divide by 9 and Practice Related Facts",
+            "teaching_points": [
+              "Division is the inverse of multiplication.",
+              "Ask: 9 times what equals the dividend?",
+              "Use the ×9 facts you built."
+            ],
+            "example": {
+              "prompt": "Solve 72 ÷ 9.",
+              "visual_type": "groups",
+              "groups": 9,
+              "items_per_group": 8,
+              "equation": "9 × 8 = 72, so 72 ÷ 9 = 8"
+            },
+            "vocabulary": ["divide by 9", "inverse", "quotient", "fact family"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "divide_by_9",
+            "prompt": "Solve 45 ÷ 9.",
+            "correct_answer": "5",
+            "hint": "9 × 5 = 45.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "divide_by_9",
+            "question_count": 6,
+            "instructions": "Use the related ×9 fact to find each quotient."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Divide by 9",
+            "type": "division_facts",
+            "card_count": 6,
+            "instructions": "Review dividing by 9.",
+            "deckId": "lesson-g3-u16-w1-d4-divide-by-9"
+          },
+          "bigIdea": {
+            "title": "Divide by 9 and Practice Related Facts",
+            "subtitle": "Use the ×9 facts",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Dividing by 9 uses the related ×9 facts. The 9s patterns and strategies also help you remember the division facts.",
+            "bigQuestion": "How do ×9 patterns help with ÷9?",
+            "starTip": {
+              "title": "Inverse thinking",
+              "lines": ["9 × ? = total", "? = total ÷ 9"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Known fact",
+                "equation": "9 × 8 = 72",
+                "badge": "Use it",
+                "description": "A known multiplication fact gives the related division fact."
+              },
+              {
+                "eyebrow": "Division",
+                "equation": "72 ÷ 9 = 8",
+                "badge": "Quotient",
+                "description": "The missing factor is the quotient."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u16-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Facts for 8 and 9",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of ×8, ÷8, ×9, and ÷9 facts.",
+          "concept": "Review the multiplication and division facts for 8 and 9. Use the doubling and pattern strategies from this unit.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show fluency with facts for 8 and 9.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "multiply_by_8",
+            "divide_by_8",
+            "multiply_by_9",
+            "divide_by_9"
+          ],
+          "skills": [
+            "multiplication",
+            "division",
+            "multiply_by_8",
+            "divide_by_8",
+            "multiply_by_9",
+            "divide_by_9",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u16-w1-d5-warmup-1",
+                "prompt": "8 × 7 = ?",
+                "correct_answer": "56",
+                "hint": "Double 7 three times: 14, 28, 56.",
+                "skill": "multiply_by_8"
+              },
+              {
+                "id": "g3-u16-w1-d5-warmup-2",
+                "prompt": "72 ÷ 9 = ?",
+                "correct_answer": "8",
+                "hint": "9 × 8 = 72.",
+                "skill": "divide_by_9"
+              },
+              {
+                "id": "g3-u16-w1-d5-warmup-3",
+                "prompt": "9 × 8 = ?",
+                "correct_answer": "72",
+                "hint": "10 × 8 = 80, minus 8.",
+                "skill": "multiply_by_9"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "×8 + ÷8 + ×9 + ÷9 = facts for 8 and 9"
+            },
+            "vocabulary": ["evaluation", "review", "multiplication", "division"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is the same as 9 × 7?",
+            "correct_answer": "63",
+            "hint": "10 × 7 - 7 = 63.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 16 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 16 before the evaluation.",
+            "deckId": "lesson-g3-u16-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Facts for 8 and 9",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: multiplying by 8 using doubles, dividing by 8, multiplying by 9 using patterns, and dividing by 9.",
+            "bigQuestion": "What do you know about facts for 8 and 9?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "×8",
+                "equation": "Double three times",
+                "badge": "Use doubles",
+                "description": "Double the number three times to multiply by 8."
+              },
+              {
+                "eyebrow": "×9",
+                "equation": "10 × n - n",
+                "badge": "Use 10s",
+                "description": "Multiply by 10 and subtract the number."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

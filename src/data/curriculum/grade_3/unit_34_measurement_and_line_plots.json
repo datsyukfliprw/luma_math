@@ -1,0 +1,632 @@
+{
+  "grade_level": 3,
+  "unit_number": 34,
+  "unit_title": "Measurement and Line Plots",
+  "unit_slug": "measurement_and_line_plots",
+  "unit_description": "This unit covers measurement and line plots. Students choose and estimate customary length units, measure to the nearest quarter inch, choose units for weight, mass, and liquid volume, and create and interpret line plots including fractional data.",
+  "unit_goals": [
+    "Choose and estimate customary length units.",
+    "Measure to the nearest quarter inch.",
+    "Choose units for weight, mass, and liquid volume.",
+    "Create and interpret line plots, including fractional data.",
+    "Use measurement data to answer questions."
+  ],
+  "fact_focus": ["measurement", "line_plots", "3.GM.B.7", "3.DS.A.3", "3.DS.A.4"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Measurement and Line Plots",
+      "weekly_focus": "Students practice measuring lengths, choosing appropriate units, and representing measurement data on line plots.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u34-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Choose and Estimate Customary Length Units",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by estimating lengths of classroom objects in inches, feet, and yards.",
+          "concept": "Different units are used for different lengths. Use inches for short objects, feet for medium objects, and yards for longer distances. Estimate before measuring.",
+          "practice": "Choose the best customary unit and estimate lengths.",
+          "objective": "Choose and estimate customary length units.",
+          "practice_type": "customary_length_units",
+          "skills": [
+            "measurement",
+            "length",
+            "inches",
+            "feet",
+            "yards",
+            "estimate"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "measurement_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with length units.",
+            "questions": [
+              {
+                "id": "g3-u34-w1-d1-warmup-1",
+                "prompt": "Which is better for measuring a pencil: inches or yards?",
+                "correct_answer": "inches",
+                "hint": "A pencil is short.",
+                "skill": "customary_length_units"
+              },
+              {
+                "id": "g3-u34-w1-d1-warmup-2",
+                "prompt": "Which is better for measuring a room: feet or inches?",
+                "correct_answer": "feet",
+                "hint": "A room is longer than a few inches.",
+                "skill": "customary_length_units"
+              },
+              {
+                "id": "g3-u34-w1-d1-warmup-3",
+                "prompt": "Estimate the length of a pencil in inches.",
+                "correct_answer": "6",
+                "hint": "A typical pencil is about 6 inches.",
+                "skill": "estimate"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Choose and Estimate Customary Length Units",
+            "teaching_points": [
+              "Inches for small lengths.",
+              "Feet for medium lengths.",
+              "Yards for long lengths or distances."
+            ],
+            "example": {
+              "prompt": "What unit would you use to measure the length of a school bus?",
+              "visual_type": "measurement",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "Yards or feet"
+            },
+            "vocabulary": ["inch", "foot", "yard", "estimate", "length"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "customary_length_units",
+            "prompt": "What unit would you use to measure the width of a book?",
+            "correct_answer": "inches",
+            "hint": "A book is small.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "customary_length_units",
+            "question_count": 6,
+            "instructions": "Choose the best unit and estimate the length for each object."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Length Units",
+            "type": "measurement_terms",
+            "card_count": 6,
+            "instructions": "Review customary length units.",
+            "deckId": "lesson-g3-u34-w1-d1-length-units"
+          },
+          "bigIdea": {
+            "title": "Choose and Estimate Customary Length Units",
+            "subtitle": "Pick the right tool for the length",
+            "thumbnail": "/images/learn/thumbnails/measurement.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "You would not measure a pencil in yards. Choose a unit that makes sense for the length of the object. Inches, feet, and yards each have a best use.",
+            "bigQuestion": "When is it better to measure in feet instead of inches?",
+            "starTip": {
+              "title": "Match the unit",
+              "lines": ["Short = inches", "Medium = feet", "Long = yards"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Inches",
+                "equation": "pencil, paper clip",
+                "badge": "Small objects",
+                "description": "Use inches for things shorter than a hand."
+              },
+              {
+                "eyebrow": "Feet",
+                "equation": "desk, doorway",
+                "badge": "Medium objects",
+                "description": "Use feet for things taller or longer than a few inches."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u34-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Measure to the Nearest Quarter Inch",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by measuring objects with a ruler marked in inches and half inches.",
+          "concept": "A ruler can be divided into fourths of an inch. Measure to the nearest quarter inch by finding the closest 1/4, 1/2, or 3/4 mark.",
+          "practice": "Measure lengths to the nearest quarter inch.",
+          "objective": "Measure to the nearest quarter inch.",
+          "practice_type": "quarter_inch_measurement",
+          "skills": [
+            "measurement",
+            "ruler",
+            "quarter_inch",
+            "fractions"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "ruler_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with quarter inches.",
+            "questions": [
+              {
+                "id": "g3-u34-w1-d2-warmup-1",
+                "prompt": "How many quarter inches are in one inch?",
+                "correct_answer": "4",
+                "hint": "1/4 + 1/4 + 1/4 + 1/4 = 1.",
+                "skill": "quarter_inch_measurement"
+              },
+              {
+                "id": "g3-u34-w1-d2-warmup-2",
+                "prompt": "A line ends halfway between 2 and 3 inches. What is the nearest half inch?",
+                "correct_answer": "2 1/2",
+                "hint": "Halfway is 2.5 inches.",
+                "skill": "quarter_inch_measurement"
+              },
+              {
+                "id": "g3-u34-w1-d2-warmup-3",
+                "prompt": "A pencil ends at the first mark after 3 inches. What is its length?",
+                "correct_answer": "3 1/4 inches",
+                "hint": "The first quarter-inch mark.",
+                "skill": "quarter_inch_measurement"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Measure to the Nearest Quarter Inch",
+            "teaching_points": [
+              "An inch is divided into 4 equal parts.",
+              "The marks are 1/4, 1/2, and 3/4 of an inch.",
+              "Find the closest mark to the end of the object."
+            ],
+            "example": {
+              "prompt": "Measure a pencil that ends at the 3/4 mark after 5 inches.",
+              "visual_type": "measurement",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "5 3/4 inches"
+            },
+            "vocabulary": ["quarter inch", "ruler", "measure", "nearest"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "quarter_inch_measurement",
+            "prompt": "A crayon ends halfway between 4 and 4 1/2 inches. What is the nearest quarter inch?",
+            "correct_answer": "4 1/4 inches",
+            "hint": "Halfway between 4 and 4 1/2 is 4 1/4.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "quarter_inch_measurement",
+            "question_count": 6,
+            "instructions": "Measure each object to the nearest quarter inch."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Quarter Inches",
+            "type": "measurement_terms",
+            "card_count": 6,
+            "instructions": "Review measuring to the nearest quarter inch.",
+            "deckId": "lesson-g3-u34-w1-d2-quarter-inches"
+          },
+          "bigIdea": {
+            "title": "Measure to the Nearest Quarter Inch",
+            "subtitle": "Use the closest mark",
+            "thumbnail": "/images/learn/thumbnails/measurement.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Rulers are divided into fourths of an inch. Find the closest quarter-inch mark to the end of the object. This gives a measurement to the nearest quarter inch.",
+            "bigQuestion": "How do you know which quarter-inch mark is closest?",
+            "starTip": {
+              "title": "Count quarters",
+              "lines": ["1/4", "2/4 = 1/2", "3/4"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Inch marks",
+                "equation": "0, 1/4, 1/2, 3/4, 1",
+                "badge": "4 parts",
+                "description": "An inch is divided into four equal parts."
+              },
+              {
+                "eyebrow": "Nearest",
+                "equation": "closest quarter mark",
+                "badge": "Round",
+                "description": "Find the quarter-inch mark closest to the end of the object."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u34-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Choose Units for Weight, Mass, and Liquid Volume",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by matching objects to units of grams, kilograms, ounces, pounds, liters, and milliliters.",
+          "concept": "Weight and mass can be measured in grams, kilograms, ounces, or pounds. Liquid volume is measured in liters or milliliters. Choose the unit that matches the size of the object or amount.",
+          "practice": "Choose the best unit for weight, mass, and liquid volume.",
+          "objective": "Choose units for weight, mass, and liquid volume.",
+          "practice_type": "choose_weight_mass_volume_units",
+          "skills": [
+            "measurement",
+            "weight",
+            "mass",
+            "volume",
+            "units"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "unit_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with weight, mass, and volume units.",
+            "questions": [
+              {
+                "id": "g3-u34-w1-d3-warmup-1",
+                "prompt": "Which is better for measuring a bottle of water: liters or milliliters?",
+                "correct_answer": "liters",
+                "hint": "A bottle holds about 1 liter.",
+                "skill": "volume"
+              },
+              {
+                "id": "g3-u34-w1-d3-warmup-2",
+                "prompt": "Which is better for measuring a pumpkin: ounces or pounds?",
+                "correct_answer": "pounds",
+                "hint": "A pumpkin is heavy.",
+                "skill": "weight"
+              },
+              {
+                "id": "g3-u34-w1-d3-warmup-3",
+                "prompt": "Which is better for a paper clip: grams or kilograms?",
+                "correct_answer": "grams",
+                "hint": "A paper clip is very light.",
+                "skill": "mass"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Choose Units for Weight, Mass, and Liquid Volume",
+            "teaching_points": [
+              "Use small units for small amounts.",
+              "Use large units for large amounts.",
+              "Match the unit to the object's size."
+            ],
+            "example": {
+              "prompt": "What unit would you use for the mass of a book?",
+              "visual_type": "measurement",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "Grams or ounces"
+            },
+            "vocabulary": ["gram", "kilogram", "ounce", "pound", "liter", "milliliter"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "choose_weight_mass_volume_units",
+            "prompt": "What unit would you use for the liquid volume of a small medicine cup?",
+            "correct_answer": "milliliters",
+            "hint": "A small amount of liquid.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "choose_weight_mass_volume_units",
+            "question_count": 6,
+            "instructions": "Choose the best unit for measuring each item."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Weight, Mass, Volume Units",
+            "type": "measurement_terms",
+            "card_count": 6,
+            "instructions": "Review units for weight, mass, and volume.",
+            "deckId": "lesson-g3-u34-w1-d3-weight-mass-volume"
+          },
+          "bigIdea": {
+            "title": "Choose Units for Weight, Mass, and Liquid Volume",
+            "subtitle": "Match the unit to the amount",
+            "thumbnail": "/images/learn/thumbnails/measurement.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Just like length, weight, mass, and volume need the right unit. Use grams or ounces for small things, kilograms or pounds for heavier things, and milliliters or liters for liquids depending on the amount.",
+            "bigQuestion": "When would you use milliliters instead of liters?",
+            "starTip": {
+              "title": "Small or large",
+              "lines": ["Small amount = milliliters/grams/ounces", "Large amount = liters/kilograms/pounds"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Mass",
+                "equation": "paper clip = grams",
+                "badge": "Light",
+                "description": "Use grams for small or light objects."
+              },
+              {
+                "eyebrow": "Volume",
+                "equation": "water bottle = liters",
+                "badge": "More liquid",
+                "description": "Use liters for larger amounts of liquid."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u34-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Create and Interpret Line Plots",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by organizing a set of measurements on a number line.",
+          "concept": "A line plot shows data as marks above a number line. Each mark stands for one measurement. Use line plots to show measurement data, including fractions.",
+          "practice": "Create and interpret line plots with whole-number and fractional data.",
+          "objective": "Create and interpret line plots, including fractional data.",
+          "practice_type": "line_plots",
+          "skills": [
+            "data",
+            "line_plot",
+            "measurement",
+            "fractions"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "line_plot_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with line plots.",
+            "questions": [
+              {
+                "id": "g3-u34-w1-d4-warmup-1",
+                "prompt": "A line plot shows X marks above 3/4 and 1. How many measurements are 3/4?",
+                "correct_answer": "2",
+                "hint": "Count the X marks above 3/4.",
+                "skill": "line_plots"
+              },
+              {
+                "id": "g3-u34-w1-d4-warmup-2",
+                "prompt": "On a line plot, what does each X stand for?",
+                "correct_answer": "one measurement",
+                "hint": "Each X is one data point.",
+                "skill": "line_plots"
+              },
+              {
+                "id": "g3-u34-w1-d4-warmup-3",
+                "prompt": "Measurements: 2, 2, 3, 3, 3, 4. How many Xs go above 3?",
+                "correct_answer": "3",
+                "hint": "Count the number of 3s.",
+                "skill": "line_plots"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Create and Interpret Line Plots",
+            "teaching_points": [
+              "Draw a number line with the measurements.",
+              "Place an X above each measurement.",
+              "Count Xs to answer questions."
+            ],
+            "example": {
+              "prompt": "Create a line plot for these measurements: 1/2, 1/2, 3/4, 3/4, 3/4, 1.",
+              "visual_type": "line_plot",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "Xs above 1/2, 3/4, and 1"
+            },
+            "vocabulary": ["line plot", "X", "data", "measurement"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "line_plots",
+            "prompt": "Create a line plot for: 1/4, 1/2, 1/2, 3/4, 1, 1. How many measurements are 1/2?",
+            "correct_answer": "2",
+            "hint": "Two 1/2 values.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "line_plots",
+            "question_count": 6,
+            "instructions": "Create and answer questions about each line plot."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Line Plots",
+            "type": "data_terms",
+            "card_count": 6,
+            "instructions": "Review line plot vocabulary.",
+            "deckId": "lesson-g3-u34-w1-d4-line-plots"
+          },
+          "bigIdea": {
+            "title": "Create and Interpret Line Plots",
+            "subtitle": "Mark data on a number line",
+            "thumbnail": "/images/learn/thumbnails/graphs.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A line plot is like a number line that shows data. Put an X above each measurement. You can use line plots to see which measurements are most common and answer questions about the data.",
+            "bigQuestion": "What does each X on a line plot represent?",
+            "starTip": {
+              "title": "One X = one measurement",
+              "lines": ["Count the Xs", "Answer questions"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Number line",
+                "equation": "measurement scale",
+                "badge": "Bottom",
+                "description": "The number line shows all possible measurements."
+              },
+              {
+                "eyebrow": "X marks",
+                "equation": "one for each measurement",
+                "badge": "Stack",
+                "description": "Each X stands for one data value."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u34-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Measurement Data",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of choosing length units, measuring to quarter inches, choosing weight/mass/volume units, and line plots.",
+          "concept": "Review the four big ideas from this unit: customary length units, measuring to the nearest quarter inch, choosing units for weight/mass/volume, and creating and interpreting line plots.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about measurement data.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "customary_length_units",
+            "quarter_inch_measurement",
+            "choose_weight_mass_volume_units",
+            "line_plots"
+          ],
+          "skills": [
+            "measurement",
+            "length",
+            "weight",
+            "mass",
+            "volume",
+            "line_plots",
+            "data"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u34-w1-d5-warmup-1",
+                "prompt": "Measure to the nearest quarter inch: a crayon at the 3/4 mark after 4 inches.",
+                "correct_answer": "4 3/4 inches",
+                "hint": "4 + 3/4.",
+                "skill": "quarter_inch_measurement"
+              },
+              {
+                "id": "g3-u34-w1-d5-warmup-2",
+                "prompt": "Which unit is best for the mass of a backpack: grams or kilograms?",
+                "correct_answer": "kilograms",
+                "hint": "A backpack is heavy.",
+                "skill": "choose_weight_mass_volume_units"
+              },
+              {
+                "id": "g3-u34-w1-d5-warmup-3",
+                "prompt": "A line plot has 4 Xs above 2 and 1 X above 3. How many total measurements?",
+                "correct_answer": "5",
+                "hint": "4 + 1.",
+                "skill": "line_plots"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "length units + quarter inches + weight/mass/volume + line plots = measurement data"
+            },
+            "vocabulary": ["evaluation", "review", "measurement"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which unit is best for the length of a school hallway: inches, feet, or yards?",
+            "correct_answer": "yards",
+            "hint": "A hallway is long.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 34 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 34 before the evaluation.",
+            "deckId": "lesson-g3-u34-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Measurement Data",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: choosing customary length units, measuring to the nearest quarter inch, choosing units for weight/mass/liquid volume, and creating and interpreting line plots.",
+            "bigQuestion": "What do you know about measurement and line plots?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Measurement",
+                "equation": "match the unit to the object",
+                "badge": "Right unit",
+                "description": "Choose a unit that makes sense for the size."
+              },
+              {
+                "eyebrow": "Line plot",
+                "equation": "X = one measurement",
+                "badge": "Count data",
+                "description": "Each X stands for one data point on the number line."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

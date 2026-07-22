@@ -1,8 +1,10 @@
-import curriculumJson from "../data/curriculum/grade_3/unit_01_multiplication_division_foundations.json";
+import { getCurriculum, getAllCurricula } from "../data/curriculum";
+import type { Curriculum, Lesson, Week } from "../data/curriculum";
 import type { LearnLesson } from "./learnContent";
 
 // Extended LearnLesson type with curriculum-specific fields
 export type CurriculumLearnLesson = LearnLesson & {
+  unit_number?: number;
   week_number?: number;
   big_idea_title?: string;
   big_idea_subtitle?: string;
@@ -20,104 +22,93 @@ export type CurriculumLearnLesson = LearnLesson & {
   flashcard_deck_id?: string;
 };
 
-// Zod schemas for validation (for future use with Zod)
-const RuleCardSchema = {
-  eyebrow: "string",
-  equation: "string",
-  badge: "string",
-  description: "string",
-};
+// Re-export validated curriculum types with curriculum-specific names
+export type CurriculumLesson = Lesson;
+export type CurriculumWeek = Week;
+export { type Curriculum };
 
-const StarTipSchema = {
-  title: "string",
-  lines: ["string"],
-};
+// Re-export curriculum accessors from the registry
+export { getCurriculum, getAllCurricula };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const BigIdeaSchema = {
-  title: "string",
-  subtitle: "string",
-  thumbnail: "string",
-  videoUrl: "string",
-  videoCaption: "string",
-  intro: "string",
-  bigQuestion: "string",
-  starTip: StarTipSchema,
-  ruleCards: [RuleCardSchema],
-};
+// Default to Grade 3 for now; the app only supports one grade at a time
+const DEFAULT_GRADE = 3;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const FlashcardSchema = {
-  enabled: "boolean",
-  required: "boolean",
-  title: "string",
-  type: "string",
-  card_count: "number",
-  instructions: "string",
-  deckId: "string",
-};
-
-// Type for the loaded curriculum
-export type CurriculumLesson = {
-  lesson_id?: string;
-  day_number: number;
-  day_name: string;
-  lesson_title: string;
-  lesson_type: "lesson" | "evaluation";
-  practice_type: string;
-  flashcards?: typeof FlashcardSchema;
-  bigIdea?: typeof BigIdeaSchema;
-};
-
-export type CurriculumWeek = {
-  week_number: number;
-  week_title: string;
-  lessons: CurriculumLesson[];
-};
-
-export type Curriculum = {
-  unit_number: number;
-  unit_title: string;
-  weeks: CurriculumWeek[];
-};
-
-// Load and validate curriculum data
-export const curriculum: Curriculum = curriculumJson as Curriculum;
-
-// Helper to find a lesson by week and day (unit is hardcoded to 1 for now)
+// Helper to find a lesson by unit, week, and day
 export function findCurriculumLesson(
+  unitNumber: number,
   weekNumber: number,
-  dayNumber: number
+  dayNumber: number,
 ): CurriculumLesson | undefined {
-  const week = curriculum.weeks.find((w) => w.week_number === weekNumber);
+  const unit = getCurriculum(DEFAULT_GRADE, unitNumber);
+  if (!unit) return undefined;
+  const week = unit.weeks.find((w) => w.week_number === weekNumber);
   if (!week) return undefined;
   return week.lessons.find((l) => l.day_number === dayNumber);
 }
 
 // Helper to get flashcard deck ID from curriculum
 export function getFlashcardDeckIdFromCurriculum(
+  unitNumber: number,
   weekNumber: number,
-  dayNumber: number
+  dayNumber: number,
 ): string | undefined {
-  const lesson = findCurriculumLesson(weekNumber, dayNumber);
+  const lesson = findCurriculumLesson(unitNumber, weekNumber, dayNumber);
   return lesson?.flashcards?.deckId;
 }
 
 // Helper to get bigIdea content from curriculum
 export function getBigIdeaFromCurriculum(
+  unitNumber: number,
   weekNumber: number,
-  dayNumber: number
+  dayNumber: number,
 ): CurriculumLesson["bigIdea"] | undefined {
-  const lesson = findCurriculumLesson(weekNumber, dayNumber);
+  const lesson = findCurriculumLesson(unitNumber, weekNumber, dayNumber);
   return lesson?.bigIdea;
 }
 
 // Convert curriculum lesson to LearnLesson format (for compatibility)
+export type FoundCurriculumLesson = {
+  unit: Curriculum;
+  week: CurriculumWeek;
+  lesson: CurriculumLesson;
+  weekDayNumber: number;
+};
+
+export function findCurriculumLessonById(lessonId: string): FoundCurriculumLesson | undefined {
+  const match = lessonId.match(/^g3-u(\d+)-w(\d+)-(?:l(\d+)|eval)$/);
+  if (!match) return undefined;
+
+  const unitNumber = Number(match[1]);
+  const weekNumber = Number(match[2]);
+  const dayNumber = match[3] ? Number(match[3]) : undefined;
+
+  const unit = getCurriculum(DEFAULT_GRADE, unitNumber);
+  if (!unit) return undefined;
+
+  const week = unit.weeks.find((w) => w.week_number === weekNumber);
+  if (!week) return undefined;
+
+  if (dayNumber !== undefined) {
+    const lesson = week.lessons.find(
+      (l) => l.lesson_type === "lesson" && l.day_number === dayNumber,
+    );
+    if (!lesson) return undefined;
+    return { unit, week, lesson, weekDayNumber: dayNumber };
+  }
+
+  const evalIndex = week.lessons.findIndex((l) => l.lesson_type === "evaluation");
+  if (evalIndex < 0) return undefined;
+  const lesson = week.lessons[evalIndex];
+  if (!lesson) return undefined;
+  return { unit, week, lesson, weekDayNumber: evalIndex + 1 };
+}
+
 export function curriculumToLearnLesson(
+  unitNumber: number,
   weekNumber: number,
-  dayNumber: number
+  dayNumber: number,
 ): CurriculumLearnLesson | undefined {
-  const lesson = findCurriculumLesson(weekNumber, dayNumber);
+  const lesson = findCurriculumLesson(unitNumber, weekNumber, dayNumber);
   if (!lesson) return undefined;
 
   return {
@@ -125,6 +116,7 @@ export function curriculumToLearnLesson(
     day_name: lesson.day_name,
     lesson_title: lesson.lesson_title,
     practice_type: lesson.practice_type,
+    unit_number: unitNumber,
     week_number: weekNumber,
     big_idea_title: lesson.bigIdea?.title,
     big_idea_subtitle: lesson.bigIdea?.subtitle,

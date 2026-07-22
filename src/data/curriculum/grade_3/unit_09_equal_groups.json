@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 9,
+  "unit_title": "Equal Groups",
+  "unit_slug": "equal_groups",
+  "unit_description": "This unit introduces multiplication through equal groups. Students count groups, connect repeated addition to multiplication, and identify factors and products in multiplication situations.",
+  "unit_goals": [
+    "Count equal groups.",
+    "Connect repeated addition to multiplication.",
+    "Identify factors and products.",
+    "Draw and describe multiplication situations.",
+    "Write multiplication equations for equal groups."
+  ],
+  "fact_focus": ["multiplication", "3.RA.A.1", "3.RA.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Equal Groups",
+      "weekly_focus": "Students explore multiplication as equal groups, connect repeated addition, and learn the meanings of factor and product.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u9-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Count Equal Groups",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting by twos, threes, and fives.",
+          "concept": "Multiplication begins with equal groups. If you have 4 groups of 3, you can count 3, 6, 9, 12 or multiply 4 times 3.",
+          "practice": "Count the total number of items in equal groups using skip counting.",
+          "objective": "Count equal groups and find totals using skip counting.",
+          "practice_type": "count_equal_groups",
+          "skills": [
+            "equal_groups",
+            "skip_counting",
+            "multiplication",
+            "counting"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "skip_counting_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by skip counting.",
+            "questions": [
+              {
+                "id": "g3-u9-w1-d1-warmup-1",
+                "prompt": "Count by twos: 2, 4, 6, __",
+                "correct_answer": "8",
+                "hint": "Add 2 more.",
+                "skill": "skip_counting"
+              },
+              {
+                "id": "g3-u9-w1-d1-warmup-2",
+                "prompt": "Count by fives: 5, 10, 15, __",
+                "correct_answer": "20",
+                "hint": "Add 5 more.",
+                "skill": "skip_counting"
+              },
+              {
+                "id": "g3-u9-w1-d1-warmup-3",
+                "prompt": "How many wheels are on 3 cars?",
+                "correct_answer": "12",
+                "hint": "Each car has 4 wheels. 4, 8, 12.",
+                "skill": "equal_groups"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Count Equal Groups",
+            "teaching_points": [
+              "A group has the same number of items.",
+              "Count all the groups together.",
+              "Skip counting is faster than counting by ones."
+            ],
+            "example": {
+              "prompt": "How many apples are in 3 baskets of 5?",
+              "visual_type": "groups",
+              "groups": 3,
+              "items_per_group": 5,
+              "equation": "5 + 5 + 5 = 15, or 3 × 5 = 15"
+            },
+            "vocabulary": ["equal groups", "skip count", "total", "groups"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "count_equal_groups",
+            "prompt": "There are 4 boxes with 4 crayons each. How many crayons total?",
+            "correct_answer": "16",
+            "hint": "4 + 4 + 4 + 4 = 16.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 4
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "count_equal_groups",
+            "question_count": 6,
+            "instructions": "Count the total number of items in each set of equal groups."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Equal Groups Vocabulary",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review equal group vocabulary.",
+            "deckId": "lesson-g3-u9-w1-d1-equal-groups-vocab"
+          },
+          "bigIdea": {
+            "title": "Count Equal Groups",
+            "subtitle": "Skip count to find the total",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Equal groups are the foundation of multiplication. Skip counting helps you find the total without counting one by one.",
+            "bigQuestion": "Why is skip counting helpful for equal groups?",
+            "starTip": {
+              "title": "Count the groups",
+              "lines": ["Same number each time", "Skip count by that number"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Equal groups",
+                "equation": "3 groups of 5",
+                "badge": "Same size",
+                "description": "Every group must have the same number of items."
+              },
+              {
+                "eyebrow": "Skip count",
+                "equation": "5, 10, 15",
+                "badge": "Faster counting",
+                "description": "Count by the number in each group to find the total."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u9-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Connect Repeated Addition to Multiplication",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing repeated addition sentences for groups.",
+          "concept": "Repeated addition is the same as multiplication. 3 + 3 + 3 + 3 = 4 × 3. The first factor tells how many groups, the second tells how many in each group.",
+          "practice": "Write multiplication equations for repeated addition sentences and pictures.",
+          "objective": "Connect repeated addition to multiplication equations.",
+          "practice_type": "repeated_addition_to_multiplication",
+          "skills": [
+            "repeated_addition",
+            "multiplication",
+            "equal_groups",
+            "equations"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "repeated_addition_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by matching repeated addition to multiplication.",
+            "questions": [
+              {
+                "id": "g3-u9-w1-d2-warmup-1",
+                "prompt": "2 + 2 + 2 + 2 is the same as 4 × __",
+                "correct_answer": "2",
+                "hint": "There are 4 groups of 2.",
+                "skill": "repeated_addition"
+              },
+              {
+                "id": "g3-u9-w1-d2-warmup-2",
+                "prompt": "5 + 5 + 5 = ?",
+                "correct_answer": "15",
+                "hint": "3 × 5 = 15.",
+                "skill": "repeated_addition"
+              },
+              {
+                "id": "g3-u9-w1-d2-warmup-3",
+                "prompt": "What multiplication equation matches 3 + 3 + 3 + 3?",
+                "correct_answer": "4 x 3",
+                "hint": "4 groups of 3.",
+                "skill": "repeated_addition"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Connect Repeated Addition to Multiplication",
+            "teaching_points": [
+              "Repeated addition adds the same number again and again.",
+              "Multiplication is a shortcut for repeated addition.",
+              "The first factor is the number of groups; the second is the group size."
+            ],
+            "example": {
+              "prompt": "Write 6 + 6 + 6 as multiplication.",
+              "visual_type": "groups",
+              "groups": 3,
+              "items_per_group": 6,
+              "equation": "3 × 6 = 18"
+            },
+            "vocabulary": ["repeated addition", "multiplication", "factor", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "repeated_addition_to_multiplication",
+            "prompt": "Write 4 + 4 + 4 + 4 + 4 as multiplication and solve.",
+            "correct_answer": "20",
+            "hint": "5 groups of 4 = 5 × 4.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 4
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "repeated_addition_to_multiplication",
+            "question_count": 6,
+            "instructions": "Change each repeated addition into a multiplication equation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Repeated Addition vs Multiplication",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review how repeated addition and multiplication are related.",
+            "deckId": "lesson-g3-u9-w1-d2-repeated-addition"
+          },
+          "bigIdea": {
+            "title": "Connect Repeated Addition to Multiplication",
+            "subtitle": "Multiplication is a faster way to add the same number",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Instead of writing 3 + 3 + 3 + 3, you can write 4 × 3. Both mean 4 groups of 3.",
+            "bigQuestion": "How is multiplication like repeated addition?",
+            "starTip": {
+              "title": "Groups and size",
+              "lines": ["Number of groups", "How many in each"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Shortcut",
+                "equation": "3 + 3 + 3 + 3 = 4 × 3",
+                "badge": "Same total",
+                "description": "Multiplication is a shorter way to show repeated addition."
+              },
+              {
+                "eyebrow": "First factor",
+                "equation": "4 groups",
+                "badge": "Number of groups",
+                "description": "The first factor tells how many groups there are."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u9-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Identify Factors and Products",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by naming the parts of multiplication equations.",
+          "concept": "In a multiplication equation like 3 × 5 = 15, the numbers being multiplied are factors and the answer is the product.",
+          "practice": "Label factors and products in multiplication equations and word problems.",
+          "objective": "Identify factors and products in multiplication.",
+          "practice_type": "factors_and_products",
+          "skills": [
+            "factors",
+            "product",
+            "multiplication",
+            "vocabulary"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "vocabulary_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by identifying parts of multiplication.",
+            "questions": [
+              {
+                "id": "g3-u9-w1-d3-warmup-1",
+                "prompt": "In 4 × 3 = 12, what is the product?",
+                "correct_answer": "12",
+                "hint": "The product is the answer.",
+                "skill": "product"
+              },
+              {
+                "id": "g3-u9-w1-d3-warmup-2",
+                "prompt": "In 6 × 2 = 12, what are the factors?",
+                "correct_answer": "6 and 2",
+                "hint": "The factors are the numbers being multiplied.",
+                "skill": "factors"
+              },
+              {
+                "id": "g3-u9-w1-d3-warmup-3",
+                "prompt": "Which is bigger: the product or the factors?",
+                "correct_answer": "product",
+                "hint": "The product is the total of all groups.",
+                "skill": "product"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Identify Factors and Products",
+            "teaching_points": [
+              "Factors are the numbers being multiplied.",
+              "The product is the total or answer.",
+              "Each factor tells something about the groups."
+            ],
+            "example": {
+              "prompt": "In 5 × 4 = 20, name the factors and product.",
+              "visual_type": "groups",
+              "groups": 5,
+              "items_per_group": 4,
+              "equation": "Factors: 5 and 4. Product: 20."
+            },
+            "vocabulary": ["factor", "product", "multiplication", "equation"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "factors_and_products",
+            "prompt": "In 7 × 3 = 21, what are the factors?",
+            "correct_answer": "7 and 3",
+            "hint": "The numbers being multiplied are factors.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 3
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "factors_and_products",
+            "question_count": 6,
+            "instructions": "Identify the factors and product in each equation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Factors and Products",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review factor and product definitions.",
+            "deckId": "lesson-g3-u9-w1-d3-factors-products"
+          },
+          "bigIdea": {
+            "title": "Identify Factors and Products",
+            "subtitle": "Name the parts of a multiplication equation",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Every multiplication equation has two factors and one product. The factors tell us about the groups, and the product is the total.",
+            "bigQuestion": "What do the two factors in a multiplication equation tell you?",
+            "starTip": {
+              "title": "Factor parts",
+              "lines": ["Number of groups", "Size of group"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Factors",
+                "equation": "5 × 4 = 20",
+                "badge": "5 and 4",
+                "description": "The factors tell how many groups and how many are in each group."
+              },
+              {
+                "eyebrow": "Product",
+                "equation": "5 × 4 = 20",
+                "badge": "20",
+                "description": "The product is the total amount after combining the groups."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u9-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Draw and Describe Multiplication Situations",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by drawing quick groups for given multiplication equations.",
+          "concept": "A multiplication story can be drawn as equal groups, an array, or a number line. Drawing helps you see the factors and product.",
+          "practice": "Draw and describe multiplication situations from equations and word problems.",
+          "objective": "Draw and describe multiplication situations.",
+          "practice_type": "draw_multiplication",
+          "skills": [
+            "multiplication",
+            "draw",
+            "equal_groups",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "drawing_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by describing a multiplication situation.",
+            "questions": [
+              {
+                "id": "g3-u9-w1-d4-warmup-1",
+                "prompt": "Describe 3 × 4 in words using groups.",
+                "correct_answer": "3 groups of 4",
+                "hint": "3 is the number of groups, 4 is the group size.",
+                "skill": "describe_multiplication"
+              },
+              {
+                "id": "g3-u9-w1-d4-warmup-2",
+                "prompt": "There are 5 vases with 2 flowers each. Write the multiplication equation.",
+                "correct_answer": "5 x 2",
+                "hint": "5 groups of 2.",
+                "skill": "equations"
+              },
+              {
+                "id": "g3-u9-w1-d4-warmup-3",
+                "prompt": "Draw 2 × 6 as 2 groups.",
+                "correct_answer": "12",
+                "hint": "2 groups of 6 is 12.",
+                "skill": "draw_multiplication"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Draw and Describe Multiplication Situations",
+            "teaching_points": [
+              "Use circles or boxes to show groups.",
+              "The first factor is the number of groups.",
+              "The second factor is the size of each group."
+            ],
+            "example": {
+              "prompt": "Draw and describe 4 × 3.",
+              "visual_type": "groups",
+              "groups": 4,
+              "items_per_group": 3,
+              "equation": "4 groups of 3 is 12."
+            },
+            "vocabulary": ["draw", "describe", "groups", "situation"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "draw_multiplication",
+            "prompt": "Draw 3 groups of 5 and write the multiplication equation.",
+            "correct_answer": "15",
+            "hint": "3 × 5 = 15.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "draw_multiplication",
+            "question_count": 6,
+            "instructions": "Draw a picture and write an equation for each multiplication situation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Drawing Multiplication",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review words for drawing multiplication situations.",
+            "deckId": "lesson-g3-u9-w1-d4-draw-multiplication"
+          },
+          "bigIdea": {
+            "title": "Draw and Describe Multiplication Situations",
+            "subtitle": "Pictures make multiplication visible",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you draw multiplication, you turn numbers into a picture. Each group is the same size, and the total is the product.",
+            "bigQuestion": "How can drawing help you understand multiplication?",
+            "starTip": {
+              "title": "Draw the groups",
+              "lines": [ "Same number each time", "Count the total" ]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Show the groups",
+                "equation": "4 × 3 = 12",
+                "badge": "Draw 4 circles",
+                "description": "Draw one circle for each group and put the same number of dots in each."
+              },
+              {
+                "eyebrow": "Describe the situation",
+                "equation": "4 groups of 3",
+                "badge": "Words match numbers",
+                "description": "Use words to tell the same story as the equation."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u9-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Equal Groups",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of counting equal groups, repeated addition, factors and products, and drawing multiplication.",
+          "concept": "Review the four big ideas from this unit: equal groups, repeated addition, factors and products, and describing multiplication situations.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about equal groups.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "count_equal_groups",
+            "repeated_addition_to_multiplication",
+            "factors_and_products",
+            "draw_multiplication"
+          ],
+          "skills": [
+            "equal_groups",
+            "skip_counting",
+            "repeated_addition",
+            "multiplication",
+            "factors",
+            "product",
+            "draw",
+            "describe"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u9-w1-d5-warmup-1",
+                "prompt": "Write 6 + 6 + 6 + 6 as multiplication.",
+                "correct_answer": "4 x 6",
+                "hint": "4 groups of 6.",
+                "skill": "repeated_addition"
+              },
+              {
+                "id": "g3-u9-w1-d5-warmup-2",
+                "prompt": "In 5 × 7 = 35, what is the product?",
+                "correct_answer": "35",
+                "hint": "The product is the answer.",
+                "skill": "product"
+              },
+              {
+                "id": "g3-u9-w1-d5-warmup-3",
+                "prompt": "How many in 3 groups of 8?",
+                "correct_answer": "24",
+                "hint": "3 × 8 = 24.",
+                "skill": "equal_groups"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "equal groups + repeated addition + factors/products + drawing = equal groups"
+            },
+            "vocabulary": ["evaluation", "review", "multiplication"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which equation matches 4 groups of 9?",
+            "correct_answer": "4 x 9 = 36",
+            "hint": "First factor is 4, second factor is 9.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 9 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 9 before the evaluation.",
+            "deckId": "lesson-g3-u9-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Equal Groups",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: counting equal groups, repeated addition, factors and products, and drawing multiplication situations.",
+            "bigQuestion": "What do you know about equal groups?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Multiplication shortcut",
+                "equation": "Repeated addition = multiplication",
+                "badge": "Core idea",
+                "description": "Multiplication is a faster way to add equal groups."
+              },
+              {
+                "eyebrow": "Factors",
+                "equation": "groups × size = product",
+                "badge": "Two factors",
+                "description": "The first factor is groups; the second is group size; the answer is the product."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

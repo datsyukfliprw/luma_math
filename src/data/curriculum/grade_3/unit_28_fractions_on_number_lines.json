@@ -1,0 +1,627 @@
+{
+  "grade_level": 3,
+  "unit_number": 28,
+  "unit_title": "Fractions on Number Lines",
+  "unit_slug": "fractions_on_number_lines",
+  "unit_description": "This unit places fractions on number lines. Students understand the interval from 0 to 1, partition number lines into equal lengths, locate unit fractions, and graph non-unit fractions.",
+  "unit_goals": [
+    "Understand the interval from 0 to 1 on a number line.",
+    "Partition number lines into equal lengths.",
+    "Locate unit fractions on number lines.",
+    "Locate and graph non-unit fractions.",
+    "Connect fraction models to number lines."
+  ],
+  "fact_focus": ["fractions", "number_line", "3.NF.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Fractions on Number Lines",
+      "weekly_focus": "Students learn to partition the interval from 0 to 1 and locate unit and non-unit fractions on a number line.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u28-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Understand the Interval from 0 to 1",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by locating 0, 1, and 1/2 on a number line.",
+          "concept": "On a fraction number line, 0 is the start and 1 is the end of the whole. Fractions between 0 and 1 show parts of the whole.",
+          "practice": "Label 0, 1, and fractions between 0 and 1 on a number line.",
+          "objective": "Understand the interval from 0 to 1 on a number line.",
+          "practice_type": "zero_to_one_interval",
+          "skills": [
+            "fractions",
+            "number_line",
+            "zero",
+            "one"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "number_line_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with 0 to 1.",
+            "questions": [
+              {
+                "id": "g3-u28-w1-d1-warmup-1",
+                "prompt": "On a fraction number line, where is the whole?",
+                "correct_answer": "1",
+                "hint": "The whole is at 1.",
+                "skill": "number_line"
+              },
+              {
+                "id": "g3-u28-w1-d1-warmup-2",
+                "prompt": "Where does a fraction number line start?",
+                "correct_answer": "0",
+                "hint": "Number lines start at 0.",
+                "skill": "number_line"
+              },
+              {
+                "id": "g3-u28-w1-d1-warmup-3",
+                "prompt": "Are fractions less than 1 between 0 and 1?",
+                "correct_answer": "yes",
+                "hint": "Fractions of a whole are between 0 and 1.",
+                "skill": "number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Understand the Interval from 0 to 1",
+            "teaching_points": [
+              "0 is the start and 1 is the end of one whole.",
+              "Fractions less than 1 are between 0 and 1.",
+              "The distance from 0 to 1 is one whole."
+            ],
+            "example": {
+              "prompt": "Label 1/2 on a number line from 0 to 1.",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "1/2 is halfway between 0 and 1"
+            },
+            "vocabulary": ["interval", "whole", "zero", "one"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "zero_to_one_interval",
+            "prompt": "Show where 1/4 would be on a number line from 0 to 1.",
+            "correct_answer": "one fourth",
+            "hint": "Divide 0 to 1 into 4 equal parts and go 1 part.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "zero_to_one_interval",
+            "question_count": 6,
+            "instructions": "Label each point on a 0 to 1 number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "0 to 1 Interval",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review the interval from 0 to 1.",
+            "deckId": "lesson-g3-u28-w1-d1-zero-one"
+          },
+          "bigIdea": {
+            "title": "Understand the Interval from 0 to 1",
+            "subtitle": "Fractions live between 0 and 1",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A fraction number line shows how the space from 0 to 1 is divided. The whole is at 1, and fractions are the points in between.",
+            "bigQuestion": "Why are fractions between 0 and 1?",
+            "starTip": {
+              "title": "0 to 1 is one whole",
+              "lines": ["Start at 0", "End at 1"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "0",
+                "equation": "start of the whole",
+                "badge": "Beginning",
+                "description": "Number lines for fractions start at 0."
+              },
+              {
+                "eyebrow": "1",
+                "equation": "end of the whole",
+                "badge": "Whole",
+                "description": "The distance from 0 to 1 is one whole."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u28-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Partition Number Lines into Equal Lengths",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by dividing a number line from 0 to 1 into 2, 3, and 4 equal parts.",
+          "concept": "To show fractions on a number line, divide the space from 0 to 1 into equal parts. The number of parts is the denominator. For fourths, make 4 equal spaces.",
+          "practice": "Partition number lines from 0 to 1 into equal lengths.",
+          "objective": "Partition number lines into equal lengths.",
+          "practice_type": "partition_number_lines",
+          "skills": [
+            "fractions",
+            "number_line",
+            "partition",
+            "equal_parts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "partition_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by partitioning.",
+            "questions": [
+              {
+                "id": "g3-u28-w1-d2-warmup-1",
+                "prompt": "How many equal parts are needed to show thirds on a number line?",
+                "correct_answer": "3",
+                "hint": "Thirds mean 3 equal parts.",
+                "skill": "partition_number_lines"
+              },
+              {
+                "id": "g3-u28-w1-d2-warmup-2",
+                "prompt": "To show fourths, how many tick marks are between 0 and 1?",
+                "correct_answer": "3",
+                "hint": "4 parts have 3 inner tick marks.",
+                "skill": "partition_number_lines"
+              },
+              {
+                "id": "g3-u28-w1-d2-warmup-3",
+                "prompt": "How many equal spaces are needed to show sixths?",
+                "correct_answer": "6",
+                "hint": "Sixths mean 6 equal parts.",
+                "skill": "partition_number_lines"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Partition Number Lines into Equal Lengths",
+            "teaching_points": [
+              "Divide 0 to 1 into the denominator number of parts.",
+              "Each part is the same length.",
+              "The number of spaces equals the denominator."
+            ],
+            "example": {
+              "prompt": "Partition a number line from 0 to 1 into 4 equal parts.",
+              "visual_type": "number_line",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "4 equal parts, each is 1/4"
+            },
+            "vocabulary": ["partition", "tick marks", "equal lengths", "denominator"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "partition_number_lines",
+            "prompt": "Partition a number line from 0 to 1 into 3 equal parts.",
+            "correct_answer": "3",
+            "hint": "Make 3 equal spaces.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "partition_number_lines",
+            "question_count": 6,
+            "instructions": "Partition each number line into the given number of equal parts."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Partition Number Lines",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review partitioning number lines.",
+            "deckId": "lesson-g3-u28-w1-d2-partition"
+          },
+          "bigIdea": {
+            "title": "Partition Number Lines into Equal Lengths",
+            "subtitle": "Same number of spaces as the denominator",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "To put fractions on a number line, split the distance from 0 to 1 into equal parts. The number of parts matches the denominator.",
+            "bigQuestion": "Why do the number of equal spaces match the denominator?",
+            "starTip": {
+              "title": "Divide the whole",
+              "lines": ["Denominator = number of spaces", "From 0 to 1"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Denominator",
+                "equation": "4 = 4 equal spaces",
+                "badge": "Parts of the whole",
+                "description": "Split 0 to 1 into the denominator number of equal parts."
+              },
+              {
+                "eyebrow": "Equal length",
+                "equation": "each part is the same size",
+                "badge": "Fair shares",
+                "description": "Each part must be the same length for fractions."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u28-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Locate Unit Fractions on Number Lines",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by pointing to the first tick mark after 0 for different partitions.",
+          "concept": "A unit fraction is one of the equal parts. On a number line, 1/4 is the first tick mark after 0 when 0 to 1 is split into 4 equal parts.",
+          "practice": "Locate unit fractions like 1/2, 1/3, 1/4, and 1/6 on number lines.",
+          "objective": "Locate unit fractions on number lines.",
+          "practice_type": "locate_unit_fractions_number_line",
+          "skills": [
+            "fractions",
+            "number_line",
+            "unit_fractions",
+            "locate"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "unit_fraction_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with unit fractions on number lines.",
+            "questions": [
+              {
+                "id": "g3-u28-w1-d3-warmup-1",
+                "prompt": "On a number line divided into 5 equal parts, what is the first tick mark after 0?",
+                "correct_answer": "1/5",
+                "hint": "One of five equal parts.",
+                "skill": "locate_unit_fractions_number_line"
+              },
+              {
+                "id": "g3-u28-w1-d3-warmup-2",
+                "prompt": "What unit fraction is halfway between 0 and 1?",
+                "correct_answer": "1/2",
+                "hint": "One of two equal parts.",
+                "skill": "locate_unit_fractions_number_line"
+              },
+              {
+                "id": "g3-u28-w1-d3-warmup-3",
+                "prompt": "On a number line divided into 8 equal parts, what is one part called?",
+                "correct_answer": "1/8",
+                "hint": "One of eight equal parts.",
+                "skill": "locate_unit_fractions_number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Locate Unit Fractions on Number Lines",
+            "teaching_points": [
+              "Count one space from 0 for a unit fraction.",
+              "The denominator tells how many total spaces.",
+              "1/4 is at the first mark when there are 4 equal spaces."
+            ],
+            "example": {
+              "prompt": "Locate 1/3 on a number line from 0 to 1.",
+              "visual_type": "number_line",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "1/3 is one of three equal spaces from 0"
+            },
+            "vocabulary": ["unit fraction", "locate", "first tick mark", "number line"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "locate_unit_fractions_number_line",
+            "prompt": "Locate 1/4 on a number line from 0 to 1.",
+            "correct_answer": "1/4",
+            "hint": "First tick mark after 0 when divided into 4.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "locate_unit_fractions_number_line",
+            "question_count": 6,
+            "instructions": "Locate each unit fraction on a number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit Fractions on Number Lines",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review unit fractions on number lines.",
+            "deckId": "lesson-g3-u28-w1-d3-unit-fractions-number-line"
+          },
+          "bigIdea": {
+            "title": "Locate Unit Fractions on Number Lines",
+            "subtitle": "One space from 0",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A unit fraction is one equal part of the whole. On a number line, it is the first tick mark after 0 when the whole is split into equal parts.",
+            "bigQuestion": "How do you know where to place 1/4 on a number line?",
+            "starTip": {
+              "title": "First tick",
+              "lines": ["Split 0 to 1 into 4", "Move 1 space"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Unit fraction",
+                "equation": "1/4",
+                "badge": "One part",
+                "description": "One of four equal parts."
+              },
+              {
+                "eyebrow": "Locate",
+                "equation": "first tick after 0",
+                "badge": "Move one space",
+                "description": "Count one equal space from 0."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u28-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Locate and Graph Non-Unit Fractions",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting tick marks for fractions like 2/3, 3/4, and 4/6.",
+          "concept": "Non-unit fractions are located by counting the number of equal spaces shown by the numerator from 0. 3/4 is three of four equal spaces from 0.",
+          "practice": "Locate and graph non-unit fractions on number lines.",
+          "objective": "Locate and graph non-unit fractions on number lines.",
+          "practice_type": "locate_non_unit_fractions_number_line",
+          "skills": [
+            "fractions",
+            "number_line",
+            "non_unit_fractions",
+            "graph"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "non_unit_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with non-unit fractions.",
+            "questions": [
+              {
+                "id": "g3-u28-w1-d4-warmup-1",
+                "prompt": "On a number line divided into 5 equal parts, where is 3/5?",
+                "correct_answer": "3rd tick after 0",
+                "hint": "Count 3 spaces from 0.",
+                "skill": "locate_non_unit_fractions_number_line"
+              },
+              {
+                "id": "g3-u28-w1-d4-warmup-2",
+                "prompt": "On a number line divided into 8 equal parts, where is 6/8?",
+                "correct_answer": "6th tick after 0",
+                "hint": "Count 6 spaces from 0.",
+                "skill": "locate_non_unit_fractions_number_line"
+              },
+              {
+                "id": "g3-u28-w1-d4-warmup-3",
+                "prompt": "Where is 2/3 on a number line?",
+                "correct_answer": "2 spaces from 0",
+                "hint": "2 of 3 equal parts.",
+                "skill": "locate_non_unit_fractions_number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Locate and Graph Non-Unit Fractions",
+            "teaching_points": [
+              "Partition 0 to 1 into the denominator number of parts.",
+              "Count the numerator number of spaces from 0.",
+              "Mark and label the point."
+            ],
+            "example": {
+              "prompt": "Locate 3/6 on a number line from 0 to 1.",
+              "visual_type": "number_line",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "3/6 is three of six equal spaces from 0"
+            },
+            "vocabulary": ["non-unit fraction", "locate", "graph", "numerator"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "locate_non_unit_fractions_number_line",
+            "prompt": "Locate 4/5 on a number line from 0 to 1.",
+            "correct_answer": "4 spaces from 0",
+            "hint": "Split into 5 equal parts, count 4 spaces.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "locate_non_unit_fractions_number_line",
+            "question_count": 6,
+            "instructions": "Locate and label each non-unit fraction on a number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Non-Unit Fractions on Number Lines",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review non-unit fractions on number lines.",
+            "deckId": "lesson-g3-u28-w1-d4-non-unit-fractions-number-line"
+          },
+          "bigIdea": {
+            "title": "Locate and Graph Non-Unit Fractions",
+            "subtitle": "Count the numerator spaces from 0",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Non-unit fractions are found by counting the number of equal spaces shown by the numerator. 4/5 is four of five equal spaces from 0.",
+            "bigQuestion": "How is locating 4/5 like taking 4 jumps of 1/5?",
+            "starTip": {
+              "title": "Count spaces",
+              "lines": ["Partition into 5", "Jump 4 times"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Partition",
+                "equation": "5 equal spaces",
+                "badge": "Denominator",
+                "description": "Split 0 to 1 into 5 equal spaces."
+              },
+              {
+                "eyebrow": "Locate",
+                "equation": "4/5 = 4 spaces from 0",
+                "badge": "Numerator",
+                "description": "Count 4 equal spaces from 0."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u28-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Fractions on Number Lines",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of the 0 to 1 interval, partitioning number lines, locating unit fractions, and locating non-unit fractions.",
+          "concept": "Review the four big ideas from this unit: the interval from 0 to 1, partitioning number lines into equal lengths, locating unit fractions, and locating non-unit fractions.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about fractions on number lines.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "zero_to_one_interval",
+            "partition_number_lines",
+            "locate_unit_fractions_number_line",
+            "locate_non_unit_fractions_number_line"
+          ],
+          "skills": [
+            "fractions",
+            "number_line",
+            "partitioning",
+            "unit_fractions",
+            "non_unit_fractions"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u28-w1-d5-warmup-1",
+                "prompt": "On a number line from 0 to 1 divided into 4 equal parts, where is 1/4?",
+                "correct_answer": "1st tick after 0",
+                "hint": "First space.",
+                "skill": "locate_unit_fractions_number_line"
+              },
+              {
+                "id": "g3-u28-w1-d5-warmup-2",
+                "prompt": "On a number line divided into 6 equal parts, where is 5/6?",
+                "correct_answer": "5th tick after 0",
+                "hint": "Count 5 spaces from 0.",
+                "skill": "locate_non_unit_fractions_number_line"
+              },
+              {
+                "id": "g3-u28-w1-d5-warmup-3",
+                "prompt": "How many equal spaces are needed to show eighths?",
+                "correct_answer": "8",
+                "hint": "Eighths mean 8 equal parts.",
+                "skill": "partition_number_lines"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "0 to 1 + partitioning + unit fractions + non-unit fractions = fractions on number lines"
+            },
+            "vocabulary": ["evaluation", "review", "fractions", "number line"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Where is 3/4 on a number line from 0 to 1?",
+            "correct_answer": "3rd tick after 0",
+            "hint": "Split into 4 equal parts, count 3 spaces.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 28 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 28 before the evaluation.",
+            "deckId": "lesson-g3-u28-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Fractions on Number Lines",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: the interval from 0 to 1, partitioning number lines into equal lengths, locating unit fractions, and locating non-unit fractions.",
+            "bigQuestion": "What do you know about fractions on number lines?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "0 to 1",
+                "equation": "one whole",
+                "badge": "Interval",
+                "description": "Fractions between 0 and 1 show parts of one whole."
+              },
+              {
+                "eyebrow": "Locate",
+                "equation": "count spaces from 0",
+                "badge": "Numerator",
+                "description": "The numerator tells how many spaces to count."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

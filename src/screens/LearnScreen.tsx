@@ -1,17 +1,22 @@
 // @SECTION LEARN_SCREEN_IMPORTS
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Clock3 } from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
-import type { LearnLesson } from "../lib/learnContent";
+import type { CurriculumLearnLesson } from "../lib/curriculumLoader";
 import BigIdeaPage from "./learn/BigIdeaPage";
 import BuildItPage from "./learn/BuildItPage";
 import SeeItPage from "./learn/SeeItPage";
 import WordsPage from "./learn/WordsPage";
 import QuickCheckPage from "./learn/QuickCheckPage";
-import { learnSteps } from "./learn/LearnStepper";
+import {
+  getBuildRounds,
+  getSeeItClues,
+  getVocabularyWords,
+  getQuickCheckQuestions,
+} from "../lib/learnContent";
 
 // @SECTION LEARN_SCREEN_HELPERS
 function getCurrentLessonId({
@@ -33,12 +38,15 @@ function LearnStepper({
   currentStep,
   onPrevious,
   onNext,
+  steps,
 }: {
   currentStep: number;
   onPrevious: () => void;
   onNext: () => void;
+  steps: { label: string }[];
 }) {
   const isFirstStep = currentStep === 0;
+  const stepCount = steps.length;
 
   return (
     <div data-name="learn-stepper-nav" className="flex items-center justify-end gap-2">
@@ -58,7 +66,7 @@ function LearnStepper({
       </button>
 
       <div data-name="learn-stepper-steps" className="flex items-start gap-0">
-        {learnSteps.map((step, index) => {
+        {steps.map((step, index) => {
           const isActive = index === currentStep;
           const isDone = index < currentStep;
 
@@ -95,7 +103,7 @@ function LearnStepper({
                 </p>
               </div>
 
-              {index < learnSteps.length - 1 && (
+              {index < stepCount - 1 && (
                 <div
                   data-name={`learn-stepper-connector-${index + 1}`}
                   className="mt-5 h-0.5 w-10 border-t-2 border-dashed border-[#9AB5C7]/45"
@@ -158,7 +166,11 @@ function LearnScreen() {
   const topSentinelRef = useRef<HTMLDivElement | null>(null);
   const pageContentRef = useRef<HTMLDivElement | null>(null);
 
-  const learnLesson = lesson as LearnLesson;
+  const learnLesson = {
+    ...lesson,
+    unit_number: unit.unit_number,
+    week_number: week.week_number,
+  } as CurriculumLearnLesson;
 
   useEffect(() => {
     // Reset step when lesson changes
@@ -225,35 +237,59 @@ function LearnScreen() {
     }
   }, [currentStep]);
 
-  const page = useMemo(() => {
-    if (currentStep === 0) {
-      return <BigIdeaPage lesson={learnLesson} starName={starName} />;
+  const availableSteps = useMemo(() => {
+    const buildRounds = getBuildRounds(learnLesson);
+    const seeItClues = getSeeItClues(learnLesson);
+    const vocab = getVocabularyWords(learnLesson);
+    const quickCheckQuestions = getQuickCheckQuestions(learnLesson);
+
+    const steps: { label: string; component: ReactNode }[] = [
+      {
+        label: "Big Idea",
+        component: <BigIdeaPage lesson={learnLesson} starName={starName} />,
+      },
+    ];
+
+    if (buildRounds.length > 0) {
+      steps.push({
+        label: "Build It",
+        component: (
+          <BuildItPage
+            lesson={learnLesson}
+            starName={starName}
+            onBuildComplete={() => {
+              updateLessonProgress(currentLessonId, {
+                learnComplete: true,
+              });
+            }}
+          />
+        ),
+      });
     }
 
-    if (currentStep === 1) {
-      return (
-        <BuildItPage
-          lesson={learnLesson}
-          starName={starName}
-          onBuildComplete={() => {
-            updateLessonProgress(currentLessonId, {
-              learnComplete: true,
-            });
-          }}
-        />
-      );
+    if (seeItClues.length > 0) {
+      steps.push({
+        label: "See It",
+        component: <SeeItPage lesson={learnLesson} starName={starName} />,
+      });
     }
 
-    if (currentStep === 2) {
-      return <SeeItPage lesson={learnLesson} starName={starName} />;
+    if (vocab.length > 0) {
+      steps.push({
+        label: "Words",
+        component: <WordsPage lesson={learnLesson} starName={starName} />,
+      });
     }
 
-    if (currentStep === 3) {
-      return <WordsPage lesson={learnLesson} starName={starName} />;
+    if (quickCheckQuestions.length > 0) {
+      steps.push({
+        label: "Quick Check",
+        component: <QuickCheckPage lessonId={currentLessonId} starName={starName} />,
+      });
     }
 
-    return <QuickCheckPage lessonId={currentLessonId} starName={starName} />;
-  }, [currentLessonId, currentStep, learnLesson, starName, updateLessonProgress]);
+    return steps;
+  }, [currentLessonId, learnLesson, starName, updateLessonProgress]);
 
   function backToLesson() {
     navigate(lessonPath);
@@ -264,7 +300,7 @@ function LearnScreen() {
   }
 
   function goNext() {
-    if (currentStep >= learnSteps.length - 1) {
+    if (currentStep >= availableSteps.length - 1) {
       updateLessonProgress(currentLessonId, {
         learnComplete: true,
       });
@@ -272,7 +308,7 @@ function LearnScreen() {
       return;
     }
 
-    setCurrentStep((current) => Math.min(current + 1, learnSteps.length - 1));
+    setCurrentStep((current) => Math.min(current + 1, availableSteps.length - 1));
   }
 
   return (
@@ -334,7 +370,7 @@ function LearnScreen() {
                     data-name="learn-header-current-page"
                     className="text-sm font-black text-[#00AFB9]"
                   >
-                    Page {currentStep + 1} • {learnSteps[currentStep].label}
+                    Page {currentStep + 1} • {availableSteps[currentStep].label}
                   </p>
 
                   {!isCompactHeader && (
@@ -364,7 +400,12 @@ function LearnScreen() {
             </div>
 
             <div data-name="learn-header-stepper-nav" className="hidden xl:block">
-              <LearnStepper currentStep={currentStep} onPrevious={goBack} onNext={goNext} />
+              <LearnStepper
+                currentStep={currentStep}
+                onPrevious={goBack}
+                onNext={goNext}
+                steps={availableSteps}
+              />
             </div>
           </div>
         </header>
@@ -373,10 +414,12 @@ function LearnScreen() {
         <section
           data-name="learn-page-content-grid"
           className={`grid items-start gap-5 ${
-            currentStep === 1 ? "xl:grid-cols-[1.55fr_0.75fr]" : "xl:grid-cols-[1.15fr_0.85fr]"
+            availableSteps[currentStep].label === "Build It"
+              ? "xl:grid-cols-[1.55fr_0.75fr]"
+              : "xl:grid-cols-[1.15fr_0.85fr]"
           }`}
         >
-          {page}
+          {availableSteps[currentStep].component}
         </section>
 
         {/* @SECTION LEARN_MOBILE_NAV */}
@@ -394,7 +437,7 @@ function LearnScreen() {
 
           <div className="flex items-center gap-2 text-sm font-black text-[#073B5A]">
             <BookOpen size={16} strokeWidth={2.7} />
-            {currentStep + 1} / {learnSteps.length}
+            {currentStep + 1} / {availableSteps.length}
           </div>
 
           <button
@@ -402,7 +445,7 @@ function LearnScreen() {
             onClick={goNext}
             className="rounded-xl bg-[#00AFB9] px-4 py-2 text-sm font-black text-white lg:px-6 lg:py-3 lg:text-base"
           >
-            {currentStep === learnSteps.length - 1 ? "Finish" : "Next →"}
+            {currentStep === availableSteps.length - 1 ? "Finish" : "Next →"}
           </button>
         </div>
 

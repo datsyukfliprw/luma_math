@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 35,
+  "unit_title": "Time and Elapsed Time",
+  "unit_slug": "time_and_elapsed_time",
+  "unit_description": "This unit focuses on telling time and elapsed time. Students read analog clocks to the nearest minute, match analog, digital, and written times, estimate time intervals in minutes, and find elapsed time and ending time.",
+  "unit_goals": [
+    "Read analog clocks to the nearest minute.",
+    "Match analog, digital, and written times.",
+    "Estimate time intervals in minutes.",
+    "Find elapsed time and ending time.",
+    "Solve real-world time problems."
+  ],
+  "fact_focus": ["time", "elapsed_time", "3.GM.B.4", "3.GM.B.5", "3.GM.B.6"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Time and Elapsed Time",
+      "weekly_focus": "Students learn to read clocks precisely, match time formats, and solve elapsed-time problems.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u35-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Read Analog Clocks to the Nearest Minute",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by reading the hour and minute hands on an analog clock.",
+          "concept": "An analog clock has an hour hand and a minute hand. The minute hand points to minutes, and the hour hand moves between hour numbers. Count by 5s for each large mark and by 1s for each small mark.",
+          "practice": "Read analog clocks to the nearest minute.",
+          "objective": "Read analog clocks to the nearest minute.",
+          "practice_type": "read_analog_clocks",
+          "skills": [
+            "time",
+            "analog_clock",
+            "minutes",
+            "hour"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "clock_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with analog clocks.",
+            "questions": [
+              {
+                "id": "g3-u35-w1-d1-warmup-1",
+                "prompt": "How many minutes are between each large number on a clock?",
+                "correct_answer": "5",
+                "hint": "Count by 5s.",
+                "skill": "read_analog_clocks"
+              },
+              {
+                "id": "g3-u35-w1-d1-warmup-2",
+                "prompt": "The minute hand points to 3. How many minutes?",
+                "correct_answer": "15",
+                "hint": "3 × 5 = 15.",
+                "skill": "read_analog_clocks"
+              },
+              {
+                "id": "g3-u35-w1-d1-warmup-3",
+                "prompt": "The hour hand is between 4 and 5. What hour is it?",
+                "correct_answer": "4",
+                "hint": "The hour hand has not reached 5 yet.",
+                "skill": "read_analog_clocks"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Read Analog Clocks to the Nearest Minute",
+            "teaching_points": [
+              "The hour hand points to the hour or between hours.",
+              "The minute hand counts minutes.",
+              "Each small mark is 1 minute; each large number is 5 minutes."
+            ],
+            "example": {
+              "prompt": "What time is it when the hour hand is between 2 and 3 and the minute hand points to 7?",
+              "visual_type": "clock",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "2:35"
+            },
+            "vocabulary": ["hour hand", "minute hand", "analog", "o'clock"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "read_analog_clocks",
+            "prompt": "Read the time: hour hand between 5 and 6, minute hand on 9.",
+            "correct_answer": "5:45",
+            "hint": "9 × 5 = 45 minutes.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "read_analog_clocks",
+            "question_count": 6,
+            "instructions": "Read each analog clock to the nearest minute."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Analog Clocks",
+            "type": "time_terms",
+            "card_count": 6,
+            "instructions": "Review reading analog clocks.",
+            "deckId": "lesson-g3-u35-w1-d1-analog-clocks"
+          },
+          "bigIdea": {
+            "title": "Read Analog Clocks to the Nearest Minute",
+            "subtitle": "Use both hands",
+            "thumbnail": "/images/learn/thumbnails/time.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "An analog clock has two hands. The short hand tells the hour. The long hand tells the minutes. Count by 5s around the clock, then by 1s for the small marks.",
+            "bigQuestion": "Why does the hour hand move between numbers?",
+            "starTip": {
+              "title": "Count minutes",
+              "lines": ["Hour hand = hour", "Minute hand = minutes"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Hour hand",
+                "equation": "points to or between hours",
+                "badge": "Hour",
+                "description": "The hour hand shows the current or last hour."
+              },
+              {
+                "eyebrow": "Minute hand",
+                "equation": "count by 5s",
+                "badge": "Minutes",
+                "description": "Each large number is 5 minutes."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u35-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Match Analog, Digital, and Written Times",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing the same time in three ways.",
+          "concept": "The same time can be shown on an analog clock, a digital clock, or written in words. 3:25 can be shown as 3:25 on a digital clock or as twenty-five minutes after three in words.",
+          "practice": "Match analog, digital, and written times.",
+          "objective": "Match analog, digital, and written times.",
+          "practice_type": "match_time_formats",
+          "skills": [
+            "time",
+            "analog",
+            "digital",
+            "written_time"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "match_time_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by matching time formats.",
+            "questions": [
+              {
+                "id": "g3-u35-w1-d2-warmup-1",
+                "prompt": "Write 4:15 in words.",
+                "correct_answer": "fifteen minutes after four",
+                "hint": "15 minutes past 4.",
+                "skill": "match_time_formats"
+              },
+              {
+                "id": "g3-u35-w1-d2-warmup-2",
+                "prompt": "What is half past 7 in digital form?",
+                "correct_answer": "7:30",
+                "hint": "30 minutes after 7.",
+                "skill": "match_time_formats"
+              },
+              {
+                "id": "g3-u35-w1-d2-warmup-3",
+                "prompt": "Write 12:45 in words.",
+                "correct_answer": "fifteen minutes before one",
+                "hint": "45 minutes after 12 is a quarter to 1.",
+                "skill": "match_time_formats"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Match Analog, Digital, and Written Times",
+            "teaching_points": [
+              "Digital clocks show hours and minutes as numbers.",
+              "Analog clocks use hands.",
+              "Written times use words like o'clock, quarter past, half past, quarter to."
+            ],
+            "example": {
+              "prompt": "Show 2:40 in three ways.",
+              "visual_type": "clock",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "2:40, twenty minutes before three, hour hand between 2 and 3, minute hand on 8"
+            },
+            "vocabulary": ["digital", "analog", "written", "o'clock", "quarter past", "half past", "quarter to"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "match_time_formats",
+            "prompt": "Write 9:10 in words and draw it on an analog clock.",
+            "correct_answer": "ten minutes after nine",
+            "hint": "9:10.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "match_time_formats",
+            "question_count": 6,
+            "instructions": "Match each time across analog, digital, and written forms."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Time Formats",
+            "type": "time_terms",
+            "card_count": 6,
+            "instructions": "Review analog, digital, and written times.",
+            "deckId": "lesson-g3-u35-w1-d2-time-formats"
+          },
+          "bigIdea": {
+            "title": "Match Analog, Digital, and Written Times",
+            "subtitle": "The same time in different forms",
+            "thumbnail": "/images/learn/thumbnails/time.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Time can be shown on an analog clock with hands, on a digital clock with numbers, or written out in words. All three forms represent the same moment.",
+            "bigQuestion": "How is 10:30 shown on an analog clock?",
+            "starTip": {
+              "title": "Same time, different display",
+              "lines": ["Analog = hands", "Digital = numbers", "Written = words"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Digital",
+                "equation": "3:25",
+                "badge": "Numbers",
+                "description": "Hours and minutes written as numbers."
+              },
+              {
+                "eyebrow": "Written",
+                "equation": "twenty-five after three",
+                "badge": "Words",
+                "description": "Time described with words."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u35-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Estimate Time Intervals in Minutes",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by guessing how many minutes common activities take.",
+          "concept": "A minute is about the time it takes to walk around a classroom or sing a short song. Use real-life experience to estimate how long activities take in minutes.",
+          "practice": "Estimate time intervals in minutes for daily activities.",
+          "objective": "Estimate time intervals in minutes.",
+          "practice_type": "estimate_time_intervals",
+          "skills": [
+            "time",
+            "estimate",
+            "minutes",
+            "intervals"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "estimate_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by estimating time.",
+            "questions": [
+              {
+                "id": "g3-u35-w1-d3-warmup-1",
+                "prompt": "About how many minutes does it take to brush your teeth?",
+                "correct_answer": "2",
+                "hint": "A few minutes.",
+                "skill": "estimate_time_intervals"
+              },
+              {
+                "id": "g3-u35-w1-d3-warmup-2",
+                "prompt": "About how many minutes is a TV show?",
+                "correct_answer": "30",
+                "hint": "Many shows are about 30 minutes.",
+                "skill": "estimate_time_intervals"
+              },
+              {
+                "id": "g3-u35-w1-d3-warmup-3",
+                "prompt": "About how many minutes does it take to eat lunch?",
+                "correct_answer": "20",
+                "hint": "Around 15 to 30 minutes.",
+                "skill": "estimate_time_intervals"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Estimate Time Intervals in Minutes",
+            "teaching_points": [
+              "Use real-life experience to estimate.",
+              "A minute is short.",
+              "Think about how long an activity usually takes."
+            ],
+            "example": {
+              "prompt": "Estimate how long it takes to walk to the bus stop.",
+              "visual_type": "time",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "about 5 minutes"
+            },
+            "vocabulary": ["estimate", "interval", "minutes", "activity"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "estimate_time_intervals",
+            "prompt": "Estimate how many minutes it takes to read a short story.",
+            "correct_answer": "10",
+            "hint": "A short story takes several minutes.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "estimate_time_intervals",
+            "question_count": 6,
+            "instructions": "Estimate the number of minutes for each activity."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Time Estimates",
+            "type": "time_terms",
+            "card_count": 6,
+            "instructions": "Review estimating time intervals.",
+            "deckId": "lesson-g3-u35-w1-d3-time-estimates"
+          },
+          "bigIdea": {
+            "title": "Estimate Time Intervals in Minutes",
+            "subtitle": "Use what you know about time",
+            "thumbnail": "/images/learn/thumbnails/time.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "You can estimate how long things take by thinking about activities you already know. One minute is about the time it takes to sing the alphabet song or walk down the hall.",
+            "bigQuestion": "Why is it helpful to estimate time in minutes?",
+            "starTip": {
+              "title": "Real life",
+              "lines": ["Brushing teeth", "Walking to school"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "1 minute",
+                "equation": "short activity",
+                "badge": "About 60 seconds",
+                "description": "One minute is enough time for a short task."
+              },
+              {
+                "eyebrow": "Estimate",
+                "equation": "compare to known activities",
+                "badge": "Reasonable guess",
+                "description": "Think about how long similar activities take."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u35-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Find Elapsed Time and Ending Time",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting forward and backward by 5s and 10s on a clock.",
+          "concept": "Elapsed time is the amount of time that passes from a start time to an end time. Count forward to find the ending time. Count backward to find the start time.",
+          "practice": "Find elapsed time and ending time using number lines and clocks.",
+          "objective": "Find elapsed time and ending time.",
+          "practice_type": "elapsed_time",
+          "skills": [
+            "time",
+            "elapsed_time",
+            "end_time",
+            "start_time",
+            "number_line"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "elapsed_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with elapsed time.",
+            "questions": [
+              {
+                "id": "g3-u35-w1-d4-warmup-1",
+                "prompt": "A movie starts at 2:00 and ends at 3:30. How long is it?",
+                "correct_answer": "90 minutes",
+                "hint": "From 2:00 to 3:30 is 1 hour and 30 minutes.",
+                "skill": "elapsed_time"
+              },
+              {
+                "id": "g3-u35-w1-d4-warmup-2",
+                "prompt": "A game starts at 4:15 and lasts 45 minutes. When does it end?",
+                "correct_answer": "5:00",
+                "hint": "45 minutes after 4:15.",
+                "skill": "elapsed_time"
+              },
+              {
+                "id": "g3-u35-w1-d4-warmup-3",
+                "prompt": "A bus ride ends at 7:20. It took 25 minutes. When did it start?",
+                "correct_answer": "6:55",
+                "hint": "Subtract 25 minutes from 7:20.",
+                "skill": "elapsed_time"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Elapsed Time and Ending Time",
+            "teaching_points": [
+              "Elapsed time = end time - start time.",
+              "Use a number line or clock to count minutes.",
+              "Break the time into easy chunks."
+            ],
+            "example": {
+              "prompt": "A party starts at 1:45 and lasts 1 hour and 20 minutes. When does it end?",
+              "visual_type": "number_line",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "1:45 + 1 hour = 2:45; +20 minutes = 3:05"
+            },
+            "vocabulary": ["elapsed time", "start time", "end time", "duration"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "elapsed_time",
+            "prompt": "A soccer practice starts at 3:30 and ends at 4:45. How long is it?",
+            "correct_answer": "75 minutes",
+            "hint": "From 3:30 to 4:30 is 60 minutes, plus 15 minutes.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "elapsed_time",
+            "question_count": 6,
+            "instructions": "Find the elapsed time or ending time for each problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Elapsed Time",
+            "type": "time_terms",
+            "card_count": 6,
+            "instructions": "Review elapsed time vocabulary.",
+            "deckId": "lesson-g3-u35-w1-d4-elapsed-time"
+          },
+          "bigIdea": {
+            "title": "Find Elapsed Time and Ending Time",
+            "subtitle": "Count the minutes that pass",
+            "thumbnail": "/images/learn/thumbnails/time.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Elapsed time is the time between a start and an end. Count forward to find when something ends. Count backward to find when it started. A number line can help.",
+            "bigQuestion": "How can a number line help find elapsed time?",
+            "starTip": {
+              "title": "Count by chunks",
+              "lines": ["Hours first", "Then minutes"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Elapsed",
+                "equation": "end - start",
+                "badge": "Time passed",
+                "description": "Elapsed time is the time between start and end."
+              },
+              {
+                "eyebrow": "End time",
+                "equation": "start + elapsed",
+                "badge": "Add",
+                "description": "Add the elapsed time to the start time."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u35-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Time",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of reading analog clocks, matching time formats, estimating intervals, and elapsed time.",
+          "concept": "Review the four big ideas from this unit: reading analog clocks to the nearest minute, matching analog/digital/written times, estimating time intervals in minutes, and finding elapsed time and ending time.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about time and elapsed time.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "read_analog_clocks",
+            "match_time_formats",
+            "estimate_time_intervals",
+            "elapsed_time"
+          ],
+          "skills": [
+            "time",
+            "analog_clock",
+            "digital_time",
+            "written_time",
+            "estimate",
+            "elapsed_time"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u35-w1-d5-warmup-1",
+                "prompt": "Write 6:20 in words.",
+                "correct_answer": "twenty minutes after six",
+                "hint": "20 minutes past 6.",
+                "skill": "match_time_formats"
+              },
+              {
+                "id": "g3-u35-w1-d5-warmup-2",
+                "prompt": "A show starts at 1:10 and lasts 50 minutes. When does it end?",
+                "correct_answer": "2:00",
+                "hint": "50 minutes after 1:10.",
+                "skill": "elapsed_time"
+              },
+              {
+                "id": "g3-u35-w1-d5-warmup-3",
+                "prompt": "What time is it when the minute hand points to 11 and the hour hand is between 8 and 9?",
+                "correct_answer": "8:55",
+                "hint": "11 × 5 = 55.",
+                "skill": "read_analog_clocks"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "analog clocks + time formats + estimates + elapsed time = time"
+            },
+            "vocabulary": ["evaluation", "review", "time"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A game starts at 3:15 and ends at 4:30. How long did it last?",
+            "correct_answer": "75 minutes",
+            "hint": "From 3:15 to 4:15 is 60 minutes, plus 15 minutes.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 35 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 35 before the evaluation.",
+            "deckId": "lesson-g3-u35-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Time",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: reading analog clocks to the nearest minute, matching analog, digital, and written times, estimating time intervals, and finding elapsed time and ending time.",
+            "bigQuestion": "What do you know about time and elapsed time?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Analog clock",
+                "equation": "hour hand + minute hand",
+                "badge": "Read both",
+                "description": "Use both hands to tell time."
+              },
+              {
+                "eyebrow": "Elapsed time",
+                "equation": "end time - start time",
+                "badge": "Count minutes",
+                "description": "Find the time between start and end."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

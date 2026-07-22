@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 20,
+  "unit_title": "Understanding Area",
+  "unit_slug": "understanding_area",
+  "unit_description": "This unit introduces area as the space inside a shape. Students cover figures with unit squares, count and label square units, and find area even when some squares are hidden.",
+  "unit_goals": [
+    "Understand area as the space inside a shape.",
+    "Cover figures with unit squares.",
+    "Count and label square units.",
+    "Find area when some squares are hidden.",
+    "Use square units to measure area."
+  ],
+  "fact_focus": ["area", "geometry", "3.GM.C.9", "3.GM.C.10"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Understanding Area",
+      "weekly_focus": "Students explore area through unit squares, counting square units, and finding area of partially hidden shapes.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u20-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Area as the Space Inside a Shape",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by tracing the inside of different shapes.",
+          "concept": "Area is the amount of space inside a flat shape. We measure area by counting how many unit squares fit inside the shape with no gaps or overlaps.",
+          "practice": "Identify and describe area as the space inside shapes.",
+          "objective": "Understand area as the space inside a shape.",
+          "practice_type": "area_introduction",
+          "skills": [
+            "area",
+            "space_inside",
+            "shapes",
+            "geometry"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "area_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by thinking about space inside.",
+            "questions": [
+              {
+                "id": "g3-u20-w1-d1-warmup-1",
+                "prompt": "Which has more space inside: a small circle or a big square?",
+                "correct_answer": "big square",
+                "hint": "The bigger shape has more area.",
+                "skill": "area"
+              },
+              {
+                "id": "g3-u20-w1-d1-warmup-2",
+                "prompt": "Area tells us the amount of what inside a shape?",
+                "correct_answer": "space",
+                "hint": "Area is the space inside a shape.",
+                "skill": "area"
+              },
+              {
+                "id": "g3-u20-w1-d1-warmup-3",
+                "prompt": "To measure area, do we count squares or lines?",
+                "correct_answer": "squares",
+                "hint": "Area is measured in square units.",
+                "skill": "area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Area as the Space Inside a Shape",
+            "teaching_points": [
+              "Area is the inside space of a flat shape.",
+              "Larger shapes have more area.",
+              "Area is measured in square units."
+            ],
+            "example": {
+              "prompt": "Which rectangle has more area?",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "Count the square units inside each shape."
+            },
+            "vocabulary": ["area", "inside", "shape", "square unit"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "area_introduction",
+            "prompt": "A shape covers 12 square units. Another covers 8 square units. Which has more area?",
+            "correct_answer": "12",
+            "hint": "Compare the number of square units.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "area_introduction",
+            "question_count": 6,
+            "instructions": "Identify which shape has more area or count square units."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Area Vocabulary",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review area vocabulary.",
+            "deckId": "lesson-g3-u20-w1-d1-area-vocab"
+          },
+          "bigIdea": {
+            "title": "Area as the Space Inside a Shape",
+            "subtitle": "Area is the space inside",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Area is the amount of flat space inside a shape. A bigger area means more space is inside. We measure it with square units.",
+            "bigQuestion": "Why do we measure area with square units?",
+            "starTip": {
+              "title": "Space inside",
+              "lines": ["Look inside", "Count the squares"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Area",
+                "equation": "space inside a shape",
+                "badge": "Flat space",
+                "description": "Area is the amount of two-dimensional space a shape covers."
+              },
+              {
+                "eyebrow": "Square units",
+                "equation": "square units (sq units)",
+                "badge": "Measure with squares",
+                "description": "We use unit squares to measure area."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u20-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Cover Figures with Unit Squares",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by covering simple shapes with square tiles on a grid.",
+          "concept": "To find area, cover a shape with unit squares without gaps or overlaps. Count the squares to find the total area.",
+          "practice": "Cover figures with unit squares and count the area.",
+          "objective": "Cover figures with unit squares to find area.",
+          "practice_type": "cover_with_unit_squares",
+          "skills": [
+            "area",
+            "unit_squares",
+            "counting",
+            "geometry"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "unit_squares_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by covering shapes.",
+            "questions": [
+              {
+                "id": "g3-u20-w1-d2-warmup-1",
+                "prompt": "How many unit squares cover a 3 by 4 rectangle?",
+                "correct_answer": "12",
+                "hint": "3 × 4 = 12.",
+                "skill": "cover_with_unit_squares"
+              },
+              {
+                "id": "g3-u20-w1-d2-warmup-2",
+                "prompt": "A shape is covered by 7 unit squares. What is its area?",
+                "correct_answer": "7 square units",
+                "hint": "Area is the number of unit squares.",
+                "skill": "cover_with_unit_squares"
+              },
+              {
+                "id": "g3-u20-w1-d2-warmup-3",
+                "prompt": "Can unit squares overlap when measuring area?",
+                "correct_answer": "no",
+                "hint": "Squares should not overlap or leave gaps.",
+                "skill": "cover_with_unit_squares"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Cover Figures with Unit Squares",
+            "teaching_points": [
+              "Use unit squares that are the same size.",
+              "Cover the shape without gaps or overlaps.",
+              "Count the squares to find the area."
+            ],
+            "example": {
+              "prompt": "Cover a 4 by 5 rectangle with unit squares.",
+              "visual_type": "grid",
+              "groups": 4,
+              "items_per_group": 5,
+              "equation": "4 rows of 5 = 20 square units"
+            },
+            "vocabulary": ["unit square", "cover", "gap", "overlap"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "cover_with_unit_squares",
+            "prompt": "Cover a 3 by 6 rectangle. What is the area?",
+            "correct_answer": "18",
+            "hint": "3 × 6 = 18.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "cover_with_unit_squares",
+            "question_count": 6,
+            "instructions": "Cover each shape with unit squares and count the area."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit Squares",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review covering shapes with unit squares.",
+            "deckId": "lesson-g3-u20-w1-d2-unit-squares"
+          },
+          "bigIdea": {
+            "title": "Cover Figures with Unit Squares",
+            "subtitle": "No gaps, no overlaps",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "To measure area, cover the shape with unit squares. Make sure there are no gaps and no overlaps. Count the squares to get the area.",
+            "bigQuestion": "What happens if the unit squares overlap?",
+            "starTip": {
+              "title": "Cover completely",
+              "lines": ["No gaps", "No overlaps"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Unit square",
+                "equation": "1 square unit",
+                "badge": "Same size",
+                "description": "Each unit square has the same area."
+              },
+              {
+                "eyebrow": "Count",
+                "equation": "number of squares = area",
+                "badge": "Square units",
+                "description": "Count how many unit squares fit inside the shape."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u20-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Count and Label Square Units",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting square units on a grid and labeling the area.",
+          "concept": "Area is written with a number and a unit label, such as square units or sq units. Count the squares carefully and write the answer with the correct label.",
+          "practice": "Count square units on grids and label the area correctly.",
+          "objective": "Count and label square units.",
+          "practice_type": "count_and_label_area",
+          "skills": [
+            "area",
+            "counting",
+            "labeling",
+            "square_units"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "labeling_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by labeling area.",
+            "questions": [
+              {
+                "id": "g3-u20-w1-d3-warmup-1",
+                "prompt": "A shape covers 15 unit squares. What is its area?",
+                "correct_answer": "15 square units",
+                "hint": "Use the label square units.",
+                "skill": "count_and_label_area"
+              },
+              {
+                "id": "g3-u20-w1-d3-warmup-2",
+                "prompt": "A rectangle has 5 rows of 4 squares. What is the area?",
+                "correct_answer": "20 square units",
+                "hint": "5 × 4 = 20.",
+                "skill": "count_and_label_area"
+              },
+              {
+                "id": "g3-u20-w1-d3-warmup-3",
+                "prompt": "How do you write area for 9 unit squares?",
+                "correct_answer": "9 square units",
+                "hint": "Number followed by square units.",
+                "skill": "count_and_label_area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Count and Label Square Units",
+            "teaching_points": [
+              "Count every unit square inside the shape.",
+              "Write the number with the label.",
+              "Use square units or sq units."
+            ],
+            "example": {
+              "prompt": "Count and label the area of a 2 by 7 rectangle.",
+              "visual_type": "grid",
+              "groups": 2,
+              "items_per_group": 7,
+              "equation": "2 × 7 = 14 square units"
+            },
+            "vocabulary": ["square units", "label", "area", "unit squares"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "count_and_label_area",
+            "prompt": "Count and label the area of a 4 by 4 square.",
+            "correct_answer": "16 square units",
+            "hint": "4 × 4 = 16.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 4
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "count_and_label_area",
+            "question_count": 6,
+            "instructions": "Count the square units and write the area with the correct label."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Counting and Labeling Area",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review counting and labeling square units.",
+            "deckId": "lesson-g3-u20-w1-d3-count-label"
+          },
+          "bigIdea": {
+            "title": "Count and Label Square Units",
+            "subtitle": "Always include the unit label",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Area is not just a number. It is a number of square units. Always write the label so others know what you measured.",
+            "bigQuestion": "Why do we write square units after an area answer?",
+            "starTip": {
+              "title": "Count and label",
+              "lines": ["Count squares", "Write square units"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Count",
+                "equation": "12 unit squares",
+                "badge": "Number",
+                "description": "Count the number of unit squares inside the shape."
+              },
+              {
+                "eyebrow": "Label",
+                "equation": "12 square units",
+                "badge": "Units",
+                "description": "Write square units or sq units after the number."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u20-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Find Area When Some Squares Are Hidden",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting visible squares and predicting the hidden ones.",
+          "concept": "Even when you cannot see every square, you can use the rows and columns to find the total area. Multiply the number of rows by the number of columns.",
+          "practice": "Find the area of shapes when some unit squares are hidden.",
+          "objective": "Find area when some squares are hidden.",
+          "practice_type": "hidden_squares_area",
+          "skills": [
+            "area",
+            "rows",
+            "columns",
+            "multiplication",
+            "hidden"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "hidden_squares_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with hidden squares.",
+            "questions": [
+              {
+                "id": "g3-u20-w1-d4-warmup-1",
+                "prompt": "A rectangle has 5 rows and 7 columns. How many square units?",
+                "correct_answer": "35",
+                "hint": "5 × 7.",
+                "skill": "hidden_squares_area"
+              },
+              {
+                "id": "g3-u20-w1-d4-warmup-2",
+                "prompt": "Only some squares of a 4 by 6 rectangle are shown. What is the total area?",
+                "correct_answer": "24",
+                "hint": "4 × 6 = 24.",
+                "skill": "hidden_squares_area"
+              },
+              {
+                "id": "g3-u20-w1-d4-warmup-3",
+                "prompt": "A shape has 3 rows and 8 columns. What is the area?",
+                "correct_answer": "24",
+                "hint": "3 × 8.",
+                "skill": "hidden_squares_area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Area When Some Squares Are Hidden",
+            "teaching_points": [
+              "Count the number of rows.",
+              "Count the number of columns.",
+              "Multiply rows times columns."
+            ],
+            "example": {
+              "prompt": "A rectangle has 4 rows and 9 columns, but some squares are covered. What is the area?",
+              "visual_type": "grid",
+              "groups": 4,
+              "items_per_group": 9,
+              "equation": "4 × 9 = 36 square units"
+            },
+            "vocabulary": ["rows", "columns", "hidden", "total area"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "hidden_squares_area",
+            "prompt": "A rectangle has 6 rows and 5 columns. Some squares are hidden. What is the total area?",
+            "correct_answer": "30",
+            "hint": "6 × 5 = 30.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "hidden_squares_area",
+            "question_count": 6,
+            "instructions": "Use rows and columns to find the total area even when some squares are hidden."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Rows and Columns for Area",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review finding area using rows and columns.",
+            "deckId": "lesson-g3-u20-w1-d4-rows-columns"
+          },
+          "bigIdea": {
+            "title": "Find Area When Some Squares Are Hidden",
+            "subtitle": "Use rows and columns",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Even if you cannot see all the squares, the rows and columns tell you how many there are. Multiply rows by columns to find the total area.",
+            "bigQuestion": "How do rows and columns help when some squares are hidden?",
+            "starTip": {
+              "title": "Rows × columns",
+              "lines": ["Count the rows", "Count the columns", "Multiply"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Rows",
+                "equation": "4 rows",
+                "badge": "Across",
+                "description": "Count how many rows of squares there are."
+              },
+              {
+                "eyebrow": "Columns",
+                "equation": "9 columns",
+                "badge": "Down",
+                "description": "Count how many squares are in each row."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u20-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Area With Unit Squares",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of area as space inside, covering with unit squares, counting and labeling square units, and finding area with hidden squares.",
+          "concept": "Review the four big ideas from this unit: area as the space inside a shape, covering with unit squares, counting and labeling square units, and finding area with hidden squares.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about area with unit squares.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "area_introduction",
+            "cover_with_unit_squares",
+            "count_and_label_area",
+            "hidden_squares_area"
+          ],
+          "skills": [
+            "area",
+            "square_units",
+            "unit_squares",
+            "rows",
+            "columns",
+            "counting",
+            "geometry"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u20-w1-d5-warmup-1",
+                "prompt": "What is the area of a 5 by 6 rectangle?",
+                "correct_answer": "30 square units",
+                "hint": "5 × 6 = 30.",
+                "skill": "hidden_squares_area"
+              },
+              {
+                "id": "g3-u20-w1-d5-warmup-2",
+                "prompt": "A shape covers 10 unit squares. What is its area?",
+                "correct_answer": "10 square units",
+                "hint": "Area equals the number of unit squares.",
+                "skill": "count_and_label_area"
+              },
+              {
+                "id": "g3-u20-w1-d5-warmup-3",
+                "prompt": "What does area measure?",
+                "correct_answer": "space inside a shape",
+                "hint": "Area is the space inside.",
+                "skill": "area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "area as space + unit squares + label + rows/columns = area with unit squares"
+            },
+            "vocabulary": ["evaluation", "review", "area"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A rectangle is 3 rows by 8 columns. What is the area?",
+            "correct_answer": "24 square units",
+            "hint": "3 × 8.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 20 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 20 before the evaluation.",
+            "deckId": "lesson-g3-u20-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Area With Unit Squares",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: area as the space inside a shape, covering figures with unit squares, counting and labeling square units, and finding area when some squares are hidden.",
+            "bigQuestion": "What do you know about area?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Area",
+                "equation": "number of square units inside a shape",
+                "badge": "Space inside",
+                "description": "Area is the space a flat shape covers."
+              },
+              {
+                "eyebrow": "Rows × columns",
+                "equation": "3 rows × 8 columns = 24 square units",
+                "badge": "Find total",
+                "description": "Multiply rows by columns to find area."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

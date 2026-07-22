@@ -8,7 +8,6 @@ import TryItCard from "../components/lesson/TryItCard";
 import WarmUpCard from "../components/lesson/WarmUpCard";
 import { getLessonById } from "../lib/lessonLookup";
 import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
-import { getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
 import {
   useStudentProgress,
   type LessonProgress,
@@ -17,10 +16,7 @@ import {
 } from "../contexts/StudentProgressContext";
 import type { WarmUpData } from "../types/warmup";
 import { getLessonExperience } from "../data/lessonExperience";
-import {
-  getChapterForConcept,
-  getConceptByLessonId,
-} from "../data/curriculum/curriculumGraph";
+import { getChapterForConcept, getConceptByLessonId } from "../data/curriculum/curriculumGraph";
 
 type LessonWithStructuredData = {
   warmup?: WarmUpData;
@@ -34,21 +30,6 @@ type NextLessonStep = {
   buttonLabel: string;
   to: string;
 };
-
-function getFlashcardDeckIdForLesson(lessonId: string) {
-  // Parse lesson ID to extract week and day numbers
-  // Format: g{grade}-u{unit}-w{week}-l{lessonNumber}
-  const match = lessonId.match(/g\d+-u\d+-w(\d+)-l(\d+)/);
-  if (match) {
-    const weekNumber = Number.parseInt(match[1], 10);
-    const dayNumber = Number.parseInt(match[2], 10);
-    const deckId = getFlashcardDeckIdFromCurriculum(weekNumber, dayNumber);
-    if (deckId) return deckId;
-  }
-
-  // Fallback for lessons not in curriculum yet
-  return `lesson-${lessonId}`;
-}
 
 function getNextStep({
   lessonId,
@@ -266,7 +247,7 @@ function LessonScreen() {
       ? `g3-u${unit.unit_number}-w${nextWeek.week_number}-l1`
       : undefined;
 
-  const flashcardDeckId = getFlashcardDeckIdForLesson(currentLessonId);
+  const flashcardDeckId = lesson.flashcards?.deckId ?? `lesson-${currentLessonId}`;
   const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
 
   const concept = getConceptByLessonId(currentLessonId);
@@ -297,7 +278,7 @@ function LessonScreen() {
           grade={`${unit.grade_level}rd Grade`}
           lessonType={lesson.lesson_type}
           quizQuestionCount={
-            lessonExperience?.quickCheck.questions.length ?? lesson.quiz_question_count
+            lessonExperience?.quickCheck?.questions.length ?? lesson.quiz_question_count
           }
           progress={progress}
           starName={starName}

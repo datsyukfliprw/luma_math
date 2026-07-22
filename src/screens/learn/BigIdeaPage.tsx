@@ -12,7 +12,7 @@ import {
   getVideoCaption,
   type LearnLesson,
 } from "../../lib/learnContent";
-import { curriculumToLearnLesson } from "../../lib/curriculumLoader";
+import { curriculumToLearnLesson, type CurriculumLearnLesson } from "../../lib/curriculumLoader";
 
 function getLessonThumbnailUrl(lesson: LearnLesson) {
   const title = (lesson.lesson_title ?? "").toLowerCase();
@@ -54,15 +54,21 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   // Try to get curriculum data first, fall back to string-matching for non-Week 1 lessons
-  const curriculumLesson = lesson.day_number
-    ? curriculumToLearnLesson(1, lesson.day_number)
-    : undefined;
+  const {
+    unit_number: unitNumber,
+    week_number: weekNumber,
+    day_number: dayNumber,
+  } = lesson as CurriculumLearnLesson;
+  const curriculumLesson =
+    unitNumber && weekNumber && dayNumber
+      ? curriculumToLearnLesson(unitNumber, weekNumber, dayNumber)
+      : undefined;
 
   const lessonVideoUrl = getLessonVideoUrl(lesson);
   const videoCaption = getVideoCaption(lesson);
   const bigIdeaDescription = getBigIdeaDescription(lesson);
   const missionSteps = getMissionSteps(lesson);
-  
+
   // Use curriculum data if available, otherwise fall back to lesson experience data
   const ruleCards = getRuleCards(lesson);
   const bigQuestion = getBigQuestion(lesson);
@@ -175,7 +181,9 @@ function BigIdeaPage({ lesson, starName }: BigIdeaPageProps) {
                 data-name={`big-idea-rule-card-${index + 1}`}
                 className={`rounded-2xl border p-4 ${card.cardClass}`}
               >
-                <p className={`text-xs font-black uppercase tracking-[0.14em] ${card.eyebrowClass}`}>
+                <p
+                  className={`text-xs font-black uppercase tracking-[0.14em] ${card.eyebrowClass}`}
+                >
                   {card.eyebrow}
                 </p>
 

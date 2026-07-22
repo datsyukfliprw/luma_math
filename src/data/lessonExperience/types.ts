@@ -2,12 +2,9 @@
 
 export type PracticeMode = "guided" | "independent" | "challenge";
 
-export type LessonPracticeType =
-  | "equal_groups"
-  | "repeated_addition_to_multiplication"
-  | "factor_product_identification"
-  | "equal_groups_with_objects"
-  | "mixed_evaluation";
+// Allow any practice_type value from the curriculum. Validity is checked at
+// runtime against the practice generator registry instead of a static union.
+export type LessonPracticeType = string;
 
 export type SeeItRuleFocus =
   | "zero"
@@ -193,3 +190,48 @@ export type LessonExperience = {
     nextLessonId?: string;
   };
 };
+
+// Source discriminant for the runtime adapter.
+// Authored experiences come from hand-written lesson experience files.
+// Curriculum experiences are derived from the curriculum JSON at runtime.
+export type LessonExperienceSource = "authored" | "curriculum";
+
+// Authored experience with its source tag. This is a strict subtype of the
+// existing LessonExperience shape, so authored lesson files do not need changes.
+export type AuthoredLessonExperience = LessonExperience & {
+  source: "authored";
+};
+
+// Curriculum-derived experience. Interaction blocks are optional because the
+// curriculum schema does not guarantee multiplication-specific fields.
+export type CurriculumLessonExperience = {
+  source: "curriculum";
+  id: string;
+  grade: 3;
+  unitId: string;
+  unitNumber: number;
+  unitTitle: string;
+  week: number;
+  lessonNumber: number;
+  lessonType: "lesson" | "evaluation";
+  title: string;
+  shortTitle: string;
+  label: string;
+  objective: string;
+  kidGoal: string;
+  topic: "multiplication" | "review";
+  practiceType: string;
+  flashcardDeckId?: string;
+  lessonHero: LessonExperience["lessonHero"];
+  bigIdea: LessonExperience["bigIdea"];
+  buildIt?: LessonExperience["buildIt"];
+  seeIt?: LessonExperience["seeIt"];
+  words?: LessonExperience["words"];
+  quickCheck?: LessonExperience["quickCheck"];
+  tryIt?: LessonExperience["tryIt"];
+  practice: LessonExperience["practice"];
+  completion: LessonExperience["completion"];
+};
+
+// The type returned by the runtime getLessonExperience resolver.
+export type ResolvedLessonExperience = AuthoredLessonExperience | CurriculumLessonExperience;

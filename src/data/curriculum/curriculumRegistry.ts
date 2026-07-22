@@ -1,4 +1,3 @@
-import { curriculum as grade3Unit1Curriculum } from "./index";
 import type { Curriculum } from "./curriculumSchema";
 
 // Curriculum registry key format: "grade-{grade}-unit-{unit}"
@@ -6,9 +5,6 @@ type CurriculumKey = string;
 
 // Central registry for all curriculum data
 const curriculumRegistry: Map<CurriculumKey, Curriculum> = new Map();
-
-// Register Grade 3 Unit 1 curriculum
-curriculumRegistry.set("grade-3-unit-1", grade3Unit1Curriculum);
 
 /**
  * Get curriculum by grade and unit number.
@@ -52,11 +48,7 @@ export function getAllCurricula(): Curriculum[] {
  * @param unit - Unit number
  * @param curriculum - Curriculum data
  */
-export function registerCurriculum(
-  grade: number,
-  unit: number,
-  curriculum: Curriculum
-): void {
+export function registerCurriculum(grade: number, unit: number, curriculum: Curriculum): void {
   const key = `grade-${grade}-unit-${unit}`;
   curriculumRegistry.set(key, curriculum);
 }

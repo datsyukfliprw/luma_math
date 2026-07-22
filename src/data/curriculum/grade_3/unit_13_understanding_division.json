@@ -1,0 +1,632 @@
+{
+  "grade_level": 3,
+  "unit_number": 13,
+  "unit_title": "Understanding Division",
+  "unit_slug": "understanding_division",
+  "unit_description": "This unit introduces division as sharing equally and counting equal groups. Students write division equations, model groups, and explore special cases with 1 and 0.",
+  "unit_goals": [
+    "Understand division as sharing equally.",
+    "Understand division as counting equal groups.",
+    "Write division equations for equal groups.",
+    "Solve division stories involving 1 and 0.",
+    "Connect division to equal groups."
+  ],
+  "fact_focus": ["division", "3.RA.A.2", "3.RA.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Understanding Division",
+      "weekly_focus": "Students learn the two meanings of division, write division equations, and investigate special cases with 1 and 0.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u13-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Division as Sharing Equally",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by sharing counters equally into groups.",
+          "concept": "Division can mean sharing a total number of items equally among a number of groups. The answer is how many each group gets.",
+          "practice": "Share items equally and write the matching division equation.",
+          "objective": "Understand division as sharing equally.",
+          "practice_type": "division_sharing",
+          "skills": [
+            "division",
+            "sharing",
+            "equal_groups",
+            "equations"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "sharing_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by sharing equally.",
+            "questions": [
+              {
+                "id": "g3-u13-w1-d1-warmup-1",
+                "prompt": "Share 12 cookies equally among 3 friends. How many does each get?",
+                "correct_answer": "4",
+                "hint": "12 ÷ 3 = 4.",
+                "skill": "division_sharing"
+              },
+              {
+                "id": "g3-u13-w1-d1-warmup-2",
+                "prompt": "Share 15 stickers equally among 5 students. How many each?",
+                "correct_answer": "3",
+                "hint": "15 ÷ 5 = 3.",
+                "skill": "division_sharing"
+              },
+              {
+                "id": "g3-u13-w1-d1-warmup-3",
+                "prompt": "Put 10 toys into 2 equal groups. How many in each group?",
+                "correct_answer": "5",
+                "hint": "10 ÷ 2 = 5.",
+                "skill": "division_sharing"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Division as Sharing Equally",
+            "teaching_points": [
+              "Start with the total number of items.",
+              "Share them equally into groups.",
+              "The number in each group is the quotient."
+            ],
+            "example": {
+              "prompt": "Share 18 marbles equally among 3 bags.",
+              "visual_type": "groups",
+              "groups": 3,
+              "items_per_group": 6,
+              "equation": "18 ÷ 3 = 6"
+            },
+            "vocabulary": ["divide", "share", "quotient", "equal groups"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "division_sharing",
+            "prompt": "Share 20 apples equally among 4 baskets.",
+            "correct_answer": "5",
+            "hint": "20 ÷ 4 = 5.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "division_sharing",
+            "question_count": 6,
+            "instructions": "Share the total equally and write the division equation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Sharing Division",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review division as sharing.",
+            "deckId": "lesson-g3-u13-w1-d1-sharing-division"
+          },
+          "bigIdea": {
+            "title": "Division as Sharing Equally",
+            "subtitle": "Split the total into equal parts",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Division can mean sharing a total equally. If you know the total and the number of groups, division tells you how many go in each group.",
+            "bigQuestion": "How is sharing equally like division?",
+            "starTip": {
+              "title": "Share one at a time",
+              "lines": ["Total ÷ groups", "= amount each"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Total",
+                "equation": "18 ÷ 3 = 6",
+                "badge": "What you start with",
+                "description": "The dividend is the total number of items."
+              },
+              {
+                "eyebrow": "Each group",
+                "equation": "18 ÷ 3 = 6",
+                "badge": "Quotient",
+                "description": "The quotient is how many each group gets."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u13-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Division as Counting Equal Groups",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by finding how many equal groups can be made.",
+          "concept": "Division can also mean counting how many equal groups of a given size can be made. 20 ÷ 5 asks how many groups of 5 are in 20.",
+          "practice": "Find how many equal groups of a certain size can be made from a total.",
+          "objective": "Understand division as counting equal groups.",
+          "practice_type": "division_counting_groups",
+          "skills": [
+            "division",
+            "equal_groups",
+            "counting_groups",
+            "quotative"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "counting_groups_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting groups.",
+            "questions": [
+              {
+                "id": "g3-u13-w1-d2-warmup-1",
+                "prompt": "How many groups of 4 are in 20?",
+                "correct_answer": "5",
+                "hint": "20 ÷ 4 = 5.",
+                "skill": "division_counting_groups"
+              },
+              {
+                "id": "g3-u13-w1-d2-warmup-2",
+                "prompt": "How many groups of 3 can you make from 18?",
+                "correct_answer": "6",
+                "hint": "18 ÷ 3 = 6.",
+                "skill": "division_counting_groups"
+              },
+              {
+                "id": "g3-u13-w1-d2-warmup-3",
+                "prompt": "How many teams of 5 can you make from 25 students?",
+                "correct_answer": "5",
+                "hint": "25 ÷ 5 = 5.",
+                "skill": "division_counting_groups"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Division as Counting Equal Groups",
+            "teaching_points": [
+              "Start with the total.",
+              "Decide the size of each group.",
+              "Count how many groups you can make."
+            ],
+            "example": {
+              "prompt": "How many groups of 6 can you make from 24?",
+              "visual_type": "groups",
+              "groups": 4,
+              "items_per_group": 6,
+              "equation": "24 ÷ 6 = 4"
+            },
+            "vocabulary": ["divide", "groups", "size", "quotient"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "division_counting_groups",
+            "prompt": "How many groups of 7 are in 28?",
+            "correct_answer": "4",
+            "hint": "28 ÷ 7 = 4.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "division_counting_groups",
+            "question_count": 6,
+            "instructions": "Find how many equal groups of the given size are in each total."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Counting Equal Groups",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review division as counting equal groups.",
+            "deckId": "lesson-g3-u13-w1-d2-counting-groups"
+          },
+          "bigIdea": {
+            "title": "Division as Counting Equal Groups",
+            "subtitle": "How many groups of a size?",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Division can also ask how many groups of a certain size fit into the total. The answer is the number of groups.",
+            "bigQuestion": "How is counting equal groups different from sharing equally?",
+            "starTip": {
+              "title": "Total ÷ size",
+              "lines": ["How many", "Groups"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Group size",
+                "equation": "24 ÷ 6 = 4",
+                "badge": "Known size",
+                "description": "You know how many go in each group. Find how many groups."
+              },
+              {
+                "eyebrow": "Number of groups",
+                "equation": "24 ÷ 6 = 4",
+                "badge": "4 groups",
+                "description": "The quotient tells how many equal groups you can make."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u13-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Write Division Equations for Groups",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing multiplication and division equations for equal groups.",
+          "concept": "A division equation has a dividend, divisor, and quotient. The dividend is the total, the divisor is the number of groups or group size, and the quotient is the answer.",
+          "practice": "Write division equations for sharing and grouping situations.",
+          "objective": "Write division equations for groups.",
+          "practice_type": "write_division_equations",
+          "skills": [
+            "division",
+            "equations",
+            "dividend",
+            "divisor",
+            "quotient"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "equation_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by writing equations.",
+            "questions": [
+              {
+                "id": "g3-u13-w1-d3-warmup-1",
+                "prompt": "24 divided by 6 is what number?",
+                "correct_answer": "4",
+                "hint": "24 ÷ 6 = 4.",
+                "skill": "division"
+              },
+              {
+                "id": "g3-u13-w1-d3-warmup-2",
+                "prompt": "Write a division equation for: 30 books shared by 5 students.",
+                "correct_answer": "30 / 5 = 6",
+                "hint": "30 ÷ 5 = 6.",
+                "skill": "write_division_equations"
+              },
+              {
+                "id": "g3-u13-w1-d3-warmup-3",
+                "prompt": "In 21 ÷ 7 = 3, what is the divisor?",
+                "correct_answer": "7",
+                "hint": "The divisor is the number you divide by.",
+                "skill": "divisor"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Write Division Equations for Groups",
+            "teaching_points": [
+              "The dividend is the total.",
+              "The divisor is the number of groups or the size of each group.",
+              "The quotient is the missing amount."
+            ],
+            "example": {
+              "prompt": "Write a division equation for 16 divided into 4 equal groups.",
+              "visual_type": "groups",
+              "groups": 4,
+              "items_per_group": 4,
+              "equation": "16 ÷ 4 = 4"
+            },
+            "vocabulary": ["dividend", "divisor", "quotient", "equation"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "write_division_equations",
+            "prompt": "Write a division equation for 35 marbles put into groups of 7.",
+            "correct_answer": "35 / 7 = 5",
+            "hint": "35 ÷ 7 = 5.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "write_division_equations",
+            "question_count": 6,
+            "instructions": "Write a division equation for each situation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Division Equation Parts",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review dividend, divisor, and quotient.",
+            "deckId": "lesson-g3-u13-w1-d3-equation-parts"
+          },
+          "bigIdea": {
+            "title": "Write Division Equations for Groups",
+            "subtitle": "Label the parts of division",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Division equations have names for each part. The dividend is the total, the divisor is how many groups or group size, and the quotient is the answer.",
+            "bigQuestion": "How do you know which number is the divisor?",
+            "starTip": {
+              "title": "Label the parts",
+              "lines": ["Total", "Groups or size", "Answer"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Dividend",
+                "equation": "24 ÷ 6 = 4",
+                "badge": "24",
+                "description": "The dividend is the total amount you start with."
+              },
+              {
+                "eyebrow": "Divisor and quotient",
+                "equation": "24 ÷ 6 = 4",
+                "badge": "6 and 4",
+                "description": "The divisor is the number of groups or size; the quotient is the answer."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u13-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Division Stories Involving 1 and 0",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with special division facts: any number divided by 1, 0 divided by a number, and dividing by 0.",
+          "concept": "Any number divided by 1 is itself. Zero divided by any number (except 0) is 0. Dividing by 0 is not possible. Sharing among 0 groups does not make sense.",
+          "practice": "Solve division problems and stories with 1 and 0.",
+          "objective": "Solve division stories involving 1 and 0.",
+          "practice_type": "division_with_1_and_0",
+          "skills": [
+            "division",
+            "zero",
+            "one",
+            "special_cases"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "special_division_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with 1 and 0 facts.",
+            "questions": [
+              {
+                "id": "g3-u13-w1-d4-warmup-1",
+                "prompt": "9 ÷ 1 = ?",
+                "correct_answer": "9",
+                "hint": "Dividing by 1 gives the same number.",
+                "skill": "division_by_1"
+              },
+              {
+                "id": "g3-u13-w1-d4-warmup-2",
+                "prompt": "0 ÷ 5 = ?",
+                "correct_answer": "0",
+                "hint": "Zero shared into groups is zero each.",
+                "skill": "zero_divided"
+              },
+              {
+                "id": "g3-u13-w1-d4-warmup-3",
+                "prompt": "6 ÷ 0 = ?",
+                "correct_answer": "undefined",
+                "hint": "You cannot divide by zero.",
+                "skill": "division_by_zero"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Division Stories Involving 1 and 0",
+            "teaching_points": [
+              "Dividing by 1 does not change the number.",
+              "Zero divided by any non-zero number is 0.",
+              "You cannot divide by 0."
+            ],
+            "example": {
+              "prompt": "What is 8 ÷ 1 and 0 ÷ 4?",
+              "visual_type": "groups",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "8 ÷ 1 = 8 and 0 ÷ 4 = 0"
+            },
+            "vocabulary": ["undefined", "divide by zero", "divide by one"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "division_with_1_and_0",
+            "prompt": "There are 0 cookies shared among 7 friends. How many does each get?",
+            "correct_answer": "0",
+            "hint": "0 ÷ 7 = 0.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 0
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "division_with_1_and_0",
+            "question_count": 6,
+            "instructions": "Solve each division problem with 1 or 0, or say undefined."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Special Division Rules",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review division with 1 and 0.",
+            "deckId": "lesson-g3-u13-w1-d4-special-division"
+          },
+          "bigIdea": {
+            "title": "Division Stories Involving 1 and 0",
+            "subtitle": "Special division rules",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Division with 1 and 0 has special rules. Dividing by 1 keeps the number the same. Zero divided by something is 0. Dividing by 0 is impossible.",
+            "bigQuestion": "Why can you not divide by 0?",
+            "starTip": {
+              "title": "Special rules",
+              "lines": ["÷1 = same", "0÷ = 0", "÷0 = no"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Divide by 1",
+                "equation": "a ÷ 1 = a",
+                "badge": "Same number",
+                "description": "Dividing by 1 does not change the number."
+              },
+              {
+                "eyebrow": "Divide by 0",
+                "equation": "a ÷ 0 = undefined",
+                "badge": "Impossible",
+                "description": "You cannot split something into zero groups."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u13-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Meaning of Division",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of sharing equally, counting equal groups, writing equations, and 1 and 0 cases.",
+          "concept": "Review the four big ideas from this unit: division as sharing, division as counting groups, writing equations, and special cases with 1 and 0.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about the meaning of division.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "division_sharing",
+            "division_counting_groups",
+            "write_division_equations",
+            "division_with_1_and_0"
+          ],
+          "skills": [
+            "division",
+            "sharing",
+            "equal_groups",
+            "equations",
+            "dividend",
+            "divisor",
+            "quotient",
+            "zero",
+            "one"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u13-w1-d5-warmup-1",
+                "prompt": "Share 42 beads equally among 6 jars. How many in each jar?",
+                "correct_answer": "7",
+                "hint": "42 ÷ 6 = 7.",
+                "skill": "division_sharing"
+              },
+              {
+                "id": "g3-u13-w1-d5-warmup-2",
+                "prompt": "How many groups of 9 are in 54?",
+                "correct_answer": "6",
+                "hint": "54 ÷ 9 = 6.",
+                "skill": "division_counting_groups"
+              },
+              {
+                "id": "g3-u13-w1-d5-warmup-3",
+                "prompt": "What is 11 ÷ 1?",
+                "correct_answer": "11",
+                "hint": "Dividing by 1 gives the same number.",
+                "skill": "division_by_1"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "sharing + counting groups + equations + 1/0 = meaning of division"
+            },
+            "vocabulary": ["evaluation", "review", "division"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which equation matches: 30 shared equally among 5 friends?",
+            "correct_answer": "30 / 5 = 6",
+            "hint": "30 ÷ 5 = 6.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 13 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 13 before the evaluation.",
+            "deckId": "lesson-g3-u13-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Meaning of Division",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: sharing equally, counting equal groups, writing division equations, and special cases with 1 and 0.",
+            "bigQuestion": "What do you know about the meaning of division?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Two meanings",
+                "equation": "Sharing or grouping",
+                "badge": "Both are division",
+                "description": "Division can be sharing equally or counting equal groups."
+              },
+              {
+                "eyebrow": "Special cases",
+                "equation": "÷1 = same, 0÷ = 0, ÷0 = undefined",
+                "badge": "Watch out",
+                "description": "Remember the special rules for 1 and 0."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

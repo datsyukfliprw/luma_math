@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 31,
+  "unit_title": "Comparing Fractions With Like Denominators",
+  "unit_slug": "comparing_fractions_with_like_denominators",
+  "unit_description": "This unit teaches students to compare fractions that have the same denominator. Students use visual models, number lines, comparison symbols, and justify answers.",
+  "unit_goals": [
+    "Compare fractions with the same denominator using visual models.",
+    "Compare fractions with the same denominator on number lines.",
+    "Use <, >, and = to compare fractions.",
+    "Solve comparison problems and justify answers.",
+    "Understand that with like denominators, the larger numerator names the larger fraction."
+  ],
+  "fact_focus": ["fractions", "comparing", "3.NF.A.6"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Comparing Fractions With Like Denominators",
+      "weekly_focus": "Students compare fractions with the same denominator using models, number lines, and symbols.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u31-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Compare Fractions Using Visual Models",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by shading fraction models and comparing the shaded amounts.",
+          "concept": "When fractions have the same denominator, the parts are the same size. Compare the number of shaded parts. The fraction with more shaded parts is larger.",
+          "practice": "Compare fractions with like denominators using area models.",
+          "objective": "Compare fractions with the same denominator using visual models.",
+          "practice_type": "compare_like_denominators_models",
+          "skills": [
+            "fractions",
+            "comparing",
+            "like_denominators",
+            "visual_models"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "compare_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by comparing models.",
+            "questions": [
+              {
+                "id": "g3-u31-w1-d1-warmup-1",
+                "prompt": "Which is larger: 2/5 or 3/5?",
+                "correct_answer": "3/5",
+                "hint": "Compare the shaded parts; same denominator.",
+                "skill": "compare_like_denominators_models"
+              },
+              {
+                "id": "g3-u31-w1-d1-warmup-2",
+                "prompt": "Which is smaller: 4/6 or 5/6?",
+                "correct_answer": "4/6",
+                "hint": "4 is less than 5.",
+                "skill": "compare_like_denominators_models"
+              },
+              {
+                "id": "g3-u31-w1-d1-warmup-3",
+                "prompt": "Are 3/8 and 3/8 equal?",
+                "correct_answer": "yes",
+                "hint": "Same numerator and denominator.",
+                "skill": "compare_like_denominators_models"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Compare Fractions Using Visual Models",
+            "teaching_points": [
+              "Same denominator means same size parts.",
+              "Compare the number of shaded parts.",
+              "More shaded parts means a larger fraction."
+            ],
+            "example": {
+              "prompt": "Compare 2/6 and 4/6 using a model.",
+              "visual_type": "area_model",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "4/6 > 2/6"
+            },
+            "vocabulary": ["compare", "like denominators", "greater", "less"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "compare_like_denominators_models",
+            "prompt": "Compare 3/8 and 5/8 using a model.",
+            "correct_answer": "3/8 < 5/8",
+            "hint": "3 shaded parts is less than 5 shaded parts.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "compare_like_denominators_models",
+            "question_count": 6,
+            "instructions": "Use visual models to compare each pair of fractions."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Like Denominators Models",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review comparing fractions with like denominators using models.",
+            "deckId": "lesson-g3-u31-w1-d1-compare-models"
+          },
+          "bigIdea": {
+            "title": "Compare Fractions Using Visual Models",
+            "subtitle": "More parts means bigger",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When two fractions have the same denominator, the pieces are the same size. The fraction with more pieces shaded is the larger fraction.",
+            "bigQuestion": "Why can you compare numerators when denominators are the same?",
+            "starTip": {
+              "title": "Same size parts",
+              "lines": ["Same denominator", "Compare numerators"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same denominator",
+                "equation": "parts are the same size",
+                "badge": "Equal parts",
+                "description": "Same denominator means each part is the same size."
+              },
+              {
+                "eyebrow": "Compare numerators",
+                "equation": "3/5 < 4/5",
+                "badge": "More shaded",
+                "description": "More shaded parts means the fraction is larger."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u31-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Compare Fractions Using Number Lines",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by locating and comparing two fractions on a number line with the same denominator.",
+          "concept": "On a number line, a fraction farther to the right is larger. With the same denominator, the fraction with the greater numerator is farther right.",
+          "practice": "Compare fractions with like denominators on number lines.",
+          "objective": "Compare fractions with the same denominator on number lines.",
+          "practice_type": "compare_like_denominators_number_line",
+          "skills": [
+            "fractions",
+            "number_line",
+            "comparing",
+            "like_denominators"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "number_line_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with number lines.",
+            "questions": [
+              {
+                "id": "g3-u31-w1-d2-warmup-1",
+                "prompt": "Which is farther right on a number line: 2/7 or 5/7?",
+                "correct_answer": "5/7",
+                "hint": "5 is greater than 2.",
+                "skill": "compare_like_denominators_number_line"
+              },
+              {
+                "id": "g3-u31-w1-d2-warmup-2",
+                "prompt": "Which is closer to 0: 3/10 or 7/10?",
+                "correct_answer": "3/10",
+                "hint": "3 is less than 7.",
+                "skill": "compare_like_denominators_number_line"
+              },
+              {
+                "id": "g3-u31-w1-d2-warmup-3",
+                "prompt": "On a number line, is 4/6 to the right of 2/6?",
+                "correct_answer": "yes",
+                "hint": "4 is greater than 2.",
+                "skill": "compare_like_denominators_number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Compare Fractions Using Number Lines",
+            "teaching_points": [
+              "Locate both fractions on the same number line.",
+              "The fraction farther right is larger.",
+              "With the same denominator, compare numerators."
+            ],
+            "example": {
+              "prompt": "Compare 2/5 and 4/5 on a number line.",
+              "visual_type": "number_line",
+              "groups": 5,
+              "items_per_group": 1,
+              "equation": "4/5 > 2/5"
+            },
+            "vocabulary": ["number line", "right", "left", "compare"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "compare_like_denominators_number_line",
+            "prompt": "Compare 3/8 and 7/8 on a number line.",
+            "correct_answer": "3/8 < 7/8",
+            "hint": "7/8 is farther to the right.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "compare_like_denominators_number_line",
+            "question_count": 6,
+            "instructions": "Use number lines to compare each pair of fractions."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Like Denominators Number Lines",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review comparing fractions on number lines.",
+            "deckId": "lesson-g3-u31-w1-d2-compare-number-lines"
+          },
+          "bigIdea": {
+            "title": "Compare Fractions Using Number Lines",
+            "subtitle": "Farther right means larger",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A number line shows which fraction is larger by its position. The fraction farther to the right is larger. With like denominators, this is the one with the larger numerator.",
+            "bigQuestion": "How does a number line show which fraction is greater?",
+            "starTip": {
+              "title": "Right is more",
+              "lines": ["Locate both", "The one on the right is larger"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Locate",
+                "equation": "mark 2/5 and 4/5",
+                "badge": "Same scale",
+                "description": "Both fractions use a number line with the same denominator."
+              },
+              {
+                "eyebrow": "Compare",
+                "equation": "4/5 is to the right of 2/5",
+                "badge": "Greater",
+                "description": "The point farther right is the greater fraction."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u31-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Use <, >, and =",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by reviewing <, >, and = symbols.",
+          "concept": "The symbol < means less than, > means greater than, and = means equal to. Compare the numerators of fractions with the same denominator and choose the correct symbol.",
+          "practice": "Write <, >, or = to compare fractions with like denominators.",
+          "objective": "Use <, >, and = to compare fractions with like denominators.",
+          "practice_type": "use_comparison_symbols",
+          "skills": [
+            "fractions",
+            "comparing",
+            "symbols",
+            "like_denominators"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "symbol_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with comparison symbols.",
+            "questions": [
+              {
+                "id": "g3-u31-w1-d3-warmup-1",
+                "prompt": "2/5 __ 4/5",
+                "correct_answer": "<",
+                "hint": "2 is less than 4.",
+                "skill": "use_comparison_symbols"
+              },
+              {
+                "id": "g3-u31-w1-d3-warmup-2",
+                "prompt": "6/8 __ 3/8",
+                "correct_answer": ">",
+                "hint": "6 is greater than 3.",
+                "skill": "use_comparison_symbols"
+              },
+              {
+                "id": "g3-u31-w1-d3-warmup-3",
+                "prompt": "5/6 __ 5/6",
+                "correct_answer": "=",
+                "hint": "They are the same.",
+                "skill": "use_comparison_symbols"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Use <, >, and =",
+            "teaching_points": [
+              "Point the symbol toward the smaller number.",
+              "Open side points to the larger number.",
+              "Use = when the fractions are the same."
+            ],
+            "example": {
+              "prompt": "Compare 3/7 and 5/7.",
+              "visual_type": "shape",
+              "groups": 7,
+              "items_per_group": 1,
+              "equation": "3/7 < 5/7"
+            },
+            "vocabulary": ["less than", "greater than", "equal to", "symbol"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "use_comparison_symbols",
+            "prompt": "Compare 4/9 and 7/9.",
+            "correct_answer": "4/9 < 7/9",
+            "hint": "4 is less than 7.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "use_comparison_symbols",
+            "question_count": 6,
+            "instructions": "Write the correct symbol for each pair of fractions."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Comparison Symbols",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review <, >, and = for fractions.",
+            "deckId": "lesson-g3-u31-w1-d3-comparison-symbols"
+          },
+          "bigIdea": {
+            "title": "Use <, >, and =",
+            "subtitle": "Point the symbol to the smaller number",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Comparison symbols show which fraction is larger or smaller. The open side of the symbol always points to the greater number.",
+            "bigQuestion": "Which way does the < symbol point?",
+            "starTip": {
+              "title": "Symbol tip",
+              "lines": ["Open to greater", "Point to smaller"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Less than",
+                "equation": "3/7 < 5/7",
+                "badge": "<",
+                "description": "The symbol points to the smaller number."
+              },
+              {
+                "eyebrow": "Greater than",
+                "equation": "5/7 > 3/7",
+                "badge": ">",
+                "description": "The open side faces the larger number."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u31-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Solve Comparison Problems and Justify Answers",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by comparing fractions in word problem contexts.",
+          "concept": "Comparison problems ask which amount is larger or smaller. Use the same-denominator rule: compare numerators. Then justify the answer by explaining that the parts are the same size, so more parts means more.",
+          "practice": "Solve word problems comparing fractions and justify answers.",
+          "objective": "Solve comparison problems and justify answers.",
+          "practice_type": "comparison_word_problems_like_denominators",
+          "skills": [
+            "fractions",
+            "word_problems",
+            "comparing",
+            "justifying",
+            "like_denominators"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "word_problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with fraction comparison word problems.",
+            "questions": [
+              {
+                "id": "g3-u31-w1-d4-warmup-1",
+                "prompt": "Sam ate 3/8 of a pizza. Mia ate 5/8. Who ate more?",
+                "correct_answer": "Mia",
+                "hint": "5/8 > 3/8.",
+                "skill": "comparison_word_problems_like_denominators"
+              },
+              {
+                "id": "g3-u31-w1-d4-warmup-2",
+                "prompt": "A rope is 2/6 blue and 4/6 green. Which color is more?",
+                "correct_answer": "green",
+                "hint": "4/6 > 2/6.",
+                "skill": "comparison_word_problems_like_denominators"
+              },
+              {
+                "id": "g3-u31-w1-d4-warmup-3",
+                "prompt": "Tara ran 7/10 of a mile. Ben ran 4/10. Who ran less?",
+                "correct_answer": "Ben",
+                "hint": "4/10 < 7/10.",
+                "skill": "comparison_word_problems_like_denominators"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Solve Comparison Problems and Justify Answers",
+            "teaching_points": [
+              "Find the fractions in the problem.",
+              "Compare numerators because denominators are the same.",
+              "Explain why the larger numerator means more."
+            ],
+            "example": {
+              "prompt": "Lily colored 3/8 of a page and Alex colored 5/8. Who colored more?",
+              "visual_type": "area_model",
+              "groups": 8,
+              "items_per_group": 1,
+              "equation": "5/8 > 3/8, Alex colored more"
+            },
+            "vocabulary": ["justify", "compare", "word problem", "more", "less"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "comparison_word_problems_like_denominators",
+            "prompt": "A jar is 4/7 full of red marbles and 3/7 full of blue marbles. Which color has more?",
+            "correct_answer": "red",
+            "hint": "4/7 > 3/7.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "comparison_word_problems_like_denominators",
+            "question_count": 6,
+            "instructions": "Solve each comparison problem and explain your answer."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Comparison Justifications",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review justifying fraction comparisons.",
+            "deckId": "lesson-g3-u31-w1-d4-comparison-justifications"
+          },
+          "bigIdea": {
+            "title": "Solve Comparison Problems and Justify Answers",
+            "subtitle": "Explain why the larger numerator wins",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "To justify a comparison, explain that the denominators are the same, so the pieces are the same size. The fraction with more pieces is larger.",
+            "bigQuestion": "How do you justify that 5/8 is greater than 3/8?",
+            "starTip": {
+              "title": "Justify",
+              "lines": ["Same size parts", "More parts = more"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same denominator",
+                "equation": "eighths",
+                "badge": "Same size",
+                "description": "The pieces are the same size."
+              },
+              {
+                "eyebrow": "Compare numerators",
+                "equation": "5 > 3",
+                "badge": "More parts",
+                "description": "5 eighths is more than 3 eighths."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u31-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Like Denominators",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of comparing with models, number lines, symbols, and word problems.",
+          "concept": "Review the four big ideas from this unit: comparing fractions using visual models, comparing on number lines, using comparison symbols, and solving comparison problems with justification.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about comparing fractions with like denominators.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "compare_like_denominators_models",
+            "compare_like_denominators_number_line",
+            "use_comparison_symbols",
+            "comparison_word_problems_like_denominators"
+          ],
+          "skills": [
+            "fractions",
+            "comparing",
+            "like_denominators",
+            "models",
+            "number_line",
+            "symbols",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u31-w1-d5-warmup-1",
+                "prompt": "3/5 __ 4/5",
+                "correct_answer": "<",
+                "hint": "3 is less than 4.",
+                "skill": "use_comparison_symbols"
+              },
+              {
+                "id": "g3-u31-w1-d5-warmup-2",
+                "prompt": "7/8 __ 5/8",
+                "correct_answer": ">",
+                "hint": "7 is greater than 5.",
+                "skill": "use_comparison_symbols"
+              },
+              {
+                "id": "g3-u31-w1-d5-warmup-3",
+                "prompt": "A pie is cut into 6 slices. Ana ate 2/6 and Ben ate 4/6. Who ate more?",
+                "correct_answer": "Ben",
+                "hint": "4/6 > 2/6.",
+                "skill": "comparison_word_problems_like_denominators"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "models + number lines + symbols + word problems = like denominators"
+            },
+            "vocabulary": ["evaluation", "review", "comparing fractions"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Compare 5/9 and 2/9 using a number line.",
+            "correct_answer": "5/9 > 2/9",
+            "hint": "5/9 is farther to the right.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 31 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 31 before the evaluation.",
+            "deckId": "lesson-g3-u31-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Like Denominators",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: comparing fractions using visual models, comparing on number lines, using < > and =, and solving comparison word problems.",
+            "bigQuestion": "What do you know about comparing fractions with like denominators?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same denominator",
+                "equation": "same size parts",
+                "badge": "Compare numerators",
+                "description": "The fraction with more parts is larger."
+              },
+              {
+                "eyebrow": "Symbols",
+                "equation": "3/5 < 4/5",
+                "badge": "Less than",
+                "description": "Use symbols to record the comparison."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

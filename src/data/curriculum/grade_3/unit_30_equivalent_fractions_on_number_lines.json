@@ -1,0 +1,628 @@
+{
+  "grade_level": 3,
+  "unit_number": 30,
+  "unit_title": "Equivalent Fractions on Number Lines",
+  "unit_slug": "equivalent_fractions_on_number_lines",
+  "unit_description": "This unit shows equivalent fractions on number lines. Students identify fractions at the same number-line location, find equivalents using number lines, graph equivalent fractions, and connect models, number lines, and equations.",
+  "unit_goals": [
+    "Identify fractions at the same number-line location.",
+    "Find equivalent fractions using number lines.",
+    "Graph equivalent fractions.",
+    "Connect models, number lines, and equations.",
+    "Understand why equivalent fractions occupy the same point."
+  ],
+  "fact_focus": ["fractions", "equivalence", "number_line", "3.NF.A.4", "3.NF.A.5"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Equivalent Fractions on Number Lines",
+      "weekly_focus": "Students locate equivalent fractions at the same point on a number line and connect number lines to models and equations.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u30-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Fractions at the Same Number-Line Location",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by marking 1/2 and 2/4 on the same number line.",
+          "concept": "Equivalent fractions are located at the exact same point on a number line. If two fractions are at the same place, they name the same amount and are equivalent.",
+          "practice": "Identify fractions that share the same location on a number line.",
+          "objective": "Identify fractions at the same number-line location.",
+          "practice_type": "same_location_number_line",
+          "skills": [
+            "fractions",
+            "number_line",
+            "equivalence",
+            "same_location"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "number_line_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with same locations.",
+            "questions": [
+              {
+                "id": "g3-u30-w1-d1-warmup-1",
+                "prompt": "Are 1/2 and 2/4 at the same place on a number line?",
+                "correct_answer": "yes",
+                "hint": "They are equivalent.",
+                "skill": "same_location_number_line"
+              },
+              {
+                "id": "g3-u30-w1-d1-warmup-2",
+                "prompt": "Are 1/3 and 2/6 at the same place?",
+                "correct_answer": "yes",
+                "hint": "They are equivalent.",
+                "skill": "same_location_number_line"
+              },
+              {
+                "id": "g3-u30-w1-d1-warmup-3",
+                "prompt": "Are 2/3 and 3/4 at the same place?",
+                "correct_answer": "no",
+                "hint": "2/3 is less than 3/4.",
+                "skill": "same_location_number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Fractions at the Same Number-Line Location",
+            "teaching_points": [
+              "Equivalent fractions land on the same point.",
+              "Different names for the same point are equivalent.",
+              "Use the number line to check equivalence."
+            ],
+            "example": {
+              "prompt": "Mark 1/2 and 2/4 on a number line. Where do they land?",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "1/2 = 2/4, same point"
+            },
+            "vocabulary": ["equivalent", "same location", "number line", "point"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "same_location_number_line",
+            "prompt": "Which fraction is at the same point as 1/2: 2/6 or 4/8?",
+            "correct_answer": "4/8",
+            "hint": "4/8 is the same as 1/2.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "same_location_number_line",
+            "question_count": 6,
+            "instructions": "Tell which fraction is at the same location on the number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Same Location on Number Lines",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review same number-line locations for equivalent fractions.",
+            "deckId": "lesson-g3-u30-w1-d1-same-location"
+          },
+          "bigIdea": {
+            "title": "Fractions at the Same Number-Line Location",
+            "subtitle": "Same point, same amount",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When two fractions are at the exact same spot on a number line, they are equivalent. The number line is a powerful way to check if fractions are equal.",
+            "bigQuestion": "How does a number line show that fractions are equivalent?",
+            "starTip": {
+              "title": "Same point",
+              "lines": ["Mark 1/2", "Mark 2/4", "They overlap"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Equivalent",
+                "equation": "same point on the number line",
+                "badge": "Same distance",
+                "description": "Fractions at the same distance from 0 are equivalent."
+              },
+              {
+                "eyebrow": "Check",
+                "equation": "mark both fractions",
+                "badge": "Overlap",
+                "description": "If the marks land on the same point, the fractions are equivalent."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u30-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Find Equivalents Using Number Lines",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by partitioning a number line into different numbers of equal parts and finding matching points.",
+          "concept": "To find an equivalent fraction on a number line, partition the same 0-to-1 interval into more equal parts. The equivalent fraction will be at the same location.",
+          "practice": "Use number lines to find fractions equivalent to a given fraction.",
+          "objective": "Find equivalent fractions using number lines.",
+          "practice_type": "find_equivalents_number_line",
+          "skills": [
+            "fractions",
+            "number_line",
+            "equivalence",
+            "partition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "number_line_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding equivalents.",
+            "questions": [
+              {
+                "id": "g3-u30-w1-d2-warmup-1",
+                "prompt": "Partition 0 to 1 into halves and fourths. What is 1/2 in fourths?",
+                "correct_answer": "2/4",
+                "hint": "One half is the same as two fourths.",
+                "skill": "find_equivalents_number_line"
+              },
+              {
+                "id": "g3-u30-w1-d2-warmup-2",
+                "prompt": "Partition 0 to 1 into thirds and sixths. What is 2/3 in sixths?",
+                "correct_answer": "4/6",
+                "hint": "Two thirds is the same as four sixths.",
+                "skill": "find_equivalents_number_line"
+              },
+              {
+                "id": "g3-u30-w1-d2-warmup-3",
+                "prompt": "Partition 0 to 1 into fourths and eighths. What is 3/4 in eighths?",
+                "correct_answer": "6/8",
+                "hint": "Three fourths is the same as six eighths.",
+                "skill": "find_equivalents_number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Equivalents Using Number Lines",
+            "teaching_points": [
+              "Start at the location of the given fraction.",
+              "Partition the 0-to-1 interval into more parts.",
+              "Find the new fraction name for the same point."
+            ],
+            "example": {
+              "prompt": "Find a fraction equivalent to 1/3 using a number line with sixths.",
+              "visual_type": "number_line",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "1/3 = 2/6"
+            },
+            "vocabulary": ["equivalent", "partition", "number line", "find"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "find_equivalents_number_line",
+            "prompt": "Find a fraction equivalent to 2/5 using a number line with tenths.",
+            "correct_answer": "4/10",
+            "hint": "2/5 and 4/10 are at the same point.",
+            "visual_data": {
+              "groups": 10,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "find_equivalents_number_line",
+            "question_count": 6,
+            "instructions": "Find an equivalent fraction for each given fraction using the number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Find Equivalents on Number Lines",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review finding equivalents on number lines.",
+            "deckId": "lesson-g3-u30-w1-d2-find-equivalents"
+          },
+          "bigIdea": {
+            "title": "Find Equivalents Using Number Lines",
+            "subtitle": "Partition into smaller parts",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "You can find equivalent fractions by making smaller equal spaces on the same number line. The new fraction will point to the same place as the original.",
+            "bigQuestion": "Why does partitioning into more parts help find equivalent fractions?",
+            "starTip": {
+              "title": "More parts, same point",
+              "lines": ["1/3", "split each third in 2", "= 2/6"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Partition",
+                "equation": "split each space in 2",
+                "badge": "×2",
+                "description": "Divide each equal part into 2 smaller equal parts."
+              },
+              {
+                "eyebrow": "Same point",
+                "equation": "1/3 = 2/6",
+                "badge": "Equivalent",
+                "description": "The new fraction is at the same point as the old one."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u30-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Graph Equivalent Fractions",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by placing multiple fraction labels at the same point on a number line.",
+          "concept": "Graphing a fraction on a number line means placing a point and writing its label. Equivalent fractions can share the same point with all their labels.",
+          "practice": "Graph fractions on number lines and label equivalent fractions at the same point.",
+          "objective": "Graph equivalent fractions on number lines.",
+          "practice_type": "graph_equivalent_fractions",
+          "skills": [
+            "fractions",
+            "number_line",
+            "graph",
+            "equivalence"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "graph_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by graphing.",
+            "questions": [
+              {
+                "id": "g3-u30-w1-d3-warmup-1",
+                "prompt": "Graph and label 1/2 and 2/4 at the same point on a number line.",
+                "correct_answer": "same point",
+                "hint": "They are equivalent.",
+                "skill": "graph_equivalent_fractions"
+              },
+              {
+                "id": "g3-u30-w1-d3-warmup-2",
+                "prompt": "Graph 2/3 and 4/6 at the same point.",
+                "correct_answer": "same point",
+                "hint": "They are equivalent.",
+                "skill": "graph_equivalent_fractions"
+              },
+              {
+                "id": "g3-u30-w1-d3-warmup-3",
+                "prompt": "Graph 1/4 and 2/8 at the same point.",
+                "correct_answer": "same point",
+                "hint": "They are equivalent.",
+                "skill": "graph_equivalent_fractions"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Graph Equivalent Fractions",
+            "teaching_points": [
+              "Partition the number line.",
+              "Place the point at the correct location.",
+              "Write all equivalent fraction labels."
+            ],
+            "example": {
+              "prompt": "Graph and label 1/2, 2/4, and 3/6 on a number line.",
+              "visual_type": "number_line",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "all at the same point"
+            },
+            "vocabulary": ["graph", "point", "label", "equivalent"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "graph_equivalent_fractions",
+            "prompt": "Graph 3/4 and 6/8 at the same point.",
+            "correct_answer": "same point",
+            "hint": "They are equivalent fractions.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "graph_equivalent_fractions",
+            "question_count": 6,
+            "instructions": "Graph and label each pair of equivalent fractions on a number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Graphing Equivalent Fractions",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review graphing equivalent fractions.",
+            "deckId": "lesson-g3-u30-w1-d3-graph-equivalent"
+          },
+          "bigIdea": {
+            "title": "Graph Equivalent Fractions",
+            "subtitle": "Put the labels on the same point",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you graph equivalent fractions, they all go at the same point. You can write each fraction name above or below that point.",
+            "bigQuestion": "How do you graph two equivalent fractions on the same number line?",
+            "starTip": {
+              "title": "One point, many names",
+              "lines": ["Graph the point", "Label both fractions"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Partition",
+                "equation": "split 0 to 1",
+                "badge": "Into equal parts",
+                "description": "Partition the number line with enough parts for both fractions."
+              },
+              {
+                "eyebrow": "Label",
+                "equation": "1/2 = 2/4",
+                "badge": "Same point",
+                "description": "Write both fraction names at the same point."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u30-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Connect Models, Number Lines, and Equations",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by drawing an area model and a number line for the same fraction.",
+          "concept": "Fractions can be shown with area models, number lines, and equations. All three representations should match. 1/2 = 2/4 can be shown with a shaded model, points on a number line, and multiplication.",
+          "practice": "Connect area models, number lines, and equations for equivalent fractions.",
+          "objective": "Connect models, number lines, and equations for equivalent fractions.",
+          "practice_type": "connect_models_number_lines_equations",
+          "skills": [
+            "fractions",
+            "models",
+            "number_line",
+            "equations",
+            "equivalence"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "connect_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by connecting representations.",
+            "questions": [
+              {
+                "id": "g3-u30-w1-d4-warmup-1",
+                "prompt": "An area model shows 2/4 shaded. What is the equivalent fraction?",
+                "correct_answer": "1/2",
+                "hint": "Half of the whole is shaded.",
+                "skill": "connect_models_number_lines_equations"
+              },
+              {
+                "id": "g3-u30-w1-d4-warmup-2",
+                "prompt": "A number line shows 3/6 and 1/2 at the same point. Write the equation.",
+                "correct_answer": "3/6 = 1/2",
+                "hint": "They are equivalent.",
+                "skill": "connect_models_number_lines_equations"
+              },
+              {
+                "id": "g3-u30-w1-d4-warmup-3",
+                "prompt": "1/3 × 2/2 = ?",
+                "correct_answer": "2/6",
+                "hint": "Multiply top and bottom by 2.",
+                "skill": "connect_models_number_lines_equations"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Connect Models, Number Lines, and Equations",
+            "teaching_points": [
+              "Area models show equal parts.",
+              "Number lines show location.",
+              "Equations show the relationship."
+            ],
+            "example": {
+              "prompt": "Show that 1/2 = 3/6 using a model, number line, and equation.",
+              "visual_type": "number_line",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "1/2 = 3/6; same shaded area; same point"
+            },
+            "vocabulary": ["model", "number line", "equation", "representation"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "connect_models_number_lines_equations",
+            "prompt": "Connect 2/4 = 1/2 using a model, number line, and equation.",
+            "correct_answer": "1/2",
+            "hint": "2/4 is the same as 1/2.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "connect_models_number_lines_equations",
+            "question_count": 6,
+            "instructions": "Show each equivalent fraction pair with a model, a number line, and an equation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Connect Representations",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review connecting models, number lines, and equations.",
+            "deckId": "lesson-g3-u30-w1-d4-connect"
+          },
+          "bigIdea": {
+            "title": "Connect Models, Number Lines, and Equations",
+            "subtitle": "Three ways to show the same fraction",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Fractions can be shown with area models, number lines, and equations. Each representation gives a different view, but they all describe the same amount.",
+            "bigQuestion": "Why are models, number lines, and equations useful for fractions?",
+            "starTip": {
+              "title": "Same fraction, different view",
+              "lines": ["Model = shaded area", "Number line = point", "Equation = symbols"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Area model",
+                "equation": "shaded parts",
+                "badge": "See the amount",
+                "description": "Shows the amount of the whole that is shaded."
+              },
+              {
+                "eyebrow": "Equation",
+                "equation": "1/2 = 2/4",
+                "badge": "Write the relationship",
+                "description": "Shows that two fractions name the same amount."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u30-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Equivalent Fractions",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of same location, finding equivalents, graphing, and connecting models/number lines/equations.",
+          "concept": "Review the four big ideas from this unit: fractions at the same number-line location, finding equivalents using number lines, graphing equivalent fractions, and connecting models, number lines, and equations.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about equivalent fractions on number lines.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "same_location_number_line",
+            "find_equivalents_number_line",
+            "graph_equivalent_fractions",
+            "connect_models_number_lines_equations"
+          ],
+          "skills": [
+            "fractions",
+            "equivalence",
+            "number_line",
+            "models",
+            "equations"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u30-w1-d5-warmup-1",
+                "prompt": "What is 1/2 in fourths?",
+                "correct_answer": "2/4",
+                "hint": "1/2 = 2/4.",
+                "skill": "find_equivalents_number_line"
+              },
+              {
+                "id": "g3-u30-w1-d5-warmup-2",
+                "prompt": "What is 2/3 in sixths?",
+                "correct_answer": "4/6",
+                "hint": "2/3 = 4/6.",
+                "skill": "find_equivalents_number_line"
+              },
+              {
+                "id": "g3-u30-w1-d5-warmup-3",
+                "prompt": "An area model shows 3/6 shaded. What is the equivalent fraction?",
+                "correct_answer": "1/2",
+                "hint": "3/6 is the same as 1/2.",
+                "skill": "connect_models_number_lines_equations"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "same location + find equivalents + graph + connect = equivalent fractions on number lines"
+            },
+            "vocabulary": ["evaluation", "review", "equivalent fractions"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which fraction is at the same point as 1/2: 2/8 or 4/8?",
+            "correct_answer": "4/8",
+            "hint": "4/8 = 1/2.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 30 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 30 before the evaluation.",
+            "deckId": "lesson-g3-u30-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Equivalent Fractions",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: fractions at the same number-line location, finding equivalent fractions using number lines, graphing equivalent fractions, and connecting models, number lines, and equations.",
+            "bigQuestion": "What do you know about equivalent fractions on number lines?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same point",
+                "equation": "equivalent fractions",
+                "badge": "Same location",
+                "description": "Equivalent fractions land at the same point on a number line."
+              },
+              {
+                "eyebrow": "Generate",
+                "equation": "partition into more parts",
+                "badge": "Same point",
+                "description": "Split each part into smaller equal parts to find equivalents."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,627 @@
+{
+  "grade_level": 3,
+  "unit_number": 24,
+  "unit_title": "Area and Perimeter Relationships",
+  "unit_slug": "area_and_perimeter_relationships",
+  "unit_description": "This unit explores the relationship between area and perimeter. Students find shapes with the same perimeter but different areas, the same area but different perimeters, missing sides, and solve real-world problems.",
+  "unit_goals": [
+    "Find shapes with the same perimeter but different areas.",
+    "Find shapes with the same area but different perimeters.",
+    "Find area, perimeter, or a missing side.",
+    "Use area and perimeter to solve real-world problems.",
+    "Compare and contrast area and perimeter."
+  ],
+  "fact_focus": ["area", "perimeter", "3.GM.D.16"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Area and Perimeter Relationships",
+      "weekly_focus": "Students compare area and perimeter, build shapes with equal area or perimeter, and solve real-world problems.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u24-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Same Perimeter, Different Areas",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by drawing rectangles with a given perimeter and finding their areas.",
+          "concept": "Different shapes can have the same perimeter but different areas. A long, skinny rectangle and a square can both have the same perimeter, but the square usually has more area.",
+          "practice": "Find different rectangles with the same perimeter and compare their areas.",
+          "objective": "Find shapes with the same perimeter but different areas.",
+          "practice_type": "same_perimeter_different_area",
+          "skills": [
+            "area",
+            "perimeter",
+            "compare",
+            "rectangles"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "compare_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by comparing perimeters and areas.",
+            "questions": [
+              {
+                "id": "g3-u24-w1-d1-warmup-1",
+                "prompt": "Which has more area: a 1 by 11 rectangle or a 4 by 4 square?",
+                "correct_answer": "4 by 4 square",
+                "hint": "1×11=11, 4×4=16.",
+                "skill": "same_perimeter_different_area"
+              },
+              {
+                "id": "g3-u24-w1-d1-warmup-2",
+                "prompt": "Find the perimeter of a 4 by 4 square and a 1 by 7 rectangle.",
+                "correct_answer": "16 and 16",
+                "hint": "4×4=16, 1+7+1+7=16.",
+                "skill": "same_perimeter_different_area"
+              },
+              {
+                "id": "g3-u24-w1-d1-warmup-3",
+                "prompt": "A rectangle has perimeter 18. Which has more area: 1 by 8 or 4 by 5?",
+                "correct_answer": "4 by 5",
+                "hint": "1×8=8, 4×5=20; check perimeters.",
+                "skill": "same_perimeter_different_area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Same Perimeter, Different Areas",
+            "teaching_points": [
+              "Same perimeter does not mean same area.",
+              "Try different factor pairs for the same perimeter.",
+              "The closer to a square, the larger the area."
+            ],
+            "example": {
+              "prompt": "Perimeter = 16. Compare a 1 by 7 and 4 by 4 rectangle.",
+              "visual_type": "grid",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "1×7=7 sq units, 4×4=16 sq units, both have perimeter 16"
+            },
+            "vocabulary": ["perimeter", "area", "square", "rectangle"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "same_perimeter_different_area",
+            "prompt": "Perimeter is 20. Which has more area: 1 by 9 or 5 by 5?",
+            "correct_answer": "5 by 5",
+            "hint": "1×9=9, 5×5=25.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "same_perimeter_different_area",
+            "question_count": 6,
+            "instructions": "Find two rectangles with the same perimeter and compare their areas."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Same Perimeter, Different Area",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review same perimeter and different area.",
+            "deckId": "lesson-g3-u24-w1-d1-same-perimeter"
+          },
+          "bigIdea": {
+            "title": "Same Perimeter, Different Areas",
+            "subtitle": "Shape matters for area",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Two shapes can have the same distance around the outside but very different amounts of space inside. The more square-like the shape, the bigger the area for the same perimeter.",
+            "bigQuestion": "Why does a square give the most area for a given perimeter?",
+            "starTip": {
+              "title": "Try factor pairs",
+              "lines": ["Same sum of sides", "Different products"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same perimeter",
+                "equation": "16 units around",
+                "badge": "Add sides",
+                "description": "The sum of all sides is the same."
+              },
+              {
+                "eyebrow": "Different area",
+                "equation": "1×7 = 7 vs 4×4 = 16",
+                "badge": "Compare",
+                "description": "The area depends on how the sides are arranged."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u24-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Same Area, Different Perimeters",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by drawing rectangles with a given area and finding their perimeters.",
+          "concept": "Different shapes can have the same area but different perimeters. A long, skinny rectangle has a larger perimeter than a square with the same area.",
+          "practice": "Find different rectangles with the same area and compare their perimeters.",
+          "objective": "Find shapes with the same area but different perimeters.",
+          "practice_type": "same_area_different_perimeter",
+          "skills": [
+            "area",
+            "perimeter",
+            "compare",
+            "rectangles"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "compare_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by comparing same-area rectangles.",
+            "questions": [
+              {
+                "id": "g3-u24-w1-d2-warmup-1",
+                "prompt": "Which has the greater perimeter: a 1 by 12 rectangle or a 4 by 3 rectangle?",
+                "correct_answer": "1 by 12",
+                "hint": "Perimeters: 26 and 14.",
+                "skill": "same_area_different_perimeter"
+              },
+              {
+                "id": "g3-u24-w1-d2-warmup-2",
+                "prompt": "A rectangle has area 24. Find the perimeter of a 2 by 12 rectangle.",
+                "correct_answer": "28",
+                "hint": "2 + 12 + 2 + 12.",
+                "skill": "same_area_different_perimeter"
+              },
+              {
+                "id": "g3-u24-w1-d2-warmup-3",
+                "prompt": "Area is 18. Which has the smaller perimeter: 2 by 9 or 3 by 6?",
+                "correct_answer": "3 by 6",
+                "hint": "Perimeters are 22 and 18.",
+                "skill": "same_area_different_perimeter"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Same Area, Different Perimeters",
+            "teaching_points": [
+              "Same area does not mean same perimeter.",
+              "Skinny rectangles have larger perimeters.",
+              "Squares have the smallest perimeter for a given area."
+            ],
+            "example": {
+              "prompt": "Area = 36. Compare a 1 by 36 and a 6 by 6 rectangle.",
+              "visual_type": "grid",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "1×36 perimeter = 74, 6×6 perimeter = 24, both area = 36"
+            },
+            "vocabulary": ["area", "perimeter", "skinny", "square"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "same_area_different_perimeter",
+            "prompt": "Area is 20. Which has a smaller perimeter: 1 by 20 or 4 by 5?",
+            "correct_answer": "4 by 5",
+            "hint": "Perimeters: 42 and 18.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "same_area_different_perimeter",
+            "question_count": 6,
+            "instructions": "Find two rectangles with the same area and compare their perimeters."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Same Area, Different Perimeter",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review same area and different perimeter.",
+            "deckId": "lesson-g3-u24-w1-d2-same-area"
+          },
+          "bigIdea": {
+            "title": "Same Area, Different Perimeters",
+            "subtitle": "A square saves perimeter",
+            "thumbnail": "/images/learn/thumbnails/perimeter.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When two shapes cover the same amount of space, the one that is more square-like has a smaller perimeter. Long, skinny shapes need more distance around.",
+            "bigQuestion": "Why do long, skinny shapes have a larger perimeter for the same area?",
+            "starTip": {
+              "title": "Compare factor pairs",
+              "lines": ["Same product", "Different sums of sides"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same area",
+                "equation": "36 square units",
+                "badge": "Same space",
+                "description": "Both shapes cover 36 square units."
+              },
+              {
+                "eyebrow": "Different perimeter",
+                "equation": "1×36 = 74 vs 6×6 = 24",
+                "badge": "Compare",
+                "description": "The square has a much smaller perimeter."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u24-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Find Area, Perimeter, or a Missing Side",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by labeling what is given and what is missing for area and perimeter.",
+          "concept": "Use the formulas for area and perimeter. If you know two of length, width, area, and perimeter, you can find the third. Area = length × width. Perimeter of rectangle = 2 × length + 2 × width.",
+          "practice": "Solve for missing area, perimeter, or side lengths.",
+          "objective": "Find area, perimeter, or a missing side.",
+          "practice_type": "find_area_perimeter_missing_side",
+          "skills": [
+            "area",
+            "perimeter",
+            "missing_side",
+            "formulas"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "missing_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with missing values.",
+            "questions": [
+              {
+                "id": "g3-u24-w1-d3-warmup-1",
+                "prompt": "Length 8, width 3. Find the area and perimeter.",
+                "correct_answer": "24 and 22",
+                "hint": "Area = 8×3, perimeter = 8+3+8+3.",
+                "skill": "find_area_perimeter_missing_side"
+              },
+              {
+                "id": "g3-u24-w1-d3-warmup-2",
+                "prompt": "Area 24, width 4. What is the length?",
+                "correct_answer": "6",
+                "hint": "24 ÷ 4.",
+                "skill": "find_area_perimeter_missing_side"
+              },
+              {
+                "id": "g3-u24-w1-d3-warmup-3",
+                "prompt": "Perimeter 30, length 9. What is the width?",
+                "correct_answer": "6",
+                "hint": "30 - 18 = 12, divided by 2.",
+                "skill": "find_area_perimeter_missing_side"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Area, Perimeter, or a Missing Side",
+            "teaching_points": [
+              "Area = length × width.",
+              "Perimeter = 2l + 2w for rectangles.",
+              "Use inverse operations to find missing values."
+            ],
+            "example": {
+              "prompt": "A rectangle has length 7 and perimeter 22. Find the width and area.",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "22 - 14 = 8, width = 4, area = 7 × 4 = 28"
+            },
+            "vocabulary": ["area", "perimeter", "missing side", "inverse"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "find_area_perimeter_missing_side",
+            "prompt": "A rectangle has width 5 and area 35. Find the length and perimeter.",
+            "correct_answer": "length 7, perimeter 24",
+            "hint": "35 ÷ 5 = 7, perimeter = 7+5+7+5.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "find_area_perimeter_missing_side",
+            "question_count": 6,
+            "instructions": "Find the missing area, perimeter, or side length for each rectangle."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Area and Perimeter Formulas",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review area and perimeter formulas.",
+            "deckId": "lesson-g3-u24-w1-d3-area-perimeter-formulas"
+          },
+          "bigIdea": {
+            "title": "Find Area, Perimeter, or a Missing Side",
+            "subtitle": "Use the formulas and inverse operations",
+            "thumbnail": "/images/learn/thumbnails/perimeter.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Area and perimeter are connected by the length and width. If you know two of these values, you can use the formulas to find the others.",
+            "bigQuestion": "How are area and perimeter formulas related?",
+            "starTip": {
+              "title": "Same side lengths",
+              "lines": ["A = l × w", "P = 2l + 2w"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Area",
+                "equation": "A = l × w",
+                "badge": "Multiply",
+                "description": "Multiply length by width to find area."
+              },
+              {
+                "eyebrow": "Perimeter",
+                "equation": "P = 2l + 2w",
+                "badge": "Add sides",
+                "description": "Add all sides, or use 2 lengths plus 2 widths."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u24-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Use Area and Perimeter to Solve Real-World Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by deciding whether a problem asks for area or perimeter.",
+          "concept": "Real-world problems use area when covering a space and perimeter when measuring a border or fence. Read carefully to choose the right measurement.",
+          "practice": "Solve real-world problems that require area or perimeter.",
+          "objective": "Use area and perimeter to solve real-world problems.",
+          "practice_type": "area_perimeter_word_problems",
+          "skills": [
+            "area",
+            "perimeter",
+            "word_problems",
+            "real_world"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "word_problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with area or perimeter?",
+            "questions": [
+              {
+                "id": "g3-u24-w1-d4-warmup-1",
+                "prompt": "A farmer wants to put a fence around a garden. Does she need area or perimeter?",
+                "correct_answer": "perimeter",
+                "hint": "A fence goes around the outside.",
+                "skill": "area_perimeter_word_problems"
+              },
+              {
+                "id": "g3-u24-w1-d4-warmup-2",
+                "prompt": "A teacher wants to cover a wall with paper. Does she need area or perimeter?",
+                "correct_answer": "area",
+                "hint": "Paper covers the space inside.",
+                "skill": "area_perimeter_word_problems"
+              },
+              {
+                "id": "g3-u24-w1-d4-warmup-3",
+                "prompt": "A pool is 8 feet by 5 feet. How much tile is needed for the floor?",
+                "correct_answer": "40 square feet",
+                "hint": "8 × 5 for area.",
+                "skill": "area_perimeter_word_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Use Area and Perimeter to Solve Real-World Problems",
+            "teaching_points": [
+              "Fence or border: perimeter.",
+              "Cover or paint: area.",
+              "Use the right units: linear for perimeter, square for area."
+            ],
+            "example": {
+              "prompt": "A garden is 9 feet by 4 feet. How much fencing is needed? How much soil is needed to cover it?",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "Perimeter = 9+4+9+4 = 26 ft; Area = 9×4 = 36 sq ft"
+            },
+            "vocabulary": ["fence", "cover", "perimeter", "area", "real world"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "area_perimeter_word_problems",
+            "prompt": "A poster is 6 feet by 4 feet. How much border tape is needed? How much paper covers it?",
+            "correct_answer": "20 feet and 24 square feet",
+            "hint": "Tape is perimeter, paper is area.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "area_perimeter_word_problems",
+            "question_count": 6,
+            "instructions": "Solve each real-world problem. Decide if you need area or perimeter."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Area or Perimeter?",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review when to use area or perimeter.",
+            "deckId": "lesson-g3-u24-w1-d4-area-or-perimeter"
+          },
+          "bigIdea": {
+            "title": "Use Area and Perimeter to Solve Real-World Problems",
+            "subtitle": "Choose the right measure",
+            "thumbnail": "/images/learn/thumbnails/perimeter.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Area and perimeter are used for different things. Area is for covering or filling a space. Perimeter is for going around the edge. Read each problem to decide which one to find.",
+            "bigQuestion": "How do you know whether to find area or perimeter in a word problem?",
+            "starTip": {
+              "title": "Look for key words",
+              "lines": ["Fence = perimeter", "Cover = area"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Perimeter",
+                "equation": "fence, border, around",
+                "badge": "Outside",
+                "description": "Perimeter measures distance around the outside."
+              },
+              {
+                "eyebrow": "Area",
+                "equation": "cover, paint, tile",
+                "badge": "Inside",
+                "description": "Area measures the space inside."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u24-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Area and Perimeter",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of same perimeter/different areas, same area/different perimeters, missing sides, and real-world area/perimeter problems.",
+          "concept": "Review the four big ideas from this unit: same perimeter different areas, same area different perimeters, finding missing values, and real-world problem solving with area and perimeter.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about area and perimeter relationships.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "same_perimeter_different_area",
+            "same_area_different_perimeter",
+            "find_area_perimeter_missing_side",
+            "area_perimeter_word_problems"
+          ],
+          "skills": [
+            "area",
+            "perimeter",
+            "compare",
+            "missing_side",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u24-w1-d5-warmup-1",
+                "prompt": "A rectangle has perimeter 20. Which has more area: 1 by 9 or 4 by 6?",
+                "correct_answer": "4 by 6",
+                "hint": "1×9=9, 4×6=24.",
+                "skill": "same_perimeter_different_area"
+              },
+              {
+                "id": "g3-u24-w1-d5-warmup-2",
+                "prompt": "Area is 36. Which has a smaller perimeter: 3 by 12 or 6 by 6?",
+                "correct_answer": "6 by 6",
+                "hint": "Perimeters: 30 and 24.",
+                "skill": "same_area_different_perimeter"
+              },
+              {
+                "id": "g3-u24-w1-d5-warmup-3",
+                "prompt": "Length 9, width 5. Find perimeter.",
+                "correct_answer": "28",
+                "hint": "9+5+9+5.",
+                "skill": "find_area_perimeter_missing_side"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "same perimeter + same area + missing sides + real-world = area and perimeter relationships"
+            },
+            "vocabulary": ["evaluation", "review", "area", "perimeter"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A garden is 7 feet by 5 feet. How much fencing is needed?",
+            "correct_answer": "24 feet",
+            "hint": "7+5+7+5.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 24 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 24 before the evaluation.",
+            "deckId": "lesson-g3-u24-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Area and Perimeter",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: same perimeter but different areas, same area but different perimeters, finding missing area/perimeter/side, and solving real-world area and perimeter problems.",
+            "bigQuestion": "What do you know about area and perimeter relationships?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same perimeter",
+                "equation": "different factor pairs",
+                "badge": "Different areas",
+                "description": "The same perimeter can make different areas."
+              },
+              {
+                "eyebrow": "Area vs perimeter",
+                "equation": "inside vs around",
+                "badge": "Different measures",
+                "description": "Area measures space inside; perimeter measures distance around."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

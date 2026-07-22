@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 7,
+  "unit_title": "Subtraction With Regrouping",
+  "unit_slug": "subtraction_with_regrouping",
+  "unit_description": "This unit extends subtraction to cases where regrouping is needed. Students regroup ones and tens, subtract across zeros, and solve missing-digit and balanced-equation puzzles.",
+  "unit_goals": [
+    "Regroup ones when subtracting.",
+    "Regroup tens when subtracting.",
+    "Subtract across zeros.",
+    "Find missing digits in subtraction equations.",
+    "Solve subtraction word problems within 1,000."
+  ],
+  "fact_focus": ["subtraction", "3.NBT.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Subtraction With Regrouping",
+      "weekly_focus": "Students learn to regroup ones and tens, subtract across zeros, and solve missing-digit and balanced-equation subtraction puzzles.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u7-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Regroup Ones When Subtracting",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with subtraction facts where the top number is larger: 13 - 8, 15 - 7.",
+          "concept": "When the top digit in the ones place is smaller than the bottom digit, regroup one ten as ten ones. Then subtract.",
+          "practice": "Subtract two- and three-digit numbers where the ones need regrouping.",
+          "objective": "Regroup ones when subtracting.",
+          "practice_type": "subtraction_regroup_ones",
+          "skills": [
+            "subtraction",
+            "regrouping",
+            "ones",
+            "three_digit_subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "subtraction_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by subtracting with teen numbers.",
+            "questions": [
+              {
+                "id": "g3-u7-w1-d1-warmup-1",
+                "prompt": "12 - 5 = ?",
+                "correct_answer": "7",
+                "hint": "12 is 1 ten and 2 ones. Take apart the ten.",
+                "skill": "subtraction_facts"
+              },
+              {
+                "id": "g3-u7-w1-d1-warmup-2",
+                "prompt": "15 - 8 = ?",
+                "correct_answer": "7",
+                "hint": "15 - 5 = 10, then 10 - 3.",
+                "skill": "subtraction_facts"
+              },
+              {
+                "id": "g3-u7-w1-d1-warmup-3",
+                "prompt": "16 - 9 = ?",
+                "correct_answer": "7",
+                "hint": "16 - 10 = 6, plus 1.",
+                "skill": "subtraction_facts"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Regroup Ones When Subtracting",
+            "teaching_points": [
+              "Subtract the ones first.",
+              "If the top digit is smaller, trade one ten for ten ones.",
+              "Now subtract the ones and then the rest."
+            ],
+            "example": {
+              "prompt": "Solve 243 - 157.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "Trade 1 ten for 10 ones. 13 - 7 = 6. 3 tens - 5 tens needs another regroup. 13 tens - 5 tens = 8 tens. 1 hundred - 1 hundred = 0. 243 - 157 = 86."
+            },
+            "vocabulary": ["regroup", "ones", "trade", "borrow"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtraction_regroup_ones",
+            "prompt": "Solve 326 - 148.",
+            "correct_answer": "178",
+            "hint": "Trade one ten for ten ones. 16 - 8 = 8.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtraction_regroup_ones",
+            "question_count": 6,
+            "instructions": "Subtract. Regroup ones when needed."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Regrouping Ones in Subtraction",
+            "type": "subtraction_terms",
+            "card_count": 6,
+            "instructions": "Review regrouping ones in subtraction.",
+            "deckId": "lesson-g3-u7-w1-d1-regroup-ones-sub"
+          },
+          "bigIdea": {
+            "title": "Regroup Ones When Subtracting",
+            "subtitle": "Trade one ten for ten ones",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When there are not enough ones to subtract, trade one ten for ten ones. You still have the same total, but now you can subtract.",
+            "bigQuestion": "Why do we trade one ten for ten ones?",
+            "starTip": {
+              "title": "Break apart a ten",
+              "lines": ["One ten", "Equals ten ones"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Not enough ones",
+                "equation": "43 - 18",
+                "badge": "3 < 8",
+                "description": "When the top ones digit is smaller than the bottom, regroup one ten."
+              },
+              {
+                "eyebrow": "Trade and subtract",
+                "equation": "3 tens 13 ones - 1 ten 8 ones",
+                "badge": "13 - 8 = 5",
+                "description": "Trade one ten for ten ones, then subtract the ones column."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u7-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Regroup Tens When Subtracting",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by subtracting multiples of ten that require regrouping.",
+          "concept": "When the top digit in the tens place is smaller than the bottom digit, regroup one hundred as ten tens. Then subtract.",
+          "practice": "Subtract three-digit numbers where the tens need regrouping.",
+          "objective": "Regroup tens when subtracting.",
+          "practice_type": "subtraction_regroup_tens",
+          "skills": [
+            "subtraction",
+            "regrouping",
+            "tens",
+            "three_digit_subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "subtraction_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by subtracting tens.",
+            "questions": [
+              {
+                "id": "g3-u7-w1-d2-warmup-1",
+                "prompt": "130 - 60 = ?",
+                "correct_answer": "70",
+                "hint": "13 tens - 6 tens = 7 tens.",
+                "skill": "subtraction_tens"
+              },
+              {
+                "id": "g3-u7-w1-d2-warmup-2",
+                "prompt": "200 - 80 = ?",
+                "correct_answer": "120",
+                "hint": "20 tens - 8 tens = 12 tens.",
+                "skill": "subtraction_tens"
+              },
+              {
+                "id": "g3-u7-w1-d2-warmup-3",
+                "prompt": "500 - 300 = ?",
+                "correct_answer": "200",
+                "hint": "5 hundreds - 3 hundreds.",
+                "skill": "subtraction_hundreds"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Regroup Tens When Subtracting",
+            "teaching_points": [
+              "Subtract the ones, then the tens.",
+              "If the top tens digit is smaller, trade one hundred for ten tens.",
+              "Now subtract the tens and hundreds."
+            ],
+            "example": {
+              "prompt": "Solve 512 - 246.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "2 - 6 needs regrouping: 12 - 6 = 6. 0 tens left, so regroup 5 hundreds into 4 hundreds and 10 tens. 10 tens - 4 tens = 6 tens. 4 hundreds - 2 hundreds = 2 hundreds. 512 - 246 = 266."
+            },
+            "vocabulary": ["regroup", "tens", "hundred", "borrow"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtraction_regroup_tens",
+            "prompt": "Solve 730 - 456.",
+            "correct_answer": "274",
+            "hint": "0 tens in the top number. Regroup from hundreds.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtraction_regroup_tens",
+            "question_count": 6,
+            "instructions": "Subtract. Regroup tens and ones when needed."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Regrouping Tens in Subtraction",
+            "type": "subtraction_terms",
+            "card_count": 6,
+            "instructions": "Review regrouping tens in subtraction.",
+            "deckId": "lesson-g3-u7-w1-d2-regroup-tens-sub"
+          },
+          "bigIdea": {
+            "title": "Regroup Tens When Subtracting",
+            "subtitle": "Trade one hundred for ten tens",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Just like ten ones make a ten, ten tens make a hundred. When the tens column does not have enough, trade one hundred for ten tens.",
+            "bigQuestion": "How is regrouping tens in subtraction like regrouping ones?",
+            "starTip": {
+              "title": "Break apart a hundred",
+              "lines": ["One hundred", "Equals ten tens"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Not enough tens",
+                "equation": "430 - 180",
+                "badge": "3 tens < 8 tens",
+                "description": "When the top tens digit is smaller, regroup one hundred."
+              },
+              {
+                "eyebrow": "Trade and subtract",
+                "equation": "4 hundreds → 3 hundreds + 10 tens",
+                "badge": "13 tens - 8 tens",
+                "description": "Trade one hundred for ten tens, then subtract the tens column."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u7-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Subtract Across Zeros",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by subtracting from multiples of 100.",
+          "concept": "When subtracting from a number with zeros, you may need to regroup across more than one place. Start from the left and trade one hundred for ten tens, then one ten for ten ones.",
+          "practice": "Subtract from numbers like 300, 400, and 1,000.",
+          "objective": "Subtract across zeros.",
+          "practice_type": "subtract_across_zeros",
+          "skills": [
+            "subtraction",
+            "regrouping",
+            "zeros",
+            "three_digit_subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "subtraction_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by subtracting from hundreds.",
+            "questions": [
+              {
+                "id": "g3-u7-w1-d3-warmup-1",
+                "prompt": "100 - 25 = ?",
+                "correct_answer": "75",
+                "hint": "Trade 1 hundred for 10 tens, then 1 ten for 10 ones.",
+                "skill": "subtract_across_zeros"
+              },
+              {
+                "id": "g3-u7-w1-d3-warmup-2",
+                "prompt": "300 - 60 = ?",
+                "correct_answer": "240",
+                "hint": "300 is 30 tens.",
+                "skill": "subtract_across_zeros"
+              },
+              {
+                "id": "g3-u7-w1-d3-warmup-3",
+                "prompt": "400 - 125 = ?",
+                "correct_answer": "275",
+                "hint": "400 - 100 = 300, 300 - 25 = 275.",
+                "skill": "subtract_across_zeros"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Subtract Across Zeros",
+            "teaching_points": [
+              "A number like 300 has 0 tens and 0 ones.",
+              "Regroup 1 hundred into 9 tens and 10 ones after the first trade.",
+              "Subtract each place from the regrouped number."
+            ],
+            "example": {
+              "prompt": "Solve 300 - 127.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "Trade 3 hundreds for 2 hundreds + 9 tens + 10 ones. 10 - 7 = 3, 9 - 2 = 7, 2 - 1 = 1. 300 - 127 = 173."
+            },
+            "vocabulary": ["zero", "regroup", "across", "trade"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtract_across_zeros",
+            "prompt": "Solve 500 - 268.",
+            "correct_answer": "232",
+            "hint": "5 hundreds become 4 hundreds, 9 tens, 10 ones.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtract_across_zeros",
+            "question_count": 6,
+            "instructions": "Subtract from numbers that have zeros. Regroup across the zeros."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Subtracting Across Zeros",
+            "type": "subtraction_terms",
+            "card_count": 6,
+            "instructions": "Review the steps for subtracting across zeros.",
+            "deckId": "lesson-g3-u7-w1-d3-across-zeros"
+          },
+          "bigIdea": {
+            "title": "Subtract Across Zeros",
+            "subtitle": "Regroup from the left across empty places",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Zeros in the top number mean there is nothing in those places. You can still subtract by trading from the next larger place, sometimes more than once.",
+            "bigQuestion": "Why do zeros make regrouping harder?",
+            "starTip": {
+              "title": "Trade step by step",
+              "lines": ["Hundreds to tens", "Tens to ones"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Zero means empty",
+                "equation": "300 - 127",
+                "badge": "No tens or ones",
+                "description": "You must trade from the hundreds place to get tens and ones."
+              },
+              {
+                "eyebrow": "Two trades",
+                "equation": "300 → 2 hundreds + 9 tens + 10 ones",
+                "badge": "9 tens rule",
+                "description": "After trading 1 hundred, 9 tens and 10 ones are left."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u7-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Missing Digits and Balanced Subtraction Equations",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by checking whether a subtraction equation is true or false.",
+          "concept": "Find missing digits in subtraction by working place by place. A balanced subtraction equation has equal differences on both sides. Use regrouping when needed.",
+          "practice": "Find missing digits and balance subtraction equations.",
+          "objective": "Find missing digits and balance subtraction equations.",
+          "practice_type": "subtraction_missing_digits",
+          "skills": [
+            "subtraction",
+            "missing_digits",
+            "balanced_equations",
+            "regrouping",
+            "place_value"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "puzzle_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding the missing number.",
+            "questions": [
+              {
+                "id": "g3-u7-w1-d4-warmup-1",
+                "prompt": "15 - __ = 7",
+                "correct_answer": "8",
+                "hint": "15 - 7 = 8.",
+                "skill": "missing_addend"
+              },
+              {
+                "id": "g3-u7-w1-d4-warmup-2",
+                "prompt": "__ - 9 = 6",
+                "correct_answer": "15",
+                "hint": "6 + 9 = 15.",
+                "skill": "missing_addend"
+              },
+              {
+                "id": "g3-u7-w1-d4-warmup-3",
+                "prompt": "Find the missing digit: 5_2 - 143 = 359.",
+                "correct_answer": "0",
+                "hint": "2 - 3 needs regrouping. _ + 10 - 4 = 5 tens, 4 - 1 = 3 hundreds.",
+                "skill": "missing_digits"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Missing Digits and Balanced Subtraction Equations",
+            "teaching_points": [
+              "Work one place at a time from right to left.",
+              "Watch for regrouping.",
+              "Check that the difference is the same on both sides of a balanced equation."
+            ],
+            "example": {
+              "prompt": "Find the missing digit: 4_2 - 158 = 254.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "2 - 8 needs regrouping: 12 - 8 = 4. _ + 10 - 5 = 5 tens, so _ = 0. 4 - 1 - 1 = 2 hundreds. 402 - 158 = 244. Wait, target is 254, so _ = 1. 412 - 158 = 254."
+            },
+            "vocabulary": ["missing digit", "balanced equation", "difference", "regroup"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtraction_missing_digits",
+            "prompt": "Find the missing digit: 6_1 - 285 = 376.",
+            "correct_answer": "6",
+            "hint": "1 - 5 needs regrouping: 11 - 5 = 6. _ + 10 - 8 = 7 tens, so _ = 5. Wait 5+10-8=7. _ = 5? Actually 651 - 285 = 366. Need 661 - 285 = 376, so 6.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtraction_missing_digits",
+            "question_count": 6,
+            "instructions": "Find missing digits and balance subtraction equations."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Subtraction Puzzles",
+            "type": "subtraction_terms",
+            "card_count": 6,
+            "instructions": "Review terms for missing-digit subtraction puzzles.",
+            "deckId": "lesson-g3-u7-w1-d4-subtraction-puzzles"
+          },
+          "bigIdea": {
+            "title": "Missing Digits and Balanced Subtraction Equations",
+            "subtitle": "Use place value and regrouping to solve puzzles",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Missing-digit subtraction puzzles work the same as regular subtraction. Work one place at a time and watch for regrouping.",
+            "bigQuestion": "How do you know when a missing-digit puzzle needs regrouping?",
+            "starTip": {
+              "title": "Start with ones",
+              "lines": ["Check top digit", "Regroup if smaller"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Right to left",
+                "equation": "Start with the ones place",
+                "badge": "Column by column",
+                "description": "Solve each place value column from right to left."
+              },
+              {
+                "eyebrow": "Regroup when needed",
+                "equation": "top digit < bottom digit",
+                "badge": "Trade from left",
+                "description": "If the top digit is smaller, regroup from the next larger place."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u7-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Subtraction Within 1,000",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of regrouping ones, regrouping tens, subtracting across zeros, and missing-digit puzzles.",
+          "concept": "Review the subtraction-with-regrouping skills from this unit: regroup ones, regroup tens, subtract across zeros, and find missing digits.",
+          "practice": "Complete a balanced evaluation covering subtraction within 1,000.",
+          "objective": "Show what you know about subtraction within 1,000.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "subtraction_regroup_ones",
+            "subtraction_regroup_tens",
+            "subtract_across_zeros",
+            "subtraction_missing_digits"
+          ],
+          "skills": [
+            "subtraction",
+            "regrouping",
+            "three_digit_subtraction",
+            "zeros",
+            "missing_digits",
+            "balanced_equations"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u7-w1-d5-warmup-1",
+                "prompt": "Solve 423 - 156.",
+                "correct_answer": "267",
+                "hint": "Regroup ones and tens.",
+                "skill": "subtraction_regrouping"
+              },
+              {
+                "id": "g3-u7-w1-d5-warmup-2",
+                "prompt": "Solve 600 - 237.",
+                "correct_answer": "363",
+                "hint": "Subtract across zeros.",
+                "skill": "subtract_across_zeros"
+              },
+              {
+                "id": "g3-u7-w1-d5-warmup-3",
+                "prompt": "Find the missing digit: _02 - 158 = 244.",
+                "correct_answer": "4",
+                "hint": "402 - 158 = 244.",
+                "skill": "missing_digits"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "regroup ones + regroup tens + across zeros + missing digits = subtraction within 1,000"
+            },
+            "vocabulary": ["evaluation", "review", "subtraction"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is the best estimate for 801 - 395?",
+            "correct_answer": "400",
+            "hint": "800 - 400 = 400.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 7 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 7 before the evaluation.",
+            "deckId": "lesson-g3-u7-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Subtraction Within 1,000",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: regrouping ones, regrouping tens, subtracting across zeros, and missing-digit subtraction puzzles.",
+            "bigQuestion": "What do you know about subtraction within 1,000?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Regrouping",
+                "equation": "Trade to make the top digit larger",
+                "badge": "One place at a time",
+                "description": "If the top digit is smaller, trade from the next larger place."
+              },
+              {
+                "eyebrow": "Across zeros",
+                "equation": "600 - 237 = 363",
+                "badge": "Two trades",
+                "description": "You may need to trade more than once when there are zeros."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

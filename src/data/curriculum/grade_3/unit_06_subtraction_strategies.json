@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 6,
+  "unit_title": "Subtraction Strategies",
+  "unit_slug": "subtraction_strategies",
+  "unit_description": "This unit develops flexible subtraction strategies. Students subtract three-digit numbers on a number line, use expanded form and compensation, and solve word problems without regrouping.",
+  "unit_goals": [
+    "Subtract three-digit numbers on a number line.",
+    "Subtract using expanded form.",
+    "Subtract using compensation.",
+    "Subtract without regrouping.",
+    "Solve one-step subtraction word problems."
+  ],
+  "fact_focus": ["subtraction", "3.NBT.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Subtraction Strategies",
+      "weekly_focus": "Students explore number-line, expanded-form, and compensation subtraction strategies, and apply them to word problems without regrouping.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u6-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Subtract Three-Digit Numbers on a Number Line",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by subtracting multiples of ten on a number line.",
+          "concept": "Subtraction on a number line means jumping left. Start at the whole, then jump back the subtrahend in friendly pieces.",
+          "practice": "Subtract three-digit numbers by making jumps of hundreds, tens, and ones on a number line.",
+          "objective": "Subtract three-digit numbers using a number line.",
+          "practice_type": "subtraction_number_line",
+          "skills": [
+            "subtraction",
+            "number_line",
+            "three_digit_subtraction",
+            "decomposition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "subtraction_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by subtracting tens mentally.",
+            "questions": [
+              {
+                "id": "g3-u6-w1-d1-warmup-1",
+                "prompt": "160 - 40 = ?",
+                "correct_answer": "120",
+                "hint": "16 tens - 4 tens = 12 tens.",
+                "skill": "subtraction_tens"
+              },
+              {
+                "id": "g3-u6-w1-d1-warmup-2",
+                "prompt": "550 - 300 = ?",
+                "correct_answer": "250",
+                "hint": "5 hundreds - 3 hundreds = 2 hundreds.",
+                "skill": "subtraction_hundreds"
+              },
+              {
+                "id": "g3-u6-w1-d1-warmup-3",
+                "prompt": "What is 55 - 20?",
+                "correct_answer": "35",
+                "hint": "55 minus 2 tens.",
+                "skill": "subtraction_tens"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Subtract Three-Digit Numbers on a Number Line",
+            "teaching_points": [
+              "Start at the whole (the bigger number).",
+              "Jump back by hundreds, then tens, then ones.",
+              "Where you land is the difference."
+            ],
+            "example": {
+              "prompt": "Solve 368 - 125 on a number line.",
+              "visual_type": "number_line",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "368 - 100 - 20 - 5 = 243"
+            },
+            "vocabulary": ["whole", "subtrahend", "difference", "number line"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtraction_number_line",
+            "prompt": "Solve 540 - 230 using a number line.",
+            "correct_answer": "310",
+            "hint": "Jump back 200, then 30.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtraction_number_line",
+            "question_count": 6,
+            "instructions": "Solve each subtraction problem by making jumps on the number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Subtraction Vocabulary",
+            "type": "subtraction_terms",
+            "card_count": 6,
+            "instructions": "Review subtraction words and number-line moves.",
+            "deckId": "lesson-g3-u6-w1-d1-subtraction-vocab"
+          },
+          "bigIdea": {
+            "title": "Subtract Three-Digit Numbers on a Number Line",
+            "subtitle": "Jump back to find the difference",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A number line helps you subtract by breaking the number you are taking away into friendly jumps. Jump back by hundreds, tens, and ones.",
+            "bigQuestion": "Why are friendly jumps helpful when subtracting?",
+            "starTip": {
+              "title": "Break it into jumps",
+              "lines": ["Start big", "Subtract hundreds first"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Start at the whole",
+                "equation": "368 - 125",
+                "badge": "Begin at 368",
+                "description": "Place your starting point at the larger number."
+              },
+              {
+                "eyebrow": "Jump back",
+                "equation": "-100, -20, -5",
+                "badge": "Friendly parts",
+                "description": "Break the subtrahend into hundreds, tens, and ones."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u6-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Subtract Using Expanded Form",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by subtracting the hundreds, tens, and ones separately.",
+          "concept": "Expanded form breaks each number into its place values. Subtract hundreds from hundreds, tens from tens, and ones from ones, then put the number back together.",
+          "practice": "Subtract two three-digit numbers using expanded form.",
+          "objective": "Subtract using expanded form.",
+          "practice_type": "subtraction_expanded_form",
+          "skills": [
+            "subtraction",
+            "expanded_form",
+            "place_value",
+            "three_digit_subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "expanded_form_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by subtracting matching place values.",
+            "questions": [
+              {
+                "id": "g3-u6-w1-d2-warmup-1",
+                "prompt": "500 - 200 = ?",
+                "correct_answer": "300",
+                "hint": "5 hundreds - 2 hundreds.",
+                "skill": "subtraction_hundreds"
+              },
+              {
+                "id": "g3-u6-w1-d2-warmup-2",
+                "prompt": "90 - 50 = ?",
+                "correct_answer": "40",
+                "hint": "9 tens - 5 tens = 4 tens.",
+                "skill": "subtraction_tens"
+              },
+              {
+                "id": "g3-u6-w1-d2-warmup-3",
+                "prompt": "700 - 20 - 1 = ?",
+                "correct_answer": "679",
+                "hint": "700 - 20 = 680, then -1.",
+                "skill": "expanded_form"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Subtract Using Expanded Form",
+            "teaching_points": [
+              "Break each number into hundreds, tens, and ones.",
+              "Subtract each place separately.",
+              "Combine the place values to find the difference."
+            ],
+            "example": {
+              "prompt": "Solve 567 - 234 using expanded form.",
+              "visual_type": "expanded_form",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "(500 - 200) + (60 - 30) + (7 - 4) = 300 + 30 + 3 = 333"
+            },
+            "vocabulary": ["expanded form", "subtract", "difference", "place value"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtraction_expanded_form",
+            "prompt": "Solve 748 - 315 using expanded form.",
+            "correct_answer": "433",
+            "hint": "700 - 300, 40 - 10, 8 - 5.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtraction_expanded_form",
+            "question_count": 6,
+            "instructions": "Subtract each pair of numbers using expanded form."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Expanded Form Subtraction",
+            "type": "expanded_form",
+            "card_count": 6,
+            "instructions": "Review expanded-form subtraction steps.",
+            "deckId": "lesson-g3-u6-w1-d2-expanded-subtraction"
+          },
+          "bigIdea": {
+            "title": "Subtract Using Expanded Form",
+            "subtitle": "Subtract each place value separately",
+            "thumbnail": "/images/learn/thumbnails/expanded-form.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Expanded form breaks numbers into their parts. When you subtract matching places, you can see why the digits line up.",
+            "bigQuestion": "Why do the place values have to line up?",
+            "starTip": {
+              "title": "Match the places",
+              "lines": ["Hundreds from hundreds", "Tens from tens"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Break apart",
+                "equation": "567 = 500 + 60 + 7",
+                "badge": "Each place shown",
+                "description": "Write each number as the sum of its place values."
+              },
+              {
+                "eyebrow": "Subtract each place",
+                "equation": "500 - 200 = 300, 60 - 30 = 30, 7 - 4 = 3",
+                "badge": "Then combine",
+                "description": "Subtract matching places, then combine them into one number."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u6-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Subtract Using Compensation",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by subtracting multiples of ten and one near a hundred.",
+          "concept": "Compensation means changing both numbers by the same amount to make the subtraction easier. The difference stays the same.",
+          "practice": "Subtract by adjusting both numbers to create a friendly problem.",
+          "objective": "Subtract using compensation.",
+          "practice_type": "subtraction_compensation",
+          "skills": [
+            "subtraction",
+            "compensation",
+            "friendly_numbers",
+            "number_sense"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "compensation_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by making subtraction friendly.",
+            "questions": [
+              {
+                "id": "g3-u6-w1-d3-warmup-1",
+                "prompt": "15 - 9 = ?",
+                "correct_answer": "6",
+                "hint": "15 - 10 = 5, but you took away one too many, so add 1 back.",
+                "skill": "compensation"
+              },
+              {
+                "id": "g3-u6-w1-d3-warmup-2",
+                "prompt": "300 - 198 = ?",
+                "correct_answer": "102",
+                "hint": "198 + 2 = 200, so 300 - 200 + 2 = 102.",
+                "skill": "compensation"
+              },
+              {
+                "id": "g3-u6-w1-d3-warmup-3",
+                "prompt": "250 - 97 = ?",
+                "correct_answer": "153",
+                "hint": "250 - 100 = 150, plus 3 because you took 3 too many.",
+                "skill": "compensation"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Subtract Using Compensation",
+            "teaching_points": [
+              "Change both numbers by the same amount.",
+              "Make the subtrahend a friendly number.",
+              "The difference does not change."
+            ],
+            "example": {
+              "prompt": "Solve 425 - 198 using compensation.",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "198 + 2 = 200, so 425 - 200 = 225, then 225 + 2 = 227"
+            },
+            "vocabulary": ["compensation", "friendly number", "subtrahend", "difference"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtraction_compensation",
+            "prompt": "Solve 612 - 299 using compensation.",
+            "correct_answer": "313",
+            "hint": "299 + 1 = 300. 612 - 300 = 312, plus 1 back.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtraction_compensation",
+            "question_count": 6,
+            "instructions": "Use compensation to make each subtraction problem easier."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Compensation Moves",
+            "type": "compensation_terms",
+            "card_count": 6,
+            "instructions": "Review how to use compensation in subtraction.",
+            "deckId": "lesson-g3-u6-w1-d3-subtraction-compensation"
+          },
+          "bigIdea": {
+            "title": "Subtract Using Compensation",
+            "subtitle": "Adjust both numbers by the same amount",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When the number you are subtracting is close to a friendly number, add the same small amount to both numbers. The difference stays the same.",
+            "bigQuestion": "Why does the difference stay the same when you compensate?",
+            "starTip": {
+              "title": "Make a friendly subtrahend",
+              "lines": ["Add the same amount", "To both numbers"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Friendly subtrahend",
+                "equation": "425 - 198 → 427 - 200",
+                "badge": "Add 2 to both",
+                "description": "Add the same amount to both numbers so the second becomes friendly."
+              },
+              {
+                "eyebrow": "Difference stays",
+                "equation": "425 - 198 = 427 - 200",
+                "badge": "Same gap",
+                "description": "The distance between the two numbers does not change."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u6-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Subtract Without Regrouping and Solve Word Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with three no-regrouping subtraction facts.",
+          "concept": "When each digit in the top number is greater than or equal to the digit below it, subtract each column without regrouping. Use this in word problems to find differences.",
+          "practice": "Subtract without regrouping and solve one-step subtraction word problems.",
+          "objective": "Subtract without regrouping and solve word problems.",
+          "practice_type": "subtraction_no_regroup",
+          "skills": [
+            "subtraction",
+            "no_regrouping",
+            "word_problems",
+            "three_digit_subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "subtraction_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by subtracting without regrouping.",
+            "questions": [
+              {
+                "id": "g3-u6-w1-d4-warmup-1",
+                "prompt": "568 - 234 = ?",
+                "correct_answer": "334",
+                "hint": "Subtract ones, then tens, then hundreds.",
+                "skill": "no_regrouping"
+              },
+              {
+                "id": "g3-u6-w1-d4-warmup-2",
+                "prompt": "970 - 450 = ?",
+                "correct_answer": "520",
+                "hint": "9 hundreds - 4 hundreds, 7 tens - 5 tens.",
+                "skill": "no_regrouping"
+              },
+              {
+                "id": "g3-u6-w1-d4-warmup-3",
+                "prompt": "A store had 348 shirts and sold 125. How many are left?",
+                "correct_answer": "223",
+                "hint": "348 - 125.",
+                "skill": "word_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Subtract Without Regrouping",
+            "teaching_points": [
+              "Line up the place values.",
+              "Subtract the ones, then the tens, then the hundreds.",
+              "If the top digit in each place is larger, no regrouping is needed."
+            ],
+            "example": {
+              "prompt": "Solve 675 - 243.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "5 - 3 = 2, 70 - 40 = 30, 600 - 200 = 400, so 675 - 243 = 432"
+            },
+            "vocabulary": ["regroup", "column", "difference", "subtrahend"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "subtraction_no_regroup",
+            "prompt": "A library has 489 books checked out. After returns, 167 fewer are checked out. How many are still checked out?",
+            "correct_answer": "322",
+            "hint": "489 - 167. Subtract each place.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "subtraction_no_regroup",
+            "question_count": 6,
+            "instructions": "Subtract each pair of numbers or solve the word problem. No regrouping needed."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "No-Regrouping Subtraction",
+            "type": "subtraction_terms",
+            "card_count": 6,
+            "instructions": "Review no-regrouping subtraction and key words.",
+            "deckId": "lesson-g3-u6-w1-d4-no-regroup"
+          },
+          "bigIdea": {
+            "title": "Subtract Without Regrouping and Solve Word Problems",
+            "subtitle": "Subtract each column separately",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When the top digit in each place is at least as large as the bottom digit, you can subtract straight down. This helps you solve how-many-more or how-many-left word problems.",
+            "bigQuestion": "How do you know if you need to regroup?",
+            "starTip": {
+              "title": "Check each column",
+              "lines": ["Top digit bigger", "Subtract straight down"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Line up places",
+                "equation": "675 - 243",
+                "badge": "Same column",
+                "description": "Make sure ones are under ones, tens under tens, and hundreds under hundreds."
+              },
+              {
+                "eyebrow": "No regrouping",
+                "equation": "top digit ≥ bottom digit",
+                "badge": "Subtract straight down",
+                "description": "If the top digit in every column is larger or equal, you do not need to regroup."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u6-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Subtraction Strategies",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of number-line, expanded-form, compensation, and no-regrouping subtraction.",
+          "concept": "Review the four subtraction strategies from this unit: number line, expanded form, compensation, and no-regrouping subtraction.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about subtraction strategies.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "subtraction_number_line",
+            "subtraction_expanded_form",
+            "subtraction_compensation",
+            "subtraction_no_regroup"
+          ],
+          "skills": [
+            "subtraction",
+            "number_line",
+            "expanded_form",
+            "compensation",
+            "no_regrouping",
+            "word_problems",
+            "three_digit_subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u6-w1-d5-warmup-1",
+                "prompt": "Solve 837 - 512 using expanded form.",
+                "correct_answer": "325",
+                "hint": "800 - 500, 30 - 10, 7 - 2.",
+                "skill": "subtraction_expanded_form"
+              },
+              {
+                "id": "g3-u6-w1-d5-warmup-2",
+                "prompt": "Solve 500 - 198 using compensation.",
+                "correct_answer": "302",
+                "hint": "198 + 2 = 200, 500 - 200 = 300, + 2 back.",
+                "skill": "subtraction_compensation"
+              },
+              {
+                "id": "g3-u6-w1-d5-warmup-3",
+                "prompt": "What is 724 - 303?",
+                "correct_answer": "421",
+                "hint": "No regrouping needed.",
+                "skill": "no_regrouping"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "number line + expanded form + compensation + no regrouping = subtraction strategies"
+            },
+            "vocabulary": ["evaluation", "review", "subtraction"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is the best estimate for 602 - 298?",
+            "correct_answer": "300",
+            "hint": "600 - 300 = 300.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 6 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 6 before the evaluation.",
+            "deckId": "lesson-g3-u6-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Subtraction Strategies",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: number-line subtraction, expanded-form subtraction, compensation, and no-regrouping subtraction.",
+            "bigQuestion": "What do you know about subtraction strategies?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Flexible strategies",
+                "equation": "Number line, expanded form, compensation",
+                "badge": "Pick what works",
+                "description": "You can use any strategy that makes the problem easy for you."
+              },
+              {
+                "eyebrow": "No regrouping",
+                "equation": "Subtract straight down",
+                "badge": "Top digit bigger",
+                "description": "When the top digit in each place is larger, subtract each column separately."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

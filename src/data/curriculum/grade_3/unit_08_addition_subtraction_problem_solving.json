@@ -1,0 +1,631 @@
+{
+  "grade_level": 3,
+  "unit_number": 8,
+  "unit_title": "Addition and Subtraction Problem Solving",
+  "unit_slug": "addition_subtraction_problem_solving",
+  "unit_description": "This unit applies addition and subtraction to real-world problem solving. Students decide which operation to use, estimate before solving, and handle one-step and two-step problems with unknown numbers.",
+  "unit_goals": [
+    "Decide whether a problem requires addition or subtraction.",
+    "Estimate before solving to check reasonableness.",
+    "Solve one-step addition and subtraction word problems.",
+    "Solve two-step problems with unknown numbers.",
+    "Explain and justify solution strategies."
+  ],
+  "fact_focus": ["problem solving", "3.NBT.A.3", "3.RA.D.9", "3.RA.D.10"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Addition and Subtraction Problem Solving",
+      "weekly_focus": "Students use addition and subtraction to solve word problems, estimate first, and handle two-step and unknown-number problems.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u8-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Decide Whether to Add or Subtract",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by identifying the operation in short story problems.",
+          "concept": "Word problems give clues about the operation. Words like 'total,' 'altogether,' or 'how many more' help you decide whether to add or subtract.",
+          "practice": "Read word problems and choose the correct operation before solving.",
+          "objective": "Decide whether to add or subtract in a word problem.",
+          "practice_type": "choose_operation",
+          "skills": [
+            "word_problems",
+            "addition",
+            "subtraction",
+            "operation_clues"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "operation_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by choosing the operation.",
+            "questions": [
+              {
+                "id": "g3-u8-w1-d1-warmup-1",
+                "prompt": "Mia has 24 stickers. She buys 15 more. Should you add or subtract?",
+                "correct_answer": "add",
+                "hint": "Total and more mean add.",
+                "skill": "operation_clues"
+              },
+              {
+                "id": "g3-u8-w1-d1-warmup-2",
+                "prompt": "A box has 90 books. 37 are given away. Should you add or subtract?",
+                "correct_answer": "subtract",
+                "hint": "Given away means take away.",
+                "skill": "operation_clues"
+              },
+              {
+                "id": "g3-u8-w1-d1-warmup-3",
+                "prompt": "What is the difference between 58 and 32?",
+                "correct_answer": "26",
+                "hint": "Difference means subtract.",
+                "skill": "subtraction"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Decide Whether to Add or Subtract",
+            "teaching_points": [
+              "Look for clue words.",
+              "Ask: am I combining or taking apart?",
+              "Match the story to the operation."
+            ],
+            "example": {
+              "prompt": "Sara has 45 pages read. She reads 28 more. How many pages has she read?",
+              "visual_type": "bar_model",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "45 + 28 = 73"
+            },
+            "vocabulary": ["add", "subtract", "total", "difference", "altogether", "more"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "choose_operation",
+            "prompt": "A jar has 120 marbles. 45 marbles fall out. How many are left?",
+            "correct_answer": "75",
+            "hint": "Fall out means subtract. 120 - 45.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "choose_operation",
+            "question_count": 6,
+            "instructions": "For each problem, choose the operation and solve."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Operation Clues",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review words that tell you to add or subtract.",
+            "deckId": "lesson-g3-u8-w1-d1-operation-clues"
+          },
+          "bigIdea": {
+            "title": "Decide Whether to Add or Subtract",
+            "subtitle": "Use clue words to choose",
+            "thumbnail": "/images/learn/thumbnails/word-problems.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Every word problem has hidden clues. Words like total and more point to addition. Words like left, difference, and fewer point to subtraction.",
+            "bigQuestion": "How do clue words help you solve word problems?",
+            "starTip": {
+              "title": "Read for clues",
+              "lines": ["Find the action", "Pick the operation"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Add clues",
+                "equation": "total, altogether, more, in all",
+                "badge": "Combine",
+                "description": "These words mean you are putting groups together."
+              },
+              {
+                "eyebrow": "Subtract clues",
+                "equation": "left, fewer, difference, how many more",
+                "badge": "Take apart",
+                "description": "These words mean you are comparing or taking away."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u8-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Estimate Before Solving",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by rounding numbers to the nearest ten and hundred.",
+          "concept": "Estimating before solving helps you know if your answer is reasonable. Round the numbers, do the easier calculation, and compare.",
+          "practice": "Estimate the answer to word problems before finding the exact answer.",
+          "objective": "Estimate to check reasonableness before solving.",
+          "practice_type": "estimate_then_solve",
+          "skills": [
+            "estimation",
+            "rounding",
+            "word_problems",
+            "reasonableness"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "estimation_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by estimating quickly.",
+            "questions": [
+              {
+                "id": "g3-u8-w1-d2-warmup-1",
+                "prompt": "Estimate 187 + 214 by rounding to the nearest hundred.",
+                "correct_answer": "400",
+                "hint": "200 + 200 = 400.",
+                "skill": "estimation"
+              },
+              {
+                "id": "g3-u8-w1-d2-warmup-2",
+                "prompt": "Estimate 403 - 198 by rounding to the nearest hundred.",
+                "correct_answer": "200",
+                "hint": "400 - 200 = 200.",
+                "skill": "estimation"
+              },
+              {
+                "id": "g3-u8-w1-d2-warmup-3",
+                "prompt": "Is 612 close to 600?",
+                "correct_answer": "yes",
+                "hint": "612 rounds to 600.",
+                "skill": "reasonableness"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Estimate Before Solving",
+            "teaching_points": [
+              "Round the numbers in the problem.",
+              "Solve the easier problem.",
+              "Use the estimate to check your exact answer."
+            ],
+            "example": {
+              "prompt": "A school has 236 boys and 287 girls. About how many students?",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "236 ≈ 200, 287 ≈ 300, estimate ≈ 500; exact = 523"
+            },
+            "vocabulary": ["estimate", "round", "about", "reasonable"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "estimate_then_solve",
+            "prompt": "A bakery had 420 cupcakes. It sold 189. About how many are left?",
+            "correct_answer": "231",
+            "hint": "Estimate 420 - 190 ≈ 230, then find exact.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "estimate_then_solve",
+            "question_count": 6,
+            "instructions": "Estimate first, then solve each word problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Estimation in Problems",
+            "type": "estimation_terms",
+            "card_count": 6,
+            "instructions": "Review estimation and reasonableness terms.",
+            "deckId": "lesson-g3-u8-w1-d2-estimation-problems"
+          },
+          "bigIdea": {
+            "title": "Estimate Before Solving",
+            "subtitle": "Round first to check your answer",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A quick estimate is like a friendly check. If your exact answer is far from the estimate, you know to look again.",
+            "bigQuestion": "Why estimate before solving?",
+            "starTip": {
+              "title": "Use friendly numbers",
+              "lines": ["Round", "Solve easy", "Compare"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Round to friendly",
+                "equation": "236 + 287 ≈ 200 + 300 = 500",
+                "badge": "Estimate",
+                "description": "Round each number to a nearby ten or hundred."
+              },
+              {
+                "eyebrow": "Check exact",
+                "equation": "523 is close to 500",
+                "badge": "Reasonable",
+                "description": "Compare the exact answer to the estimate to see if it makes sense."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u8-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "One-Step Addition and Subtraction Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by solving one-step addition and subtraction equations.",
+          "concept": "A one-step problem can be solved with a single equation. Identify the numbers, choose the operation, and solve.",
+          "practice": "Solve a variety of one-step addition and subtraction word problems.",
+          "objective": "Solve one-step addition and subtraction word problems.",
+          "practice_type": "one_step_word_problems",
+          "skills": [
+            "word_problems",
+            "one_step",
+            "addition",
+            "subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "word_problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by solving one-step problems.",
+            "questions": [
+              {
+                "id": "g3-u8-w1-d3-warmup-1",
+                "prompt": "Tom has 38 baseball cards. He gives away 12. How many does he have left?",
+                "correct_answer": "26",
+                "hint": "38 - 12.",
+                "skill": "subtraction"
+              },
+              {
+                "id": "g3-u8-w1-d3-warmup-2",
+                "prompt": "A bus has 45 seats. 18 are empty. How many are filled?",
+                "correct_answer": "27",
+                "hint": "45 - 18.",
+                "skill": "subtraction"
+              },
+              {
+                "id": "g3-u8-w1-d3-warmup-3",
+                "prompt": "There are 56 apples in one basket and 37 in another. How many apples are there in all?",
+                "correct_answer": "93",
+                "hint": "56 + 37.",
+                "skill": "addition"
+              }
+            ]
+          },
+          "learn": {
+            "title": "One-Step Addition and Subtraction Problems",
+            "teaching_points": [
+              "Read the problem for the important numbers.",
+              "Choose the operation based on the action.",
+              "Write an equation and solve it."
+            ],
+            "example": {
+              "prompt": "A farmer has 125 apples. She sells 48 apples. How many are left?",
+              "visual_type": "bar_model",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "125 - 48 = 77"
+            },
+            "vocabulary": ["equation", "solution", "one-step", "sum", "difference"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "one_step_word_problems",
+            "prompt": "A bookshelf has 92 books. 35 are chapter books. The rest are picture books. How many are picture books?",
+            "correct_answer": "57",
+            "hint": "92 - 35.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "one_step_word_problems",
+            "question_count": 6,
+            "instructions": "Solve each one-step word problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "One-Step Problem Words",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review key words for one-step problems.",
+            "deckId": "lesson-g3-u8-w1-d3-one-step-words"
+          },
+          "bigIdea": {
+            "title": "One-Step Addition and Subtraction Problems",
+            "subtitle": "One action, one equation",
+            "thumbnail": "/images/learn/thumbnails/word-problems.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "One-step problems have one action. Find the numbers, choose the operation, and write one equation to solve.",
+            "bigQuestion": "How is a one-step problem different from a two-step problem?",
+            "starTip": {
+              "title": "Find the action",
+              "lines": ["What changes?", "Add or subtract?"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Identify numbers",
+                "equation": "125 apples, 48 sold",
+                "badge": "What's known",
+                "description": "Find the numbers you know and the question you need to answer."
+              },
+              {
+                "eyebrow": "Write an equation",
+                "equation": "125 - 48 = ?",
+                "badge": "One equation",
+                "description": "Use one equation to solve a one-step problem."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u8-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Two-Step Problems with Unknown Numbers",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by solving two short equations in a row.",
+          "concept": "Two-step problems need two actions. Sometimes the unknown is in the middle. Solve the first step, then use that answer for the second step.",
+          "practice": "Solve two-step addition and subtraction problems with unknowns.",
+          "objective": "Solve two-step word problems with unknown numbers.",
+          "practice_type": "two_step_unknowns",
+          "skills": [
+            "word_problems",
+            "two_step",
+            "addition",
+            "subtraction",
+            "unknown_numbers"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "two_step_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by working through two steps.",
+            "questions": [
+              {
+                "id": "g3-u8-w1-d4-warmup-1",
+                "prompt": "A store had 80 shirts. It sold 25 in the morning and 18 in the afternoon. How many are left?",
+                "correct_answer": "37",
+                "hint": "80 - 25 = 55, then 55 - 18.",
+                "skill": "two_step"
+              },
+              {
+                "id": "g3-u8-w1-d4-warmup-2",
+                "prompt": "Leo had $50. He spent $18 and then earned $12. How much does he have now?",
+                "correct_answer": "44",
+                "hint": "50 - 18 = 32, then 32 + 12.",
+                "skill": "two_step"
+              },
+              {
+                "id": "g3-u8-w1-d4-warmup-3",
+                "prompt": "There are 72 children on a bus. 15 get off and 9 get on. How many are on the bus now?",
+                "correct_answer": "66",
+                "hint": "72 - 15 = 57, then 57 + 9.",
+                "skill": "two_step"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Two-Step Problems with Unknown Numbers",
+            "teaching_points": [
+              "Do the first action first.",
+              "Use the result for the next action.",
+              "Keep track of the unknown at each step."
+            ],
+            "example": {
+              "prompt": "A class has 28 students. 5 leave and 7 arrive. How many are in the class now?",
+              "visual_type": "bar_model",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "28 - 5 = 23, then 23 + 7 = 30"
+            },
+            "vocabulary": ["two-step", "unknown", "first step", "second step"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "two_step_unknowns",
+            "prompt": "A fish tank has 45 fish. 12 are removed and 8 new ones are added. How many fish are there now?",
+            "correct_answer": "41",
+            "hint": "45 - 12 = 33, then 33 + 8.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "two_step_unknowns",
+            "question_count": 6,
+            "instructions": "Solve each two-step problem. Show both steps."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Two-Step Problem Steps",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review two-step problem vocabulary.",
+            "deckId": "lesson-g3-u8-w1-d4-two-step-steps"
+          },
+          "bigIdea": {
+            "title": "Two-Step Problems with Unknown Numbers",
+            "subtitle": "Solve one step, then the next",
+            "thumbnail": "/images/learn/thumbnails/word-problems.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Some problems have two actions. Solve the first part, then use that answer in the second part. Watch for unknown amounts in the middle.",
+            "bigQuestion": "How do you keep track of an unknown in a two-step problem?",
+            "starTip": {
+              "title": "Take it step by step",
+              "lines": ["First action", "Use the answer", "Second action"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "First step",
+                "equation": "28 - 5 = 23",
+                "badge": "Use the first action",
+                "description": "Find the result of the first action before moving on."
+              },
+              {
+                "eyebrow": "Second step",
+                "equation": "23 + 7 = 30",
+                "badge": "Use the result",
+                "description": "Use the answer from the first step to complete the second step."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u8-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Addition and Subtraction Applications",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of choosing operations, estimating, one-step, and two-step problem solving.",
+          "concept": "Review the four problem-solving skills from this unit: choosing operations, estimating, one-step, and two-step problems with unknowns.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about addition and subtraction problem solving.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "choose_operation",
+            "estimate_then_solve",
+            "one_step_word_problems",
+            "two_step_unknowns"
+          ],
+          "skills": [
+            "word_problems",
+            "operation_clues",
+            "estimation",
+            "one_step",
+            "two_step",
+            "unknown_numbers",
+            "addition",
+            "subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u8-w1-d5-warmup-1",
+                "prompt": "A library has 312 books checked out. 98 are returned. How many are still checked out?",
+                "correct_answer": "214",
+                "hint": "312 - 98.",
+                "skill": "subtraction"
+              },
+              {
+                "id": "g3-u8-w1-d5-warmup-2",
+                "prompt": "A garden has 56 red flowers and 47 yellow flowers. About how many flowers total?",
+                "correct_answer": "100",
+                "hint": "56 ≈ 60, 47 ≈ 50, estimate 110; or round to nearest hundred ~100.",
+                "skill": "estimation"
+              },
+              {
+                "id": "g3-u8-w1-d5-warmup-3",
+                "prompt": "A bakery made 150 cupcakes. It sold 45 in the morning and 38 in the afternoon. How many are left?",
+                "correct_answer": "67",
+                "hint": "150 - 45 = 105, then 105 - 38.",
+                "skill": "two_step"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "choose operation + estimate + one-step + two-step = problem solving"
+            },
+            "vocabulary": ["evaluation", "review", "problem solving"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which operation solves: A team has 24 players. 9 leave. How many are left?",
+            "correct_answer": "subtraction",
+            "hint": "Leave means subtract.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 8 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 8 before the evaluation.",
+            "deckId": "lesson-g3-u8-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Addition and Subtraction Applications",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: choosing an operation, estimating, one-step problems, and two-step problems with unknowns.",
+            "bigQuestion": "What do you know about addition and subtraction problem solving?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Choose the operation",
+                "equation": "Look for clue words",
+                "badge": "Core skill",
+                "description": "Decide whether the problem is asking you to add, subtract, or both."
+              },
+              {
+                "eyebrow": "Take it step by step",
+                "equation": "Two actions, two equations",
+                "badge": "Two-step",
+                "description": "For two-step problems, solve one action before the next."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

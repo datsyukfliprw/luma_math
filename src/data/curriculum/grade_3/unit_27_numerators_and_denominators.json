@@ -1,0 +1,628 @@
+{
+  "grade_level": 3,
+  "unit_number": 27,
+  "unit_title": "Numerators and Denominators",
+  "unit_slug": "numerators_and_denominators",
+  "unit_description": "This unit develops the meaning of numerators and denominators. Students understand what each part of a fraction represents, represent fractions with fraction bars, area models, and stories, and name fractions accurately.",
+  "unit_goals": [
+    "Understand what the numerator represents.",
+    "Understand what the denominator represents.",
+    "Represent fractions with fraction bars.",
+    "Represent fractions with area models and stories.",
+    "Name fractions correctly."
+  ],
+  "fact_focus": ["fractions", "3.NF.A.1", "3.NF.A.2"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Numerators and Denominators",
+      "weekly_focus": "Students learn the meaning of the numerator and denominator and represent fractions with models and stories.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u27-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "What the Numerator Represents",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting shaded parts of partitioned shapes.",
+          "concept": "The numerator of a fraction tells how many equal parts are being counted or shaded. It is the top number. In 3/4, the numerator 3 means 3 parts are shaded.",
+          "practice": "Identify and write numerators for shaded parts of models.",
+          "objective": "Understand what the numerator represents.",
+          "practice_type": "numerator_meaning",
+          "skills": [
+            "fractions",
+            "numerator",
+            "shaded_parts",
+            "models"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "numerator_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting shaded parts.",
+            "questions": [
+              {
+                "id": "g3-u27-w1-d1-warmup-1",
+                "prompt": "A shape is divided into 4 equal parts. 3 are shaded. What is the numerator?",
+                "correct_answer": "3",
+                "hint": "Count the shaded parts.",
+                "skill": "numerator"
+              },
+              {
+                "id": "g3-u27-w1-d1-warmup-2",
+                "prompt": "A shape has 5 equal parts. 2 are shaded. What fraction is shaded?",
+                "correct_answer": "2/5",
+                "hint": "2 shaded out of 5 total.",
+                "skill": "numerator"
+              },
+              {
+                "id": "g3-u27-w1-d1-warmup-3",
+                "prompt": "In 3/8, what does the 3 mean?",
+                "correct_answer": "3 parts shaded",
+                "hint": "The numerator is the top number.",
+                "skill": "numerator"
+              }
+            ]
+          },
+          "learn": {
+            "title": "What the Numerator Represents",
+            "teaching_points": [
+              "The numerator is the top number.",
+              "It counts the parts you are talking about.",
+              "It can be shaded, chosen, or eaten."
+            ],
+            "example": {
+              "prompt": "A circle is divided into 6 equal parts. 2 parts are shaded. What is the fraction?",
+              "visual_type": "shape",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "2/6, numerator is 2"
+            },
+            "vocabulary": ["numerator", "shaded", "parts", "fraction"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "numerator_meaning",
+            "prompt": "A rectangle is divided into 8 equal parts. 5 are shaded. What is the numerator?",
+            "correct_answer": "5",
+            "hint": "Count the shaded parts.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "numerator_meaning",
+            "question_count": 6,
+            "instructions": "Write the numerator for each shaded model."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Numerator",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review what the numerator means.",
+            "deckId": "lesson-g3-u27-w1-d1-numerator"
+          },
+          "bigIdea": {
+            "title": "What the Numerator Represents",
+            "subtitle": "The numerator counts the parts",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "The numerator is the top number of a fraction. It tells how many parts you are looking at or counting.",
+            "bigQuestion": "What does the numerator count?",
+            "starTip": {
+              "title": "Top number",
+              "lines": ["Numerator", "= how many"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Numerator",
+                "equation": "3/4",
+                "badge": "3",
+                "description": "The top number tells how many parts are shaded or counted."
+              },
+              {
+                "eyebrow": "Count",
+                "equation": "count the shaded parts",
+                "badge": "Top number",
+                "description": "For models, count the shaded parts to find the numerator."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u27-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "What the Denominator Represents",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting the total number of equal parts in shapes.",
+          "concept": "The denominator is the bottom number of a fraction. It tells the total number of equal parts the whole is divided into. In 3/4, the denominator 4 means 4 equal parts.",
+          "practice": "Identify and write denominators for partitioned models.",
+          "objective": "Understand what the denominator represents.",
+          "practice_type": "denominator_meaning",
+          "skills": [
+            "fractions",
+            "denominator",
+            "total_parts",
+            "models"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "denominator_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting total parts.",
+            "questions": [
+              {
+                "id": "g3-u27-w1-d2-warmup-1",
+                "prompt": "A shape is divided into 7 equal parts. What is the denominator if some are shaded?",
+                "correct_answer": "7",
+                "hint": "Count all the equal parts.",
+                "skill": "denominator"
+              },
+              {
+                "id": "g3-u27-w1-d2-warmup-2",
+                "prompt": "In 2/6, what does the 6 mean?",
+                "correct_answer": "6 equal parts total",
+                "hint": "The denominator is the bottom number.",
+                "skill": "denominator"
+              },
+              {
+                "id": "g3-u27-w1-d2-warmup-3",
+                "prompt": "A shape has 4 equal parts. What is the denominator?",
+                "correct_answer": "4",
+                "hint": "Total number of equal parts.",
+                "skill": "denominator"
+              }
+            ]
+          },
+          "learn": {
+            "title": "What the Denominator Represents",
+            "teaching_points": [
+              "The denominator is the bottom number.",
+              "It tells the total number of equal parts.",
+              "It names the size of each part."
+            ],
+            "example": {
+              "prompt": "A circle is divided into 5 equal parts. 2 are shaded. What is the denominator?",
+              "visual_type": "shape",
+              "groups": 5,
+              "items_per_group": 1,
+              "equation": "2/5, denominator is 5"
+            },
+            "vocabulary": ["denominator", "total parts", "equal parts", "fraction"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "denominator_meaning",
+            "prompt": "A rectangle is divided into 6 equal parts. 1 is shaded. What is the denominator?",
+            "correct_answer": "6",
+            "hint": "Count the total number of equal parts.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "denominator_meaning",
+            "question_count": 6,
+            "instructions": "Write the denominator for each partitioned model."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Denominator",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review what the denominator means.",
+            "deckId": "lesson-g3-u27-w1-d2-denominator"
+          },
+          "bigIdea": {
+            "title": "What the Denominator Represents",
+            "subtitle": "The denominator names the total parts",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "The denominator is the bottom number of a fraction. It tells how many equal parts the whole has been split into.",
+            "bigQuestion": "What does the denominator tell you about the size of each part?",
+            "starTip": {
+              "title": "Bottom number",
+              "lines": ["Denominator", "= total parts"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Denominator",
+                "equation": "3/4",
+                "badge": "4",
+                "description": "The bottom number tells how many equal parts make the whole."
+              },
+              {
+                "eyebrow": "Total parts",
+                "equation": "count all equal parts",
+                "badge": "Bottom number",
+                "description": "For models, count all equal parts to find the denominator."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u27-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Represent Fractions with Fraction Bars",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by shading fraction bars to match fractions.",
+          "concept": "A fraction bar is a rectangle divided into equal parts. Shade the number of parts shown by the numerator. The total number of parts is the denominator.",
+          "practice": "Shade fraction bars and write the matching fraction.",
+          "objective": "Represent fractions with fraction bars.",
+          "practice_type": "fraction_bars",
+          "skills": [
+            "fractions",
+            "fraction_bars",
+            "models",
+            "shading"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "fraction_bar_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with fraction bars.",
+            "questions": [
+              {
+                "id": "g3-u27-w1-d3-warmup-1",
+                "prompt": "Shade 2/5 of a fraction bar with 5 equal parts.",
+                "correct_answer": "2",
+                "hint": "Shade 2 parts.",
+                "skill": "fraction_bars"
+              },
+              {
+                "id": "g3-u27-w1-d3-warmup-2",
+                "prompt": "A fraction bar has 4 parts. 3 are shaded. What fraction is shaded?",
+                "correct_answer": "3/4",
+                "hint": "3 out of 4.",
+                "skill": "fraction_bars"
+              },
+              {
+                "id": "g3-u27-w1-d3-warmup-3",
+                "prompt": "Shade 5/8 of a fraction bar with 8 equal parts.",
+                "correct_answer": "5",
+                "hint": "Shade 5 parts.",
+                "skill": "fraction_bars"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Represent Fractions with Fraction Bars",
+            "teaching_points": [
+              "Draw a bar with the same number of parts as the denominator.",
+              "Shade the number of parts shown by the numerator.",
+              "The fraction names the shaded amount."
+            ],
+            "example": {
+              "prompt": "Represent 3/6 with a fraction bar.",
+              "visual_type": "fraction_bar",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "shade 3 of 6 equal parts"
+            },
+            "vocabulary": ["fraction bar", "shade", "numerator", "denominator"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "fraction_bars",
+            "prompt": "Represent 4/7 with a fraction bar.",
+            "correct_answer": "4",
+            "hint": "Shade 4 of 7 equal parts.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "fraction_bars",
+            "question_count": 6,
+            "instructions": "Shade the fraction bar to match each fraction."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Fraction Bars",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review fraction bar representations.",
+            "deckId": "lesson-g3-u27-w1-d3-fraction-bars"
+          },
+          "bigIdea": {
+            "title": "Represent Fractions with Fraction Bars",
+            "subtitle": "Shade parts to show the fraction",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A fraction bar is a model that shows a fraction. The number of parts in the bar is the denominator. The number of shaded parts is the numerator.",
+            "bigQuestion": "How is a fraction bar like a fraction?",
+            "starTip": {
+              "title": "Shade the top number",
+              "lines": ["Total parts = bottom", "Shaded parts = top"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Denominator",
+                "equation": "7 total parts",
+                "badge": "Divide the bar",
+                "description": "Divide the fraction bar into the denominator number of parts."
+              },
+              {
+                "eyebrow": "Numerator",
+                "equation": "4 shaded parts",
+                "badge": "Shade",
+                "description": "Shade the numerator number of parts."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u27-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Represent Fractions with Area Models and Stories",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by telling fraction stories for shaded shapes.",
+          "concept": "Fractions can be shown with area models like circles and rectangles, and they can be described with stories. 3/4 can mean 3 out of 4 equal slices of pizza.",
+          "practice": "Represent fractions with area models and write fraction stories.",
+          "objective": "Represent fractions with area models and stories.",
+          "practice_type": "area_models_and_stories",
+          "skills": [
+            "fractions",
+            "area_models",
+            "stories",
+            "represent"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "story_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with fraction stories.",
+            "questions": [
+              {
+                "id": "g3-u27-w1-d4-warmup-1",
+                "prompt": "A pizza is cut into 6 equal slices. 2 are eaten. What fraction is eaten?",
+                "correct_answer": "2/6",
+                "hint": "2 out of 6.",
+                "skill": "area_models_and_stories"
+              },
+              {
+                "id": "g3-u27-w1-d4-warmup-2",
+                "prompt": "A chocolate bar has 8 equal pieces. 5 are left. What fraction is left?",
+                "correct_answer": "5/8",
+                "hint": "5 out of 8.",
+                "skill": "area_models_and_stories"
+              },
+              {
+                "id": "g3-u27-w1-d4-warmup-3",
+                "prompt": "Shade an area model to show 3/5.",
+                "correct_answer": "3",
+                "hint": "3 out of 5 parts shaded.",
+                "skill": "area_models_and_stories"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Represent Fractions with Area Models and Stories",
+            "teaching_points": [
+              "Area models show fractions as parts of a shape.",
+              "Stories use fractions to describe real things.",
+              "The numerator is the part; the denominator is the whole."
+            ],
+            "example": {
+              "prompt": "Write a story for 3/8 and show it with an area model.",
+              "visual_type": "area_model",
+              "groups": 8,
+              "items_per_group": 1,
+              "equation": "A granola bar cut into 8 pieces, 3 pieces eaten"
+            },
+            "vocabulary": ["area model", "story", "fraction", "real world"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "area_models_and_stories",
+            "prompt": "Write a story for 4/6 and draw an area model.",
+            "correct_answer": "4/6",
+            "hint": "4 out of 6 equal parts.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "area_models_and_stories",
+            "question_count": 6,
+            "instructions": "Draw an area model and write a story for each fraction."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Fraction Stories and Models",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review fraction area models and stories.",
+            "deckId": "lesson-g3-u27-w1-d4-fraction-stories"
+          },
+          "bigIdea": {
+            "title": "Represent Fractions with Area Models and Stories",
+            "subtitle": "Fractions describe parts in many ways",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Fractions can be shown with shapes or told in stories. Both the numerator and denominator have the same meaning: parts counted over total equal parts.",
+            "bigQuestion": "How is a fraction story like an area model?",
+            "starTip": {
+              "title": "Parts and total",
+              "lines": ["Numerator = parts", "Denominator = total"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Area model",
+                "equation": "shade 3 of 8 parts",
+                "badge": "3/8",
+                "description": "The shaded area shows the fraction."
+              },
+              {
+                "eyebrow": "Story",
+                "equation": "3 of 8 slices eaten",
+                "badge": "3/8",
+                "description": "A story can describe the same fraction."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u27-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Naming Fractions",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of numerator meaning, denominator meaning, fraction bars, and area models/stories.",
+          "concept": "Review the four big ideas from this unit: what the numerator represents, what the denominator represents, representing fractions with fraction bars, and representing fractions with area models and stories.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about naming fractions.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "numerator_meaning",
+            "denominator_meaning",
+            "fraction_bars",
+            "area_models_and_stories"
+          ],
+          "skills": [
+            "fractions",
+            "numerator",
+            "denominator",
+            "fraction_bars",
+            "area_models",
+            "stories"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u27-w1-d5-warmup-1",
+                "prompt": "In 3/7, what does the 3 mean?",
+                "correct_answer": "3 parts",
+                "hint": "The numerator.",
+                "skill": "numerator"
+              },
+              {
+                "id": "g3-u27-w1-d5-warmup-2",
+                "prompt": "In 3/7, what does the 7 mean?",
+                "correct_answer": "7 equal parts total",
+                "hint": "The denominator.",
+                "skill": "denominator"
+              },
+              {
+                "id": "g3-u27-w1-d5-warmup-3",
+                "prompt": "A fraction bar is divided into 5 parts. Shade 2. What fraction is shaded?",
+                "correct_answer": "2/5",
+                "hint": "2 out of 5.",
+                "skill": "fraction_bars"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "numerator + denominator + fraction bars + area models/stories = naming fractions"
+            },
+            "vocabulary": ["evaluation", "review", "fractions"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A circle is divided into 6 equal parts. 4 are shaded. What fraction is shaded?",
+            "correct_answer": "4/6",
+            "hint": "4 out of 6.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 27 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 27 before the evaluation.",
+            "deckId": "lesson-g3-u27-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Naming Fractions",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: the meaning of the numerator, the meaning of the denominator, fraction bars, and area models and stories.",
+            "bigQuestion": "What do you know about numerators and denominators?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Numerator",
+                "equation": "top number",
+                "badge": "Count",
+                "description": "The numerator counts the parts."
+              },
+              {
+                "eyebrow": "Denominator",
+                "equation": "bottom number",
+                "badge": "Total",
+                "description": "The denominator tells the total number of equal parts."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

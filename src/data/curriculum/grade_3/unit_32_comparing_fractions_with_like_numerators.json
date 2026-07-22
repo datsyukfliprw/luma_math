@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 32,
+  "unit_title": "Comparing Fractions With Like Numerators",
+  "unit_slug": "comparing_fractions_with_like_numerators",
+  "unit_description": "This unit teaches students to compare fractions that have the same numerator. Students use visual models, number lines, and reasoning, and explain why fractions must refer to the same whole.",
+  "unit_goals": [
+    "Compare fractions with the same numerator using visual models.",
+    "Compare fractions with the same numerator on number lines.",
+    "Understand why fractions must refer to the same whole.",
+    "Compare fractions and explain the reasoning.",
+    "Understand that with like numerators, the smaller denominator names the larger fraction."
+  ],
+  "fact_focus": ["fractions", "comparing", "3.NF.A.6", "3.NF.A.7"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Comparing Fractions With Like Numerators",
+      "weekly_focus": "Students compare fractions with the same numerator using models and number lines and explain that the whole must be the same size.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u32-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Compare Fractions With the Same Numerator Using Models",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by shading one or two parts of models with different denominators and comparing.",
+          "concept": "When two fractions have the same numerator, they represent the same number of parts. The fraction with the smaller denominator has larger parts, so it is larger overall.",
+          "practice": "Compare fractions with like numerators using area models.",
+          "objective": "Compare fractions with the same numerator using models.",
+          "practice_type": "compare_like_numerators_models",
+          "skills": [
+            "fractions",
+            "comparing",
+            "like_numerators",
+            "visual_models"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "compare_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by comparing models.",
+            "questions": [
+              {
+                "id": "g3-u32-w1-d1-warmup-1",
+                "prompt": "Which is larger: 1/2 or 1/4?",
+                "correct_answer": "1/2",
+                "hint": "Halves are bigger pieces than fourths.",
+                "skill": "compare_like_numerators_models"
+              },
+              {
+                "id": "g3-u32-w1-d1-warmup-2",
+                "prompt": "Which is smaller: 2/3 or 2/5?",
+                "correct_answer": "2/5",
+                "hint": "Fifths are smaller pieces than thirds.",
+                "skill": "compare_like_numerators_models"
+              },
+              {
+                "id": "g3-u32-w1-d1-warmup-3",
+                "prompt": "Are 3/4 and 3/8 the same amount?",
+                "correct_answer": "no",
+                "hint": "3 fourths are bigger than 3 eighths.",
+                "skill": "compare_like_numerators_models"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Compare Fractions With the Same Numerator Using Models",
+            "teaching_points": [
+              "Same numerator means the same number of parts.",
+              "A smaller denominator means bigger parts.",
+              "Bigger parts make a larger amount."
+            ],
+            "example": {
+              "prompt": "Compare 2/3 and 2/6 using a model.",
+              "visual_type": "area_model",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "2/3 > 2/6"
+            },
+            "vocabulary": ["numerator", "denominator", "same numerator", "compare"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "compare_like_numerators_models",
+            "prompt": "Compare 3/4 and 3/8 using a model.",
+            "correct_answer": "3/4 > 3/8",
+            "hint": "Fourth pieces are bigger than eighth pieces.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "compare_like_numerators_models",
+            "question_count": 6,
+            "instructions": "Use visual models to compare each pair of fractions."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Like Numerators Models",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review comparing fractions with like numerators using models.",
+            "deckId": "lesson-g3-u32-w1-d1-compare-models"
+          },
+          "bigIdea": {
+            "title": "Compare Fractions With the Same Numerator Using Models",
+            "subtitle": "Same number of bigger parts is more",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When the numerators are the same, you are counting the same number of parts. The fraction with the bigger parts has more total amount.",
+            "bigQuestion": "Why is 2/3 more than 2/5?",
+            "starTip": {
+              "title": "Same numerator",
+              "lines": ["2 parts each", "Thirds are bigger than fifths"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same numerator",
+                "equation": "same number of parts",
+                "badge": "2 parts",
+                "description": "Both fractions count the same number of parts."
+              },
+              {
+                "eyebrow": "Smaller denominator",
+                "equation": "thirds > fifths",
+                "badge": "Bigger parts",
+                "description": "The smaller denominator means each part is bigger."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u32-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Compare Fractions With the Same Numerator on Number Lines",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by locating 1/2 and 1/4 on the same number line and comparing their positions.",
+          "concept": "On a number line, the fraction with the same numerator but smaller denominator is farther from 1? Wait, farther from 0? Actually it's farther from 1? Let's think: 1/2 is at 0.5, 1/4 at 0.25. 1/2 is closer to 1 and farther from 0. The larger fraction is farther to the right. With same numerator, smaller denominator means larger value, so farther right. The number line makes this visible.",
+          "practice": "Compare fractions with like numerators on number lines.",
+          "objective": "Compare fractions with the same numerator on number lines.",
+          "practice_type": "compare_like_numerators_number_line",
+          "skills": [
+            "fractions",
+            "number_line",
+            "comparing",
+            "like_numerators"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "number_line_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with number lines.",
+            "questions": [
+              {
+                "id": "g3-u32-w1-d2-warmup-1",
+                "prompt": "Which is farther to the right: 1/2 or 1/4?",
+                "correct_answer": "1/2",
+                "hint": "1/2 is at 0.5 and 1/4 is at 0.25.",
+                "skill": "compare_like_numerators_number_line"
+              },
+              {
+                "id": "g3-u32-w1-d2-warmup-2",
+                "prompt": "Which is closer to 1: 2/3 or 2/5?",
+                "correct_answer": "2/3",
+                "hint": "2/3 is more than 2/5.",
+                "skill": "compare_like_numerators_number_line"
+              },
+              {
+                "id": "g3-u32-w1-d2-warmup-3",
+                "prompt": "Is 3/6 to the right of 3/8?",
+                "correct_answer": "yes",
+                "hint": "3/6 is the same as 1/2, 3/8 is less.",
+                "skill": "compare_like_numerators_number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Compare Fractions With the Same Numerator on Number Lines",
+            "teaching_points": [
+              "Locate both fractions on the same number line.",
+              "The fraction farther right is larger.",
+              "With the same numerator, the smaller denominator is farther right."
+            ],
+            "example": {
+              "prompt": "Compare 3/4 and 3/8 on a number line.",
+              "visual_type": "number_line",
+              "groups": 8,
+              "items_per_group": 1,
+              "equation": "3/4 > 3/8"
+            },
+            "vocabulary": ["number line", "right", "left", "compare"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "compare_like_numerators_number_line",
+            "prompt": "Compare 2/3 and 2/6 on a number line.",
+            "correct_answer": "2/3 > 2/6",
+            "hint": "2/3 is farther to the right.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "compare_like_numerators_number_line",
+            "question_count": 6,
+            "instructions": "Use number lines to compare each pair of fractions."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Like Numerators Number Lines",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review comparing fractions with like numerators on number lines.",
+            "deckId": "lesson-g3-u32-w1-d2-compare-number-lines"
+          },
+          "bigIdea": {
+            "title": "Compare Fractions With the Same Numerator on Number Lines",
+            "subtitle": "Farther right means larger",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A number line shows that fractions with the same numerator are not always the same amount. The fraction with smaller pieces is closer to 1? Wait, fractions with smaller pieces (larger denominator) are smaller. So the larger fraction is farther right. Good.",
+            "bigQuestion": "How does a number line show that 1/2 > 1/4?",
+            "starTip": {
+              "title": "Right is more",
+              "lines": ["Locate both", "Smaller denominator is farther right"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same numerator",
+                "equation": "1 part",
+                "badge": "Same count",
+                "description": "Both fractions count one part."
+              },
+              {
+                "eyebrow": "Smaller denominator",
+                "equation": "1/2 > 1/4",
+                "badge": "Larger value",
+                "description": "1/2 is farther to the right on the number line."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u32-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Understand Why Fractions Must Refer to the Same Whole",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by comparing shaded parts of rectangles that are the same size versus different sizes.",
+          "concept": "You can only compare fractions when they refer to the same-sized whole. A half of a small pizza is not the same as a half of a large pizza.",
+          "practice": "Identify when fractions refer to the same whole and when comparison is not fair.",
+          "objective": "Understand that fractions must refer to the same whole to compare.",
+          "practice_type": "same_whole_fractions",
+          "skills": [
+            "fractions",
+            "same_whole",
+            "comparing",
+            "reasoning"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "same_whole_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with same whole.",
+            "questions": [
+              {
+                "id": "g3-u32-w1-d3-warmup-1",
+                "prompt": "Can you compare 1/2 of a small cookie and 1/2 of a large cookie?",
+                "correct_answer": "no",
+                "hint": "The wholes are different sizes.",
+                "skill": "same_whole_fractions"
+              },
+              {
+                "id": "g3-u32-w1-d3-warmup-2",
+                "prompt": "To compare 1/3 and 2/3, must the wholes be the same size?",
+                "correct_answer": "yes",
+                "hint": "Yes, the same whole is needed.",
+                "skill": "same_whole_fractions"
+              },
+              {
+                "id": "g3-u32-w1-d3-warmup-3",
+                "prompt": "If two rectangles are different sizes, can you tell which 1/4 is larger?",
+                "correct_answer": "no",
+                "hint": "The wholes are different.",
+                "skill": "same_whole_fractions"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Understand Why Fractions Must Refer to the Same Whole",
+            "teaching_points": [
+              "Fractions are parts of a whole.",
+              "If the wholes are different sizes, you cannot compare the fractions.",
+              "Always check that the whole is the same size."
+            ],
+            "example": {
+              "prompt": "Which is larger: 1/2 of a small square or 1/2 of a large square?",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "Cannot compare because the wholes are different sizes."
+            },
+            "vocabulary": ["same whole", "compare", "fair", "different wholes"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "same_whole_fractions",
+            "prompt": "Two pizzas are the same size. Maria ate 3/8 of one. Tom ate 3/8 of the other. Did they eat the same amount?",
+            "correct_answer": "yes",
+            "hint": "Same whole and same fraction.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "same_whole_fractions",
+            "question_count": 6,
+            "instructions": "Tell whether each comparison is fair and explain."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Same Whole",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review the same whole concept.",
+            "deckId": "lesson-g3-u32-w1-d3-same-whole"
+          },
+          "bigIdea": {
+            "title": "Understand Why Fractions Must Refer to the Same Whole",
+            "subtitle": "Same whole, fair comparison",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Comparing fractions only makes sense when the wholes are the same size. If the wholes are different, a fraction can mean a different amount.",
+            "bigQuestion": "Why does 1/2 of a small cookie not equal 1/2 of a large cookie?",
+            "starTip": {
+              "title": "Check the whole",
+              "lines": ["Same size", "Fair comparison"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same whole",
+                "equation": "same-sized shape",
+                "badge": "Compare",
+                "description": "Fractions can be compared only when the wholes are the same."
+              },
+              {
+                "eyebrow": "Different whole",
+                "equation": "different-sized shape",
+                "badge": "Cannot compare",
+                "description": "A fraction of a larger whole is more than the same fraction of a smaller whole."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u32-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Compare Fractions and Explain the Reasoning",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing a sentence to explain a fraction comparison.",
+          "concept": "To compare fractions, use models or number lines to see which is larger. Then explain the reason: same numerator means same number of parts, smaller denominator means bigger parts, so it's larger.",
+          "practice": "Compare fractions and write or say a clear explanation.",
+          "objective": "Compare fractions and explain the reasoning.",
+          "practice_type": "compare_explain_fractions",
+          "skills": [
+            "fractions",
+            "comparing",
+            "reasoning",
+            "explain",
+            "like_numerators"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "explain_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by explaining comparisons.",
+            "questions": [
+              {
+                "id": "g3-u32-w1-d4-warmup-1",
+                "prompt": "Why is 1/2 greater than 1/4?",
+                "correct_answer": "halves are bigger pieces",
+                "hint": "Same numerator; halves are larger than fourths.",
+                "skill": "compare_explain_fractions"
+              },
+              {
+                "id": "g3-u32-w1-d4-warmup-2",
+                "prompt": "Why is 2/5 less than 2/3?",
+                "correct_answer": "fifths are smaller pieces",
+                "hint": "Same numerator; fifths are smaller than thirds.",
+                "skill": "compare_explain_fractions"
+              },
+              {
+                "id": "g3-u32-w1-d4-warmup-3",
+                "prompt": "Compare 3/8 and 3/4 and explain.",
+                "correct_answer": "3/8 < 3/4 because eighths are smaller than fourths",
+                "hint": "Same numerator; smaller denominator means bigger pieces.",
+                "skill": "compare_explain_fractions"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Compare Fractions and Explain the Reasoning",
+            "teaching_points": [
+              "Start with the comparison result.",
+              "Say that the numerators are the same.",
+              "Explain that the smaller denominator makes larger parts."
+            ],
+            "example": {
+              "prompt": "Compare 2/6 and 2/3 and explain.",
+              "visual_type": "area_model",
+              "groups": 6,
+              "items_per_group": 1,
+              "equation": "2/6 < 2/3 because thirds are larger pieces than sixths"
+            },
+            "vocabulary": ["explain", "reason", "compare", "justify"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "compare_explain_fractions",
+            "prompt": "Compare 3/5 and 3/10 and explain your reasoning.",
+            "correct_answer": "3/5 > 3/10 because fifths are larger than tenths",
+            "hint": "Same numerator; fifths are larger pieces.",
+            "visual_data": {
+              "groups": 10,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "compare_explain_fractions",
+            "question_count": 6,
+            "instructions": "Compare each pair and write a sentence explaining your reasoning."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Explain Comparisons",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review explaining fraction comparisons.",
+            "deckId": "lesson-g3-u32-w1-d4-explain-comparisons"
+          },
+          "bigIdea": {
+            "title": "Compare Fractions and Explain the Reasoning",
+            "subtitle": "Use words to explain why",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A good explanation tells what is the same and what is different. With like numerators, the number of parts is the same. The difference is the size of each part.",
+            "bigQuestion": "How do you explain that 2/3 is larger than 2/5?",
+            "starTip": {
+              "title": "Same numerator, compare part size",
+              "lines": ["2 parts each", "Thirds are bigger than fifths"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same numerator",
+                "equation": "same number of parts",
+                "badge": "Same count",
+                "description": "Both fractions count the same number of parts."
+              },
+              {
+                "eyebrow": "Different denominator",
+                "equation": "thirds > fifths",
+                "badge": "Larger pieces",
+                "description": "The fraction with larger parts is larger overall."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u32-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Fraction Comparison",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of comparing like numerators with models, number lines, same whole, and reasoning.",
+          "concept": "Review the four big ideas from this unit: comparing fractions with the same numerator using models, comparing on number lines, understanding the same whole, and explaining reasoning.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about comparing fractions with like numerators.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "compare_like_numerators_models",
+            "compare_like_numerators_number_line",
+            "same_whole_fractions",
+            "compare_explain_fractions"
+          ],
+          "skills": [
+            "fractions",
+            "comparing",
+            "like_numerators",
+            "models",
+            "number_line",
+            "same_whole",
+            "reasoning"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u32-w1-d5-warmup-1",
+                "prompt": "1/2 __ 1/8",
+                "correct_answer": ">",
+                "hint": "Halves are bigger pieces.",
+                "skill": "compare_like_numerators_models"
+              },
+              {
+                "id": "g3-u32-w1-d5-warmup-2",
+                "prompt": "2/5 __ 2/3",
+                "correct_answer": "<",
+                "hint": "Fifths are smaller than thirds.",
+                "skill": "compare_like_numerators_number_line"
+              },
+              {
+                "id": "g3-u32-w1-d5-warmup-3",
+                "prompt": "Can you compare 1/4 of a small pizza and 1/4 of a large pizza?",
+                "correct_answer": "no",
+                "hint": "The wholes are different sizes.",
+                "skill": "same_whole_fractions"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "models + number lines + same whole + reasoning = fraction comparison"
+            },
+            "vocabulary": ["evaluation", "review", "fractions"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Compare 3/4 and 3/6 and explain.",
+            "correct_answer": "3/4 > 3/6 because fourths are larger than sixths",
+            "hint": "Same numerator; the smaller denominator has larger parts.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 32 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 32 before the evaluation.",
+            "deckId": "lesson-g3-u32-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Fraction Comparison",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: comparing fractions with like numerators using models, comparing on number lines, the same whole requirement, and explaining your reasoning.",
+            "bigQuestion": "What do you know about comparing fractions with like numerators?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Like numerators",
+                "equation": "same number of parts",
+                "badge": "Compare pieces",
+                "description": "The fraction with the larger pieces is larger."
+              },
+              {
+                "eyebrow": "Same whole",
+                "equation": "same-sized whole",
+                "badge": "Must be true",
+                "description": "Fractions can only be compared if they refer to the same whole."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

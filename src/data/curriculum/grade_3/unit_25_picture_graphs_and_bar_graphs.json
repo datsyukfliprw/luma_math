@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 25,
+  "unit_title": "Picture Graphs and Bar Graphs",
+  "unit_slug": "picture_graphs_and_bar_graphs",
+  "unit_description": "This unit introduces scaled picture graphs and bar graphs. Students read and create scaled graphs and solve one- and two-step problems using data from graphs.",
+  "unit_goals": [
+    "Read scaled picture graphs.",
+    "Create scaled picture graphs.",
+    "Read scaled bar graphs.",
+    "Create scaled graphs and solve one- and two-step problems.",
+    "Interpret data from graphs."
+  ],
+  "fact_focus": ["data", "graphs", "3.DS.A.1", "3.DS.A.2"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Picture Graphs and Bar Graphs",
+      "weekly_focus": "Students learn to read and create scaled picture and bar graphs and use them to solve problems.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u25-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Read Scaled Picture Graphs",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting symbols and using a key.",
+          "concept": "A picture graph uses symbols to show data. When the graph is scaled, each symbol stands for more than one. Use the key to find the value of the symbols.",
+          "practice": "Read scaled picture graphs and answer questions.",
+          "objective": "Read scaled picture graphs.",
+          "practice_type": "read_picture_graphs",
+          "skills": [
+            "picture_graphs",
+            "scaled",
+            "data",
+            "key"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "graph_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with a picture graph.",
+            "questions": [
+              {
+                "id": "g3-u25-w1-d1-warmup-1",
+                "prompt": "A picture graph key says each star = 5 books. If a student has 3 stars, how many books?",
+                "correct_answer": "15",
+                "hint": "3 × 5.",
+                "skill": "read_picture_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d1-warmup-2",
+                "prompt": "A picture graph key says each apple = 2 students. How many students for 4 apples?",
+                "correct_answer": "8",
+                "hint": "4 × 2.",
+                "skill": "read_picture_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d1-warmup-3",
+                "prompt": "If each symbol = 4 and there is half a symbol, what does it stand for?",
+                "correct_answer": "2",
+                "hint": "Half of 4.",
+                "skill": "read_picture_graphs"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Read Scaled Picture Graphs",
+            "teaching_points": [
+              "Read the key to see what each symbol stands for.",
+              "Count the symbols for each category.",
+              "Multiply to find the total."
+            ],
+            "example": {
+              "prompt": "A picture graph shows books read. Each book symbol = 3. Alex has 4 symbols. How many books?",
+              "visual_type": "graph",
+              "groups": 4,
+              "items_per_group": 3,
+              "equation": "4 × 3 = 12 books"
+            },
+            "vocabulary": ["picture graph", "key", "symbol", "scaled"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "read_picture_graphs",
+            "prompt": "A picture graph key says each star = 4 points. A team has 5 stars. How many points?",
+            "correct_answer": "20",
+            "hint": "5 × 4.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 4
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "read_picture_graphs",
+            "question_count": 6,
+            "instructions": "Use the key to answer questions about each picture graph."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Picture Graph Key",
+            "type": "data_terms",
+            "card_count": 6,
+            "instructions": "Review picture graph terms.",
+            "deckId": "lesson-g3-u25-w1-d1-picture-graph-key"
+          },
+          "bigIdea": {
+            "title": "Read Scaled Picture Graphs",
+            "subtitle": "Use the key",
+            "thumbnail": "/images/learn/thumbnails/graphs.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "In a scaled picture graph, each picture stands for more than one. Always look at the key to know how many each symbol represents.",
+            "bigQuestion": "Why do scaled picture graphs use keys?",
+            "starTip": {
+              "title": "Check the key",
+              "lines": ["Symbol = ?", "Multiply"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Key",
+                "equation": "1 symbol = 5 items",
+                "badge": "Read first",
+                "description": "The key tells you how many items each symbol represents."
+              },
+              {
+                "eyebrow": "Count symbols",
+                "equation": "3 symbols × 5 = 15",
+                "badge": "Multiply",
+                "description": "Count the symbols and multiply by the key value."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u25-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Create Scaled Picture Graphs",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by choosing a good scale for a data set.",
+          "concept": "To create a scaled picture graph, choose a key, such as 1 symbol = 2 or 5, and draw the correct number of symbols for each category.",
+          "practice": "Create scaled picture graphs from data tables.",
+          "objective": "Create scaled picture graphs.",
+          "practice_type": "create_picture_graphs",
+          "skills": [
+            "picture_graphs",
+            "scaled",
+            "create",
+            "data"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "create_graph_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by creating a picture graph.",
+            "questions": [
+              {
+                "id": "g3-u25-w1-d2-warmup-1",
+                "prompt": "If 15 students like apples and the key is 1 apple = 5, how many apple symbols?",
+                "correct_answer": "3",
+                "hint": "15 ÷ 5.",
+                "skill": "create_picture_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d2-warmup-2",
+                "prompt": "If 20 students like soccer and 1 ball = 4, how many ball symbols?",
+                "correct_answer": "5",
+                "hint": "20 ÷ 4.",
+                "skill": "create_picture_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d2-warmup-3",
+                "prompt": "If 8 students like dogs and 1 dog symbol = 2, how many symbols?",
+                "correct_answer": "4",
+                "hint": "8 ÷ 2.",
+                "skill": "create_picture_graphs"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Create Scaled Picture Graphs",
+            "teaching_points": [
+              "Pick a scale that makes the graph easy to read.",
+              "Divide each value by the scale to find the number of symbols.",
+              "Label the key and categories clearly."
+            ],
+            "example": {
+              "prompt": "Create a picture graph for favorite fruits: apples 12, bananas 8, grapes 16. Use 1 fruit = 4.",
+              "visual_type": "graph",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "apples 3 symbols, bananas 2 symbols, grapes 4 symbols"
+            },
+            "vocabulary": ["scale", "key", "category", "symbol"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "create_picture_graphs",
+            "prompt": "Create a picture graph for pets: dogs 10, cats 15, fish 5. Use 1 paw = 5.",
+            "correct_answer": "dogs 2, cats 3, fish 1",
+            "hint": "Divide each by 5.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "create_picture_graphs",
+            "question_count": 6,
+            "instructions": "Choose a key and draw a scaled picture graph for each data set."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Creating Picture Graphs",
+            "type": "data_terms",
+            "card_count": 6,
+            "instructions": "Review creating scaled picture graphs.",
+            "deckId": "lesson-g3-u25-w1-d2-create-picture-graphs"
+          },
+          "bigIdea": {
+            "title": "Create Scaled Picture Graphs",
+            "subtitle": "Pick a good scale",
+            "thumbnail": "/images/learn/thumbnails/graphs.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you make a picture graph, choose a scale that keeps the number of symbols small and easy to count. Divide each number by the scale to find how many symbols to draw.",
+            "bigQuestion": "How do you choose a good scale for a picture graph?",
+            "starTip": {
+              "title": "Divide by scale",
+              "lines": ["Value ÷ scale", "= number of symbols"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Choose scale",
+                "equation": "1 symbol = 5",
+                "badge": "Easy to count",
+                "description": "Pick a scale that gives a small number of symbols."
+              },
+              {
+                "eyebrow": "Draw symbols",
+                "equation": "20 ÷ 5 = 4 symbols",
+                "badge": "Divide",
+                "description": "Divide each value by the scale."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u25-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Read Scaled Bar Graphs",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by reading heights of bars on a scaled bar graph.",
+          "concept": "A bar graph uses bars to show data. On a scaled bar graph, the scale may count by 2, 5, or 10. Use the scale to read the value of each bar.",
+          "practice": "Read scaled bar graphs and answer questions.",
+          "objective": "Read scaled bar graphs.",
+          "practice_type": "read_bar_graphs",
+          "skills": [
+            "bar_graphs",
+            "scaled",
+            "data",
+            "read"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "bar_graph_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with bar graphs.",
+            "questions": [
+              {
+                "id": "g3-u25-w1-d3-warmup-1",
+                "prompt": "A bar graph scale counts by 5. A bar reaches 4 spaces. How many?",
+                "correct_answer": "20",
+                "hint": "4 × 5.",
+                "skill": "read_bar_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d3-warmup-2",
+                "prompt": "A bar graph scale counts by 10. A bar reaches 6 spaces. How many?",
+                "correct_answer": "60",
+                "hint": "6 × 10.",
+                "skill": "read_bar_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d3-warmup-3",
+                "prompt": "Which is taller: a bar at 30 or a bar at 45?",
+                "correct_answer": "45",
+                "hint": "45 is greater than 30.",
+                "skill": "read_bar_graphs"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Read Scaled Bar Graphs",
+            "teaching_points": [
+              "Look at the scale on the side.",
+              "Find how high each bar goes.",
+              "Multiply the height by the scale."
+            ],
+            "example": {
+              "prompt": "A bar graph shows number of books. Scale counts by 2. The bar for June reaches 7 spaces.",
+              "visual_type": "graph",
+              "groups": 1,
+              "items_per_group": 1,
+              "equation": "7 × 2 = 14 books"
+            },
+            "vocabulary": ["bar graph", "scale", "bar", "category"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "read_bar_graphs",
+            "prompt": "A bar graph scale counts by 5. The bar for dogs reaches 8 spaces. How many dogs?",
+            "correct_answer": "40",
+            "hint": "8 × 5.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "read_bar_graphs",
+            "question_count": 6,
+            "instructions": "Read each bar graph and answer the questions."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Bar Graph Scale",
+            "type": "data_terms",
+            "card_count": 6,
+            "instructions": "Review bar graph terms.",
+            "deckId": "lesson-g3-u25-w1-d3-bar-graph-scale"
+          },
+          "bigIdea": {
+            "title": "Read Scaled Bar Graphs",
+            "subtitle": "Use the scale on the side",
+            "thumbnail": "/images/learn/thumbnails/graphs.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "On a scaled bar graph, each line may stand for more than one. Find the top of the bar, read across to the scale, and multiply to find the value.",
+            "bigQuestion": "How is a scaled bar graph like a picture graph?",
+            "starTip": {
+              "title": "Read the scale",
+              "lines": ["Count spaces", "Multiply by scale"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Scale",
+                "equation": "1 space = 5",
+                "badge": "Check the side",
+                "description": "The scale tells how much each space represents."
+              },
+              {
+                "eyebrow": "Bar height",
+                "equation": "6 spaces × 5 = 30",
+                "badge": "Multiply",
+                "description": "Multiply the number of spaces by the scale."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u25-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Create Graphs and Solve One- and Two-Step Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by solving addition and subtraction questions from a simple bar graph.",
+          "concept": "Graphs help answer questions. One-step problems ask for a single value. Two-step problems may ask you to combine or compare values from the graph.",
+          "practice": "Create scaled graphs from data and solve one- and two-step problems.",
+          "objective": "Create scaled graphs and solve one- and two-step problems using data.",
+          "practice_type": "create_graphs_solve_problems",
+          "skills": [
+            "graphs",
+            "create",
+            "one_step",
+            "two_step",
+            "data"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with graph problems.",
+            "questions": [
+              {
+                "id": "g3-u25-w1-d4-warmup-1",
+                "prompt": "A graph shows 10 red, 15 blue, and 5 green marbles. How many more blue than green?",
+                "correct_answer": "10",
+                "hint": "15 - 5.",
+                "skill": "create_graphs_solve_problems"
+              },
+              {
+                "id": "g3-u25-w1-d4-warmup-2",
+                "prompt": "A graph shows 12 cars, 8 trucks, and 10 bikes. How many vehicles total?",
+                "correct_answer": "30",
+                "hint": "12 + 8 + 10.",
+                "skill": "create_graphs_solve_problems"
+              },
+              {
+                "id": "g3-u25-w1-d4-warmup-3",
+                "prompt": "If twice as many students like soccer than baseball, and 6 like baseball, how many like soccer?",
+                "correct_answer": "12",
+                "hint": "6 × 2.",
+                "skill": "create_graphs_solve_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Create Graphs and Solve One- and Two-Step Problems",
+            "teaching_points": [
+              "Create the graph first.",
+              "Read the values you need.",
+              "Do one or two operations to answer the question."
+            ],
+            "example": {
+              "prompt": "Create a bar graph for votes: pizza 20, tacos 15, burgers 10. How many more voted for pizza than burgers?",
+              "visual_type": "graph",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "20 - 10 = 10 more votes"
+            },
+            "vocabulary": ["one-step", "two-step", "compare", "total"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "create_graphs_solve_problems",
+            "prompt": "A bar graph shows points: Team A 25, Team B 15, Team C 10. What is the total and how many more points does Team A have than Team C?",
+            "correct_answer": "total 50, 15 more",
+            "hint": "25 + 15 + 10 = 50, 25 - 10 = 15.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "create_graphs_solve_problems",
+            "question_count": 6,
+            "instructions": "Create a graph from the data and solve the problems."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Graph Problems",
+            "type": "data_terms",
+            "card_count": 6,
+            "instructions": "Review solving problems with graphs.",
+            "deckId": "lesson-g3-u25-w1-d4-graph-problems"
+          },
+          "bigIdea": {
+            "title": "Create Graphs and Solve One- and Two-Step Problems",
+            "subtitle": "Graphs help answer questions",
+            "thumbnail": "/images/learn/thumbnails/graphs.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "After making a graph, you can use it to answer questions. One-step questions use one value. Two-step questions may add, subtract, or compare values.",
+            "bigQuestion": "How do graphs help solve two-step problems?",
+            "starTip": {
+              "title": "Read and compute",
+              "lines": ["Find the values", "Do the operations"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "One-step",
+                "equation": "How many voted for pizza?",
+                "badge": "Read the bar",
+                "description": "Read the value from the graph."
+              },
+              {
+                "eyebrow": "Two-step",
+                "equation": "How many more for pizza than burgers?",
+                "badge": "Compare",
+                "description": "Read two values and subtract."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u25-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Scaled Graphs",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of reading picture graphs, creating picture graphs, reading bar graphs, and solving graph problems.",
+          "concept": "Review the four big ideas from this unit: reading scaled picture graphs, creating scaled picture graphs, reading scaled bar graphs, and creating graphs to solve one- and two-step problems.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about scaled picture and bar graphs.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "read_picture_graphs",
+            "create_picture_graphs",
+            "read_bar_graphs",
+            "create_graphs_solve_problems"
+          ],
+          "skills": [
+            "picture_graphs",
+            "bar_graphs",
+            "scaled",
+            "data",
+            "one_step",
+            "two_step"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u25-w1-d5-warmup-1",
+                "prompt": "A picture graph key says each star = 5. If a student has 3 stars, how many?",
+                "correct_answer": "15",
+                "hint": "3 × 5.",
+                "skill": "read_picture_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d5-warmup-2",
+                "prompt": "A bar graph scale counts by 10. A bar reaches 5 spaces. What is the value?",
+                "correct_answer": "50",
+                "hint": "5 × 10.",
+                "skill": "read_bar_graphs"
+              },
+              {
+                "id": "g3-u25-w1-d5-warmup-3",
+                "prompt": "A graph shows 12 cats, 8 dogs, and 10 birds. How many more cats than dogs?",
+                "correct_answer": "4",
+                "hint": "12 - 8.",
+                "skill": "create_graphs_solve_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "read picture graphs + create picture graphs + read bar graphs + solve problems = scaled graphs"
+            },
+            "vocabulary": ["evaluation", "review", "graphs"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A bar graph scale counts by 5. A bar reaches 6 spaces. What is the value?",
+            "correct_answer": "30",
+            "hint": "6 × 5.",
+            "visual_data": {
+              "groups": 1,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 25 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 25 before the evaluation.",
+            "deckId": "lesson-g3-u25-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Scaled Graphs",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: reading scaled picture graphs, creating scaled picture graphs, reading scaled bar graphs, and solving one- and two-step problems with graphs.",
+            "bigQuestion": "What do you know about scaled graphs?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Picture graph",
+                "equation": "key tells value of each symbol",
+                "badge": "Use the key",
+                "description": "Multiply the number of symbols by the key value."
+              },
+              {
+                "eyebrow": "Bar graph",
+                "equation": "scale tells value of each space",
+                "badge": "Read the scale",
+                "description": "Multiply the bar height by the scale value."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

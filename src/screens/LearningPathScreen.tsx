@@ -1,8 +1,8 @@
+import { useEffect, useRef } from "react";
 import PageLayout from "../components/layout/PageLayout";
 import UnitCard from "../components/learning-path/UnitCard";
-import unitOne from "../data/curriculum/grade_3/unit_01_multiplication_division_foundations.json";
+import { getAllCurricula, getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
 import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
-import { getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
 import {
   useStudentProgress,
   type LessonProgress,
@@ -11,11 +11,12 @@ import {
 } from "../contexts/StudentProgressContext";
 
 function getFlashcardDeckIdForLesson(lessonId: string) {
-  const match = lessonId.match(/g\d+-u\d+-w(\d+)-l(\d+)/);
+  const match = lessonId.match(/^g3-u(\d+)-w(\d+)-l(\d+)$/);
   if (match) {
-    const weekNumber = Number.parseInt(match[1], 10);
-    const dayNumber = Number.parseInt(match[2], 10);
-    const deckId = getFlashcardDeckIdFromCurriculum(weekNumber, dayNumber);
+    const unitNumber = Number.parseInt(match[1], 10);
+    const weekNumber = Number.parseInt(match[2], 10);
+    const dayNumber = Number.parseInt(match[3], 10);
+    const deckId = getFlashcardDeckIdFromCurriculum(unitNumber, weekNumber, dayNumber);
     if (deckId) return deckId;
   }
   return `lesson-${lessonId}`;
@@ -55,10 +56,29 @@ function getLessonCompletionPercent(
   return Math.round((items.filter(Boolean).length / items.length) * 100);
 }
 
-function LearningPathScreen() {
-  const { getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress } = useStudentProgress();
+function getUnitCardData(
+  unit: {
+    unit_number: number;
+    unit_title: string;
+    unit_description?: string;
+    weeks: {
+      week_number: number;
+      week_title: string;
+      lessons: {
+        day_number: number;
+        lesson_title: string;
+        lesson_type: "lesson" | "evaluation";
+      }[];
+    }[];
+  },
+  getLessonProgress: (id: string) => LessonProgress,
+  getPracticeRewardState: (id: string) => LessonPracticeRewardState,
+  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
+) {
+  let totalLessons = 0;
+  let completeLessons = 0;
 
-  const weeks = unitOne.weeks.map((week) => {
+  const weeks = unit.weeks.map((week) => {
     const weekIsAvailable = week.week_number === 1;
     let hasFoundCurrentLesson = false;
 
@@ -66,9 +86,13 @@ function LearningPathScreen() {
       weekNumber: week.week_number,
       title: week.week_title,
       status: weekIsAvailable ? ("current" as const) : ("locked" as const),
-      lessons: week.lessons.map((lesson, lessonIndex) => {
-        const weekDayNumber = lessonIndex + 1;
-        const lessonId = `g3-u${unitOne.unit_number}-w${week.week_number}-l${weekDayNumber}`;
+      lessons: week.lessons.map((lesson) => {
+        const weekDayNumber = lesson.day_number;
+        const lessonId =
+          lesson.lesson_type === "evaluation"
+            ? `g3-u${unit.unit_number}-w${week.week_number}-eval`
+            : `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`;
+
         const percentComplete = weekIsAvailable
           ? getLessonCompletionPercent(
               lessonId,
@@ -83,10 +107,13 @@ function LearningPathScreen() {
 
         if (weekIsAvailable && percentComplete >= 100) {
           status = "complete";
+          completeLessons += 1;
         } else if (weekIsAvailable && !hasFoundCurrentLesson) {
           status = "current";
           hasFoundCurrentLesson = true;
         }
+
+        totalLessons += 1;
 
         const progressLabel =
           weekIsAvailable && percentComplete > 0 && percentComplete < 100
@@ -103,31 +130,80 @@ function LearningPathScreen() {
     };
   });
 
+  const progress = totalLessons > 0 ? Math.round((completeLessons / totalLessons) * 100) : 0;
+
+  return {
+    weeks,
+    progress,
+  };
+}
+
+function LearningPathScreen() {
+  const { getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress } =
+    useStudentProgress();
+  const currentUnitRef = useRef<HTMLDivElement | null>(null);
+
+  const units = getAllCurricula().sort((a, b) => a.unit_number - b.unit_number);
+
+  const unitData = units.map((unit) => ({
+    unit,
+    ...getUnitCardData(unit, getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress),
+  }));
+
+  const currentUnitEntry =
+    unitData.find((entry) => entry.progress < 100) ?? unitData[unitData.length - 1];
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      currentUnitRef.current?.scrollIntoView({ behavior: "auto", block: "start" });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [currentUnitEntry?.unit.unit_number]);
+
   return (
     <PageLayout>
-      <div className="mb-6 rounded-[2rem] bg-white p-6 lg:p-8 shadow-sm">
-        <p className="text-sm font-black uppercase tracking-[0.2em] text-[#00AFB9]">Your journey</p>
+      {/* @SECTION LEARNING_PATH_STATIC_HEADER */}
+      <div
+        data-name="learning-path-static-header"
+        className="sticky top-0 z-20 -mx-1 bg-[#FAF9F4] px-1 pb-6"
+      >
+        <div className="rounded-[2rem] bg-white p-6 shadow-sm lg:p-8">
+          <p className="text-sm font-black uppercase tracking-[0.2em] text-[#00AFB9]">
+            Your journey
+          </p>
 
-        <h1 className="mt-3 text-3xl font-black lg:text-4xl">Learning Path</h1>
+          <h1 className="mt-3 text-3xl font-black lg:text-4xl">Learning Path</h1>
 
-        <p className="mt-3 max-w-3xl text-base lg:text-lg font-medium leading-relaxed text-[#073B5A]/70">
-          Follow each pathway one concept at a time. Complete missions, practice new skills, and
-          prove mastery with a review quiz.
-        </p>
+          <p className="mt-3 max-w-3xl text-base font-medium leading-relaxed text-[#073B5A]/70 lg:text-lg">
+            Follow each pathway one concept at a time. Complete missions, practice new skills, and
+            prove mastery with a review quiz.
+          </p>
+        </div>
       </div>
 
-      <div className="space-y-5">
-        <UnitCard
-          unitNumber={unitOne.unit_number}
-          title={unitOne.unit_title}
-          description={unitOne.unit_description}
-          progress={Math.round(
-            (weeks[0].lessons.filter((lesson) => lesson.status === "complete").length /
-              weeks[0].lessons.length) *
-              100,
-          )}
-          weeks={weeks}
-        />
+      {/* @SECTION LEARNING_PATH_UNIT_LIST */}
+      <div data-name="learning-path-unit-list" className="space-y-5">
+        {unitData.map(({ unit, weeks, progress }) => {
+          const isCurrent = unit === currentUnitEntry.unit;
+
+          return (
+            <div
+              key={unit.unit_number}
+              ref={isCurrent ? currentUnitRef : undefined}
+              className={isCurrent ? "scroll-mt-[260px] lg:scroll-mt-[230px]" : ""}
+            >
+              <UnitCard
+                unitNumber={unit.unit_number}
+                title={unit.unit_title}
+                description={unit.unit_description ?? ""}
+                progress={progress}
+                isCurrent={isCurrent}
+                weeks={weeks}
+              />
+            </div>
+          );
+        })}
       </div>
     </PageLayout>
   );

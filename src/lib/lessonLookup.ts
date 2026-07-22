@@ -1,43 +1,66 @@
-import unitOne from "../data/curriculum/grade_3/unit_01_multiplication_division_foundations.json";
-import type { CurriculumLesson } from "./curriculumLoader";
+import { getCurriculum } from "../data/curriculum";
+import type { Curriculum, Lesson, Week } from "../data/curriculum";
+
+const DEFAULT_GRADE = 3;
+
+function getFallbackUnit(): Curriculum {
+  return getCurriculum(DEFAULT_GRADE, 1)!;
+}
 
 export function getLessonById(lessonId?: string) {
+  const fallbackUnit = getFallbackUnit();
+  const fallbackWeek = fallbackUnit.weeks[0];
+  const fallbackLesson = fallbackWeek.lessons[0];
+
   if (!lessonId) {
     return {
-      unit: unitOne,
-      week: unitOne.weeks[0],
-      lesson: unitOne.weeks[0].lessons[0],
+      unit: fallbackUnit,
+      week: fallbackWeek,
+      lesson: fallbackLesson,
       weekDayNumber: 1,
     };
   }
 
-  for (const week of unitOne.weeks) {
-    for (let lessonIndex = 0; lessonIndex < week.lessons.length; lessonIndex += 1) {
-      const lesson = week.lessons[lessonIndex];
-      const weekDayNumber = lessonIndex + 1;
+  // Match formats: g3-u{unit}-w{week}-l{lesson} or g3-u{unit}-w{week}-eval
+  const match = lessonId.match(/^g3-u(\d+)-w(\d+)-(?:l(\d+)|eval)$/);
+  if (!match) {
+    return {
+      unit: fallbackUnit,
+      week: fallbackWeek,
+      lesson: fallbackLesson,
+      weekDayNumber: 1,
+    };
+  }
 
-      // Use lesson_id from curriculum JSON if available, otherwise fall back to generated ID
-      const curriculumLessonId = (lesson as CurriculumLesson).lesson_id;
-      const generatedId = lesson.lesson_type === "evaluation"
-        ? `g3-u${unitOne.unit_number}-w${week.week_number}-eval`
-        : `g3-u${unitOne.unit_number}-w${week.week_number}-l${weekDayNumber}`;
-      const id = curriculumLessonId || generatedId;
+  const unitNumber = Number.parseInt(match[1], 10);
+  const weekNumber = Number.parseInt(match[2], 10);
+  const isEvaluation = !match[3];
+  const dayNumber = isEvaluation ? undefined : Number.parseInt(match[3], 10);
 
-      if (id === lessonId) {
-        return {
-          unit: unitOne,
-          week,
-          lesson,
-          weekDayNumber,
-        };
-      }
+  const unit = getCurriculum(DEFAULT_GRADE, unitNumber) ?? fallbackUnit;
+  const week = unit.weeks.find((w) => w.week_number === weekNumber) ?? fallbackWeek;
+
+  let lesson: Lesson = fallbackLesson;
+  let weekDayNumber = fallbackLesson.day_number;
+
+  if (isEvaluation) {
+    const found = week.lessons.find((l) => l.lesson_type === "evaluation");
+    if (found) {
+      lesson = found;
+      weekDayNumber = found.day_number;
+    }
+  } else if (dayNumber !== undefined) {
+    const found = week.lessons.find((l) => l.day_number === dayNumber);
+    if (found) {
+      lesson = found;
+      weekDayNumber = dayNumber;
     }
   }
 
   return {
-    unit: unitOne,
-    week: unitOne.weeks[0],
-    lesson: unitOne.weeks[0].lessons[0],
-    weekDayNumber: 1,
+    unit,
+    week: week as Week,
+    lesson,
+    weekDayNumber,
   };
 }

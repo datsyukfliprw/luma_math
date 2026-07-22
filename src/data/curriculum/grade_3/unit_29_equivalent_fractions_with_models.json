@@ -1,0 +1,628 @@
+{
+  "grade_level": 3,
+  "unit_number": 29,
+  "unit_title": "Equivalent Fractions With Models",
+  "unit_slug": "equivalent_fractions_with_models",
+  "unit_description": "This unit introduces equivalent fractions using models. Students understand equivalence as the same amount, find equivalent fractions using fraction strips and area models, and generate and explain equivalent fractions.",
+  "unit_goals": [
+    "Understand equivalence as the same amount.",
+    "Find equivalent fractions using fraction strips.",
+    "Find equivalent fractions using area models.",
+    "Generate and explain equivalent fractions.",
+    "Use models to show fractions that name the same amount."
+  ],
+  "fact_focus": ["fractions", "equivalence", "3.NF.A.5"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Equivalent Fractions With Models",
+      "weekly_focus": "Students use fraction strips and area models to understand and generate equivalent fractions.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u29-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Equivalence as the Same Amount",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by shading two different models to show the same amount.",
+          "concept": "Equivalent fractions name the same amount of the same whole. Even though the numerators and denominators are different, the shaded amount is the same.",
+          "practice": "Identify and create models that show equivalent amounts.",
+          "objective": "Understand equivalence as the same amount.",
+          "practice_type": "equivalence_same_amount",
+          "skills": [
+            "fractions",
+            "equivalence",
+            "models",
+            "same_amount"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "equivalence_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by matching equal amounts.",
+            "questions": [
+              {
+                "id": "g3-u29-w1-d1-warmup-1",
+                "prompt": "Are 1/2 and 2/4 the same amount?",
+                "correct_answer": "yes",
+                "hint": "Both show half of the whole.",
+                "skill": "equivalence"
+              },
+              {
+                "id": "g3-u29-w1-d1-warmup-2",
+                "prompt": "Are 1/3 and 2/6 the same amount?",
+                "correct_answer": "yes",
+                "hint": "Both show the same amount of the whole.",
+                "skill": "equivalence"
+              },
+              {
+                "id": "g3-u29-w1-d1-warmup-3",
+                "prompt": "Are 2/3 and 3/4 the same amount?",
+                "correct_answer": "no",
+                "hint": "2/3 is more than 1/2, 3/4 is even more; they are not the same.",
+                "skill": "equivalence"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Equivalence as the Same Amount",
+            "teaching_points": [
+              "Equivalent fractions show the same amount.",
+              "The numerator and denominator are different.",
+              "The whole must be the same size."
+            ],
+            "example": {
+              "prompt": "Show that 1/2 is the same amount as 2/4.",
+              "visual_type": "area_model",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "1/2 = 2/4"
+            },
+            "vocabulary": ["equivalent", "same amount", "fractions", "whole"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "equivalence_same_amount",
+            "prompt": "Are 2/4 and 4/8 the same amount?",
+            "correct_answer": "yes",
+            "hint": "Both are half of the whole.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "equivalence_same_amount",
+            "question_count": 6,
+            "instructions": "Tell whether each pair of fractions shows the same amount."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Equivalent Fractions",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review equivalent fractions vocabulary.",
+            "deckId": "lesson-g3-u29-w1-d1-equivalent-fractions"
+          },
+          "bigIdea": {
+            "title": "Equivalence as the Same Amount",
+            "subtitle": "Different names for the same amount",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Equivalent fractions are different ways to name the same amount. The number of parts and the size of each part change, but the total shaded amount stays the same.",
+            "bigQuestion": "Why do equivalent fractions have different numerators and denominators?",
+            "starTip": {
+              "title": "Same shaded amount",
+              "lines": ["More parts", "Smaller pieces"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same amount",
+                "equation": "1/2 = 2/4",
+                "badge": "Equivalent",
+                "description": "Both fractions name the same amount of the whole."
+              },
+              {
+                "eyebrow": "Same whole",
+                "equation": "wholes must be the same size",
+                "badge": "Important",
+                "description": "Equivalent fractions only compare the same whole."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u29-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Find Equivalent Fractions Using Fraction Strips",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by lining up fraction strips of the same length.",
+          "concept": "Fraction strips of the same length can be compared. When two strips show the same amount, the fractions are equivalent.",
+          "practice": "Use fraction strips to find equivalent fractions.",
+          "objective": "Find equivalent fractions using fraction strips.",
+          "practice_type": "fraction_strips_equivalence",
+          "skills": [
+            "fractions",
+            "fraction_strips",
+            "equivalence",
+            "models"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "fraction_strip_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with fraction strips.",
+            "questions": [
+              {
+                "id": "g3-u29-w1-d2-warmup-1",
+                "prompt": "A 1/2 strip lines up with two 1/4 strips. What is equivalent to 1/2?",
+                "correct_answer": "2/4",
+                "hint": "Two 1/4 strips cover the same length as one 1/2 strip.",
+                "skill": "fraction_strips_equivalence"
+              },
+              {
+                "id": "g3-u29-w1-d2-warmup-2",
+                "prompt": "A 1/3 strip lines up with two 1/6 strips. What is equivalent to 1/3?",
+                "correct_answer": "2/6",
+                "hint": "Two 1/6 strips cover the same length as one 1/3 strip.",
+                "skill": "fraction_strips_equivalence"
+              },
+              {
+                "id": "g3-u29-w1-d2-warmup-3",
+                "prompt": "A 3/4 strip lines up with six 1/8 strips. What is equivalent to 3/4?",
+                "correct_answer": "6/8",
+                "hint": "Six 1/8 strips cover the same length as three 1/4 strips.",
+                "skill": "fraction_strips_equivalence"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Equivalent Fractions Using Fraction Strips",
+            "teaching_points": [
+              "Line up fraction strips of the same whole length.",
+              "Find which smaller strips cover the same amount.",
+              "Write the equivalent fractions."
+            ],
+            "example": {
+              "prompt": "Use fraction strips to find a fraction equivalent to 1/2.",
+              "visual_type": "fraction_strip",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "1/2 = 2/4 = 3/6 = 4/8"
+            },
+            "vocabulary": ["fraction strip", "line up", "equivalent"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "fraction_strips_equivalence",
+            "prompt": "Use fraction strips to find a fraction equivalent to 2/3.",
+            "correct_answer": "4/6",
+            "hint": "2/3 lines up with four 1/6 strips.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "fraction_strips_equivalence",
+            "question_count": 6,
+            "instructions": "Use fraction strips to find an equivalent fraction for each given fraction."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Fraction Strips",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review fraction strips and equivalence.",
+            "deckId": "lesson-g3-u29-w1-d2-fraction-strips"
+          },
+          "bigIdea": {
+            "title": "Find Equivalent Fractions Using Fraction Strips",
+            "subtitle": "Line up strips that cover the same amount",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Fraction strips let you see that different fractions can cover the same length. When two strips match, they are equivalent fractions.",
+            "bigQuestion": "How do fraction strips show that fractions are equivalent?",
+            "starTip": {
+              "title": "Match the length",
+              "lines": ["Same whole", "Same shaded length"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same whole",
+                "equation": "strips start and end together",
+                "badge": "Match",
+                "description": "The strips must be the same total length."
+              },
+              {
+                "eyebrow": "Equivalent",
+                "equation": "1/2 = 2/4",
+                "badge": "Same length",
+                "description": "The shaded parts cover the same distance."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u29-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Find Equivalent Fractions Using Area Models",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by shading the same area using different numbers of parts.",
+          "concept": "An area model can be split in different ways to show equivalent fractions. The same shaded area can be called 1/2, 2/4, or 3/6.",
+          "practice": "Use area models to find and show equivalent fractions.",
+          "objective": "Find equivalent fractions using area models.",
+          "practice_type": "area_models_equivalence",
+          "skills": [
+            "fractions",
+            "area_models",
+            "equivalence",
+            "shading"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "area_model_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with area models.",
+            "questions": [
+              {
+                "id": "g3-u29-w1-d3-warmup-1",
+                "prompt": "A circle is shaded in 2 of 4 parts. What is an equivalent fraction?",
+                "correct_answer": "1/2",
+                "hint": "Half the circle is shaded.",
+                "skill": "area_models_equivalence"
+              },
+              {
+                "id": "g3-u29-w1-d3-warmup-2",
+                "prompt": "A rectangle is shaded in 4 of 8 parts. What is an equivalent fraction?",
+                "correct_answer": "1/2",
+                "hint": "4/8 is the same as 1/2.",
+                "skill": "area_models_equivalence"
+              },
+              {
+                "id": "g3-u29-w1-d3-warmup-3",
+                "prompt": "A square is shaded in 3 of 6 parts. What is an equivalent fraction?",
+                "correct_answer": "1/2",
+                "hint": "3/6 equals 1/2.",
+                "skill": "area_models_equivalence"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Equivalent Fractions Using Area Models",
+            "teaching_points": [
+              "Shade the same area of the whole.",
+              "Split the whole into more or fewer parts.",
+              "The fraction name changes, but the shaded amount stays the same."
+            ],
+            "example": {
+              "prompt": "Show that 1/2 = 3/6 using an area model.",
+              "visual_type": "area_model",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "same shaded area, different number of equal parts"
+            },
+            "vocabulary": ["area model", "shaded", "equivalent", "same area"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "area_models_equivalence",
+            "prompt": "Show that 2/3 = 4/6 using an area model.",
+            "correct_answer": "4/6",
+            "hint": "Shade the same area using 6 equal parts.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "area_models_equivalence",
+            "question_count": 6,
+            "instructions": "Draw an area model to show an equivalent fraction for each given fraction."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Area Models and Equivalence",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review area models and equivalent fractions.",
+            "deckId": "lesson-g3-u29-w1-d3-area-models"
+          },
+          "bigIdea": {
+            "title": "Find Equivalent Fractions Using Area Models",
+            "subtitle": "Same shaded area, different parts",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Area models help you see that the same shaded amount can be described with different fractions. When you split each part into smaller equal pieces, the total shaded area does not change.",
+            "bigQuestion": "How does the shaded area stay the same when the number of parts changes?",
+            "starTip": {
+              "title": "Split each part",
+              "lines": ["More parts", "Same total shaded"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Split each part",
+                "equation": "1/2 = 2/4",
+                "badge": "More parts",
+                "description": "Split each half into two fourths. Same shaded area."
+              },
+              {
+                "eyebrow": "Same area",
+                "equation": "shaded does not change",
+                "badge": "Equivalence",
+                "description": "The total shaded amount is the same."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u29-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Generate and Explain Equivalent Fractions",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by multiplying the numerator and denominator of a fraction by 2.",
+          "concept": "You can generate equivalent fractions by splitting each part into more equal parts. Multiply the numerator and denominator by the same number to find an equivalent fraction.",
+          "practice": "Generate equivalent fractions and explain why they are the same.",
+          "objective": "Generate and explain equivalent fractions.",
+          "practice_type": "generate_explain_equivalent",
+          "skills": [
+            "fractions",
+            "equivalence",
+            "generate",
+            "explain",
+            "multiplication"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "generate_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by generating equivalents.",
+            "questions": [
+              {
+                "id": "g3-u29-w1-d4-warmup-1",
+                "prompt": "Multiply the numerator and denominator of 1/2 by 2. What is the equivalent fraction?",
+                "correct_answer": "2/4",
+                "hint": "1×2 = 2, 2×2 = 4.",
+                "skill": "generate_explain_equivalent"
+              },
+              {
+                "id": "g3-u29-w1-d4-warmup-2",
+                "prompt": "What fraction is equivalent to 1/3 when you split each third into 2 parts?",
+                "correct_answer": "2/6",
+                "hint": "1×2 = 2, 3×2 = 6.",
+                "skill": "generate_explain_equivalent"
+              },
+              {
+                "id": "g3-u29-w1-d4-warmup-3",
+                "prompt": "Multiply 2/3 by 3/3. What is the equivalent fraction?",
+                "correct_answer": "6/9",
+                "hint": "2×3 = 6, 3×3 = 9.",
+                "skill": "generate_explain_equivalent"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Generate and Explain Equivalent Fractions",
+            "teaching_points": [
+              "Split each part into the same number of smaller parts.",
+              "Multiply the numerator and denominator by the same number.",
+              "The new fraction names the same amount."
+            ],
+            "example": {
+              "prompt": "Generate an equivalent fraction for 2/5.",
+              "visual_type": "area_model",
+              "groups": 5,
+              "items_per_group": 1,
+              "equation": "2/5 = 4/10 by splitting each fifth into two tenths"
+            },
+            "vocabulary": ["generate", "equivalent", "multiply", "numerator", "denominator"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "generate_explain_equivalent",
+            "prompt": "Generate an equivalent fraction for 3/4 by splitting each fourth into 2 parts.",
+            "correct_answer": "6/8",
+            "hint": "3×2 = 6, 4×2 = 8.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "generate_explain_equivalent",
+            "question_count": 6,
+            "instructions": "Generate an equivalent fraction for each given fraction and explain why it is equivalent."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Generate Equivalent Fractions",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review generating equivalent fractions.",
+            "deckId": "lesson-g3-u29-w1-d4-generate-equivalent"
+          },
+          "bigIdea": {
+            "title": "Generate and Explain Equivalent Fractions",
+            "subtitle": "Multiply numerator and denominator by the same number",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "To make an equivalent fraction, split each part of the whole into more equal pieces. Multiply the numerator and denominator by the same number. The amount stays the same.",
+            "bigQuestion": "Why does multiplying the numerator and denominator by the same number keep the amount the same?",
+            "starTip": {
+              "title": "Same multiplication",
+              "lines": ["Top × 2", "Bottom × 2"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Split each part",
+                "equation": "2/5 = 4/10",
+                "badge": "×2",
+                "description": "Split each fifth into 2 tenths; numerator and denominator both ×2."
+              },
+              {
+                "eyebrow": "Same amount",
+                "equation": "more smaller parts",
+                "badge": "Equivalent",
+                "description": "The total shaded area does not change."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u29-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Equivalent Fraction Models",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of equivalence as same amount, fraction strips, area models, and generating equivalent fractions.",
+          "concept": "Review the four big ideas from this unit: equivalence as the same amount, fraction strips, area models, and generating and explaining equivalent fractions.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about equivalent fractions with models.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "equivalence_same_amount",
+            "fraction_strips_equivalence",
+            "area_models_equivalence",
+            "generate_explain_equivalent"
+          ],
+          "skills": [
+            "fractions",
+            "equivalence",
+            "fraction_strips",
+            "area_models",
+            "generate"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u29-w1-d5-warmup-1",
+                "prompt": "Are 1/2 and 3/6 the same amount?",
+                "correct_answer": "yes",
+                "hint": "Both are half.",
+                "skill": "equivalence_same_amount"
+              },
+              {
+                "id": "g3-u29-w1-d5-warmup-2",
+                "prompt": "Use fraction strips: 1/3 = ?/6.",
+                "correct_answer": "2/6",
+                "hint": "One 1/3 strip lines up with two 1/6 strips.",
+                "skill": "fraction_strips_equivalence"
+              },
+              {
+                "id": "g3-u29-w1-d5-warmup-3",
+                "prompt": "Generate an equivalent fraction for 2/5 by multiplying by 2/2.",
+                "correct_answer": "4/10",
+                "hint": "2×2=4, 5×2=10.",
+                "skill": "generate_explain_equivalent"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "same amount + fraction strips + area models + generate = equivalent fraction models"
+            },
+            "vocabulary": ["evaluation", "review", "equivalent fractions"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A rectangle shaded 3/4 is split into 8 equal parts. How many parts are shaded?",
+            "correct_answer": "6",
+            "hint": "3/4 = 6/8.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 29 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 29 before the evaluation.",
+            "deckId": "lesson-g3-u29-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Equivalent Fraction Models",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: equivalence as the same amount, fraction strips, area models, and generating and explaining equivalent fractions.",
+            "bigQuestion": "What do you know about equivalent fractions with models?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Equivalent fractions",
+                "equation": "same amount",
+                "badge": "Same whole",
+                "description": "Equivalent fractions name the same amount of the same whole."
+              },
+              {
+                "eyebrow": "Generate",
+                "equation": "multiply top and bottom by same number",
+                "badge": "× n/n",
+                "description": "You can generate equivalent fractions by splitting each part into smaller equal parts."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

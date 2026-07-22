@@ -1,0 +1,628 @@
+{
+  "grade_level": 3,
+  "unit_number": 22,
+  "unit_title": "Area Arrangements and Decomposition",
+  "unit_slug": "area_arrangements_and_decomposition",
+  "unit_description": "This unit explores how the same area can be arranged in different ways. Students create rectangles with a given area, find different arrangements, find missing side lengths, and decompose rectangles using the distributive property.",
+  "unit_goals": [
+    "Create rectangles with a given area.",
+    "Find different arrangements for the same area.",
+    "Find a missing side length given area and one side.",
+    "Decompose rectangles using the distributive property.",
+    "Apply flexible area strategies."
+  ],
+  "fact_focus": ["area", "distributive", "3.GM.C.13", "3.GM.C.14"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Area Arrangements and Decomposition",
+      "weekly_focus": "Students create rectangles with a given area, explore multiple arrangements, find missing sides, and decompose rectangles with the distributive property.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u22-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Create Rectangles with a Given Area",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by listing factor pairs for a given number.",
+          "concept": "A rectangle with a given area can have different lengths and widths. The factor pairs of the area give the possible side lengths.",
+          "practice": "Create rectangles with a given area by finding factor pairs.",
+          "objective": "Create rectangles with a given area.",
+          "practice_type": "create_rectangles_area",
+          "skills": [
+            "area",
+            "factor_pairs",
+            "rectangles",
+            "multiplication"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "factor_pairs_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with factor pairs.",
+            "questions": [
+              {
+                "id": "g3-u22-w1-d1-warmup-1",
+                "prompt": "What are the factor pairs for 12?",
+                "correct_answer": "1 and 12, 2 and 6, 3 and 4",
+                "hint": "1×12, 2×6, 3×4.",
+                "skill": "factor_pairs"
+              },
+              {
+                "id": "g3-u22-w1-d1-warmup-2",
+                "prompt": "A rectangle has area 18 square units. What could the length and width be?",
+                "correct_answer": "2 and 9 or 3 and 6 or 1 and 18",
+                "hint": "Factor pairs of 18.",
+                "skill": "create_rectangles_area"
+              },
+              {
+                "id": "g3-u22-w1-d1-warmup-3",
+                "prompt": "List the factor pairs for 24.",
+                "correct_answer": "1 and 24, 2 and 12, 3 and 8, 4 and 6",
+                "hint": "1×24, 2×12, 3×8, 4×6.",
+                "skill": "factor_pairs"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Create Rectangles with a Given Area",
+            "teaching_points": [
+              "List the factor pairs of the area.",
+              "Each factor pair is a possible length and width.",
+              "Draw the rectangle for each pair."
+            ],
+            "example": {
+              "prompt": "Create rectangles with area 20 square units.",
+              "visual_type": "grid",
+              "groups": 4,
+              "items_per_group": 5,
+              "equation": "1 × 20, 2 × 10, 4 × 5"
+            },
+            "vocabulary": ["factor pair", "area", "length", "width", "rectangle"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "create_rectangles_area",
+            "prompt": "Create a rectangle with area 16 square units. What could the length and width be?",
+            "correct_answer": "4 and 4 or 2 and 8 or 1 and 16",
+            "hint": "Factor pairs of 16.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 4
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "create_rectangles_area",
+            "question_count": 6,
+            "instructions": "Find all possible rectangles with the given area."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Factor Pairs and Area",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review factor pairs and area.",
+            "deckId": "lesson-g3-u22-w1-d1-factor-pairs"
+          },
+          "bigIdea": {
+            "title": "Create Rectangles with a Given Area",
+            "subtitle": "Use factor pairs",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "If you know the area, you can find all the possible rectangles by listing the factor pairs. Each factor pair becomes a length and width.",
+            "bigQuestion": "How are factor pairs related to rectangles with a given area?",
+            "starTip": {
+              "title": "List factor pairs",
+              "lines": ["Area = length × width", "Find all pairs"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Factor pairs",
+                "equation": "20 = 1 × 20, 2 × 10, 4 × 5",
+                "badge": "Possible sides",
+                "description": "Each factor pair gives a length and width."
+              },
+              {
+                "eyebrow": "Same area",
+                "equation": "Different side lengths",
+                "badge": "Different shapes",
+                "description": "The same area can make different-looking rectangles."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u22-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Find Different Arrangements for the Same Area",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by drawing two different rectangles with the same area.",
+          "concept": "Different rectangles can have the same area. Changing the length and width changes the shape, but the total number of square units stays the same.",
+          "practice": "Draw and compare different arrangements with the same area.",
+          "objective": "Find different arrangements for the same area.",
+          "practice_type": "different_arrangements_same_area",
+          "skills": [
+            "area",
+            "arrangements",
+            "factor_pairs",
+            "rectangles"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "arrangements_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with same-area rectangles.",
+            "questions": [
+              {
+                "id": "g3-u22-w1-d2-warmup-1",
+                "prompt": "Draw a 2 by 6 rectangle and a 3 by 4 rectangle. What is the area of each?",
+                "correct_answer": "12 square units",
+                "hint": "Both have area 12.",
+                "skill": "different_arrangements_same_area"
+              },
+              {
+                "id": "g3-u22-w1-d2-warmup-2",
+                "prompt": "Can a 1 by 18 and a 3 by 6 rectangle have the same area?",
+                "correct_answer": "yes",
+                "hint": "Both equal 18 square units.",
+                "skill": "different_arrangements_same_area"
+              },
+              {
+                "id": "g3-u22-w1-d2-warmup-3",
+                "prompt": "Name two different rectangles with area 24 square units.",
+                "correct_answer": "3 by 8 and 4 by 6",
+                "hint": "3 × 8 = 24 and 4 × 6 = 24.",
+                "skill": "different_arrangements_same_area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Different Arrangements for the Same Area",
+            "teaching_points": [
+              "Use factor pairs to find arrangements.",
+              "Different side lengths can give the same area.",
+              "Draw each arrangement to compare."
+            ],
+            "example": {
+              "prompt": "Find different rectangles with area 18 square units.",
+              "visual_type": "grid",
+              "groups": 3,
+              "items_per_group": 6,
+              "equation": "1 × 18, 2 × 9, 3 × 6"
+            },
+            "vocabulary": ["arrangement", "factor pair", "same area", "different shape"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "different_arrangements_same_area",
+            "prompt": "Find two different rectangles with area 20 square units.",
+            "correct_answer": "4 by 5 and 2 by 10",
+            "hint": "Factor pairs of 20.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "different_arrangements_same_area",
+            "question_count": 6,
+            "instructions": "Draw all possible arrangements for each given area."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Same Area, Different Shapes",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review same area with different arrangements.",
+            "deckId": "lesson-g3-u22-w1-d2-same-area"
+          },
+          "bigIdea": {
+            "title": "Find Different Arrangements for the Same Area",
+            "subtitle": "Same area, different rectangles",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "The same area can be arranged in different ways. A long, skinny rectangle can have the same area as a short, wide one.",
+            "bigQuestion": "Can two different rectangles have the same area?",
+            "starTip": {
+              "title": "Change the factors",
+              "lines": ["Same product", "Different sides"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same area",
+                "equation": "12 square units",
+                "badge": "Many rectangles",
+                "description": "Factor pairs of 12 give different rectangles."
+              },
+              {
+                "eyebrow": "Different shape",
+                "equation": "2 × 6 vs 3 × 4",
+                "badge": "Same product",
+                "description": "Different side lengths can have the same area."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u22-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Find a Missing Side Length",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by dividing area by one side length.",
+          "concept": "If you know the area of a rectangle and one side length, you can find the missing side by dividing. Missing side = area ÷ known side.",
+          "practice": "Find the missing side length of rectangles given area and one side.",
+          "objective": "Find a missing side length given area and one side.",
+          "practice_type": "missing_side_length",
+          "skills": [
+            "area",
+            "division",
+            "missing_side",
+            "rectangles"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "missing_side_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with missing sides.",
+            "questions": [
+              {
+                "id": "g3-u22-w1-d3-warmup-1",
+                "prompt": "Area is 28. One side is 4. What is the other side?",
+                "correct_answer": "7",
+                "hint": "28 ÷ 4.",
+                "skill": "missing_side_length"
+              },
+              {
+                "id": "g3-u22-w1-d3-warmup-2",
+                "prompt": "Area is 45. One side is 9. What is the other side?",
+                "correct_answer": "5",
+                "hint": "45 ÷ 9.",
+                "skill": "missing_side_length"
+              },
+              {
+                "id": "g3-u22-w1-d3-warmup-3",
+                "prompt": "Area is 36. One side is 6. What is the other side?",
+                "correct_answer": "6",
+                "hint": "36 ÷ 6.",
+                "skill": "missing_side_length"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find a Missing Side Length",
+            "teaching_points": [
+              "Use area = length × width.",
+              "Divide the area by the known side.",
+              "Check by multiplying the sides."
+            ],
+            "example": {
+              "prompt": "A rectangle has area 32 square units and width 4. Find the length.",
+              "visual_type": "grid",
+              "groups": 8,
+              "items_per_group": 4,
+              "equation": "32 ÷ 4 = 8, so length is 8 units"
+            },
+            "vocabulary": ["missing side", "area", "length", "width", "division"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "missing_side_length",
+            "prompt": "A rectangle has area 42 square units and length 7. What is the width?",
+            "correct_answer": "6",
+            "hint": "42 ÷ 7.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "missing_side_length",
+            "question_count": 6,
+            "instructions": "Find the missing side length for each rectangle."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Missing Side Lengths",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review finding missing side lengths.",
+            "deckId": "lesson-g3-u22-w1-d3-missing-side"
+          },
+          "bigIdea": {
+            "title": "Find a Missing Side Length",
+            "subtitle": "Divide area by known side",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "If you know the area and one side of a rectangle, you can find the other side by dividing. This works because area = length × width.",
+            "bigQuestion": "Why does area ÷ one side give the other side?",
+            "starTip": {
+              "title": "Inverse thinking",
+              "lines": ["Area ÷ length", "= width"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Known",
+                "equation": "Area = 32, width = 4",
+                "badge": "Two knowns",
+                "description": "You know the area and one side."
+              },
+              {
+                "eyebrow": "Find missing",
+                "equation": "32 ÷ 4 = 8",
+                "badge": "Length = 8",
+                "description": "Divide the area by the known side."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u22-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Decompose Rectangles Using the Distributive Property",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by breaking a rectangle into two smaller rectangles and finding each area.",
+          "concept": "A large rectangle can be split into two smaller rectangles. The total area is the sum of the two smaller areas. This is the distributive property: 8 × 6 = (8 × 3) + (8 × 3) = 48.",
+          "practice": "Decompose rectangles and use the distributive property to find area.",
+          "objective": "Decompose rectangles using the distributive property.",
+          "practice_type": "distributive_property_area",
+          "skills": [
+            "area",
+            "distributive_property",
+            "decompose",
+            "rectangles"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "distributive_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by decomposing areas.",
+            "questions": [
+              {
+                "id": "g3-u22-w1-d4-warmup-1",
+                "prompt": "Split 6 × 7 into 6 × (3 + 4). What is 6 × 3 + 6 × 4?",
+                "correct_answer": "42",
+                "hint": "18 + 24 = 42.",
+                "skill": "distributive_property_area"
+              },
+              {
+                "id": "g3-u22-w1-d4-warmup-2",
+                "prompt": "A rectangle 8 by 5 is split into 8 by 2 and 8 by 3. What is the total area?",
+                "correct_answer": "40",
+                "hint": "16 + 24 = 40.",
+                "skill": "distributive_property_area"
+              },
+              {
+                "id": "g3-u22-w1-d4-warmup-3",
+                "prompt": "Split 9 × 4 into (5 + 4) × 4. What is 5 × 4 + 4 × 4?",
+                "correct_answer": "36",
+                "hint": "20 + 16 = 36.",
+                "skill": "distributive_property_area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Decompose Rectangles Using the Distributive Property",
+            "teaching_points": [
+              "Split the length or width into two parts.",
+              "Find the area of each smaller rectangle.",
+              "Add the two areas together."
+            ],
+            "example": {
+              "prompt": "Find the area of a 7 by 6 rectangle by splitting 6 into 4 + 2.",
+              "visual_type": "grid",
+              "groups": 7,
+              "items_per_group": 6,
+              "equation": "7 × 6 = 7 × (4 + 2) = (7 × 4) + (7 × 2) = 28 + 14 = 42"
+            },
+            "vocabulary": ["decompose", "distributive property", "split", "sum"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "distributive_property_area",
+            "prompt": "Find the area of an 8 by 7 rectangle by splitting 7 into 5 + 2.",
+            "correct_answer": "56",
+            "hint": "8 × 5 = 40, 8 × 2 = 16, 40 + 16 = 56.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "distributive_property_area",
+            "question_count": 6,
+            "instructions": "Decompose each rectangle and use the distributive property to find the area."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Distributive Property and Area",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review decomposing rectangles with the distributive property.",
+            "deckId": "lesson-g3-u22-w1-d4-distributive-area"
+          },
+          "bigIdea": {
+            "title": "Decompose Rectangles Using the Distributive Property",
+            "subtitle": "Split and add the areas",
+            "thumbnail": "/images/learn/thumbnails/area.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "You can break a rectangle into two smaller rectangles, find each area, and add them. This is the distributive property with area.",
+            "bigQuestion": "How is decomposing a rectangle like using the distributive property?",
+            "starTip": {
+              "title": "Split a side",
+              "lines": ["Find each part", "Add the areas"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Split",
+                "equation": "8 × 7 = 8 × (5 + 2)",
+                "badge": "Break apart",
+                "description": "Split one side into two parts."
+              },
+              {
+                "eyebrow": "Add areas",
+                "equation": "(8 × 5) + (8 × 2) = 40 + 16 = 56",
+                "badge": "Total area",
+                "description": "Add the areas of the smaller rectangles."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u22-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Area Strategies",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of creating rectangles with a given area, different arrangements, missing side lengths, and decomposition with the distributive property.",
+          "concept": "Review the four big ideas from this unit: creating rectangles with a given area, finding different arrangements, finding missing side lengths, and decomposing rectangles with the distributive property.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about area strategies.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "create_rectangles_area",
+            "different_arrangements_same_area",
+            "missing_side_length",
+            "distributive_property_area"
+          ],
+          "skills": [
+            "area",
+            "factor_pairs",
+            "missing_side",
+            "distributive_property",
+            "rectangles",
+            "geometry"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u22-w1-d5-warmup-1",
+                "prompt": "List the factor pairs for 30.",
+                "correct_answer": "1 and 30, 2 and 15, 3 and 10, 5 and 6",
+                "hint": "1×30, 2×15, 3×10, 5×6.",
+                "skill": "factor_pairs"
+              },
+              {
+                "id": "g3-u22-w1-d5-warmup-2",
+                "prompt": "A rectangle has area 48 and one side is 6. What is the other side?",
+                "correct_answer": "8",
+                "hint": "48 ÷ 6.",
+                "skill": "missing_side_length"
+              },
+              {
+                "id": "g3-u22-w1-d5-warmup-3",
+                "prompt": "Find 7 × 8 by splitting 8 into 5 + 3.",
+                "correct_answer": "56",
+                "hint": "7×5 = 35, 7×3 = 21, 35+21 = 56.",
+                "skill": "distributive_property_area"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "create rectangles + arrangements + missing side + decomposition = area strategies"
+            },
+            "vocabulary": ["evaluation", "review", "area"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "What are two different rectangles with area 24 square units?",
+            "correct_answer": "4 by 6 and 3 by 8",
+            "hint": "Factor pairs of 24.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 22 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 22 before the evaluation.",
+            "deckId": "lesson-g3-u22-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Area Strategies",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: creating rectangles with a given area, finding different arrangements, finding missing side lengths, and decomposing rectangles with the distributive property.",
+            "bigQuestion": "What do you know about area strategies?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Factor pairs",
+                "equation": "Area = length × width",
+                "badge": "Find sides",
+                "description": "Use factor pairs to find possible side lengths for a given area."
+              },
+              {
+                "eyebrow": "Distributive property",
+                "equation": "Area = a × (b + c)",
+                "badge": "Decompose",
+                "description": "Split a rectangle and add the smaller areas."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,628 @@
+{
+  "grade_level": 3,
+  "unit_number": 12,
+  "unit_title": "Multiplying by 3 and 4",
+  "unit_slug": "multiplying_by_3_and_4",
+  "unit_description": "This unit develops fluency for the 3 and 4 multiplication facts. Students multiply by 3, use doubles for multiplying by 4, and apply the commutative and associative properties to group factors.",
+  "unit_goals": [
+    "Multiply by 3 using skip counting and strategies.",
+    "Multiply by 4 using doubles.",
+    "Use the commutative property to switch factor order.",
+    "Use grouping and the associative property to multiply three factors.",
+    "Build fluency with facts for 3 and 4."
+  ],
+  "fact_focus": ["multiplication", "3.RA.B.6", "3.RA.C.7"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Multiplying by 3 and 4",
+      "weekly_focus": "Students develop strategies for the 3 and 4 facts, including skip counting, doubles, and the commutative and associative properties.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u12-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Multiply by 3",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting by threes to 36.",
+          "concept": "To multiply by 3, count by threes or double the number and add one more group. 4 × 3 is 4 + 4 + 4 = 12, or 4 × 2 + 4 = 12.",
+          "practice": "Multiply numbers by 3 using skip counting and the double-plus-one strategy.",
+          "objective": "Multiply by 3 using strategies.",
+          "practice_type": "multiply_by_3",
+          "skills": [
+            "multiplication",
+            "multiply_by_3",
+            "skip_counting",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "skip_counting_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting by threes.",
+            "questions": [
+              {
+                "id": "g3-u12-w1-d1-warmup-1",
+                "prompt": "3, 6, 9, 12, __",
+                "correct_answer": "15",
+                "hint": "Add 3.",
+                "skill": "skip_counting"
+              },
+              {
+                "id": "g3-u12-w1-d1-warmup-2",
+                "prompt": "5 × 3 = ?",
+                "correct_answer": "15",
+                "hint": "3, 6, 9, 12, 15.",
+                "skill": "multiply_by_3"
+              },
+              {
+                "id": "g3-u12-w1-d1-warmup-3",
+                "prompt": "7 × 3 = ?",
+                "correct_answer": "21",
+                "hint": "7 × 2 = 14, plus 7 more.",
+                "skill": "multiply_by_3"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply by 3",
+            "teaching_points": [
+              "Count by threes to find the product.",
+              "Or use double plus one more group.",
+              "Practice makes the facts faster."
+            ],
+            "example": {
+              "prompt": "What is 6 × 3?",
+              "visual_type": "groups",
+              "groups": 6,
+              "items_per_group": 3,
+              "equation": "6 × 2 = 12, plus 6 = 18, so 6 × 3 = 18"
+            },
+            "vocabulary": ["multiply by 3", "skip count", "double plus one", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_3",
+            "prompt": "What is 8 × 3?",
+            "correct_answer": "24",
+            "hint": "8 × 2 = 16, plus 8 = 24.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 3
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_3",
+            "question_count": 6,
+            "instructions": "Use a strategy to multiply each number by 3."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 3 Facts",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review strategies for multiplying by 3.",
+            "deckId": "lesson-g3-u12-w1-d1-times-3"
+          },
+          "bigIdea": {
+            "title": "Multiply by 3",
+            "subtitle": "Use skip counting or double plus one",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Multiplying by 3 can be done by counting by threes or by doubling the number and adding one more group.",
+            "bigQuestion": "How is multiplying by 3 related to multiplying by 2?",
+            "starTip": {
+              "title": "Double plus one",
+              "lines": ["3 × n", "= 2 × n + n"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Skip count",
+                "equation": "3, 6, 9, 12, 15",
+                "badge": "Count by 3s",
+                "description": "Count by threes to find the product."
+              },
+              {
+                "eyebrow": "Double plus one",
+                "equation": "6 × 3 = 6 × 2 + 6 = 18",
+                "badge": "Use what you know",
+                "description": "Double the number, then add the number one more time."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u12-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Multiply by 4 Using Doubles",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with doubles of 3, 4, 5, and 6.",
+          "concept": "Multiplying by 4 is the same as doubling twice. 4 × 3 is double 3 = 6, then double 6 = 12.",
+          "practice": "Multiply numbers by 4 by doubling twice.",
+          "objective": "Multiply by 4 using doubles.",
+          "practice_type": "multiply_by_4",
+          "skills": [
+            "multiplication",
+            "multiply_by_4",
+            "doubles",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "doubles_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by doubling twice.",
+            "questions": [
+              {
+                "id": "g3-u12-w1-d2-warmup-1",
+                "prompt": "Double 5, then double it again.",
+                "correct_answer": "20",
+                "hint": "5 × 2 = 10, 10 × 2 = 20.",
+                "skill": "multiply_by_4"
+              },
+              {
+                "id": "g3-u12-w1-d2-warmup-2",
+                "prompt": "6 × 4 = ?",
+                "correct_answer": "24",
+                "hint": "Double 6 = 12, double 12 = 24.",
+                "skill": "multiply_by_4"
+              },
+              {
+                "id": "g3-u12-w1-d2-warmup-3",
+                "prompt": "4 × 7 = ?",
+                "correct_answer": "28",
+                "hint": "Double 7 = 14, double 14 = 28.",
+                "skill": "multiply_by_4"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply by 4 Using Doubles",
+            "teaching_points": [
+              "4 × a number means double the number twice.",
+              "First find 2 × the number, then double again.",
+              "This works for any number."
+            ],
+            "example": {
+              "prompt": "What is 7 × 4?",
+              "visual_type": "groups",
+              "groups": 4,
+              "items_per_group": 7,
+              "equation": "7 × 2 = 14, 14 × 2 = 28, so 7 × 4 = 28"
+            },
+            "vocabulary": ["double twice", "multiply by 4", "doubles", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_4",
+            "prompt": "What is 9 × 4?",
+            "correct_answer": "36",
+            "hint": "9 × 2 = 18, double 18 = 36.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_4",
+            "question_count": 6,
+            "instructions": "Use double twice to multiply each number by 4."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 4 Facts",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review multiplying by 4 using doubles.",
+            "deckId": "lesson-g3-u12-w1-d2-times-4"
+          },
+          "bigIdea": {
+            "title": "Multiply by 4 Using Doubles",
+            "subtitle": "Double, then double again",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Multiplying by 4 is the same as doubling twice. If you can double a number, you can multiply by 4.",
+            "bigQuestion": "Why does doubling twice give ×4?",
+            "starTip": {
+              "title": "Double twice",
+              "lines": ["×2", "then ×2 again"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "First double",
+                "equation": "7 × 2 = 14",
+                "badge": "×2",
+                "description": "Find twice the number."
+              },
+              {
+                "eyebrow": "Double again",
+                "equation": "14 × 2 = 28",
+                "badge": "×4",
+                "description": "Double the result to multiply by 4."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u12-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Use the Commutative Property",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing the turn-around fact for given multiplication equations.",
+          "concept": "The commutative property of multiplication says a × b = b × a. Use the easier fact to solve. If 4 × 6 is hard, think 6 × 4.",
+          "practice": "Use the commutative property to find products more easily.",
+          "objective": "Use the commutative property of multiplication.",
+          "practice_type": "commutative_multiplication",
+          "skills": [
+            "multiplication",
+            "commutative_property",
+            "facts",
+            "fluency"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "commutative_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with turn-around facts.",
+            "questions": [
+              {
+                "id": "g3-u12-w1-d3-warmup-1",
+                "prompt": "If 6 × 3 = 18, then 3 × 6 = ?",
+                "correct_answer": "18",
+                "hint": "The factors can switch.",
+                "skill": "commutative_property"
+              },
+              {
+                "id": "g3-u12-w1-d3-warmup-2",
+                "prompt": "Which is easier: 8 × 4 or 4 × 8?",
+                "correct_answer": "same",
+                "hint": "They are the same product.",
+                "skill": "commutative_property"
+              },
+              {
+                "id": "g3-u12-w1-d3-warmup-3",
+                "prompt": "Use 5 × 4 to find 4 × 5.",
+                "correct_answer": "20",
+                "hint": "Both equal 20.",
+                "skill": "commutative_property"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Use the Commutative Property",
+            "teaching_points": [
+              "The order of the factors does not change the product.",
+              "Switch to the fact you know better.",
+              "This works for any multiplication."
+            ],
+            "example": {
+              "prompt": "Solve 7 × 4 using the commutative property.",
+              "visual_type": "array",
+              "groups": 7,
+              "items_per_group": 4,
+              "equation": "7 × 4 = 4 × 7 = 28"
+            },
+            "vocabulary": ["commutative property", "factor", "product", "turn-around"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "commutative_multiplication",
+            "prompt": "Use an easier fact to solve 9 × 3.",
+            "correct_answer": "27",
+            "hint": "3 × 9 = 27.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 3
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "commutative_multiplication",
+            "question_count": 6,
+            "instructions": "Switch the factors if it makes the problem easier."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Commutative Property",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review the commutative property of multiplication.",
+            "deckId": "lesson-g3-u12-w1-d3-commutative"
+          },
+          "bigIdea": {
+            "title": "Use the Commutative Property",
+            "subtitle": "Switch the factors, keep the product",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "The commutative property lets you flip the factors. If 4 × 6 is easier for you than 6 × 4, use the easier one. The answer is the same.",
+            "bigQuestion": "Why does switching factors keep the product the same?",
+            "starTip": {
+              "title": "Flip the factors",
+              "lines": ["a × b", "= b × a"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Same product",
+                "equation": "7 × 4 = 4 × 7",
+                "badge": "Turn around",
+                "description": "The order of factors does not change the answer."
+              },
+              {
+                "eyebrow": "Use the easier fact",
+                "equation": "3 × 9 = 9 × 3",
+                "badge": "Pick the one you know",
+                "description": "Switch to the fact that is easier for you."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u12-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Grouping and the Associative Property",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by multiplying three one-digit numbers using grouping.",
+          "concept": "The associative property lets you group factors in different ways. Group the easiest pair first. 2 × 3 × 4 can be (2 × 3) × 4 or 2 × (3 × 4).",
+          "practice": "Multiply three factors by grouping in the easiest order.",
+          "objective": "Use grouping and the associative property to multiply three factors.",
+          "practice_type": "associative_multiplication",
+          "skills": [
+            "multiplication",
+            "associative_property",
+            "grouping",
+            "three_factors"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "grouping_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by grouping factors.",
+            "questions": [
+              {
+                "id": "g3-u12-w1-d4-warmup-1",
+                "prompt": "2 × 3 × 5 = ?",
+                "correct_answer": "30",
+                "hint": "2 × 3 = 6, then 6 × 5.",
+                "skill": "associative_property"
+              },
+              {
+                "id": "g3-u12-w1-d4-warmup-2",
+                "prompt": "4 × 2 × 4 = ?",
+                "correct_answer": "32",
+                "hint": "4 × 4 = 16, then 16 × 2.",
+                "skill": "associative_property"
+              },
+              {
+                "id": "g3-u12-w1-d4-warmup-3",
+                "prompt": "Which is easier: (2 × 5) × 3 or 2 × (5 × 3)?",
+                "correct_answer": "same",
+                "hint": "Both give 30.",
+                "skill": "associative_property"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Grouping and the Associative Property",
+            "teaching_points": [
+              "You can multiply three factors in any grouping.",
+              "Group the pair that is easiest first.",
+              "The product stays the same."
+            ],
+            "example": {
+              "prompt": "Find 2 × 4 × 5 by grouping the easy pair.",
+              "visual_type": "groups",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "2 × 4 = 8, then 8 × 5 = 40; or 4 × 5 = 20, then 20 × 2 = 40"
+            },
+            "vocabulary": ["associative property", "grouping", "factor", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "associative_multiplication",
+            "prompt": "Find 5 × 2 × 6.",
+            "correct_answer": "60",
+            "hint": "5 × 2 = 10, then 10 × 6.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "associative_multiplication",
+            "question_count": 6,
+            "instructions": "Group the factors in the easiest order, then multiply."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Associative Property",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review grouping and the associative property.",
+            "deckId": "lesson-g3-u12-w1-d4-associative"
+          },
+          "bigIdea": {
+            "title": "Grouping and the Associative Property",
+            "subtitle": "Group the easy pair first",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you have three factors, you can group any two together first. Pick the pair that is easiest to make the problem simpler.",
+            "bigQuestion": "Why can you group factors differently without changing the answer?",
+            "starTip": {
+              "title": "Find easy pairs",
+              "lines": ["Group first", "Then multiply"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Group any pair",
+                "equation": "(2 × 5) × 3 = 2 × (5 × 3)",
+                "badge": "Same total",
+                "description": "The grouping of factors does not change the product."
+              },
+              {
+                "eyebrow": "Choose easy first",
+                "equation": "5 × 2 = 10, then 10 × 3 = 30",
+                "badge": "Make tens",
+                "description": "Group factors that give a friendly product first."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u12-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Facts for 3 and 4",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of multiplying by 3, multiplying by 4, the commutative property, and grouping with three factors.",
+          "concept": "Review the multiplication facts and properties from this unit: ×3, ×4, commutative, and associative.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show fluency with facts for 3 and 4 and related properties.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "multiply_by_3",
+            "multiply_by_4",
+            "commutative_multiplication",
+            "associative_multiplication"
+          ],
+          "skills": [
+            "multiplication",
+            "multiply_by_3",
+            "multiply_by_4",
+            "commutative_property",
+            "associative_property",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u12-w1-d5-warmup-1",
+                "prompt": "7 × 3 = ?",
+                "correct_answer": "21",
+                "hint": "7 × 2 = 14, plus 7.",
+                "skill": "multiply_by_3"
+              },
+              {
+                "id": "g3-u12-w1-d5-warmup-2",
+                "prompt": "6 × 4 = ?",
+                "correct_answer": "24",
+                "hint": "Double 6 = 12, double 12.",
+                "skill": "multiply_by_4"
+              },
+              {
+                "id": "g3-u12-w1-d5-warmup-3",
+                "prompt": "2 × 4 × 5 = ?",
+                "correct_answer": "40",
+                "hint": "4 × 5 = 20, then 20 × 2.",
+                "skill": "associative_property"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "×3 + ×4 + commutative + associative = facts for 3 and 4"
+            },
+            "vocabulary": ["evaluation", "review", "multiplication"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is the same as 4 × 9?",
+            "correct_answer": "9 x 4 = 36",
+            "hint": "Switch the factors.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 12 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 12 before the evaluation.",
+            "deckId": "lesson-g3-u12-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Facts for 3 and 4",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: multiplying by 3, multiplying by 4, the commutative property, and grouping with three factors.",
+            "bigQuestion": "What do you know about multiplying by 3 and 4?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "×3 and ×4",
+                "equation": "×3 = double + 1, ×4 = double twice",
+                "badge": "Use doubles",
+                "description": "Doubles help with both the 3 and 4 facts."
+              },
+              {
+                "eyebrow": "Properties",
+                "equation": "a × b = b × a, (a × b) × c = a × (b × c)",
+                "badge": "Flexible",
+                "description": "Use the commutative and associative properties to make facts easier."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

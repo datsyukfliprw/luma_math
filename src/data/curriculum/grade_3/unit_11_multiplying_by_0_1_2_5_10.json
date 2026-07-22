@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 11,
+  "unit_title": "Multiplying by 0, 1, 2, 5, and 10",
+  "unit_slug": "multiplying_by_0_1_2_5_10",
+  "unit_description": "This unit builds fact fluency for multiplying by 0, 1, 2, 5, and 10. Students learn the zero and identity rules, use doubles for multiplying by 2, recognize patterns for 5 and 10, and practice mixed facts.",
+  "unit_goals": [
+    "Use the zero and identity rules for multiplication.",
+    "Multiply by 2 using doubles.",
+    "Multiply by 5 using patterns.",
+    "Multiply by 10.",
+    "Practice mixed facts for 0, 1, 2, 5, and 10."
+  ],
+  "fact_focus": ["multiplication", "3.RA.B.6", "3.RA.C.7"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Multiplying by 0, 1, 2, 5, and 10",
+      "weekly_focus": "Students build fluency with the 0, 1, 2, 5, and 10 multiplication facts using patterns and strategies.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u11-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Zero and Identity Rules",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by quickly saying any number times 0 and times 1.",
+          "concept": "Any number times 0 is 0. Any number times 1 is the same number. These rules make multiplying by 0 and 1 easy.",
+          "practice": "Solve multiplication facts with 0 and 1.",
+          "objective": "Use the zero and identity rules for multiplication.",
+          "practice_type": "zero_identity_rules",
+          "skills": [
+            "multiplication",
+            "zero_rule",
+            "identity_rule",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "facts_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with 0 and 1 facts.",
+            "questions": [
+              {
+                "id": "g3-u11-w1-d1-warmup-1",
+                "prompt": "7 × 0 = ?",
+                "correct_answer": "0",
+                "hint": "Any number times 0 is 0.",
+                "skill": "zero_rule"
+              },
+              {
+                "id": "g3-u11-w1-d1-warmup-2",
+                "prompt": "9 × 1 = ?",
+                "correct_answer": "9",
+                "hint": "Any number times 1 is itself.",
+                "skill": "identity_rule"
+              },
+              {
+                "id": "g3-u11-w1-d1-warmup-3",
+                "prompt": "0 × 5 = ?",
+                "correct_answer": "0",
+                "hint": "Zero groups of 5 is 0.",
+                "skill": "zero_rule"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Zero and Identity Rules",
+            "teaching_points": [
+              "0 groups of any number is 0.",
+              "1 group of any number is that number.",
+              "These rules work for any factor."
+            ],
+            "example": {
+              "prompt": "What is 6 × 0 and 6 × 1?",
+              "visual_type": "groups",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "6 × 0 = 0 and 6 × 1 = 6"
+            },
+            "vocabulary": ["zero rule", "identity rule", "factor", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "zero_identity_rules",
+            "prompt": "What is 12 × 0 and 12 × 1?",
+            "correct_answer": "0 and 12",
+            "hint": "Zero groups = 0. One group = 12.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "zero_identity_rules",
+            "question_count": 6,
+            "instructions": "Solve each multiplication fact with 0 or 1."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Zero and Identity Rules",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review zero and identity multiplication rules.",
+            "deckId": "lesson-g3-u11-w1-d1-zero-identity"
+          },
+          "bigIdea": {
+            "title": "Zero and Identity Rules",
+            "subtitle": "Two special multiplication rules",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Multiplying by 0 and 1 is easy because they follow special rules. Zero groups means nothing, and one group means the same amount.",
+            "bigQuestion": "Why is any number times 1 the same number?",
+            "starTip": {
+              "title": "Special rules",
+              "lines": ["×0 = 0", "×1 = same"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Zero rule",
+                "equation": "a × 0 = 0",
+                "badge": "No groups",
+                "description": "Zero groups of any number is always zero."
+              },
+              {
+                "eyebrow": "Identity rule",
+                "equation": "a × 1 = a",
+                "badge": "One group",
+                "description": "One group of any number is that number."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u11-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Multiply by 2 Using Doubles",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with doubles facts: 4+4, 7+7, 9+9.",
+          "concept": "Multiplying by 2 is the same as adding a number to itself. This is called a double.",
+          "practice": "Multiply numbers by 2 using doubles.",
+          "objective": "Multiply by 2 using doubles.",
+          "practice_type": "multiply_by_2",
+          "skills": [
+            "multiplication",
+            "doubles",
+            "facts",
+            "multiply_by_2"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "doubles_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with doubles.",
+            "questions": [
+              {
+                "id": "g3-u11-w1-d2-warmup-1",
+                "prompt": "6 + 6 = ?",
+                "correct_answer": "12",
+                "hint": "6 × 2 = 12.",
+                "skill": "doubles"
+              },
+              {
+                "id": "g3-u11-w1-d2-warmup-2",
+                "prompt": "8 × 2 = ?",
+                "correct_answer": "16",
+                "hint": "8 + 8.",
+                "skill": "multiply_by_2"
+              },
+              {
+                "id": "g3-u11-w1-d2-warmup-3",
+                "prompt": "5 + 5 = ?",
+                "correct_answer": "10",
+                "hint": "5 × 2 = 10.",
+                "skill": "doubles"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply by 2 Using Doubles",
+            "teaching_points": [
+              "2 × a number means add it to itself.",
+              "Doubles facts are addition facts.",
+              "Use doubles to solve ×2 quickly."
+            ],
+            "example": {
+              "prompt": "What is 7 × 2?",
+              "visual_type": "groups",
+              "groups": 2,
+              "items_per_group": 7,
+              "equation": "7 + 7 = 14, so 7 × 2 = 14"
+            },
+            "vocabulary": ["double", "multiply by 2", "sum", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_2",
+            "prompt": "What is 9 × 2?",
+            "correct_answer": "18",
+            "hint": "9 + 9.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_2",
+            "question_count": 6,
+            "instructions": "Use doubles to multiply each number by 2."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Doubles and Times 2",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review multiplying by 2 using doubles.",
+            "deckId": "lesson-g3-u11-w1-d2-times-2"
+          },
+          "bigIdea": {
+            "title": "Multiply by 2 Using Doubles",
+            "subtitle": "Doubles are the key",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you multiply by 2, you are finding a double. If you know 7 + 7 = 14, then you know 7 × 2 = 14.",
+            "bigQuestion": "How are doubles and multiplying by 2 related?",
+            "starTip": {
+              "title": "Add to itself",
+              "lines": ["2 × n", "= n + n"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Double rule",
+                "equation": "2 × n = n + n",
+                "badge": "Add to itself",
+                "description": "Multiplying by 2 means adding a number to itself."
+              },
+              {
+                "eyebrow": "Use doubles facts",
+                "equation": "7 + 7 = 14",
+                "badge": "Same as 7 × 2",
+                "description": "Doubles facts from addition help you multiply by 2."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u11-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Multiply by 5 Using Patterns",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting by fives to 50.",
+          "concept": "Multiples of 5 end in 0 or 5. To multiply by 5, you can count by fives or use the fact that 5 is half of 10.",
+          "practice": "Multiply numbers by 5 using skip counting and the 10-and-half strategy.",
+          "objective": "Multiply by 5 using patterns and strategies.",
+          "practice_type": "multiply_by_5",
+          "skills": [
+            "multiplication",
+            "multiply_by_5",
+            "patterns",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "skip_counting_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting by fives.",
+            "questions": [
+              {
+                "id": "g3-u11-w1-d3-warmup-1",
+                "prompt": "5, 10, 15, 20, __",
+                "correct_answer": "25",
+                "hint": "Add 5.",
+                "skill": "skip_counting"
+              },
+              {
+                "id": "g3-u11-w1-d3-warmup-2",
+                "prompt": "6 × 5 = ?",
+                "correct_answer": "30",
+                "hint": "5, 10, 15, 20, 25, 30.",
+                "skill": "multiply_by_5"
+              },
+              {
+                "id": "g3-u11-w1-d3-warmup-3",
+                "prompt": "Which is a multiple of 5: 27 or 35?",
+                "correct_answer": "35",
+                "hint": "Multiples of 5 end in 0 or 5.",
+                "skill": "patterns"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply by 5 Using Patterns",
+            "teaching_points": [
+              "Count by fives to find the product.",
+              "Multiples of 5 end in 0 or 5.",
+              "You can also multiply by 10 and take half."
+            ],
+            "example": {
+              "prompt": "What is 8 × 5?",
+              "visual_type": "number_line",
+              "groups": 8,
+              "items_per_group": 5,
+              "equation": "8 × 10 = 80, half is 40, so 8 × 5 = 40"
+            },
+            "vocabulary": ["multiple", "pattern", "skip count", "multiply by 5"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_5",
+            "prompt": "What is 7 × 5?",
+            "correct_answer": "35",
+            "hint": "7 × 10 = 70, take half = 35.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_5",
+            "question_count": 6,
+            "instructions": "Use a pattern or strategy to multiply each number by 5."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 5 Patterns",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review patterns for multiplying by 5.",
+            "deckId": "lesson-g3-u11-w1-d3-times-5"
+          },
+          "bigIdea": {
+            "title": "Multiply by 5 Using Patterns",
+            "subtitle": "Use the 5s pattern",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Fives follow a clear pattern. Their products end in 0 or 5. You can also multiply by 10 and take half.",
+            "bigQuestion": "Why do multiples of 5 end in 0 or 5?",
+            "starTip": {
+              "title": "End in 0 or 5",
+              "lines": ["Skip count by 5", "Or halve ×10"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Skip count",
+                "equation": "5, 10, 15, 20, 25",
+                "badge": "Pattern",
+                "description": "Count by fives to find any ×5 product."
+              },
+              {
+                "eyebrow": "Half of ×10",
+                "equation": "8 × 5 = 8 × 10 ÷ 2 = 40",
+                "badge": "5 is half of 10",
+                "description": "Multiply by 10, then take half."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u11-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Multiply by 10 and Practice Mixed Facts",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by multiplying numbers by 10.",
+          "concept": "Multiplying by 10 adds a zero to the ones place. When you multiply a one-digit number by 10, the product is that number with a 0 after it.",
+          "practice": "Multiply by 10 and practice mixed 0, 1, 2, 5, and 10 facts.",
+          "objective": "Multiply by 10 and practice mixed facts.",
+          "practice_type": "multiply_by_10_and_mixed",
+          "skills": [
+            "multiplication",
+            "multiply_by_10",
+            "facts",
+            "mixed_facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "facts_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with ×10 and mixed facts.",
+            "questions": [
+              {
+                "id": "g3-u11-w1-d4-warmup-1",
+                "prompt": "4 × 10 = ?",
+                "correct_answer": "40",
+                "hint": "Add a zero.",
+                "skill": "multiply_by_10"
+              },
+              {
+                "id": "g3-u11-w1-d4-warmup-2",
+                "prompt": "7 × 5 = ?",
+                "correct_answer": "35",
+                "hint": "Multiply by 10, then take half.",
+                "skill": "multiply_by_5"
+              },
+              {
+                "id": "g3-u11-w1-d4-warmup-3",
+                "prompt": "9 × 2 = ?",
+                "correct_answer": "18",
+                "hint": "9 + 9.",
+                "skill": "multiply_by_2"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Multiply by 10 and Practice Mixed Facts",
+            "teaching_points": [
+              "To multiply by 10, add a zero.",
+              "10 groups of a number is that number tens.",
+              "Practice all the facts together for speed."
+            ],
+            "example": {
+              "prompt": "What is 6 × 10?",
+              "visual_type": "groups",
+              "groups": 10,
+              "items_per_group": 6,
+              "equation": "6 × 10 = 60"
+            },
+            "vocabulary": ["multiply by 10", "zero", "mixed facts", "fluency"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_10_and_mixed",
+            "prompt": "What is 9 × 10?",
+            "correct_answer": "90",
+            "hint": "Add a zero to 9.",
+            "visual_data": {
+              "groups": 10,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_10_and_mixed",
+            "question_count": 6,
+            "instructions": "Answer each multiplication fact. Watch for 0, 1, 2, 5, and 10."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 10 and Mixed Facts",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review multiplying by 10 and mixed facts.",
+            "deckId": "lesson-g3-u11-w1-d4-times-10"
+          },
+          "bigIdea": {
+            "title": "Multiply by 10 and Practice Mixed Facts",
+            "subtitle": "Add a zero for ×10",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you multiply by 10, the product is the number with a 0 in the ones place. Practice mixing 0, 1, 2, 5, and 10 facts to build fluency.",
+            "bigQuestion": "How is multiplying by 10 different from multiplying by 5?",
+            "starTip": {
+              "title": "Add a zero",
+              "lines": ["×10", "Put a 0 at the end"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "×10 rule",
+                "equation": "6 × 10 = 60",
+                "badge": "Add a zero",
+                "description": "Multiplying by 10 adds a zero to the ones place."
+              },
+              {
+                "eyebrow": "Mixed practice",
+                "equation": "0, 1, 2, 5, 10",
+                "badge": "Build fluency",
+                "description": "Practice all of these facts together to get faster."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u11-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Facts for 0, 1, 2, 5, and 10",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of the 0, 1, 2, 5, and 10 multiplication facts.",
+          "concept": "Review the multiplication facts for 0, 1, 2, 5, and 10. Use the rules and patterns from this unit.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show fluency with facts for 0, 1, 2, 5, and 10.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "zero_identity_rules",
+            "multiply_by_2",
+            "multiply_by_5",
+            "multiply_by_10_and_mixed"
+          ],
+          "skills": [
+            "multiplication",
+            "zero_rule",
+            "identity_rule",
+            "multiply_by_2",
+            "multiply_by_5",
+            "multiply_by_10",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u11-w1-d5-warmup-1",
+                "prompt": "8 × 5 = ?",
+                "correct_answer": "40",
+                "hint": "8 × 10 = 80, half is 40.",
+                "skill": "multiply_by_5"
+              },
+              {
+                "id": "g3-u11-w1-d5-warmup-2",
+                "prompt": "7 × 10 = ?",
+                "correct_answer": "70",
+                "hint": "Add a zero.",
+                "skill": "multiply_by_10"
+              },
+              {
+                "id": "g3-u11-w1-d5-warmup-3",
+                "prompt": "6 × 2 = ?",
+                "correct_answer": "12",
+                "hint": "6 + 6.",
+                "skill": "multiply_by_2"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "0/1 rules + doubles for 2 + 5s pattern + 10s = facts for 0,1,2,5,10"
+            },
+            "vocabulary": ["evaluation", "review", "multiplication"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which product is the largest: 9 × 1, 9 × 0, or 9 × 2?",
+            "correct_answer": "18",
+            "hint": "9 × 2 = 18.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 11 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 11 before the evaluation.",
+            "deckId": "lesson-g3-u11-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Facts for 0, 1, 2, 5, and 10",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: zero and identity rules, multiplying by 2 using doubles, multiplying by 5 using patterns, and multiplying by 10.",
+            "bigQuestion": "What do you know about multiplying by 0, 1, 2, 5, and 10?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Special rules",
+                "equation": "×0 = 0, ×1 = same",
+                "badge": "Quick facts",
+                "description": "Zero and one follow simple rules that never change."
+              },
+              {
+                "eyebrow": "Patterns",
+                "equation": "×2 = double, ×5 ends in 0 or 5, ×10 adds a zero",
+                "badge": "Use the pattern",
+                "description": "Use the pattern for each set of facts to solve quickly."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

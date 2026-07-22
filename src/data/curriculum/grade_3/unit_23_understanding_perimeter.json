@@ -1,0 +1,628 @@
+{
+  "grade_level": 3,
+  "unit_number": 23,
+  "unit_title": "Understanding Perimeter",
+  "unit_slug": "understanding_perimeter",
+  "unit_description": "This unit introduces perimeter as the distance around a shape. Students find perimeter on grids, calculate the perimeter of rectangles and quadrilaterals, and find missing side lengths and solve perimeter problems.",
+  "unit_goals": [
+    "Understand perimeter as the distance around a shape.",
+    "Find perimeter on grids.",
+    "Find the perimeter of rectangles and quadrilaterals.",
+    "Find missing side lengths and solve perimeter problems.",
+    "Use addition and multiplication to find perimeter."
+  ],
+  "fact_focus": ["perimeter", "geometry", "3.GM.D.15"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Understanding Perimeter",
+      "weekly_focus": "Students learn to measure the distance around shapes, find perimeter on grids, and solve perimeter problems with missing sides.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u23-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Perimeter as Distance Around a Shape",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by tracing the edges of different shapes.",
+          "concept": "Perimeter is the total distance around the outside of a shape. To find it, add the lengths of all the sides.",
+          "practice": "Find the perimeter of shapes by adding side lengths.",
+          "objective": "Understand perimeter as the distance around a shape.",
+          "practice_type": "perimeter_introduction",
+          "skills": [
+            "perimeter",
+            "addition",
+            "distance_around",
+            "geometry"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "perimeter_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by thinking about distance around.",
+            "questions": [
+              {
+                "id": "g3-u23-w1-d1-warmup-1",
+                "prompt": "A triangle has sides 3, 4, and 5 units. What is the perimeter?",
+                "correct_answer": "12",
+                "hint": "3 + 4 + 5.",
+                "skill": "perimeter"
+              },
+              {
+                "id": "g3-u23-w1-d1-warmup-2",
+                "prompt": "What does perimeter measure?",
+                "correct_answer": "distance around a shape",
+                "hint": "The distance around the outside.",
+                "skill": "perimeter"
+              },
+              {
+                "id": "g3-u23-w1-d1-warmup-3",
+                "prompt": "A square has sides of 6. What is the perimeter?",
+                "correct_answer": "24",
+                "hint": "6 + 6 + 6 + 6.",
+                "skill": "perimeter"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Perimeter as Distance Around a Shape",
+            "teaching_points": [
+              "Perimeter is the outside distance of a shape.",
+              "Add all side lengths.",
+              "For a square, multiply one side by 4."
+            ],
+            "example": {
+              "prompt": "Find the perimeter of a rectangle with sides 5, 3, 5, and 3.",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "5 + 3 + 5 + 3 = 16 units"
+            },
+            "vocabulary": ["perimeter", "distance around", "side length", "units"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "perimeter_introduction",
+            "prompt": "A quadrilateral has sides 7, 4, 7, and 4. What is the perimeter?",
+            "correct_answer": "22",
+            "hint": "7 + 4 + 7 + 4.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "perimeter_introduction",
+            "question_count": 6,
+            "instructions": "Add all the side lengths to find the perimeter."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Perimeter Vocabulary",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review perimeter vocabulary.",
+            "deckId": "lesson-g3-u23-w1-d1-perimeter-vocab"
+          },
+          "bigIdea": {
+            "title": "Perimeter as Distance Around a Shape",
+            "subtitle": "Add all the sides",
+            "thumbnail": "/images/learn/thumbnails/perimeter.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Perimeter is the distance you would walk if you went all the way around a shape. To find it, add every side length.",
+            "bigQuestion": "How is perimeter different from area?",
+            "starTip": {
+              "title": "Around the outside",
+              "lines": ["Walk the edge", "Add the sides"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Perimeter",
+                "equation": "sum of all sides",
+                "badge": "Around",
+                "description": "Perimeter is the total distance around a shape."
+              },
+              {
+                "eyebrow": "Add each side",
+                "equation": "5 + 3 + 5 + 3 = 16",
+                "badge": "Don't skip any",
+                "description": "Every side length must be included."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u23-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Find Perimeter on Grids",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting unit lengths around shapes on a grid.",
+          "concept": "On a grid, each side of a square unit is 1 unit long. Count the unit segments around the shape to find the perimeter.",
+          "practice": "Find the perimeter of shapes drawn on grids by counting unit lengths.",
+          "objective": "Find perimeter on grids.",
+          "practice_type": "perimeter_on_grids",
+          "skills": [
+            "perimeter",
+            "grid",
+            "counting",
+            "units"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "grid_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting on a grid.",
+            "questions": [
+              {
+                "id": "g3-u23-w1-d2-warmup-1",
+                "prompt": "A 3 by 3 square on a grid has how many units around it?",
+                "correct_answer": "12",
+                "hint": "3 + 3 + 3 + 3.",
+                "skill": "perimeter_on_grids"
+              },
+              {
+                "id": "g3-u23-w1-d2-warmup-2",
+                "prompt": "A rectangle 4 units long and 2 units wide has a perimeter of how many units?",
+                "correct_answer": "12",
+                "hint": "4 + 2 + 4 + 2.",
+                "skill": "perimeter_on_grids"
+              },
+              {
+                "id": "g3-u23-w1-d2-warmup-3",
+                "prompt": "Count the unit segments around an L-shaped figure with sides 6, 2, 3, 2, 6, and 5.",
+                "correct_answer": "24",
+                "hint": "6 + 2 + 3 + 2 + 6 + 5.",
+                "skill": "perimeter_on_grids"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Perimeter on Grids",
+            "teaching_points": [
+              "Each grid line is 1 unit.",
+              "Count the unit segments around the shape.",
+              "Add all the counts."
+            ],
+            "example": {
+              "prompt": "Find the perimeter of a 5 by 4 rectangle on a grid.",
+              "visual_type": "grid",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "5 + 4 + 5 + 4 = 18 units"
+            },
+            "vocabulary": ["grid", "unit segment", "perimeter", "count"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "perimeter_on_grids",
+            "prompt": "Find the perimeter of a 6 by 3 rectangle on a grid.",
+            "correct_answer": "18",
+            "hint": "6 + 3 + 6 + 3.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "perimeter_on_grids",
+            "question_count": 6,
+            "instructions": "Count the unit segments around each shape on the grid."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Perimeter on Grids",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review perimeter on grids.",
+            "deckId": "lesson-g3-u23-w1-d2-perimeter-grids"
+          },
+          "bigIdea": {
+            "title": "Find Perimeter on Grids",
+            "subtitle": "Count unit segments",
+            "thumbnail": "/images/learn/thumbnails/perimeter.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "On a grid, the perimeter is the number of unit segments around the shape. Count each side carefully, even if it is short.",
+            "bigQuestion": "Why is it helpful to find perimeter on a grid?",
+            "starTip": {
+              "title": "Each small side is 1",
+              "lines": ["Count each unit", "Add them up"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Grid units",
+                "equation": "each side of a square = 1 unit",
+                "badge": "Count",
+                "description": "Count the unit segments around the shape."
+              },
+              {
+                "eyebrow": "All sides",
+                "equation": "top + right + bottom + left",
+                "badge": "Add",
+                "description": "Add every side, even for irregular shapes."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u23-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Find the Perimeter of Rectangles and Quadrilaterals",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by adding pairs of sides and doubling.",
+          "concept": "For a rectangle, opposite sides are equal. Perimeter can be found by adding length + width + length + width, or 2 × length + 2 × width. For any quadrilateral, add all four sides.",
+          "practice": "Find the perimeter of rectangles and other quadrilaterals using formulas and addition.",
+          "objective": "Find the perimeter of rectangles and quadrilaterals.",
+          "practice_type": "perimeter_rectangles_quadrilaterals",
+          "skills": [
+            "perimeter",
+            "rectangles",
+            "quadrilaterals",
+            "formulas"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "formula_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with rectangles.",
+            "questions": [
+              {
+                "id": "g3-u23-w1-d3-warmup-1",
+                "prompt": "A rectangle has length 8 and width 5. What is the perimeter?",
+                "correct_answer": "26",
+                "hint": "8 + 5 + 8 + 5.",
+                "skill": "perimeter_rectangles"
+              },
+              {
+                "id": "g3-u23-w1-d3-warmup-2",
+                "prompt": "A rectangle has length 10 and width 4. Use 2 × length + 2 × width.",
+                "correct_answer": "28",
+                "hint": "2×10 + 2×4 = 28.",
+                "skill": "perimeter_rectangles"
+              },
+              {
+                "id": "g3-u23-w1-d3-warmup-3",
+                "prompt": "A quadrilateral has sides 9, 6, 7, and 4. What is the perimeter?",
+                "correct_answer": "26",
+                "hint": "9 + 6 + 7 + 4.",
+                "skill": "perimeter_quadrilaterals"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find the Perimeter of Rectangles and Quadrilaterals",
+            "teaching_points": [
+              "Rectangles have two pairs of equal sides.",
+              "Perimeter = 2 × length + 2 × width.",
+              "Quadrilaterals: add all four sides."
+            ],
+            "example": {
+              "prompt": "Find the perimeter of a rectangle with length 7 and width 4.",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "2 × 7 + 2 × 4 = 14 + 8 = 22 units"
+            },
+            "vocabulary": ["rectangle", "quadrilateral", "formula", "perimeter"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "perimeter_rectangles_quadrilaterals",
+            "prompt": "Find the perimeter of a rectangle with length 9 and width 6.",
+            "correct_answer": "30",
+            "hint": "2×9 + 2×6 = 18 + 12.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "perimeter_rectangles_quadrilaterals",
+            "question_count": 6,
+            "instructions": "Find the perimeter of each rectangle or quadrilateral."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Rectangle Perimeter",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review perimeter of rectangles and quadrilaterals.",
+            "deckId": "lesson-g3-u23-w1-d3-rectangle-perimeter"
+          },
+          "bigIdea": {
+            "title": "Find the Perimeter of Rectangles and Quadrilaterals",
+            "subtitle": "Use a formula for rectangles",
+            "thumbnail": "/images/learn/thumbnails/perimeter.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "For a rectangle, opposite sides are equal. You can add all four sides or use a shortcut: 2 × length + 2 × width.",
+            "bigQuestion": "Why does 2 × length + 2 × width work for a rectangle?",
+            "starTip": {
+              "title": "Two of each",
+              "lines": ["2 lengths", "2 widths"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Rectangle",
+                "equation": "P = 2l + 2w",
+                "badge": "Shortcut",
+                "description": "Two lengths plus two widths gives the perimeter."
+              },
+              {
+                "eyebrow": "Quadrilateral",
+                "equation": "P = a + b + c + d",
+                "badge": "Add all 4",
+                "description": "Add all four side lengths."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u23-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Find Missing Side Lengths and Solve Perimeter Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by subtracting known sides from a given perimeter.",
+          "concept": "If you know the perimeter and some side lengths, subtract the known sides from the perimeter to find the missing side. For rectangles, opposite sides are equal.",
+          "practice": "Find missing side lengths and solve perimeter word problems.",
+          "objective": "Find missing side lengths and solve perimeter problems.",
+          "practice_type": "missing_side_perimeter",
+          "skills": [
+            "perimeter",
+            "missing_side",
+            "subtraction",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "missing_side_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with missing sides.",
+            "questions": [
+              {
+                "id": "g3-u23-w1-d4-warmup-1",
+                "prompt": "A rectangle has perimeter 20 and length 6. What is the width?",
+                "correct_answer": "4",
+                "hint": "20 - 6 - 6 = 8, divided by 2.",
+                "skill": "missing_side_perimeter"
+              },
+              {
+                "id": "g3-u23-w1-d4-warmup-2",
+                "prompt": "A triangle has perimeter 18. Two sides are 7 and 6. What is the third side?",
+                "correct_answer": "5",
+                "hint": "18 - 7 - 6.",
+                "skill": "missing_side_perimeter"
+              },
+              {
+                "id": "g3-u23-w1-d4-warmup-3",
+                "prompt": "A quadrilateral has perimeter 30. Three sides are 8, 7, and 9. What is the fourth side?",
+                "correct_answer": "6",
+                "hint": "30 - 8 - 7 - 9.",
+                "skill": "missing_side_perimeter"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Missing Side Lengths and Solve Perimeter Problems",
+            "teaching_points": [
+              "Perimeter is the total of all sides.",
+              "Subtract the known sides from the perimeter.",
+              "Use opposite sides for rectangles."
+            ],
+            "example": {
+              "prompt": "A rectangle has perimeter 24 and length 8. Find the width.",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "24 - 8 - 8 = 8, so width + width = 8, width = 4"
+            },
+            "vocabulary": ["missing side", "perimeter", "subtraction", "solve"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "missing_side_perimeter",
+            "prompt": "A rectangle has perimeter 28 and width 5. What is the length?",
+            "correct_answer": "9",
+            "hint": "28 - 5 - 5 = 18, divided by 2 = 9.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "missing_side_perimeter",
+            "question_count": 6,
+            "instructions": "Find the missing side length for each perimeter problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Missing Sides and Perimeter",
+            "type": "geometry_terms",
+            "card_count": 6,
+            "instructions": "Review finding missing sides using perimeter.",
+            "deckId": "lesson-g3-u23-w1-d4-missing-sides"
+          },
+          "bigIdea": {
+            "title": "Find Missing Side Lengths and Solve Perimeter Problems",
+            "subtitle": "Subtract the known sides",
+            "thumbnail": "/images/learn/thumbnails/perimeter.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "If you know the total perimeter and all but one side, subtract the known sides from the total. For rectangles, remember opposite sides are equal.",
+            "bigQuestion": "How do you find a missing side when you know the perimeter?",
+            "starTip": {
+              "title": "Take away known sides",
+              "lines": ["Perimeter - known sides", "= missing side(s)"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Known perimeter",
+                "equation": "P = 24, length = 8",
+                "badge": "Start with total",
+                "description": "Use the total perimeter and the known sides."
+              },
+              {
+                "eyebrow": "Find missing",
+                "equation": "24 - 8 - 8 = 8, width = 4",
+                "badge": "Subtract",
+                "description": "Subtract the known sides to find the remaining total."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u23-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Perimeter",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of perimeter as distance around, perimeter on grids, rectangles and quadrilaterals, and missing side lengths.",
+          "concept": "Review the four big ideas from this unit: perimeter as the distance around a shape, perimeter on grids, perimeter of rectangles and quadrilaterals, and finding missing side lengths.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about perimeter.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "perimeter_introduction",
+            "perimeter_on_grids",
+            "perimeter_rectangles_quadrilaterals",
+            "missing_side_perimeter"
+          ],
+          "skills": [
+            "perimeter",
+            "grids",
+            "rectangles",
+            "quadrilaterals",
+            "missing_side",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u23-w1-d5-warmup-1",
+                "prompt": "A rectangle is 7 by 5. What is the perimeter?",
+                "correct_answer": "24",
+                "hint": "7 + 5 + 7 + 5.",
+                "skill": "perimeter"
+              },
+              {
+                "id": "g3-u23-w1-d5-warmup-2",
+                "prompt": "A square has perimeter 36. What is the side length?",
+                "correct_answer": "9",
+                "hint": "36 ÷ 4.",
+                "skill": "missing_side_perimeter"
+              },
+              {
+                "id": "g3-u23-w1-d5-warmup-3",
+                "prompt": "A shape on a grid has sides 6, 4, 6, and 4. What is the perimeter?",
+                "correct_answer": "20",
+                "hint": "6 + 4 + 6 + 4.",
+                "skill": "perimeter_on_grids"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "perimeter as distance + grids + rectangles/quadrilaterals + missing sides = perimeter"
+            },
+            "vocabulary": ["evaluation", "review", "perimeter"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A rectangle has length 10 and width 3. What is the perimeter?",
+            "correct_answer": "26",
+            "hint": "10 + 3 + 10 + 3.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 23 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 23 before the evaluation.",
+            "deckId": "lesson-g3-u23-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Perimeter",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: perimeter as distance around, perimeter on grids, perimeter of rectangles and quadrilaterals, and missing side lengths.",
+            "bigQuestion": "What do you know about perimeter?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Perimeter",
+                "equation": "distance around",
+                "badge": "Add sides",
+                "description": "Add every side length to find the perimeter."
+              },
+              {
+                "eyebrow": "Missing side",
+                "equation": "perimeter - known sides",
+                "badge": "Subtract",
+                "description": "Subtract known sides from the perimeter to find missing sides."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

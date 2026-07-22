@@ -11,9 +11,15 @@ import type {
   QuickCheckQuestion,
   TryItProblem,
   LessonExperience,
+  LessonExperienceSource,
+  AuthoredLessonExperience,
+  CurriculumLessonExperience,
+  ResolvedLessonExperience,
 } from "./lessonExperience/types";
 
-// Re-export types for backward compatibility
+import { getAdaptedLessonExperience } from "../lib/lessonExperienceAdapter";
+
+// Re-export types for consumers and authored lesson files
 export type {
   PracticeMode,
   LessonPracticeType,
@@ -21,6 +27,10 @@ export type {
   QuickCheckQuestion,
   TryItProblem,
   LessonExperience,
+  LessonExperienceSource,
+  AuthoredLessonExperience,
+  CurriculumLessonExperience,
+  ResolvedLessonExperience,
 };
 
 // Import lesson experiences from organized structure
@@ -30,7 +40,7 @@ import { grade3Unit1Week1Experience as week1Lessons } from "./lessonExperience/g
 export const grade3Unit1Week1Experience = week1Lessons;
 
 // @SECTION LESSON_EXPERIENCE_REGISTRY
-// Central registry of all lesson experiences
+// Central registry of authored lesson experiences
 const lessonExperienceRegistry: Record<string, LessonExperience> = {};
 
 // Register Grade 3 Unit 1 Week 1 lessons
@@ -38,16 +48,33 @@ week1Lessons.forEach((lesson) => {
   lessonExperienceRegistry[lesson.id] = lesson;
 });
 
+// Cache for derived curriculum experiences so we do not rebuild on every render.
+const derivedExperienceCache: Record<string, CurriculumLessonExperience> = {};
+
 // @SECTION LESSON_EXPERIENCE_LOOKUPS
-export function getLessonExperience(lessonId?: string) {
+export function getLessonExperience(lessonId?: string): ResolvedLessonExperience | undefined {
   if (!lessonId) {
-    return week1Lessons[0];
+    return undefined;
   }
 
-  return lessonExperienceRegistry[lessonId];
+  const authored = lessonExperienceRegistry[lessonId];
+  if (authored) {
+    return { ...authored, source: "authored" } as AuthoredLessonExperience;
+  }
+
+  if (derivedExperienceCache[lessonId]) {
+    return derivedExperienceCache[lessonId];
+  }
+
+  const derived = getAdaptedLessonExperience(lessonId);
+  if (derived) {
+    derivedExperienceCache[lessonId] = derived;
+  }
+
+  return derived;
 }
 
-export function requireLessonExperience(lessonId?: string): LessonExperience {
+export function requireLessonExperience(lessonId?: string): ResolvedLessonExperience {
   const lesson = getLessonExperience(lessonId);
 
   if (!lesson) {

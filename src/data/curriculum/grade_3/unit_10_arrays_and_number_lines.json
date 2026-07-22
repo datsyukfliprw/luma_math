@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 10,
+  "unit_title": "Arrays and Number Lines",
+  "unit_slug": "arrays_and_number_lines",
+  "unit_description": "This unit uses arrays and number lines to represent multiplication. Students build arrays, write two multiplication equations for an array, and connect models, equations, and stories.",
+  "unit_goals": [
+    "Build arrays to represent multiplication.",
+    "Write two multiplication equations for an array.",
+    "Represent multiplication on a number line.",
+    "Connect models, equations, and stories.",
+    "Use the commutative property with arrays."
+  ],
+  "fact_focus": ["multiplication", "3.RA.A.1", "3.RA.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Arrays and Number Lines",
+      "weekly_focus": "Students build arrays for multiplication, write two equations for each array, and show multiplication as jumps on a number line.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u10-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Build Arrays to Represent Multiplication",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting rows and columns in arrays.",
+          "concept": "An array is a set of objects arranged in equal rows and columns. The number of rows and columns are the factors, and the total is the product.",
+          "practice": "Build arrays and write matching multiplication equations.",
+          "objective": "Build arrays to represent multiplication.",
+          "practice_type": "build_arrays",
+          "skills": [
+            "arrays",
+            "rows",
+            "columns",
+            "multiplication"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "array_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by looking at arrays.",
+            "questions": [
+              {
+                "id": "g3-u10-w1-d1-warmup-1",
+                "prompt": "An array has 3 rows and 4 columns. How many items are there?",
+                "correct_answer": "12",
+                "hint": "3 × 4 = 12.",
+                "skill": "arrays"
+              },
+              {
+                "id": "g3-u10-w1-d1-warmup-2",
+                "prompt": "How many rows are in a 2 by 6 array?",
+                "correct_answer": "2",
+                "hint": "The first number is the number of rows.",
+                "skill": "rows"
+              },
+              {
+                "id": "g3-u10-w1-d1-warmup-3",
+                "prompt": "How many columns are in a 5 by 3 array?",
+                "correct_answer": "3",
+                "hint": "The second number is the number of columns.",
+                "skill": "columns"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Build Arrays to Represent Multiplication",
+            "teaching_points": [
+              "An array has rows and columns.",
+              "Rows go across; columns go up and down.",
+              "Multiply rows times columns to find the total."
+            ],
+            "example": {
+              "prompt": "Build an array for 3 × 5.",
+              "visual_type": "array",
+              "groups": 3,
+              "items_per_group": 5,
+              "equation": "3 rows of 5 = 15, or 3 × 5 = 15"
+            },
+            "vocabulary": ["array", "row", "column", "total"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "build_arrays",
+            "prompt": "Build an array for 4 × 3 and find the total.",
+            "correct_answer": "12",
+            "hint": "4 rows of 3.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 3
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "build_arrays",
+            "question_count": 6,
+            "instructions": "Draw an array for each multiplication expression and write the total."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Array Vocabulary",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review array, row, and column words.",
+            "deckId": "lesson-g3-u10-w1-d1-array-vocab"
+          },
+          "bigIdea": {
+            "title": "Build Arrays to Represent Multiplication",
+            "subtitle": "Rows and columns show multiplication",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "An array is like a grid. The number of rows and columns are the factors, and the total number of items is the product.",
+            "bigQuestion": "How does an array show the two factors of a multiplication problem?",
+            "starTip": {
+              "title": "Rows and columns",
+              "lines": ["Count the rows", "Count the columns"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Rows",
+                "equation": "3 rows of 5",
+                "badge": "Horizontal groups",
+                "description": "Rows go across the array."
+              },
+              {
+                "eyebrow": "Columns",
+                "equation": "5 columns of 3",
+                "badge": "Vertical groups",
+                "description": "Columns go up and down the array."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u10-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Write Two Multiplication Equations for an Array",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting rows and columns and writing two equations.",
+          "concept": "An array can be seen two ways: rows × columns or columns × rows. Both give the same product because of the commutative property.",
+          "practice": "Write two multiplication equations for each array and explain why they have the same product.",
+          "objective": "Write two multiplication equations for an array.",
+          "practice_type": "two_equations_for_array",
+          "skills": [
+            "arrays",
+            "commutative_property",
+            "multiplication",
+            "equations"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "array_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by writing two equations.",
+            "questions": [
+              {
+                "id": "g3-u10-w1-d2-warmup-1",
+                "prompt": "Write two equations for 2 rows of 6.",
+                "correct_answer": "2 x 6 = 12 and 6 x 2 = 12",
+                "hint": "2 × 6 or 6 × 2.",
+                "skill": "commutative_property"
+              },
+              {
+                "id": "g3-u10-w1-d2-warmup-2",
+                "prompt": "What is 5 × 3?",
+                "correct_answer": "15",
+                "hint": "5 rows of 3.",
+                "skill": "multiplication"
+              },
+              {
+                "id": "g3-u10-w1-d2-warmup-3",
+                "prompt": "Is 4 × 5 the same as 5 × 4?",
+                "correct_answer": "yes",
+                "hint": "The product is 20 for both.",
+                "skill": "commutative_property"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Write Two Multiplication Equations for an Array",
+            "teaching_points": [
+              "One equation is rows × columns.",
+              "The other is columns × rows.",
+              "Both have the same product."
+            ],
+            "example": {
+              "prompt": "Write two equations for an array with 3 rows and 6 columns.",
+              "visual_type": "array",
+              "groups": 3,
+              "items_per_group": 6,
+              "equation": "3 × 6 = 18 and 6 × 3 = 18"
+            },
+            "vocabulary": ["commutative property", "equation", "array", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "two_equations_for_array",
+            "prompt": "Write two equations for an array with 4 rows and 5 columns.",
+            "correct_answer": "4 x 5 = 20 and 5 x 4 = 20",
+            "hint": "4 × 5 = 20 and 5 × 4 = 20.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "two_equations_for_array",
+            "question_count": 6,
+            "instructions": "Write two multiplication equations for each array."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Commutative Property",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review the commutative property of multiplication.",
+            "deckId": "lesson-g3-u10-w1-d2-commutative"
+          },
+          "bigIdea": {
+            "title": "Write Two Multiplication Equations for an Array",
+            "subtitle": "An array can be turned two ways",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Turn your head and an array looks different, but the total stays the same. That is why 3 × 6 and 6 × 3 both equal 18.",
+            "bigQuestion": "Why can you write two equations for the same array?",
+            "starTip": {
+              "title": "Flip the array",
+              "lines": ["Rows become columns", "Product stays the same"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Rows × columns",
+                "equation": "3 × 6 = 18",
+                "badge": "One way",
+                "description": "Count the rows first, then the columns."
+              },
+              {
+                "eyebrow": "Columns × rows",
+                "equation": "6 × 3 = 18",
+                "badge": "Same total",
+                "description": "Count the columns first, then the rows."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u10-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Represent Multiplication on a Number Line",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by making equal jumps on a number line.",
+          "concept": "A number line can show multiplication as equal jumps. 4 × 3 is four jumps of 3, landing on 12.",
+          "practice": "Draw jumps on a number line for multiplication facts.",
+          "objective": "Represent multiplication on a number line.",
+          "practice_type": "multiplication_number_line",
+          "skills": [
+            "number_line",
+            "multiplication",
+            "jumps",
+            "equal_groups"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "number_line_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting jumps.",
+            "questions": [
+              {
+                "id": "g3-u10-w1-d3-warmup-1",
+                "prompt": "Make 3 jumps of 4. Where do you land?",
+                "correct_answer": "12",
+                "hint": "4, 8, 12.",
+                "skill": "number_line"
+              },
+              {
+                "id": "g3-u10-w1-d3-warmup-2",
+                "prompt": "How many jumps of 5 make 20?",
+                "correct_answer": "4",
+                "hint": "5, 10, 15, 20.",
+                "skill": "number_line"
+              },
+              {
+                "id": "g3-u10-w1-d3-warmup-3",
+                "prompt": "What multiplication equation matches 2 jumps of 6?",
+                "correct_answer": "2 x 6 = 12",
+                "hint": "2 groups of 6.",
+                "skill": "multiplication"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Represent Multiplication on a Number Line",
+            "teaching_points": [
+              "The number of jumps is one factor.",
+              "The size of each jump is the other factor.",
+              "Where you land is the product."
+            ],
+            "example": {
+              "prompt": "Show 5 × 2 on a number line.",
+              "visual_type": "number_line",
+              "groups": 5,
+              "items_per_group": 2,
+              "equation": "5 jumps of 2 = 10"
+            },
+            "vocabulary": ["jump", "number line", "factor", "product"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiplication_number_line",
+            "prompt": "Show 3 × 5 on a number line and find the product.",
+            "correct_answer": "15",
+            "hint": "3 jumps of 5.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiplication_number_line",
+            "question_count": 6,
+            "instructions": "Draw equal jumps on a number line for each multiplication expression."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Number Line Multiplication",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review number-line multiplication vocabulary.",
+            "deckId": "lesson-g3-u10-w1-d3-number-line-multiplication"
+          },
+          "bigIdea": {
+            "title": "Represent Multiplication on a Number Line",
+            "subtitle": "Jumps show equal groups",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "On a number line, multiplication looks like equal jumps. The number of jumps and the size of each jump are the two factors.",
+            "bigQuestion": "How is a number-line jump like an equal group?",
+            "starTip": {
+              "title": "Count jumps",
+              "lines": ["Number of jumps", "Size of each jump"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Number of jumps",
+                "equation": "5 × 2",
+                "badge": "5 jumps",
+                "description": "The first factor tells how many jumps to make."
+              },
+              {
+                "eyebrow": "Size of jumps",
+                "equation": "5 × 2",
+                "badge": "Jump by 2",
+                "description": "The second factor tells how far each jump is."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u10-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Connect Models, Equations, and Stories",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by matching arrays, equations, and word problems.",
+          "concept": "A multiplication story can be shown as an array, a number line, or an equation. All three represent the same multiplication.",
+          "practice": "Match and create models, equations, and stories for multiplication.",
+          "objective": "Connect models, equations, and stories for multiplication.",
+          "practice_type": "connect_models_equations_stories",
+          "skills": [
+            "arrays",
+            "number_line",
+            "equations",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "matching_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by matching models to equations.",
+            "questions": [
+              {
+                "id": "g3-u10-w1-d4-warmup-1",
+                "prompt": "What equation matches 3 rows of 7?",
+                "correct_answer": "3 x 7 = 21",
+                "hint": "3 × 7.",
+                "skill": "arrays"
+              },
+              {
+                "id": "g3-u10-w1-d4-warmup-2",
+                "prompt": "What story matches 4 × 5?",
+                "correct_answer": "4 groups of 5",
+                "hint": "4 groups with 5 in each group.",
+                "skill": "word_problems"
+              },
+              {
+                "id": "g3-u10-w1-d4-warmup-3",
+                "prompt": "A number line has 4 jumps of 3. What is the product?",
+                "correct_answer": "12",
+                "hint": "4 × 3 = 12.",
+                "skill": "number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Connect Models, Equations, and Stories",
+            "teaching_points": [
+              "The same multiplication can be shown in different ways.",
+              "A picture, equation, and story should all match.",
+              "Models help explain the meaning of multiplication."
+            ],
+            "example": {
+              "prompt": "Show 3 × 4 as an array, a number line, and a story.",
+              "visual_type": "array",
+              "groups": 3,
+              "items_per_group": 4,
+              "equation": "Array: 3 rows of 4. Number line: 3 jumps of 4. Story: 3 bags of 4 apples."
+            },
+            "vocabulary": ["model", "equation", "story", "represent"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "connect_models_equations_stories",
+            "prompt": "Match the story to a model: 5 boxes with 6 crayons each.",
+            "correct_answer": "5 x 6 = 30",
+            "hint": "5 groups of 6.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "connect_models_equations_stories",
+            "question_count": 6,
+            "instructions": "Draw a model, write an equation, and tell a story for each multiplication."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Models and Stories",
+            "type": "multiplication_terms",
+            "card_count": 6,
+            "instructions": "Review how models, equations, and stories connect.",
+            "deckId": "lesson-g3-u10-w1-d4-models-stories"
+          },
+          "bigIdea": {
+            "title": "Connect Models, Equations, and Stories",
+            "subtitle": "Multiplication can look different but mean the same thing",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A multiplication problem can be shown as an array, jumps on a number line, or a story. All of them show the same factors and product.",
+            "bigQuestion": "Why is it useful to show multiplication in different ways?",
+            "starTip": {
+              "title": "Match all three",
+              "lines": ["Model", "Equation", "Story"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Array",
+                "equation": "3 × 4 = 12",
+                "badge": "Rows and columns",
+                "description": "Rows and columns show the factors and the total."
+              },
+              {
+                "eyebrow": "Number line",
+                "equation": "3 × 4 = 12",
+                "badge": "Equal jumps",
+                "description": "Equal jumps show the same multiplication as an array."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u10-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Multiplication Models",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of arrays, two equations, number lines, and connecting models.",
+          "concept": "Review the four big ideas from this unit: building arrays, writing two equations, number-line multiplication, and connecting models, equations, and stories.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about multiplication models.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "build_arrays",
+            "two_equations_for_array",
+            "multiplication_number_line",
+            "connect_models_equations_stories"
+          ],
+          "skills": [
+            "arrays",
+            "rows",
+            "columns",
+            "commutative_property",
+            "number_line",
+            "multiplication",
+            "models",
+            "equations"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u10-w1-d5-warmup-1",
+                "prompt": "Write two equations for an array with 5 rows and 3 columns.",
+                "correct_answer": "5 x 3 = 15 and 3 x 5 = 15",
+                "hint": "5 × 3 = 15 and 3 × 5 = 15.",
+                "skill": "commutative_property"
+              },
+              {
+                "id": "g3-u10-w1-d5-warmup-2",
+                "prompt": "What is 4 jumps of 5 on a number line?",
+                "correct_answer": "20",
+                "hint": "4 × 5 = 20.",
+                "skill": "number_line"
+              },
+              {
+                "id": "g3-u10-w1-d5-warmup-3",
+                "prompt": "A story says 3 boxes of 8 crayons. What is the total?",
+                "correct_answer": "24",
+                "hint": "3 × 8 = 24.",
+                "skill": "word_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "arrays + two equations + number line + models = multiplication models"
+            },
+            "vocabulary": ["evaluation", "review", "multiplication"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which equation matches an array of 4 rows and 7 columns?",
+            "correct_answer": "4 x 7 = 28",
+            "hint": "Rows × columns.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 10 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 10 before the evaluation.",
+            "deckId": "lesson-g3-u10-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Multiplication Models",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: arrays, two equations for an array, number-line multiplication, and connecting models, equations, and stories.",
+            "bigQuestion": "What do you know about multiplication models?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Arrays",
+                "equation": "rows × columns = product",
+                "badge": "Grid model",
+                "description": "Rows and columns give two factors for the same array."
+              },
+              {
+                "eyebrow": "Number line",
+                "equation": "jumps × jump size = product",
+                "badge": "Equal jumps",
+                "description": "Multiplication can be shown as equal jumps on a number line."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

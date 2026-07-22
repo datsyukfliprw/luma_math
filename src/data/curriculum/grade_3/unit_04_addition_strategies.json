@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 4,
+  "unit_title": "Addition Strategies",
+  "unit_slug": "addition_strategies",
+  "unit_description": "This unit develops flexible addition strategies. Students add three-digit numbers on a number line, use expanded form and compensation, and solve word problems without regrouping.",
+  "unit_goals": [
+    "Add three-digit numbers on a number line.",
+    "Add using expanded form.",
+    "Add using compensation.",
+    "Add without regrouping.",
+    "Solve one-step addition word problems."
+  ],
+  "fact_focus": ["addition", "3.NBT.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Addition Strategies",
+      "weekly_focus": "Students explore number-line, expanded-form, and compensation addition strategies, and apply them to word problems without regrouping.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u4-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Add Three-Digit Numbers on a Number Line",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by adding multiples of ten on a number line.",
+          "concept": "A number line shows addition as jumps to the right. Start at one addend, then jump by the other addend in friendly pieces.",
+          "practice": "Add three-digit numbers by making jumps of hundreds, tens, and ones on a number line.",
+          "objective": "Add three-digit numbers using a number line.",
+          "practice_type": "addition_number_line",
+          "skills": [
+            "addition",
+            "number_line",
+            "three_digit_addition",
+            "decomposition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "addition_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by adding tens mentally.",
+            "questions": [
+              {
+                "id": "g3-u4-w1-d1-warmup-1",
+                "prompt": "120 + 40 = ?",
+                "correct_answer": "160",
+                "hint": "12 tens + 4 tens = 16 tens.",
+                "skill": "addition_tens"
+              },
+              {
+                "id": "g3-u4-w1-d1-warmup-2",
+                "prompt": "250 + 300 = ?",
+                "correct_answer": "550",
+                "hint": "2 hundreds + 3 hundreds = 5 hundreds.",
+                "skill": "addition_hundreds"
+              },
+              {
+                "id": "g3-u4-w1-d1-warmup-3",
+                "prompt": "What is 35 + 20?",
+                "correct_answer": "55",
+                "hint": "35 plus 2 tens.",
+                "skill": "addition_tens"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Add Three-Digit Numbers on a Number Line",
+            "teaching_points": [
+              "Start at the bigger number.",
+              "Jump by hundreds, then tens, then ones.",
+              "Where you land is the sum."
+            ],
+            "example": {
+              "prompt": "Solve 245 + 123 on a number line.",
+              "visual_type": "number_line",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "245 + 100 + 20 + 3 = 368"
+            },
+            "vocabulary": ["addend", "sum", "number line", "jump"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "addition_number_line",
+            "prompt": "Solve 318 + 150 using a number line.",
+            "correct_answer": "468",
+            "hint": "Jump 100, then 50.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "addition_number_line",
+            "question_count": 6,
+            "instructions": "Solve each addition problem by making jumps on the number line."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Addition Vocabulary",
+            "type": "addition_terms",
+            "card_count": 6,
+            "instructions": "Review addition words and number-line moves.",
+            "deckId": "lesson-g3-u4-w1-d1-addition-vocab"
+          },
+          "bigIdea": {
+            "title": "Add Three-Digit Numbers on a Number Line",
+            "subtitle": "Use jumps to show addition",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A number line helps you add by breaking the second number into friendly jumps. Jump by hundreds, tens, and ones, and see where you land.",
+            "bigQuestion": "Why are friendly jumps helpful when adding?",
+            "starTip": {
+              "title": "Break it into jumps",
+              "lines": ["Start big", "Add hundreds first"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Start at the first addend",
+                "equation": "245 + 123",
+                "badge": "Begin at 245",
+                "description": "Place your starting point at one of the numbers you are adding."
+              },
+              {
+                "eyebrow": "Jump in pieces",
+                "equation": "+100, +20, +3",
+                "badge": "Friendly parts",
+                "description": "Break the second number into hundreds, tens, and ones."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u4-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Add Using Expanded Form",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by adding the hundreds, tens, and ones separately.",
+          "concept": "Expanded form breaks each number into its place values. Add hundreds with hundreds, tens with tens, and ones with ones, then put the number back together.",
+          "practice": "Add two three-digit numbers using expanded form.",
+          "objective": "Add using expanded form.",
+          "practice_type": "addition_expanded_form",
+          "skills": [
+            "addition",
+            "expanded_form",
+            "place_value",
+            "three_digit_addition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "expanded_form_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by adding matching place values.",
+            "questions": [
+              {
+                "id": "g3-u4-w1-d2-warmup-1",
+                "prompt": "300 + 200 = ?",
+                "correct_answer": "500",
+                "hint": "3 hundreds + 2 hundreds.",
+                "skill": "addition_hundreds"
+              },
+              {
+                "id": "g3-u4-w1-d2-warmup-2",
+                "prompt": "40 + 50 = ?",
+                "correct_answer": "90",
+                "hint": "4 tens + 5 tens = 9 tens.",
+                "skill": "addition_tens"
+              },
+              {
+                "id": "g3-u4-w1-d2-warmup-3",
+                "prompt": "600 + 70 + 2 = ?",
+                "correct_answer": "672",
+                "hint": "6 hundreds, 7 tens, and 2 ones.",
+                "skill": "expanded_form"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Add Using Expanded Form",
+            "teaching_points": [
+              "Break each number into hundreds, tens, and ones.",
+              "Add each place separately.",
+              "Combine the place values to find the sum."
+            ],
+            "example": {
+              "prompt": "Solve 241 + 326 using expanded form.",
+              "visual_type": "expanded_form",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "(200 + 300) + (40 + 20) + (1 + 6) = 500 + 60 + 7 = 567"
+            },
+            "vocabulary": ["expanded form", "add", "sum", "place value"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "addition_expanded_form",
+            "prompt": "Solve 415 + 232 using expanded form.",
+            "correct_answer": "647",
+            "hint": "400 + 200, 10 + 30, 5 + 2.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "addition_expanded_form",
+            "question_count": 6,
+            "instructions": "Add each pair of numbers using expanded form."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Expanded Form Addition",
+            "type": "expanded_form",
+            "card_count": 6,
+            "instructions": "Review expanded-form addition steps.",
+            "deckId": "lesson-g3-u4-w1-d2-expanded-addition"
+          },
+          "bigIdea": {
+            "title": "Add Using Expanded Form",
+            "subtitle": "Add each place value separately",
+            "thumbnail": "/images/learn/thumbnails/expanded-form.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Expanded form breaks numbers into their parts. When you add matching places, you can see why the digits line up.",
+            "bigQuestion": "Why do the place values have to line up?",
+            "starTip": {
+              "title": "Match the places",
+              "lines": ["Hundreds with hundreds", "Tens with tens"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Break apart",
+                "equation": "241 = 200 + 40 + 1",
+                "badge": "Each place shown",
+                "description": "Write each number as the sum of its place values."
+              },
+              {
+                "eyebrow": "Combine",
+                "equation": "500 + 60 + 7 = 567",
+                "badge": "Put it back together",
+                "description": "Add each place value, then combine them into one number."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u4-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Add Using Compensation",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by finding pairs of numbers that make 100.",
+          "concept": "Compensation means moving a small amount from one addend to another to make the problem easier. The total stays the same.",
+          "practice": "Add by adjusting one addend to make a friendly number.",
+          "objective": "Add using compensation.",
+          "practice_type": "addition_compensation",
+          "skills": [
+            "addition",
+            "compensation",
+            "friendly_numbers",
+            "number_sense"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "compensation_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding friendly numbers.",
+            "questions": [
+              {
+                "id": "g3-u4-w1-d3-warmup-1",
+                "prompt": "What is 9 + 6?",
+                "correct_answer": "15",
+                "hint": "Move 1 from 6 to 9 to make 10 + 5.",
+                "skill": "compensation"
+              },
+              {
+                "id": "g3-u4-w1-d3-warmup-2",
+                "prompt": "What is 298 + 5?",
+                "correct_answer": "303",
+                "hint": "298 + 2 = 300, plus 3 more.",
+                "skill": "compensation"
+              },
+              {
+                "id": "g3-u4-w1-d3-warmup-3",
+                "prompt": "What is 397 + 50?",
+                "correct_answer": "447",
+                "hint": "397 + 3 = 400, plus 47 more.",
+                "skill": "compensation"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Add Using Compensation",
+            "teaching_points": [
+              "Move a small amount to make a friendly number.",
+              "Add to the friendly number.",
+              "The total does not change because you only moved value."
+            ],
+            "example": {
+              "prompt": "Solve 299 + 47 using compensation.",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "299 + 1 = 300, then 300 + 46 = 346"
+            },
+            "vocabulary": ["compensation", "friendly number", "move", "total"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "addition_compensation",
+            "prompt": "Solve 398 + 56 using compensation.",
+            "correct_answer": "454",
+            "hint": "Move 2 to make 400, then 400 + 54.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "addition_compensation",
+            "question_count": 6,
+            "instructions": "Use compensation to make each addition problem easier."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Compensation Moves",
+            "type": "compensation_terms",
+            "card_count": 6,
+            "instructions": "Review how to move value between addends.",
+            "deckId": "lesson-g3-u4-w1-d3-compensation-moves"
+          },
+          "bigIdea": {
+            "title": "Add Using Compensation",
+            "subtitle": "Make a friendly number, then add",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Sometimes you can move a small piece from one number to another to make a friendly number. The total stays the same because you did not add or remove anything.",
+            "bigQuestion": "Why does the total stay the same when you compensate?",
+            "starTip": {
+              "title": "Move to make tens",
+              "lines": ["Take from one addend", "Add to the other"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Make a friendly number",
+                "equation": "299 + 47 → 300 + 46",
+                "badge": "Move 1",
+                "description": "Move a small amount to make a number that is easy to work with."
+              },
+              {
+                "eyebrow": "Total stays the same",
+                "equation": "299 + 47 = 300 + 46",
+                "badge": "Balance",
+                "description": "Moving value between addends does not change the total."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u4-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Add Without Regrouping and Solve Word Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with three no-regrouping addition facts.",
+          "concept": "When no place adds to more than 9, you can add each column without regrouping. Use the same strategies in word problems.",
+          "practice": "Add without regrouping and solve one-step addition word problems.",
+          "objective": "Add without regrouping and solve word problems.",
+          "practice_type": "addition_no_regroup",
+          "skills": [
+            "addition",
+            "no_regrouping",
+            "word_problems",
+            "three_digit_addition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "addition_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by adding without regrouping.",
+            "questions": [
+              {
+                "id": "g3-u4-w1-d4-warmup-1",
+                "prompt": "212 + 345 = ?",
+                "correct_answer": "557",
+                "hint": "Add ones, then tens, then hundreds.",
+                "skill": "no_regrouping"
+              },
+              {
+                "id": "g3-u4-w1-d4-warmup-2",
+                "prompt": "403 + 120 = ?",
+                "correct_answer": "523",
+                "hint": "0 hundreds + 4 hundreds, 0 tens + 2 tens, 3 ones + 0 ones.",
+                "skill": "no_regrouping"
+              },
+              {
+                "id": "g3-u4-w1-d4-warmup-3",
+                "prompt": "A library has 124 fiction books and 213 nonfiction books. How many books total?",
+                "correct_answer": "337",
+                "hint": "124 + 213.",
+                "skill": "word_problems"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Add Without Regrouping",
+            "teaching_points": [
+              "Line up the place values.",
+              "Add the ones, then the tens, then the hundreds.",
+              "If no column is greater than 9, no regrouping is needed."
+            ],
+            "example": {
+              "prompt": "Solve 432 + 251.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "2 + 1 = 3, 30 + 50 = 80, 400 + 200 = 600, so 432 + 251 = 683"
+            },
+            "vocabulary": ["regroup", "column", "sum", "addend"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "addition_no_regroup",
+            "prompt": "A basket holds 345 apples and another holds 423 apples. How many apples are there in all?",
+            "correct_answer": "768",
+            "hint": "345 + 423. No column is greater than 9.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "addition_no_regroup",
+            "question_count": 6,
+            "instructions": "Add each pair of numbers or solve the word problem. No regrouping needed."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "No-Regrouping Addition",
+            "type": "addition_terms",
+            "card_count": 6,
+            "instructions": "Review no-regrouping addition and key words.",
+            "deckId": "lesson-g3-u4-w1-d4-no-regroup"
+          },
+          "bigIdea": {
+            "title": "Add Without Regrouping and Solve Word Problems",
+            "subtitle": "Add each column separately",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When each place value adds to nine or less, you can add the ones, tens, and hundreds straight down. This makes solving word problems straightforward.",
+            "bigQuestion": "How do you know if you need to regroup?",
+            "starTip": {
+              "title": "Check each column",
+              "lines": ["Ones plus ones", "No total over 9"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Line up places",
+                "equation": "432 + 251",
+                "badge": "Same column",
+                "description": "Make sure ones are under ones, tens under tens, and hundreds under hundreds."
+              },
+              {
+                "eyebrow": "No regrouping",
+                "equation": "each column ≤ 9",
+                "badge": "Add straight down",
+                "description": "If no column totals more than 9, you do not need to regroup."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u4-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Addition Strategies",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of number-line, expanded-form, compensation, and no-regrouping addition.",
+          "concept": "Review the four addition strategies from this unit: number line, expanded form, compensation, and no-regrouping addition.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about addition strategies.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "addition_number_line",
+            "addition_expanded_form",
+            "addition_compensation",
+            "addition_no_regroup"
+          ],
+          "skills": [
+            "addition",
+            "number_line",
+            "expanded_form",
+            "compensation",
+            "no_regrouping",
+            "word_problems",
+            "three_digit_addition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u4-w1-d5-warmup-1",
+                "prompt": "Solve 225 + 312 using expanded form.",
+                "correct_answer": "537",
+                "hint": "200 + 300, 20 + 10, 5 + 2.",
+                "skill": "addition_expanded_form"
+              },
+              {
+                "id": "g3-u4-w1-d5-warmup-2",
+                "prompt": "Solve 399 + 25 using compensation.",
+                "correct_answer": "424",
+                "hint": "399 + 1 = 400, then 400 + 24.",
+                "skill": "addition_compensation"
+              },
+              {
+                "id": "g3-u4-w1-d5-warmup-3",
+                "prompt": "What is 405 + 332?",
+                "correct_answer": "737",
+                "hint": "No regrouping needed.",
+                "skill": "no_regrouping"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "number line + expanded form + compensation + no regrouping = addition strategies"
+            },
+            "vocabulary": ["evaluation", "review", "addition"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is the best estimate for 248 + 315?",
+            "correct_answer": "550",
+            "hint": "250 + 300 = 550.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 4 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 4 before the evaluation.",
+            "deckId": "lesson-g3-u4-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Addition Strategies",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: number-line addition, expanded-form addition, compensation, and no-regrouping addition.",
+            "bigQuestion": "What do you know about addition strategies?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Flexible strategies",
+                "equation": "Number line, expanded form, compensation",
+                "badge": "Pick what works",
+                "description": "You can use any strategy that makes the problem easy for you."
+              },
+              {
+                "eyebrow": "No regrouping",
+                "equation": "Add straight down",
+                "badge": "Each column ≤ 9",
+                "description": "When no column is greater than 9, add the places separately."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

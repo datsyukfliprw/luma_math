@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 5,
+  "unit_title": "Addition With Regrouping",
+  "unit_slug": "addition_with_regrouping",
+  "unit_description": "This unit extends addition to cases where regrouping is needed. Students regroup ones and tens, add three addends, and explore missing-digit and balanced-equation puzzles.",
+  "unit_goals": [
+    "Regroup ones when adding.",
+    "Regroup tens when adding.",
+    "Add three or more numbers.",
+    "Find missing digits in addition equations.",
+    "Understand the commutative and associative properties."
+  ],
+  "fact_focus": ["addition", "3.NBT.A.3"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Addition With Regrouping",
+      "weekly_focus": "Students learn to regroup ones and tens, add three addends, and solve missing-digit and balanced-equation puzzles.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u5-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Regroup Ones When Adding",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with sums that make a ten: 8 + 4, 7 + 5, 6 + 9.",
+          "concept": "When the ones add to 10 or more, trade ten ones for one ten. This is called regrouping.",
+          "practice": "Add two-digit and three-digit numbers where the ones need regrouping.",
+          "objective": "Regroup ones when adding.",
+          "practice_type": "addition_regroup_ones",
+          "skills": [
+            "addition",
+            "regrouping",
+            "ones",
+            "three_digit_addition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "addition_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by making tens.",
+            "questions": [
+              {
+                "id": "g3-u5-w1-d1-warmup-1",
+                "prompt": "8 + 5 = ?",
+                "correct_answer": "13",
+                "hint": "8 + 2 = 10, plus 3 more.",
+                "skill": "addition_facts"
+              },
+              {
+                "id": "g3-u5-w1-d1-warmup-2",
+                "prompt": "6 + 7 = ?",
+                "correct_answer": "13",
+                "hint": "6 + 4 = 10, plus 3 more.",
+                "skill": "addition_facts"
+              },
+              {
+                "id": "g3-u5-w1-d1-warmup-3",
+                "prompt": "9 + 9 = ?",
+                "correct_answer": "18",
+                "hint": "9 + 1 = 10, plus 8 more.",
+                "skill": "addition_facts"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Regroup Ones When Adding",
+            "teaching_points": [
+              "Add the ones column first.",
+              "If the sum is 10 or more, trade ten ones for one ten.",
+              "Write the leftover ones and carry the new ten to the tens column."
+            ],
+            "example": {
+              "prompt": "Solve 248 + 135.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "8 + 5 = 13. Trade 10 ones for 1 ten, leaving 3 ones. 1 ten + 4 tens + 3 tens = 8 tens. 2 hundreds + 1 hundred = 3 hundreds. 248 + 135 = 383."
+            },
+            "vocabulary": ["regroup", "ones", "trade", "carry"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "addition_regroup_ones",
+            "prompt": "Solve 176 + 258.",
+            "correct_answer": "434",
+            "hint": "6 + 8 = 14. Regroup 10 ones as 1 ten.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "addition_regroup_ones",
+            "question_count": 6,
+            "instructions": "Add. Regroup ones when needed."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Regrouping Ones",
+            "type": "addition_terms",
+            "card_count": 6,
+            "instructions": "Review regrouping ones steps.",
+            "deckId": "lesson-g3-u5-w1-d1-regroup-ones"
+          },
+          "bigIdea": {
+            "title": "Regroup Ones When Adding",
+            "subtitle": "Trade ten ones for one ten",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When the ones add up to ten or more, we bundle ten ones into a ten. This keeps each place from getting too big.",
+            "bigQuestion": "Why do we regroup when adding?",
+            "starTip": {
+              "title": "Bundle ones",
+              "lines": ["Ten ones", "Make one ten"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Add ones first",
+                "equation": "8 + 5 = 13",
+                "badge": "13 ones",
+                "description": "If the ones total 10 or more, you need to regroup."
+              },
+              {
+                "eyebrow": "Trade and carry",
+                "equation": "13 ones = 1 ten + 3 ones",
+                "badge": "Leave 3",
+                "description": "Trade ten ones for one ten. Carry the ten to the tens column."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u5-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Regroup Tens When Adding",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by adding multiples of ten that make 100.",
+          "concept": "When the tens add to 10 or more, trade ten tens for one hundred. This works just like regrouping ones.",
+          "practice": "Add three-digit numbers where the tens need regrouping.",
+          "objective": "Regroup tens when adding.",
+          "practice_type": "addition_regroup_tens",
+          "skills": [
+            "addition",
+            "regrouping",
+            "tens",
+            "three_digit_addition"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "addition_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by adding tens to 100.",
+            "questions": [
+              {
+                "id": "g3-u5-w1-d2-warmup-1",
+                "prompt": "60 + 50 = ?",
+                "correct_answer": "110",
+                "hint": "6 tens + 5 tens = 11 tens = 1 hundred and 1 ten.",
+                "skill": "addition_tens"
+              },
+              {
+                "id": "g3-u5-w1-d2-warmup-2",
+                "prompt": "80 + 70 = ?",
+                "correct_answer": "150",
+                "hint": "8 tens + 7 tens = 15 tens.",
+                "skill": "addition_tens"
+              },
+              {
+                "id": "g3-u5-w1-d2-warmup-3",
+                "prompt": "30 + 90 = ?",
+                "correct_answer": "120",
+                "hint": "3 tens + 9 tens = 12 tens.",
+                "skill": "addition_tens"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Regroup Tens When Adding",
+            "teaching_points": [
+              "Add the ones first, then the tens.",
+              "If the tens sum to 10 or more, trade ten tens for one hundred.",
+              "Carry the new hundred to the hundreds column."
+            ],
+            "example": {
+              "prompt": "Solve 475 + 346.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "5 + 6 = 11 ones → 1 ten + 1 one. 7 + 4 + 1 = 12 tens → 1 hundred + 2 tens. 4 + 3 + 1 = 8 hundreds. 475 + 346 = 821."
+            },
+            "vocabulary": ["regroup", "tens", "hundred", "carry"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "addition_regroup_tens",
+            "prompt": "Solve 568 + 273.",
+            "correct_answer": "841",
+            "hint": "6 + 7 = 13 tens. Trade for 1 hundred.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "addition_regroup_tens",
+            "question_count": 6,
+            "instructions": "Add. Regroup tens and ones when needed."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Regrouping Tens",
+            "type": "addition_terms",
+            "card_count": 6,
+            "instructions": "Review regrouping tens and ones.",
+            "deckId": "lesson-g3-u5-w1-d2-regroup-tens"
+          },
+          "bigIdea": {
+            "title": "Regroup Tens When Adding",
+            "subtitle": "Trade ten tens for one hundred",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Just like ten ones make a ten, ten tens make a hundred. When the tens column adds to ten or more, regroup into a hundred.",
+            "bigQuestion": "How is regrouping tens like regrouping ones?",
+            "starTip": {
+              "title": "Bundle tens",
+              "lines": ["Ten tens", "Make one hundred"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Add tens",
+                "equation": "70 + 50 = 120",
+                "badge": "12 tens",
+                "description": "When the tens total 10 or more, regroup into hundreds."
+              },
+              {
+                "eyebrow": "Carry hundreds",
+                "equation": "120 = 1 hundred + 2 tens",
+                "badge": "Move to hundreds",
+                "description": "Trade ten tens for one hundred and carry it to the hundreds column."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u5-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Add Three Numbers",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by adding three one-digit numbers.",
+          "concept": "When adding three numbers, look for friendly combinations first, then add the third. You may need to regroup more than once.",
+          "practice": "Add three two- or three-digit numbers, regrouping when needed.",
+          "objective": "Add three numbers using friendly pairs and regrouping.",
+          "practice_type": "addition_three_numbers",
+          "skills": [
+            "addition",
+            "regrouping",
+            "friendly_numbers",
+            "three_addends"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "addition_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by adding three numbers quickly.",
+            "questions": [
+              {
+                "id": "g3-u5-w1-d3-warmup-1",
+                "prompt": "7 + 4 + 6 = ?",
+                "correct_answer": "17",
+                "hint": "6 + 4 = 10, then 10 + 7.",
+                "skill": "three_addends"
+              },
+              {
+                "id": "g3-u5-w1-d3-warmup-2",
+                "prompt": "8 + 9 + 2 = ?",
+                "correct_answer": "19",
+                "hint": "8 + 2 = 10, then 10 + 9.",
+                "skill": "three_addends"
+              },
+              {
+                "id": "g3-u5-w1-d3-warmup-3",
+                "prompt": "25 + 18 + 12 = ?",
+                "correct_answer": "55",
+                "hint": "18 + 12 = 30, then 25 + 30.",
+                "skill": "three_addends"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Add Three Numbers",
+            "teaching_points": [
+              "Look for two numbers that make a ten or a hundred.",
+              "Add those first.",
+              "Then add the third number, regrouping if needed."
+            ],
+            "example": {
+              "prompt": "Solve 145 + 218 + 155.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "145 + 155 = 300, then 300 + 218 = 518"
+            },
+            "vocabulary": ["addend", "sum", "friendly pair", "commutative"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "addition_three_numbers",
+            "prompt": "Solve 326 + 274 + 109.",
+            "correct_answer": "709",
+            "hint": "326 + 274 = 600, then 600 + 109.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "addition_three_numbers",
+            "question_count": 6,
+            "instructions": "Add the three numbers. Look for friendly pairs first."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Adding Three Numbers",
+            "type": "addition_terms",
+            "card_count": 6,
+            "instructions": "Review strategies for adding three addends.",
+            "deckId": "lesson-g3-u5-w1-d3-three-addends"
+          },
+          "bigIdea": {
+            "title": "Add Three Numbers",
+            "subtitle": "Find friendly pairs first",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Adding three numbers is easier when you look for two numbers that make a friendly sum. Then add the third number.",
+            "bigQuestion": "Why can you add numbers in any order?",
+            "starTip": {
+              "title": "Make tens or hundreds",
+              "lines": ["Find a friendly pair", "Add the third"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Friendly pairs",
+                "equation": "145 + 155 = 300",
+                "badge": "Look first",
+                "description": "Look for two numbers that add to a ten or a hundred."
+              },
+              {
+                "eyebrow": "Add in any order",
+                "equation": "a + b + c = a + c + b",
+                "badge": "Commutative",
+                "description": "The order of the addends does not change the sum."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u5-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Missing Digits, Balanced Equations, and Addition Properties",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up with addition facts and identify the sum in each column.",
+          "concept": "Find missing digits by working place by place. A balanced equation has equal sums on both sides. The commutative and associative properties help rearrange addends.",
+          "practice": "Find missing digits, balance equations, and explain addition properties.",
+          "objective": "Find missing digits and use the commutative and associative properties.",
+          "practice_type": "missing_digits_properties",
+          "skills": [
+            "addition",
+            "missing_digits",
+            "balanced_equations",
+            "properties",
+            "place_value"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "puzzle_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding the missing number.",
+            "questions": [
+              {
+                "id": "g3-u5-w1-d4-warmup-1",
+                "prompt": "8 + __ = 15",
+                "correct_answer": "7",
+                "hint": "15 - 8.",
+                "skill": "missing_addend"
+              },
+              {
+                "id": "g3-u5-w1-d4-warmup-2",
+                "prompt": "Is 12 + 9 = 9 + 12 true or false?",
+                "correct_answer": "true",
+                "hint": "Addends can switch places.",
+                "skill": "commutative_property"
+              },
+              {
+                "id": "g3-u5-w1-d4-warmup-3",
+                "prompt": "Find the missing digit: 2_5 + 314 = 559.",
+                "correct_answer": "4",
+                "hint": "5 + 4 = 9 ones, _ + 1 = 5 tens.",
+                "skill": "missing_digits"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Missing Digits and Properties",
+            "teaching_points": [
+              "Work one place at a time.",
+              "If a sum is too big for one digit, regroup.",
+              "The order and grouping of addends can change without changing the total."
+            ],
+            "example": {
+              "prompt": "Find the missing digit: 4_7 + 235 = 672.",
+              "visual_type": "place_value_chart",
+              "groups": 3,
+              "items_per_group": 1,
+              "equation": "7 + 5 = 12. Regroup: 1 ten + 2 ones. _ + 3 + 1 = 7 tens, so _ = 3. 4 + 2 = 6 hundreds."
+            },
+            "vocabulary": ["missing digit", "balanced equation", "commutative", "associative"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "missing_digits",
+            "prompt": "Find the missing digit: 5_6 + 147 = 703.",
+            "correct_answer": "5",
+            "hint": "6 + 7 = 13. _ + 4 + 1 = 10 tens, so _ = 5.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "missing_digits_properties",
+            "question_count": 6,
+            "instructions": "Find missing digits, balance equations, and name the property."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Addition Properties",
+            "type": "property_terms",
+            "card_count": 6,
+            "instructions": "Review missing-digit and property terms.",
+            "deckId": "lesson-g3-u5-w1-d4-addition-properties"
+          },
+          "bigIdea": {
+            "title": "Missing Digits, Balanced Equations, and Addition Properties",
+            "subtitle": "Use place value and properties to solve puzzles",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Missing-digit puzzles ask you to figure out a hidden digit. Work one place at a time, and remember that addition can happen in any order or grouping.",
+            "bigQuestion": "How can properties help you solve addition puzzles?",
+            "starTip": {
+              "title": "One place at a time",
+              "lines": ["Start with ones", "Watch for regrouping"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Commutative property",
+                "equation": "a + b = b + a",
+                "badge": "Switch order",
+                "description": "The order of the addends does not change the sum."
+              },
+              {
+                "eyebrow": "Associative property",
+                "equation": "(a + b) + c = a + (b + c)",
+                "badge": "Group differently",
+                "description": "The grouping of the addends does not change the sum."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u5-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Addition Within 1,000",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of regrouping ones, regrouping tens, adding three numbers, and missing-digit puzzles.",
+          "concept": "Review the addition-with-regrouping skills from this unit: regroup ones, regroup tens, add three numbers, and find missing digits.",
+          "practice": "Complete a balanced evaluation covering addition within 1,000.",
+          "objective": "Show what you know about addition within 1,000.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "addition_regroup_ones",
+            "addition_regroup_tens",
+            "addition_three_numbers",
+            "missing_digits_properties"
+          ],
+          "skills": [
+            "addition",
+            "regrouping",
+            "three_digit_addition",
+            "three_addends",
+            "missing_digits",
+            "balanced_equations",
+            "properties"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u5-w1-d5-warmup-1",
+                "prompt": "Solve 467 + 285.",
+                "correct_answer": "752",
+                "hint": "Regroup ones and tens.",
+                "skill": "addition_regrouping"
+              },
+              {
+                "id": "g3-u5-w1-d5-warmup-2",
+                "prompt": "Solve 128 + 245 + 72.",
+                "correct_answer": "445",
+                "hint": "128 + 72 = 200, then 200 + 245.",
+                "skill": "three_addends"
+              },
+              {
+                "id": "g3-u5-w1-d5-warmup-3",
+                "prompt": "Find the missing digit: 3_9 + 264 = 613.",
+                "correct_answer": "4",
+                "hint": "9 + 4 = 13, _ + 6 + 1 = 11 tens.",
+                "skill": "missing_digits"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "regroup ones + regroup tens + three addends + missing digits = addition within 1,000"
+            },
+            "vocabulary": ["evaluation", "review", "addition"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is the best estimate for 398 + 207?",
+            "correct_answer": "600",
+            "hint": "400 + 200 = 600.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 5 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 5 before the evaluation.",
+            "deckId": "lesson-g3-u5-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Addition Within 1,000",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: regrouping ones, regrouping tens, adding three numbers, and missing-digit and property puzzles.",
+            "bigQuestion": "What do you know about addition within 1,000?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Regrouping",
+                "equation": "10 ones = 1 ten, 10 tens = 1 hundred",
+                "badge": "Trade up",
+                "description": "Whenever a place reaches 10, regroup to the next larger place."
+              },
+              {
+                "eyebrow": "Properties",
+                "equation": "Order and grouping don't matter",
+                "badge": "Flexible",
+                "description": "Use the commutative and associative properties to make addition easier."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

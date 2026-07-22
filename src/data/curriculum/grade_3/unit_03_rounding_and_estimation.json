@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 3,
+  "unit_title": "Rounding and Estimation",
+  "unit_slug": "rounding_and_estimation",
+  "unit_description": "This unit builds rounding and estimation skills. Students round to the nearest ten and hundred using number lines and place value, then use rounded numbers to estimate and judge reasonable answers.",
+  "unit_goals": [
+    "Round numbers to the nearest ten using a number line.",
+    "Round numbers to the nearest hundred using a number line.",
+    "Use place value to round numbers.",
+    "Estimate sums, differences, and products.",
+    "Identify whether an answer is reasonable."
+  ],
+  "fact_focus": ["rounding", "3.NBT.A.1"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Rounding and Estimation",
+      "weekly_focus": "Students learn to round to the nearest ten and hundred, use place-value reasoning, and estimate to check whether answers make sense.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u3-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Round to the Nearest Ten",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting by tens on a number line.",
+          "concept": "A number rounds to the nearest ten that is closest on the number line. If it is exactly halfway, round up to the next ten.",
+          "practice": "Round two- and three-digit numbers to the nearest ten on a number line.",
+          "objective": "Round numbers to the nearest ten.",
+          "practice_type": "round_ten",
+          "skills": [
+            "rounding",
+            "nearest_ten",
+            "number_line",
+            "number_sense"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "rounding_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding the nearest ten.",
+            "questions": [
+              {
+                "id": "g3-u3-w1-d1-warmup-1",
+                "prompt": "What is the nearest ten to 27?",
+                "correct_answer": "30",
+                "hint": "27 is closer to 30 than to 20.",
+                "skill": "nearest_ten"
+              },
+              {
+                "id": "g3-u3-w1-d1-warmup-2",
+                "prompt": "What is the nearest ten to 45?",
+                "correct_answer": "50",
+                "hint": "5 or more round up.",
+                "skill": "nearest_ten"
+              },
+              {
+                "id": "g3-u3-w1-d1-warmup-3",
+                "prompt": "What is the nearest ten to 62?",
+                "correct_answer": "60",
+                "hint": "62 is closer to 60.",
+                "skill": "nearest_ten"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Round to the Nearest Ten",
+            "teaching_points": [
+              "Tens are the numbers 0, 10, 20, 30, ...",
+              "Find the two tens a number is between.",
+              "Choose the ten that is closer. If halfway, round up."
+            ],
+            "example": {
+              "prompt": "Round 37 to the nearest ten.",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "37 is between 30 and 40. It is closer to 40."
+            },
+            "vocabulary": ["round", "nearest ten", "number line", "closer"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "round_ten",
+            "prompt": "Round 54 to the nearest ten.",
+            "correct_answer": "50",
+            "hint": "54 is closer to 50 than 60.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "round_ten",
+            "question_count": 6,
+            "instructions": "Round each number to the nearest ten."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Rounding to the Nearest Ten",
+            "type": "rounding_terms",
+            "card_count": 6,
+            "instructions": "Review rounding vocabulary and rules.",
+            "deckId": "lesson-g3-u3-w1-d1-round-ten"
+          },
+          "bigIdea": {
+            "title": "Round to the Nearest Ten",
+            "subtitle": "Find the closest ten on the number line",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Rounding makes numbers easier to work with. On a number line, rounding to the nearest ten means jumping to the closest ten.",
+            "bigQuestion": "How do you know which ten is closer?",
+            "starTip": {
+              "title": "Look at the ones",
+              "lines": ["5 or more, round up", "4 or less, round down"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Find the tens",
+                "equation": "37 is between 30 and 40",
+                "badge": "Two choices",
+                "description": "First locate the two tens the number is between."
+              },
+              {
+                "eyebrow": "Halfway rounds up",
+                "equation": "35 → 40",
+                "badge": "5 or more",
+                "description": "When the ones digit is 5 or more, round up to the next ten."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u3-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Round to the Nearest Hundred",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by counting by hundreds on a number line.",
+          "concept": "A number rounds to the nearest hundred that is closest on the number line. The tens digit tells you whether to round up or down.",
+          "practice": "Round three- and four-digit numbers to the nearest hundred.",
+          "objective": "Round numbers to the nearest hundred.",
+          "practice_type": "round_hundred",
+          "skills": [
+            "rounding",
+            "nearest_hundred",
+            "number_line",
+            "place_value"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "rounding_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding the nearest hundred.",
+            "questions": [
+              {
+                "id": "g3-u3-w1-d2-warmup-1",
+                "prompt": "What is the nearest hundred to 280?",
+                "correct_answer": "300",
+                "hint": "280 is closer to 300 than 200.",
+                "skill": "nearest_hundred"
+              },
+              {
+                "id": "g3-u3-w1-d2-warmup-2",
+                "prompt": "What is the nearest hundred to 450?",
+                "correct_answer": "500",
+                "hint": "5 or more in the tens place rounds up.",
+                "skill": "nearest_hundred"
+              },
+              {
+                "id": "g3-u3-w1-d2-warmup-3",
+                "prompt": "What is the nearest hundred to 1,230?",
+                "correct_answer": "1200",
+                "hint": "230 is closer to 200.",
+                "skill": "nearest_hundred"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Round to the Nearest Hundred",
+            "teaching_points": [
+              "Hundreds are 0, 100, 200, 300, ...",
+              "Look at the tens digit to decide.",
+              "5 or more in the tens place means round up."
+            ],
+            "example": {
+              "prompt": "Round 462 to the nearest hundred.",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "462 is between 400 and 500. The tens digit is 6, so round up to 500."
+            },
+            "vocabulary": ["nearest hundred", "hundreds", "tens digit", "round up"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "round_hundred",
+            "prompt": "Round 745 to the nearest hundred.",
+            "correct_answer": "700",
+            "hint": "The tens digit is 4, so round down.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "round_hundred",
+            "question_count": 6,
+            "instructions": "Round each number to the nearest hundred."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Rounding to the Nearest Hundred",
+            "type": "rounding_terms",
+            "card_count": 6,
+            "instructions": "Review rounding rules for hundreds.",
+            "deckId": "lesson-g3-u3-w1-d2-round-hundred"
+          },
+          "bigIdea": {
+            "title": "Round to the Nearest Hundred",
+            "subtitle": "Use the tens digit to decide",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Rounding to the nearest hundred is like rounding to the nearest ten, but you look at the tens digit to decide which hundred is closer.",
+            "bigQuestion": "What digit tells you to round up to the next hundred?",
+            "starTip": {
+              "title": "Look at the tens",
+              "lines": ["5 or more, round up", "4 or less, round down"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Tens digit decides",
+                "equation": "462 → 500 because 6 ≥ 5",
+                "badge": "Round up",
+                "description": "Look at the tens digit. If it is 5 or more, round up."
+              },
+              {
+                "eyebrow": "Round down",
+                "equation": "745 → 700 because 4 < 5",
+                "badge": "Tens less than 5",
+                "description": "If the tens digit is less than 5, keep the hundreds digit the same."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u3-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Use Place Value to Round Numbers",
+          "lesson_type": "lesson",
+          "fact_drill": "Round three numbers to the nearest ten and nearest hundred.",
+          "concept": "The digit to the right of the place you are rounding to tells you whether to round up or stay the same.",
+          "practice": "Round to the nearest ten, hundred, or thousand by looking at the digit to the right.",
+          "objective": "Use place value to round numbers to any target place.",
+          "practice_type": "round_place_value",
+          "skills": [
+            "rounding",
+            "place_value",
+            "digit_value",
+            "number_sense"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "place_value_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by identifying the digit to the right.",
+            "questions": [
+              {
+                "id": "g3-u3-w1-d3-warmup-1",
+                "prompt": "Round 3,748 to the nearest hundred.",
+                "correct_answer": "3700",
+                "hint": "Look at the tens digit: 4.",
+                "skill": "nearest_hundred"
+              },
+              {
+                "id": "g3-u3-w1-d3-warmup-2",
+                "prompt": "Round 8,562 to the nearest thousand.",
+                "correct_answer": "9000",
+                "hint": "Look at the hundreds digit: 5.",
+                "skill": "nearest_thousand"
+              },
+              {
+                "id": "g3-u3-w1-d3-warmup-3",
+                "prompt": "What digit do you look at to round 6,214 to the nearest hundred?",
+                "correct_answer": "1",
+                "hint": "The digit to the right of the hundreds place.",
+                "skill": "place_value"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Use Place Value to Round Numbers",
+            "teaching_points": [
+              "Find the place you are rounding to.",
+              "Look at the digit immediately to the right.",
+              "5 or more round up; 4 or less stay the same."
+            ],
+            "example": {
+              "prompt": "Round 4,358 to the nearest thousand.",
+              "visual_type": "place_value_chart",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "The hundreds digit is 3, so 4,358 rounds to 4,000."
+            },
+            "vocabulary": ["target place", "digit to the right", "round up", "round down"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "round_place_value",
+            "prompt": "Round 7,649 to the nearest thousand.",
+            "correct_answer": "8000",
+            "hint": "The hundreds digit is 6, so round up.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "round_place_value",
+            "question_count": 6,
+            "instructions": "Round each number to the target place."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Rounding by Place Value",
+            "type": "rounding_terms",
+            "card_count": 6,
+            "instructions": "Review how place value helps you round.",
+            "deckId": "lesson-g3-u3-w1-d3-round-place-value"
+          },
+          "bigIdea": {
+            "title": "Use Place Value to Round Numbers",
+            "subtitle": "Look at the digit to the right",
+            "thumbnail": "/images/learn/thumbnails/place-value.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "You can round to any place by looking at the digit one place to the right. That digit tells you whether to round up or stay.",
+            "bigQuestion": "How does place value help you round to larger places?",
+            "starTip": {
+              "title": "Find the target",
+              "lines": ["Look right", "5 or more up"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Target place",
+                "equation": "Round 4,358 to the nearest thousand",
+                "badge": "Look at hundreds",
+                "description": "Find the thousands place, then look at the digit to its right."
+              },
+              {
+                "eyebrow": "Round up or stay",
+                "equation": "6 or more → round up; 4 or less → stay",
+                "badge": "Right-hand digit",
+                "description": "The digit to the right decides the rounding direction."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u3-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Estimate and Identify Reasonable Answers",
+          "lesson_type": "lesson",
+          "fact_drill": "Round two numbers and add the rounded numbers mentally.",
+          "concept": "Estimate by rounding numbers to friendly places, then compute. Check if an answer is close to the estimate.",
+          "practice": "Estimate sums and differences and decide if a given answer is reasonable.",
+          "objective": "Use rounding to estimate and judge reasonableness.",
+          "practice_type": "estimate_reasonable",
+          "skills": [
+            "estimation",
+            "reasonableness",
+            "rounding",
+            "addition",
+            "subtraction"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "estimation_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by estimating quickly.",
+            "questions": [
+              {
+                "id": "g3-u3-w1-d4-warmup-1",
+                "prompt": "Estimate 48 + 32 by rounding each to the nearest ten.",
+                "correct_answer": "80",
+                "hint": "50 + 30 = 80.",
+                "skill": "estimation"
+              },
+              {
+                "id": "g3-u3-w1-d4-warmup-2",
+                "prompt": "Is 220 a reasonable answer for 58 + 61?",
+                "correct_answer": "no",
+                "hint": "58 + 61 is about 120.",
+                "skill": "reasonableness"
+              },
+              {
+                "id": "g3-u3-w1-d4-warmup-3",
+                "prompt": "Estimate 95 - 47 by rounding each to the nearest ten.",
+                "correct_answer": "50",
+                "hint": "100 - 50 = 50.",
+                "skill": "estimation"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Estimate and Identify Reasonable Answers",
+            "teaching_points": [
+              "Round each number to a friendly place.",
+              "Compute with the rounded numbers.",
+              "Compare the exact answer to the estimate."
+            ],
+            "example": {
+              "prompt": "Is 340 a reasonable answer for 178 + 156?",
+              "visual_type": "number_line",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "178 ≈ 200 and 156 ≈ 200, so the estimate is 400. 340 is not reasonable."
+            },
+            "vocabulary": ["estimate", "reasonable", "round", "about"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "estimate_reasonable",
+            "prompt": "Estimate 387 + 212 by rounding to the nearest hundred.",
+            "correct_answer": "600",
+            "hint": "400 + 200 = 600.",
+            "visual_data": {
+              "groups": 2,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "estimate_reasonable",
+            "question_count": 6,
+            "instructions": "Estimate each problem and decide if the given answer is reasonable."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Estimation Words",
+            "type": "estimation_terms",
+            "card_count": 6,
+            "instructions": "Review estimation and reasonableness vocabulary.",
+            "deckId": "lesson-g3-u3-w1-d4-estimation-words"
+          },
+          "bigIdea": {
+            "title": "Estimate and Identify Reasonable Answers",
+            "subtitle": "Round first, then judge",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Estimation helps you know if an answer makes sense. Round each number, do the easy calculation, and compare.",
+            "bigQuestion": "Why is it helpful to estimate before solving?",
+            "starTip": {
+              "title": "Round to easy numbers",
+              "lines": ["Add the rounded", "Compare answers"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Estimate first",
+                "equation": "178 + 156 ≈ 200 + 200 = 400",
+                "badge": "Friendly numbers",
+                "description": "Round to numbers that are easy to add or subtract mentally."
+              },
+              {
+                "eyebrow": "Check reasonableness",
+                "equation": "340 is not close to 400",
+                "badge": "Far off",
+                "description": "If the exact answer is far from the estimate, check your work."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u3-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Rounding and Estimation",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of rounding to tens, hundreds, and thousands, and estimating answers.",
+          "concept": "Review rounding to the nearest ten, hundred, and thousand, and using estimates to judge reasonable answers.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about rounding and estimation.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "round_ten",
+            "round_hundred",
+            "round_place_value",
+            "estimate_reasonable"
+          ],
+          "skills": [
+            "rounding",
+            "nearest_ten",
+            "nearest_hundred",
+            "nearest_thousand",
+            "estimation",
+            "reasonableness",
+            "place_value"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u3-w1-d5-warmup-1",
+                "prompt": "Round 63 to the nearest ten.",
+                "correct_answer": "60",
+                "hint": "3 is less than 5, so round down.",
+                "skill": "nearest_ten"
+              },
+              {
+                "id": "g3-u3-w1-d5-warmup-2",
+                "prompt": "Round 2,550 to the nearest hundred.",
+                "correct_answer": "2600",
+                "hint": "5 in the tens place rounds up.",
+                "skill": "nearest_hundred"
+              },
+              {
+                "id": "g3-u3-w1-d5-warmup-3",
+                "prompt": "Is 900 a reasonable estimate for 452 + 438?",
+                "correct_answer": "yes",
+                "hint": "450 + 440 is about 900.",
+                "skill": "reasonableness"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use a number line if you get stuck."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "round tens + round hundreds + place-value rounding + estimation = rounding and estimation"
+            },
+            "vocabulary": ["evaluation", "review", "rounding", "estimation"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is 6,247 rounded to the nearest thousand?",
+            "correct_answer": "6000",
+            "hint": "The hundreds digit is 2, so round down.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 3 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 3 before the evaluation.",
+            "deckId": "lesson-g3-u3-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Rounding and Estimation",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: rounding to tens, hundreds, any place, and estimating reasonable answers.",
+            "bigQuestion": "What do you know about rounding and estimation?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Round to target place",
+                "equation": "Look one place to the right",
+                "badge": "Core idea",
+                "description": "The digit to the right of the target place tells you whether to round up."
+              },
+              {
+                "eyebrow": "Estimate",
+                "equation": "Round, then compute",
+                "badge": "Reasonableness",
+                "description": "Use rounded numbers to check if an exact answer makes sense."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

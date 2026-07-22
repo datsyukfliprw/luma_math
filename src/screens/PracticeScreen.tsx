@@ -229,7 +229,28 @@ function PracticeScreen() {
   }, [practiceMode, currentLessonId]);
 
   const currentProblem = problems[currentProblemIndex];
-  const visualData = currentProblem?.visualData;
+
+  if (problems.length === 0 || !currentProblem) {
+    return (
+      <PageLayout>
+        <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8 text-center shadow-lg">
+          <div className="mb-4 text-4xl">🚧</div>
+          <h1 className="text-2xl font-black text-[#073B5A]">Practice being prepared</h1>
+          <p className="mt-2 font-semibold text-[#073B5A]/75">
+            This practice activity is not ready yet.
+          </p>
+          <Link
+            to={`/lesson/${currentLessonId}`}
+            className="mt-6 inline-block rounded-xl bg-[#00AFB9] px-6 py-3 font-black text-white hover:bg-[#0081A7]"
+          >
+            Back to Lesson
+          </Link>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  const visualData = currentProblem.visualData;
 
   const lessonPath = lessonId ? `/lesson/${lessonId}` : "/lesson";
   const correctCount = correctProblemIndexes.length;
@@ -242,10 +263,7 @@ function PracticeScreen() {
     : [];
 
   function openCompletionModal(firstCompletion: boolean) {
-    const recommendedMode = getRecommendedNextPracticeMode(
-      currentLessonId,
-      practiceMode,
-    );
+    const recommendedMode = getRecommendedNextPracticeMode(currentLessonId, practiceMode);
 
     setCompletionModal({
       firstCompletion,
@@ -274,10 +292,7 @@ function PracticeScreen() {
         currentProblemIndex >= problems.length - 1 && !current.includes(currentProblemIndex);
 
       if (justFinishedLastQuestion) {
-        const firstCompletion = !hasPracticeReward(
-          currentLessonId,
-          practiceMode,
-        );
+        const firstCompletion = !hasPracticeReward(currentLessonId, practiceMode);
 
         markPracticeReward(currentLessonId, practiceMode);
         updateLessonProgress(currentLessonId, {
@@ -1152,7 +1167,6 @@ function PracticeScreen() {
                 </div>
               </div>
             )}
-
 
             {feedback === null && (
               <div className="mx-auto mt-4 flex max-w-4xl items-center gap-4 rounded-3xl border border-[#00AFB9]/25 bg-[#E9F7F8] px-5 py-3 shadow-sm">

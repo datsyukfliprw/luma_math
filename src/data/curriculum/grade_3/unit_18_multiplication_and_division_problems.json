@@ -1,0 +1,633 @@
+{
+  "grade_level": 3,
+  "unit_number": 18,
+  "unit_title": "Multiplication and Division Problems",
+  "unit_slug": "multiplication_and_division_problems",
+  "unit_description": "This unit applies multiplication and division to problem solving. Students solve equal-group and array problems, use strip models, write equations with unknowns, and handle two-step problems and patterns.",
+  "unit_goals": [
+    "Solve equal-group and array word problems.",
+    "Use strip models to represent problems.",
+    "Write equations with unknown numbers.",
+    "Solve two-step multiplication and division problems.",
+    "Identify and explain patterns in problems."
+  ],
+  "fact_focus": ["multiplication", "division", "3.RA.A.4", "3.RA.D.9", "3.RA.E.11"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Multiplication and Division Problems",
+      "weekly_focus": "Students apply multiplication and division to word problems, strip models, equations with unknowns, and two-step problems.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u18-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Solve Equal-Group and Array Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing multiplication equations for equal groups and arrays.",
+          "concept": "Word problems about equal groups or arrays can be solved with multiplication. If the total and one factor are known, use division to find the missing factor.",
+          "practice": "Solve word problems about equal groups and arrays.",
+          "objective": "Solve equal-group and array word problems.",
+          "practice_type": "equal_group_array_problems",
+          "skills": [
+            "word_problems",
+            "multiplication",
+            "division",
+            "equal_groups",
+            "arrays"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "word_problem_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by choosing the operation.",
+            "questions": [
+              {
+                "id": "g3-u18-w1-d1-warmup-1",
+                "prompt": "There are 6 boxes with 8 crayons each. How many crayons?",
+                "correct_answer": "48",
+                "hint": "6 × 8.",
+                "skill": "multiplication"
+              },
+              {
+                "id": "g3-u18-w1-d1-warmup-2",
+                "prompt": "48 crayons are shared equally among 6 boxes. How many in each box?",
+                "correct_answer": "8",
+                "hint": "48 ÷ 6.",
+                "skill": "division"
+              },
+              {
+                "id": "g3-u18-w1-d1-warmup-3",
+                "prompt": "A shelf has 5 rows of 7 books. How many books?",
+                "correct_answer": "35",
+                "hint": "5 × 7.",
+                "skill": "arrays"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Solve Equal-Group and Array Problems",
+            "teaching_points": [
+              "Find the number of groups and the size of each group.",
+              "Multiply to find the total.",
+              "Divide if the total and one factor are known."
+            ],
+            "example": {
+              "prompt": "A farmer packs 24 apples into 4 baskets. How many in each basket?",
+              "visual_type": "groups",
+              "groups": 4,
+              "items_per_group": 6,
+              "equation": "24 ÷ 4 = 6"
+            },
+            "vocabulary": ["equal groups", "array", "total", "factor"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "equal_group_array_problems",
+            "prompt": "A classroom has 6 tables. Each table has 4 students. How many students?",
+            "correct_answer": "24",
+            "hint": "6 × 4 = 24.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 4
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "equal_group_array_problems",
+            "question_count": 6,
+            "instructions": "Solve each equal-group or array word problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Equal Group and Array Words",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review words for equal-group and array problems.",
+            "deckId": "lesson-g3-u18-w1-d1-equal-group-array-words"
+          },
+          "bigIdea": {
+            "title": "Solve Equal-Group and Array Problems",
+            "subtitle": "Use multiplication and division",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Equal-group and array problems use the same three numbers. If you know the groups and size, multiply. If you know the total and one factor, divide.",
+            "bigQuestion": "How are equal-group and array problems related?",
+            "starTip": {
+              "title": "Find groups and size",
+              "lines": ["Groups × size = total", "Total ÷ groups = size"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Find the total",
+                "equation": "6 × 4 = 24",
+                "badge": "Multiply",
+                "description": "Multiply groups by size to find the total."
+              },
+              {
+                "eyebrow": "Find a missing factor",
+                "equation": "24 ÷ 6 = 4",
+                "badge": "Divide",
+                "description": "Divide the total by the known factor."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u18-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Use Strip Models",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by drawing a strip for a given multiplication fact.",
+          "concept": "A strip model is a rectangle divided into equal parts. It can show multiplication, division, and unknown amounts. The total strip represents the product.",
+          "practice": "Draw and interpret strip models for multiplication and division problems.",
+          "objective": "Use strip models to represent multiplication and division problems.",
+          "practice_type": "strip_models",
+          "skills": [
+            "strip_models",
+            "multiplication",
+            "division",
+            "visualization"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "strip_model_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by matching strips to equations.",
+            "questions": [
+              {
+                "id": "g3-u18-w1-d2-warmup-1",
+                "prompt": "A strip is cut into 5 equal parts. Each part is 6. What is the total?",
+                "correct_answer": "30",
+                "hint": "5 × 6.",
+                "skill": "strip_models"
+              },
+              {
+                "id": "g3-u18-w1-d2-warmup-2",
+                "prompt": "A total strip is 36. It has 4 equal parts. How long is each part?",
+                "correct_answer": "9",
+                "hint": "36 ÷ 4.",
+                "skill": "strip_models"
+              },
+              {
+                "id": "g3-u18-w1-d2-warmup-3",
+                "prompt": "A strip has 7 parts of 8. What is the total?",
+                "correct_answer": "56",
+                "hint": "7 × 8.",
+                "skill": "strip_models"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Use Strip Models",
+            "teaching_points": [
+              "Draw a strip for the total.",
+              "Divide it into equal parts for groups.",
+              "Label the unknown with a question mark."
+            ],
+            "example": {
+              "prompt": "Use a strip model to solve 45 ÷ 9.",
+              "visual_type": "strip",
+              "groups": 9,
+              "items_per_group": 5,
+              "equation": "45 divided into 9 equal parts is 5 each."
+            },
+            "vocabulary": ["strip model", "parts", "whole", "equal parts"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "strip_models",
+            "prompt": "Use a strip model to solve 8 × 7.",
+            "correct_answer": "56",
+            "hint": "8 parts of 7 is 56.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "strip_models",
+            "question_count": 6,
+            "instructions": "Draw a strip model and solve each problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Strip Models",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review strip model vocabulary.",
+            "deckId": "lesson-g3-u18-w1-d2-strip-models"
+          },
+          "bigIdea": {
+            "title": "Use Strip Models",
+            "subtitle": "Draw a bar to show the problem",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A strip model shows the whole and its equal parts. It helps you see whether to multiply or divide and where the unknown is.",
+            "bigQuestion": "How does a strip model help you choose an operation?",
+            "starTip": {
+              "title": "Draw the whole",
+              "lines": ["Cut into equal parts", "Label the unknown"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Whole unknown",
+                "equation": "5 parts of 6 = ?",
+                "badge": "Multiply",
+                "description": "Multiply the number of parts by the size of each part."
+              },
+              {
+                "eyebrow": "Part unknown",
+                "equation": "30 ÷ 5 = ?",
+                "badge": "Divide",
+                "description": "Divide the whole by the number of parts."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u18-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Write Equations with Unknown Numbers",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by writing equations with a question mark for word problems.",
+          "concept": "An unknown number can be shown with a letter or a box. Write an equation that matches the problem, then solve for the unknown.",
+          "practice": "Write and solve multiplication and division equations with unknown numbers.",
+          "objective": "Write equations with unknown numbers for word problems.",
+          "practice_type": "equations_with_unknowns",
+          "skills": [
+            "equations",
+            "unknown_numbers",
+            "multiplication",
+            "division",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "unknown_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with unknowns.",
+            "questions": [
+              {
+                "id": "g3-u18-w1-d3-warmup-1",
+                "prompt": "Write an equation for: 7 times a number is 42.",
+                "correct_answer": "7 x n = 42",
+                "hint": "7 × n = 42.",
+                "skill": "equations_with_unknowns"
+              },
+              {
+                "id": "g3-u18-w1-d3-warmup-2",
+                "prompt": "A number divided by 5 is 6. Write an equation.",
+                "correct_answer": "n / 5 = 6",
+                "hint": "n ÷ 5 = 6.",
+                "skill": "equations_with_unknowns"
+              },
+              {
+                "id": "g3-u18-w1-d3-warmup-3",
+                "prompt": "Solve 9 × n = 54.",
+                "correct_answer": "6",
+                "hint": "54 ÷ 9.",
+                "skill": "equations_with_unknowns"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Write Equations with Unknown Numbers",
+            "teaching_points": [
+              "Use a letter or box for the unknown.",
+              "Match the words to an operation.",
+              "Solve the equation."
+            ],
+            "example": {
+              "prompt": "A number divided by 8 is 7. What is the number?",
+              "visual_type": "groups",
+              "groups": 8,
+              "items_per_group": 7,
+              "equation": "n ÷ 8 = 7, so n = 8 × 7 = 56"
+            },
+            "vocabulary": ["unknown", "variable", "equation", "solve"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "equations_with_unknowns",
+            "prompt": "6 times a number is 48. Write an equation and solve.",
+            "correct_answer": "8",
+            "hint": "6 × n = 48, n = 48 ÷ 6.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "equations_with_unknowns",
+            "question_count": 6,
+            "instructions": "Write an equation with an unknown and solve each problem."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unknowns in Equations",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review unknowns and equations.",
+            "deckId": "lesson-g3-u18-w1-d3-unknowns"
+          },
+          "bigIdea": {
+            "title": "Write Equations with Unknown Numbers",
+            "subtitle": "Use a letter for what you don't know",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When a problem has a number you don't know, use a letter or a box to stand for it. Write an equation that matches the story, then solve.",
+            "bigQuestion": "Why is writing an equation helpful for word problems?",
+            "starTip": {
+              "title": "Name the unknown",
+              "lines": ["n = the missing number", "Match the story"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Write the equation",
+                "equation": "n ÷ 8 = 7",
+                "badge": "Unknown n",
+                "description": "Use n for the number you need to find."
+              },
+              {
+                "eyebrow": "Solve",
+                "equation": "n = 8 × 7 = 56",
+                "badge": "Inverse operation",
+                "description": "Use the inverse operation to find the unknown."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u18-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Solve Two-Step Problems and Identify Patterns",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by solving one-step multiplication or division problems quickly.",
+          "concept": "Two-step problems need two actions. Look for a pattern after the first step to solve the second step. Use strip models or equations to keep track.",
+          "practice": "Solve two-step multiplication and division problems and identify patterns.",
+          "objective": "Solve two-step multiplication and division problems and identify patterns.",
+          "practice_type": "two_step_mult_div_patterns",
+          "skills": [
+            "two_step",
+            "multiplication",
+            "division",
+            "patterns",
+            "word_problems"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "two_step_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with two-step problems.",
+            "questions": [
+              {
+                "id": "g3-u18-w1-d4-warmup-1",
+                "prompt": "A class has 4 groups of 6 students. Then 8 students leave. How many are left?",
+                "correct_answer": "16",
+                "hint": "4 × 6 = 24, then 24 - 8.",
+                "skill": "two_step"
+              },
+              {
+                "id": "g3-u18-w1-d4-warmup-2",
+                "prompt": "A box has 24 crayons. 6 students each get 4 crayons. How many crayons are left?",
+                "correct_answer": "0",
+                "hint": "6 × 4 = 24, 24 - 24.",
+                "skill": "two_step"
+              },
+              {
+                "id": "g3-u18-w1-d4-warmup-3",
+                "prompt": "What pattern do you see: 2, 4, 8, 16?",
+                "correct_answer": "double",
+                "hint": "Each number is double the previous.",
+                "skill": "patterns"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Solve Two-Step Problems and Identify Patterns",
+            "teaching_points": [
+              "Do the first step first.",
+              "Use the result for the second step.",
+              "Look for number patterns."
+            ],
+            "example": {
+              "prompt": "A bakery makes 5 trays of 9 cookies. 12 cookies are sold. How many are left?",
+              "visual_type": "strip",
+              "groups": 5,
+              "items_per_group": 9,
+              "equation": "5 × 9 = 45, then 45 - 12 = 33"
+            },
+            "vocabulary": ["two-step", "pattern", "first step", "second step"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "two_step_mult_div_patterns",
+            "prompt": "A store has 6 boxes of 8 markers. 10 markers are used. How many are left?",
+            "correct_answer": "38",
+            "hint": "6 × 8 = 48, then 48 - 10.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "two_step_mult_div_patterns",
+            "question_count": 6,
+            "instructions": "Solve each two-step problem and describe any pattern."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Two-Step and Patterns",
+            "type": "word_problem_terms",
+            "card_count": 6,
+            "instructions": "Review two-step problem and pattern vocabulary.",
+            "deckId": "lesson-g3-u18-w1-d4-two-step-patterns"
+          },
+          "bigIdea": {
+            "title": "Solve Two-Step Problems and Identify Patterns",
+            "subtitle": "Take it one step at a time",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Two-step problems have two actions. Solve the first part, then use that answer. Sometimes the numbers make a pattern that helps you check.",
+            "bigQuestion": "How can finding a pattern help you check a two-step problem?",
+            "starTip": {
+              "title": "Step by step",
+              "lines": ["First action", "Use the result", "Second action"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "First step",
+                "equation": "5 × 9 = 45",
+                "badge": "Find the total",
+                "description": "Multiply to find the total amount."
+              },
+              {
+                "eyebrow": "Second step",
+                "equation": "45 - 12 = 33",
+                "badge": "Adjust",
+                "description": "Use the total for the second action."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u18-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Multiplication and Division Applications",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of equal-group/array problems, strip models, equations with unknowns, and two-step problems with patterns.",
+          "concept": "Review the four big ideas from this unit: equal-group and array problems, strip models, equations with unknowns, and two-step problems with patterns.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about multiplication and division problem solving.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "equal_group_array_problems",
+            "strip_models",
+            "equations_with_unknowns",
+            "two_step_mult_div_patterns"
+          ],
+          "skills": [
+            "word_problems",
+            "multiplication",
+            "division",
+            "strip_models",
+            "equations",
+            "unknowns",
+            "two_step",
+            "patterns"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u18-w1-d5-warmup-1",
+                "prompt": "7 packs of 8 markers is how many markers?",
+                "correct_answer": "56",
+                "hint": "7 × 8.",
+                "skill": "multiplication"
+              },
+              {
+                "id": "g3-u18-w1-d5-warmup-2",
+                "prompt": "A strip is 54 divided into 6 equal parts. How long is each part?",
+                "correct_answer": "9",
+                "hint": "54 ÷ 6.",
+                "skill": "division"
+              },
+              {
+                "id": "g3-u18-w1-d5-warmup-3",
+                "prompt": "n ÷ 4 = 9. What is n?",
+                "correct_answer": "36",
+                "hint": "4 × 9.",
+                "skill": "equations_with_unknowns"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "equal group/array problems + strip models + unknowns + two-step/patterns = applications"
+            },
+            "vocabulary": ["evaluation", "review", "problem solving"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which equation matches: 5 bags with 7 apples in each?",
+            "correct_answer": "5 x 7 = 35",
+            "hint": "5 groups of 7.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 18 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 18 before the evaluation.",
+            "deckId": "lesson-g3-u18-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Multiplication and Division Applications",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: equal-group and array problems, strip models, equations with unknowns, and two-step problems with patterns.",
+            "bigQuestion": "What do you know about multiplication and division problem solving?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Equal groups and arrays",
+                "equation": "groups × size = total",
+                "badge": "Core idea",
+                "description": "Multiplication and division are both about equal groups."
+              },
+              {
+                "eyebrow": "Unknowns",
+                "equation": "Use a letter or box",
+                "badge": "Write an equation",
+                "description": "Write an equation to match the problem and solve for the unknown."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

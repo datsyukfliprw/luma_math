@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 15,
+  "unit_title": "Facts for 6 and 7",
+  "unit_slug": "facts_for_6_and_7",
+  "unit_description": "This unit builds multiplication and division fact fluency for 6 and 7. Students build ×6 from known facts, divide by 6, build ×7 using strategies, and practice related division facts.",
+  "unit_goals": [
+    "Build ×6 facts from known facts.",
+    "Divide by 6.",
+    "Build ×7 facts using strategies.",
+    "Divide by 7 and practice related facts.",
+    "Connect multiplication and division facts for 6 and 7."
+  ],
+  "fact_focus": ["multiplication", "division", "3.RA.B.6", "3.RA.C.7"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Facts for 6 and 7",
+      "weekly_focus": "Students use known facts and patterns to learn the 6 and 7 multiplication and division facts.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u15-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Build ×6 from Known Facts",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by reviewing the 3 and 5 facts.",
+          "concept": "Six is one more than five. 6 × 4 is 5 × 4 + 4. Use the ×5 facts you know and add one more group.",
+          "practice": "Multiply by 6 using the ×5-plus-one strategy.",
+          "objective": "Build ×6 facts from known facts.",
+          "practice_type": "multiply_by_6",
+          "skills": [
+            "multiplication",
+            "multiply_by_6",
+            "known_facts",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "facts_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with 5s and 6s.",
+            "questions": [
+              {
+                "id": "g3-u15-w1-d1-warmup-1",
+                "prompt": "5 × 4 = ?",
+                "correct_answer": "20",
+                "hint": "Five fours.",
+                "skill": "multiply_by_5"
+              },
+              {
+                "id": "g3-u15-w1-d1-warmup-2",
+                "prompt": "6 × 4 = ?",
+                "correct_answer": "24",
+                "hint": "5 × 4 = 20, plus 4 more.",
+                "skill": "multiply_by_6"
+              },
+              {
+                "id": "g3-u15-w1-d1-warmup-3",
+                "prompt": "6 × 3 = ?",
+                "correct_answer": "18",
+                "hint": "5 × 3 = 15, plus 3.",
+                "skill": "multiply_by_6"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Build ×6 from Known Facts",
+            "teaching_points": [
+              "6 is 5 + 1.",
+              "6 × n = (5 × n) + n.",
+              "Use known ×5 facts and add one more group."
+            ],
+            "example": {
+              "prompt": "What is 6 × 7?",
+              "visual_type": "groups",
+              "groups": 6,
+              "items_per_group": 7,
+              "equation": "5 × 7 = 35, plus 7 = 42, so 6 × 7 = 42"
+            },
+            "vocabulary": ["multiply by 6", "known facts", "five plus one", "strategy"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_6",
+            "prompt": "What is 6 × 8?",
+            "correct_answer": "48",
+            "hint": "5 × 8 = 40, plus 8.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_6",
+            "question_count": 6,
+            "instructions": "Use the ×5-plus-one strategy to multiply by 6."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 6 Facts",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review strategies for multiplying by 6.",
+            "deckId": "lesson-g3-u15-w1-d1-times-6"
+          },
+          "bigIdea": {
+            "title": "Build ×6 from Known Facts",
+            "subtitle": "Use 5s and add one more",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "If you know the 5s facts, you can build the 6s facts. Six is just five groups plus one more group.",
+            "bigQuestion": "How does knowing ×5 help with ×6?",
+            "starTip": {
+              "title": "Five plus one",
+              "lines": ["6 × n", "= 5 × n + n"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Break 6 into 5 + 1",
+                "equation": "6 × 7 = (5 × 7) + 7",
+                "badge": "Use 5s",
+                "description": "Multiply by 5, then add one more group."
+              },
+              {
+                "eyebrow": "Check",
+                "equation": "35 + 7 = 42",
+                "badge": "6 × 7 = 42",
+                "description": "Add the extra group to the ×5 product."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u15-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Divide by 6",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by reciting the ×6 facts and their related ÷6 facts.",
+          "concept": "Dividing by 6 uses the related multiplication facts. 42 ÷ 6 = ? means 6 × ? = 42. If 6 × 7 = 42, then 42 ÷ 6 = 7.",
+          "practice": "Divide by 6 using related multiplication facts.",
+          "objective": "Divide by 6 using related multiplication facts.",
+          "practice_type": "divide_by_6",
+          "skills": [
+            "division",
+            "divide_by_6",
+            "multiplication",
+            "fact_families"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "division_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with ÷6 facts.",
+            "questions": [
+              {
+                "id": "g3-u15-w1-d2-warmup-1",
+                "prompt": "6 × __ = 36",
+                "correct_answer": "6",
+                "hint": "36 ÷ 6 = 6.",
+                "skill": "divide_by_6"
+              },
+              {
+                "id": "g3-u15-w1-d2-warmup-2",
+                "prompt": "42 ÷ 6 = ?",
+                "correct_answer": "7",
+                "hint": "6 × 7 = 42.",
+                "skill": "divide_by_6"
+              },
+              {
+                "id": "g3-u15-w1-d2-warmup-3",
+                "prompt": "54 ÷ 6 = ?",
+                "correct_answer": "9",
+                "hint": "6 × 9 = 54.",
+                "skill": "divide_by_6"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Divide by 6",
+            "teaching_points": [
+              "Division is the inverse of multiplication.",
+              "Ask: 6 times what equals the dividend?",
+              "Use the ×6 facts you are building."
+            ],
+            "example": {
+              "prompt": "Solve 48 ÷ 6.",
+              "visual_type": "groups",
+              "groups": 6,
+              "items_per_group": 8,
+              "equation": "6 × 8 = 48, so 48 ÷ 6 = 8"
+            },
+            "vocabulary": ["divide by 6", "inverse", "quotient", "fact family"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "divide_by_6",
+            "prompt": "Solve 36 ÷ 6.",
+            "correct_answer": "6",
+            "hint": "6 × 6 = 36.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "divide_by_6",
+            "question_count": 6,
+            "instructions": "Use the related ×6 fact to find each quotient."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Divide by 6",
+            "type": "division_facts",
+            "card_count": 6,
+            "instructions": "Review dividing by 6.",
+            "deckId": "lesson-g3-u15-w1-d2-divide-by-6"
+          },
+          "bigIdea": {
+            "title": "Divide by 6",
+            "subtitle": "Use the ×6 facts",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Dividing by 6 is just asking what times 6 gives the total. Use the multiplication facts you already know.",
+            "bigQuestion": "How does a ×6 fact help you divide by 6?",
+            "starTip": {
+              "title": "Inverse thinking",
+              "lines": ["6 × ? = total", "? = total ÷ 6"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Known fact",
+                "equation": "6 × 8 = 48",
+                "badge": "Use it",
+                "description": "A known multiplication fact gives the related division fact."
+              },
+              {
+                "eyebrow": "Division",
+                "equation": "48 ÷ 6 = 8",
+                "badge": "Quotient",
+                "description": "The missing factor is the quotient."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u15-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Build ×7 Facts Using Strategies",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by reviewing doubles and the 5s facts.",
+          "concept": "Seven facts can be built from known facts. 7 × 4 is double 7 = 14, plus two more 7s, or 5 × 4 + 2 × 4 = 28. Another strategy: 7 × 6 is 6 × 6 + 6 = 42.",
+          "practice": "Multiply by 7 using doubles, 5s, or known facts.",
+          "objective": "Build ×7 facts using strategies.",
+          "practice_type": "multiply_by_7",
+          "skills": [
+            "multiplication",
+            "multiply_by_7",
+            "strategies",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "facts_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with 7s.",
+            "questions": [
+              {
+                "id": "g3-u15-w1-d3-warmup-1",
+                "prompt": "7 × 4 = ?",
+                "correct_answer": "28",
+                "hint": "5 × 4 = 20, plus 2 × 4 = 8, total 28.",
+                "skill": "multiply_by_7"
+              },
+              {
+                "id": "g3-u15-w1-d3-warmup-2",
+                "prompt": "7 × 6 = ?",
+                "correct_answer": "42",
+                "hint": "6 × 6 = 36, plus 6.",
+                "skill": "multiply_by_7"
+              },
+              {
+                "id": "g3-u15-w1-d3-warmup-3",
+                "prompt": "7 × 3 = ?",
+                "correct_answer": "21",
+                "hint": "5 × 3 = 15, plus 2 × 3 = 6.",
+                "skill": "multiply_by_7"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Build ×7 Facts Using Strategies",
+            "teaching_points": [
+              "Use 5 × n + 2 × n.",
+              "Or use the fact before it: 7 × 6 = 7 × 5 + 7.",
+              "Find the strategy that works for you."
+            ],
+            "example": {
+              "prompt": "What is 7 × 8?",
+              "visual_type": "groups",
+              "groups": 7,
+              "items_per_group": 8,
+              "equation": "5 × 8 = 40, 2 × 8 = 16, 40 + 16 = 56, so 7 × 8 = 56"
+            },
+            "vocabulary": ["multiply by 7", "break apart", "five plus two", "strategy"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiply_by_7",
+            "prompt": "What is 7 × 9?",
+            "correct_answer": "63",
+            "hint": "5 × 9 = 45, 2 × 9 = 18, 45 + 18 = 63.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiply_by_7",
+            "question_count": 6,
+            "instructions": "Use a strategy to multiply each number by 7."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Times 7 Facts",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review strategies for multiplying by 7.",
+            "deckId": "lesson-g3-u15-w1-d3-times-7"
+          },
+          "bigIdea": {
+            "title": "Build ×7 Facts Using Strategies",
+            "subtitle": "Break 7 into 5 + 2",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Seven can be broken into 5 and 2. Use the easier 5s facts and add 2 more groups to build the 7s facts.",
+            "bigQuestion": "How does breaking 7 into 5 + 2 help?",
+            "starTip": {
+              "title": "Break apart",
+              "lines": ["7 × n", "= 5 × n + 2 × n"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Use 5s and 2s",
+                "equation": "7 × 8 = (5 × 8) + (2 × 8)",
+                "badge": "40 + 16",
+                "description": "Multiply by 5 and by 2, then add the products."
+              },
+              {
+                "eyebrow": "Use the previous fact",
+                "equation": "7 × 8 = 7 × 7 + 7",
+                "badge": "49 + 7",
+                "description": "Start with the fact before it and add another group."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u15-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Divide by 7 and Practice Related Facts",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by reciting the ×7 facts and related ÷7 facts.",
+          "concept": "Dividing by 7 uses the related ×7 facts. 56 ÷ 7 = ? means 7 × ? = 56. If 7 × 8 = 56, then 56 ÷ 7 = 8.",
+          "practice": "Divide by 7 and practice the related ×7 and ÷7 facts.",
+          "objective": "Divide by 7 and practice related facts.",
+          "practice_type": "divide_by_7",
+          "skills": [
+            "division",
+            "divide_by_7",
+            "multiplication",
+            "fact_families"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "division_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with ÷7 facts.",
+            "questions": [
+              {
+                "id": "g3-u15-w1-d4-warmup-1",
+                "prompt": "7 × __ = 49",
+                "correct_answer": "7",
+                "hint": "49 ÷ 7 = 7.",
+                "skill": "divide_by_7"
+              },
+              {
+                "id": "g3-u15-w1-d4-warmup-2",
+                "prompt": "56 ÷ 7 = ?",
+                "correct_answer": "8",
+                "hint": "7 × 8 = 56.",
+                "skill": "divide_by_7"
+              },
+              {
+                "id": "g3-u15-w1-d4-warmup-3",
+                "prompt": "63 ÷ 7 = ?",
+                "correct_answer": "9",
+                "hint": "7 × 9 = 63.",
+                "skill": "divide_by_7"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Divide by 7 and Practice Related Facts",
+            "teaching_points": [
+              "Division is the inverse of multiplication.",
+              "Ask: 7 times what equals the dividend?",
+              "Use the ×7 facts you are building."
+            ],
+            "example": {
+              "prompt": "Solve 42 ÷ 7.",
+              "visual_type": "groups",
+              "groups": 7,
+              "items_per_group": 6,
+              "equation": "7 × 6 = 42, so 42 ÷ 7 = 6"
+            },
+            "vocabulary": ["divide by 7", "inverse", "quotient", "fact family"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "divide_by_7",
+            "prompt": "Solve 35 ÷ 7.",
+            "correct_answer": "5",
+            "hint": "7 × 5 = 35.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "divide_by_7",
+            "question_count": 6,
+            "instructions": "Use the related ×7 fact to find each quotient."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Divide by 7",
+            "type": "division_facts",
+            "card_count": 6,
+            "instructions": "Review dividing by 7.",
+            "deckId": "lesson-g3-u15-w1-d4-divide-by-7"
+          },
+          "bigIdea": {
+            "title": "Divide by 7 and Practice Related Facts",
+            "subtitle": "Use the ×7 facts",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Dividing by 7 uses the related ×7 facts. The better you know the 7s, the easier the division.",
+            "bigQuestion": "How does knowing ×7 help with ÷7?",
+            "starTip": {
+              "title": "Inverse thinking",
+              "lines": ["7 × ? = total", "? = total ÷ 7"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Known fact",
+                "equation": "7 × 6 = 42",
+                "badge": "Use it",
+                "description": "A known multiplication fact gives the related division fact."
+              },
+              {
+                "eyebrow": "Division",
+                "equation": "42 ÷ 7 = 6",
+                "badge": "Quotient",
+                "description": "The missing factor is the quotient."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u15-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Facts for 6 and 7",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of ×6, ÷6, ×7, and ÷7 facts.",
+          "concept": "Review the multiplication and division facts for 6 and 7. Use the strategies from this unit.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show fluency with facts for 6 and 7.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "multiply_by_6",
+            "divide_by_6",
+            "multiply_by_7",
+            "divide_by_7"
+          ],
+          "skills": [
+            "multiplication",
+            "division",
+            "multiply_by_6",
+            "divide_by_6",
+            "multiply_by_7",
+            "divide_by_7",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u15-w1-d5-warmup-1",
+                "prompt": "6 × 9 = ?",
+                "correct_answer": "54",
+                "hint": "5 × 9 = 45, plus 9.",
+                "skill": "multiply_by_6"
+              },
+              {
+                "id": "g3-u15-w1-d5-warmup-2",
+                "prompt": "56 ÷ 7 = ?",
+                "correct_answer": "8",
+                "hint": "7 × 8 = 56.",
+                "skill": "divide_by_7"
+              },
+              {
+                "id": "g3-u15-w1-d5-warmup-3",
+                "prompt": "7 × 7 = ?",
+                "correct_answer": "49",
+                "hint": "7 × 5 = 35, plus 7 × 2 = 14.",
+                "skill": "multiply_by_7"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "×6 + ÷6 + ×7 + ÷7 = facts for 6 and 7"
+            },
+            "vocabulary": ["evaluation", "review", "multiplication", "division"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "Which is greater: 6 × 7 or 7 × 6?",
+            "correct_answer": "same",
+            "hint": "They are the same because of the commutative property.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 15 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 15 before the evaluation.",
+            "deckId": "lesson-g3-u15-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Facts for 6 and 7",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: building ×6 facts, dividing by 6, building ×7 facts, and dividing by 7.",
+            "bigQuestion": "What do you know about facts for 6 and 7?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Build ×6",
+                "equation": "6 × n = 5 × n + n",
+                "badge": "Use 5s",
+                "description": "Use the 5s facts and add one more group."
+              },
+              {
+                "eyebrow": "Divide",
+                "equation": "42 ÷ 7 = 6 because 7 × 6 = 42",
+                "badge": "Inverse",
+                "description": "Use related multiplication facts to divide."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

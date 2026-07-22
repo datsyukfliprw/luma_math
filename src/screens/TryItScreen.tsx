@@ -181,6 +181,10 @@ function TryItScreen() {
     return <LessonFallbackScreen lessonId={currentLessonId} contentType="experience" />;
   }
 
+  if (tryItProblems.length === 0) {
+    return <LessonFallbackScreen lessonId={currentLessonId} contentType="experience" />;
+  }
+
   const currentProblem = tryItProblems[problemIndex % tryItProblems.length];
 
   const correctStepCount = (() => {

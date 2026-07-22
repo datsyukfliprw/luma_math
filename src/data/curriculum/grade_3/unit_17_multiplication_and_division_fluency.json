@@ -1,0 +1,629 @@
+{
+  "grade_level": 3,
+  "unit_number": 17,
+  "unit_title": "Multiplication and Division Fluency",
+  "unit_slug": "multiplication_and_division_fluency",
+  "unit_description": "This unit builds fluency with multiplication and division facts through mixed practice, missing factors, missing numbers in division equations, and choosing efficient strategies.",
+  "unit_goals": [
+    "Practice mixed multiplication facts.",
+    "Find missing factors in multiplication equations.",
+    "Find missing numbers in division equations.",
+    "Choose efficient fact strategies.",
+    "Show fluency with facts within 100."
+  ],
+  "fact_focus": ["multiplication", "division", "3.RA.A.5", "3.RA.C.7", "3.RA.C.8"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Multiplication and Division Fluency",
+      "weekly_focus": "Students practice mixed multiplication and division facts, find missing numbers, and choose the most efficient strategy.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u17-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Practice Mixed Multiplication Facts",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by answering a mix of multiplication facts quickly.",
+          "concept": "Fluency means knowing facts quickly and accurately. Mixed practice helps you recognize facts no matter what order they appear.",
+          "practice": "Solve mixed multiplication facts from 0 through 9.",
+          "objective": "Practice mixed multiplication facts.",
+          "practice_type": "mixed_multiplication_facts",
+          "skills": [
+            "multiplication",
+            "fluency",
+            "mixed_facts",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "facts_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with mixed multiplication.",
+            "questions": [
+              {
+                "id": "g3-u17-w1-d1-warmup-1",
+                "prompt": "7 × 8 = ?",
+                "correct_answer": "56",
+                "hint": "Use 5×8 + 2×8.",
+                "skill": "multiply_by_7"
+              },
+              {
+                "id": "g3-u17-w1-d1-warmup-2",
+                "prompt": "9 × 6 = ?",
+                "correct_answer": "54",
+                "hint": "10 × 6 - 6.",
+                "skill": "multiply_by_9"
+              },
+              {
+                "id": "g3-u17-w1-d1-warmup-3",
+                "prompt": "8 × 4 = ?",
+                "correct_answer": "32",
+                "hint": "Double 4 three times.",
+                "skill": "multiply_by_8"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Practice Mixed Multiplication Facts",
+            "teaching_points": [
+              "Use the fastest strategy for each fact.",
+              "Doubles help for 2, 4, and 8.",
+              "Patterns help for 5, 9, and 10."
+            ],
+            "example": {
+              "prompt": "Solve 8 × 6 quickly.",
+              "visual_type": "groups",
+              "groups": 8,
+              "items_per_group": 6,
+              "equation": "Double 6 = 12, double 12 = 24, double 24 = 48, so 8 × 6 = 48"
+            },
+            "vocabulary": ["fluency", "mixed facts", "strategy", "efficient"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "mixed_multiplication_facts",
+            "prompt": "Solve 7 × 9.",
+            "correct_answer": "63",
+            "hint": "5 × 9 = 45, 2 × 9 = 18, 45 + 18 = 63.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "mixed_multiplication_facts",
+            "question_count": 6,
+            "instructions": "Answer each mixed multiplication fact as quickly and accurately as you can."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Mixed Multiplication",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review mixed multiplication facts.",
+            "deckId": "lesson-g3-u17-w1-d1-mixed-multiplication"
+          },
+          "bigIdea": {
+            "title": "Practice Mixed Multiplication Facts",
+            "subtitle": "Use the right strategy for each fact",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When facts are mixed, you have to pick the right strategy. Some facts are doubles, some use patterns, and some you may already have memorized.",
+            "bigQuestion": "Why is mixed practice important for fluency?",
+            "starTip": {
+              "title": "Pick a strategy",
+              "lines": ["Recognize the fact", "Use the fastest way"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Doubles",
+                "equation": "×2, ×4, ×8",
+                "badge": "Double",
+                "description": "Use doubling once, twice, or three times."
+              },
+              {
+                "eyebrow": "Patterns",
+                "equation": "×5, ×9, ×10",
+                "badge": "Use patterns",
+                "description": "Use 5s, 9s, and 10s patterns to solve quickly."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u17-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Find Missing Factors",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by solving missing-factor equations with 1 and 2-digit products.",
+          "concept": "A missing factor is like a division problem in disguise. 8 × __ = 32 is the same as 32 ÷ 8 = ?. Use known facts or trial to find the missing factor.",
+          "practice": "Find missing factors in multiplication equations.",
+          "objective": "Find missing factors in multiplication equations.",
+          "practice_type": "missing_factors",
+          "skills": [
+            "multiplication",
+            "missing_factor",
+            "division",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "missing_factor_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with missing factors.",
+            "questions": [
+              {
+                "id": "g3-u17-w1-d2-warmup-1",
+                "prompt": "6 × __ = 42",
+                "correct_answer": "7",
+                "hint": "42 ÷ 6 = 7.",
+                "skill": "missing_factor"
+              },
+              {
+                "id": "g3-u17-w1-d2-warmup-2",
+                "prompt": "__ × 9 = 54",
+                "correct_answer": "6",
+                "hint": "54 ÷ 9 = 6.",
+                "skill": "missing_factor"
+              },
+              {
+                "id": "g3-u17-w1-d2-warmup-3",
+                "prompt": "8 × __ = 64",
+                "correct_answer": "8",
+                "hint": "64 ÷ 8 = 8.",
+                "skill": "missing_factor"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Missing Factors",
+            "teaching_points": [
+              "A missing factor question is a division problem.",
+              "Use the related division fact.",
+              "Try known factors if you are unsure."
+            ],
+            "example": {
+              "prompt": "Find the missing factor: 7 × __ = 49.",
+              "visual_type": "groups",
+              "groups": 7,
+              "items_per_group": 7,
+              "equation": "49 ÷ 7 = 7, so 7 × 7 = 49"
+            },
+            "vocabulary": ["missing factor", "inverse", "division", "equation"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "missing_factors",
+            "prompt": "Find the missing factor: __ × 6 = 36.",
+            "correct_answer": "6",
+            "hint": "36 ÷ 6 = 6.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "missing_factors",
+            "question_count": 6,
+            "instructions": "Find the missing factor in each multiplication equation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Missing Factors",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review finding missing factors.",
+            "deckId": "lesson-g3-u17-w1-d2-missing-factors"
+          },
+          "bigIdea": {
+            "title": "Find Missing Factors",
+            "subtitle": "A missing factor is a division problem",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When one factor is missing, use division to find it. The product divided by the known factor gives the missing factor.",
+            "bigQuestion": "How do you find a missing factor?",
+            "starTip": {
+              "title": "Think division",
+              "lines": ["Product ÷ known factor", "= missing factor"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Missing factor",
+                "equation": "7 × __ = 49",
+                "badge": "49 ÷ 7",
+                "description": "Divide the product by the known factor to find the missing factor."
+              },
+              {
+                "eyebrow": "Check",
+                "equation": "7 × 7 = 49",
+                "badge": "Multiply back",
+                "description": "Multiply the factors to check that you get the product."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u17-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Find Missing Numbers in Division Equations",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by finding missing dividends, divisors, and quotients.",
+          "concept": "A missing dividend can be found by multiplying divisor and quotient. A missing divisor or quotient can be found by dividing. Use the fact family for all three numbers.",
+          "practice": "Find missing numbers in division equations.",
+          "objective": "Find missing numbers in division equations.",
+          "practice_type": "missing_numbers_division",
+          "skills": [
+            "division",
+            "missing_numbers",
+            "fact_families",
+            "multiplication"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "missing_number_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with missing numbers.",
+            "questions": [
+              {
+                "id": "g3-u17-w1-d3-warmup-1",
+                "prompt": "__ ÷ 8 = 7",
+                "correct_answer": "56",
+                "hint": "8 × 7 = 56.",
+                "skill": "missing_numbers"
+              },
+              {
+                "id": "g3-u17-w1-d3-warmup-2",
+                "prompt": "48 ÷ __ = 6",
+                "correct_answer": "8",
+                "hint": "48 ÷ 6 = 8.",
+                "skill": "missing_numbers"
+              },
+              {
+                "id": "g3-u17-w1-d3-warmup-3",
+                "prompt": "63 ÷ 9 = __",
+                "correct_answer": "7",
+                "hint": "9 × 7 = 63.",
+                "skill": "missing_numbers"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Find Missing Numbers in Division Equations",
+            "teaching_points": [
+              "If the dividend is missing, multiply.",
+              "If the divisor or quotient is missing, divide.",
+              "Use the fact family to check."
+            ],
+            "example": {
+              "prompt": "Find the missing number: __ ÷ 6 = 7.",
+              "visual_type": "groups",
+              "groups": 6,
+              "items_per_group": 7,
+              "equation": "6 × 7 = 42, so 42 ÷ 6 = 7"
+            },
+            "vocabulary": ["missing dividend", "missing divisor", "missing quotient", "fact family"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "missing_numbers_division",
+            "prompt": "Find the missing number: 72 ÷ __ = 8.",
+            "correct_answer": "9",
+            "hint": "72 ÷ 8 = 9.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "missing_numbers_division",
+            "question_count": 6,
+            "instructions": "Find the missing number in each division equation."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Missing Numbers in Division",
+            "type": "division_facts",
+            "card_count": 6,
+            "instructions": "Review finding missing numbers in division.",
+            "deckId": "lesson-g3-u17-w1-d3-missing-division"
+          },
+          "bigIdea": {
+            "title": "Find Missing Numbers in Division Equations",
+            "subtitle": "Use the fact family",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A division equation has three numbers. If one is missing, use multiplication or the fact family to find it.",
+            "bigQuestion": "How can a fact family help you find a missing number?",
+            "starTip": {
+              "title": "Same three numbers",
+              "lines": ["Total = divisor × quotient", "Divisor = total ÷ quotient"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Missing dividend",
+                "equation": "__ ÷ 6 = 7 → 6 × 7 = 42",
+                "badge": "Multiply",
+                "description": "Multiply the divisor and quotient to find the dividend."
+              },
+              {
+                "eyebrow": "Missing divisor",
+                "equation": "42 ÷ __ = 7 → 42 ÷ 7 = 6",
+                "badge": "Divide",
+                "description": "Divide the dividend by the quotient to find the divisor."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u17-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Choose Efficient Fact Strategies",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by explaining your strategy for a mix of facts.",
+          "concept": "Efficient strategies help you solve facts quickly. Choose the strategy that is fastest for each fact: doubles, 5s and 10s, 9s, or known facts.",
+          "practice": "Choose and explain the best strategy for solving mixed multiplication and division facts.",
+          "objective": "Choose efficient strategies for multiplication and division facts.",
+          "practice_type": "choose_strategy",
+          "skills": [
+            "multiplication",
+            "division",
+            "strategies",
+            "fluency"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "strategy_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by choosing a strategy.",
+            "questions": [
+              {
+                "id": "g3-u17-w1-d4-warmup-1",
+                "prompt": "What is the best way to solve 8 × 7?",
+                "correct_answer": "double 7 three times",
+                "hint": "Doubling: 14, 28, 56.",
+                "skill": "choose_strategy"
+              },
+              {
+                "id": "g3-u17-w1-d4-warmup-2",
+                "prompt": "What is the best way to solve 9 × 5?",
+                "correct_answer": "10 x 5 - 5",
+                "hint": "10 × 5 = 50, minus 5.",
+                "skill": "choose_strategy"
+              },
+              {
+                "id": "g3-u17-w1-d4-warmup-3",
+                "prompt": "What is 64 ÷ 8?",
+                "correct_answer": "8",
+                "hint": "8 × 8 = 64.",
+                "skill": "division"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Choose Efficient Fact Strategies",
+            "teaching_points": [
+              "Look at the factors.",
+              "Pick a strategy you know well.",
+              "With practice, many facts become automatic."
+            ],
+            "example": {
+              "prompt": "Choose a strategy for 9 × 7.",
+              "visual_type": "groups",
+              "groups": 9,
+              "items_per_group": 7,
+              "equation": "10 × 7 = 70, minus 7 = 63, so 9 × 7 = 63"
+            },
+            "vocabulary": ["efficient", "strategy", "automatic", "fluency"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "choose_strategy",
+            "prompt": "Choose a strategy and solve 8 × 9.",
+            "correct_answer": "72",
+            "hint": "Double 9 three times: 18, 36, 72. Or 10 × 9 - 9.",
+            "visual_data": {
+              "groups": 8,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "choose_strategy",
+            "question_count": 6,
+            "instructions": "Choose the best strategy and solve each fact."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Efficient Strategies",
+            "type": "multiplication_facts",
+            "card_count": 6,
+            "instructions": "Review efficient fact strategies.",
+            "deckId": "lesson-g3-u17-w1-d4-efficient-strategies"
+          },
+          "bigIdea": {
+            "title": "Choose Efficient Fact Strategies",
+            "subtitle": "Use the fastest strategy for each fact",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Fast math is not about memorizing everything at once. It is about choosing the right shortcut for each fact and getting faster with practice.",
+            "bigQuestion": "How do you choose the best strategy for a fact?",
+            "starTip": {
+              "title": "Know your shortcuts",
+              "lines": ["×2 = double", "×9 = 10 - 1", "×5 = count by fives"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Pick the fact",
+                "equation": "8 × 9",
+                "badge": "Use doubles or 9s",
+                "description": "Choose the strategy that is fastest for you."
+              },
+              {
+                "eyebrow": "Practice",
+                "equation": "Fluency",
+                "badge": "Speed + accuracy",
+                "description": "The more you practice, the faster and more accurate you become."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u17-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Facts Within 100",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of mixed multiplication, missing factors, missing numbers in division, and efficient strategies.",
+          "concept": "Review all multiplication and division fact skills from this unit and previous units to show fluency within 100.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show fluency with multiplication and division facts within 100.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "mixed_multiplication_facts",
+            "missing_factors",
+            "missing_numbers_division",
+            "choose_strategy"
+          ],
+          "skills": [
+            "multiplication",
+            "division",
+            "fluency",
+            "missing_factor",
+            "missing_numbers",
+            "strategies",
+            "facts"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u17-w1-d5-warmup-1",
+                "prompt": "7 × 6 = ?",
+                "correct_answer": "42",
+                "hint": "5 × 6 = 30, plus 2 × 6 = 12.",
+                "skill": "mixed_multiplication_facts"
+              },
+              {
+                "id": "g3-u17-w1-d5-warmup-2",
+                "prompt": "__ × 8 = 64",
+                "correct_answer": "8",
+                "hint": "64 ÷ 8 = 8.",
+                "skill": "missing_factors"
+              },
+              {
+                "id": "g3-u17-w1-d5-warmup-3",
+                "prompt": "54 ÷ __ = 9",
+                "correct_answer": "6",
+                "hint": "54 ÷ 9 = 6.",
+                "skill": "missing_numbers"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "mixed facts + missing factors + missing division + efficient strategies = fluency"
+            },
+            "vocabulary": ["evaluation", "review", "fluency"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "What is 9 × 7?",
+            "correct_answer": "63",
+            "hint": "10 × 7 = 70, minus 7.",
+            "visual_data": {
+              "groups": 9,
+              "items_per_group": 7
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 17 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 17 before the evaluation.",
+            "deckId": "lesson-g3-u17-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Facts Within 100",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: mixed multiplication facts, missing factors, missing numbers in division equations, and choosing efficient strategies.",
+            "bigQuestion": "What do you know about multiplication and division fluency?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Fluency",
+                "equation": "Fast and accurate",
+                "badge": "Goal",
+                "description": "Fluency means solving facts quickly and correctly."
+              },
+              {
+                "eyebrow": "Strategies",
+                "equation": "Choose the best one",
+                "badge": "Tools",
+                "description": "Use the strategy that is fastest for each fact."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

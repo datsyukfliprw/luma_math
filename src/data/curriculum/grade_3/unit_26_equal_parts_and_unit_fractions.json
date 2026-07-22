@@ -1,0 +1,631 @@
+{
+  "grade_level": 3,
+  "unit_number": 26,
+  "unit_title": "Equal Parts and Unit Fractions",
+  "unit_slug": "equal_parts_and_unit_fractions",
+  "unit_description": "This unit introduces fractions by partitioning shapes into equal parts. Students identify equal and unequal parts, make halves, thirds, fourths, sixths, and eighths, and name unit fractions.",
+  "unit_goals": [
+    "Identify equal and unequal parts of shapes.",
+    "Make halves, thirds, and fourths.",
+    "Make sixths and eighths.",
+    "Name unit fractions of partitioned shapes.",
+    "Understand that equal parts are the same size."
+  ],
+  "fact_focus": ["fractions", "partitioning", "3.GM.A.3", "3.NF.A.1"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Equal Parts and Unit Fractions",
+      "weekly_focus": "Students learn to partition shapes into equal parts and name unit fractions.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u26-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Identify Equal and Unequal Parts",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by folding or drawing lines to split shapes.",
+          "concept": "A fraction is made when a whole is split into equal parts. Equal parts are the same size. Unequal parts are different sizes and do not make fractions.",
+          "practice": "Identify whether shapes are split into equal or unequal parts.",
+          "objective": "Identify equal and unequal parts of shapes.",
+          "practice_type": "equal_unequal_parts",
+          "skills": [
+            "fractions",
+            "equal_parts",
+            "partitioning",
+            "geometry"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "partitioning_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by checking for equal parts.",
+            "questions": [
+              {
+                "id": "g3-u26-w1-d1-warmup-1",
+                "prompt": "A circle is split into two parts that are the same size. Are they equal?",
+                "correct_answer": "yes",
+                "hint": "Same size means equal.",
+                "skill": "equal_unequal_parts"
+              },
+              {
+                "id": "g3-u26-w1-d1-warmup-2",
+                "prompt": "A rectangle is split into three parts of different sizes. Are they equal?",
+                "correct_answer": "no",
+                "hint": "Different sizes are not equal.",
+                "skill": "equal_unequal_parts"
+              },
+              {
+                "id": "g3-u26-w1-d1-warmup-3",
+                "prompt": "To name a fraction, must the parts be equal?",
+                "correct_answer": "yes",
+                "hint": "Fractions need equal parts.",
+                "skill": "equal_unequal_parts"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Identify Equal and Unequal Parts",
+            "teaching_points": [
+              "Fractions need equal parts.",
+              "Equal parts are the same size and shape.",
+              "If parts are not equal, you cannot name them with a fraction."
+            ],
+            "example": {
+              "prompt": "Which shape is divided into equal parts?",
+              "visual_type": "shape",
+              "groups": 2,
+              "items_per_group": 1,
+              "equation": "Same size parts = equal"
+            },
+            "vocabulary": ["equal parts", "unequal parts", "partition", "fraction"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "equal_unequal_parts",
+            "prompt": "A square is split into 4 parts. Two parts are large and two are small. Are the parts equal?",
+            "correct_answer": "no",
+            "hint": "All parts must be the same size.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "equal_unequal_parts",
+            "question_count": 6,
+            "instructions": "Tell whether each shape is divided into equal or unequal parts."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Equal Parts Vocabulary",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review equal and unequal parts vocabulary.",
+            "deckId": "lesson-g3-u26-w1-d1-equal-parts"
+          },
+          "bigIdea": {
+            "title": "Identify Equal and Unequal Parts",
+            "subtitle": "Fractions need equal parts",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "Before you can name a fraction, the whole must be split into equal parts. Equal parts are exactly the same size.",
+            "bigQuestion": "Why must parts be equal to name a fraction?",
+            "starTip": {
+              "title": "Check size",
+              "lines": ["Same size", "Equal parts"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Equal parts",
+                "equation": "same size and shape",
+                "badge": "Can be named",
+                "description": "Equal parts can be named with fractions."
+              },
+              {
+                "eyebrow": "Unequal parts",
+                "equation": "different sizes",
+                "badge": "Cannot name",
+                "description": "Unequal parts cannot be named with fractions."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u26-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Make Halves, Thirds, and Fourths",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by partitioning shapes into 2, 3, and 4 equal parts.",
+          "concept": "Partitioning means splitting a whole into equal parts. Halves are 2 equal parts, thirds are 3 equal parts, and fourths are 4 equal parts.",
+          "practice": "Partition shapes into halves, thirds, and fourths and name each part.",
+          "objective": "Make halves, thirds, and fourths.",
+          "practice_type": "halves_thirds_fourths",
+          "skills": [
+            "fractions",
+            "halves",
+            "thirds",
+            "fourths"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "partitioning_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with halves, thirds, and fourths.",
+            "questions": [
+              {
+                "id": "g3-u26-w1-d2-warmup-1",
+                "prompt": "How many equal parts are in halves?",
+                "correct_answer": "2",
+                "hint": "Half means 2 equal parts.",
+                "skill": "halves"
+              },
+              {
+                "id": "g3-u26-w1-d2-warmup-2",
+                "prompt": "How many equal parts are in thirds?",
+                "correct_answer": "3",
+                "hint": "Third means 3 equal parts.",
+                "skill": "thirds"
+              },
+              {
+                "id": "g3-u26-w1-d2-warmup-3",
+                "prompt": "How many equal parts are in fourths?",
+                "correct_answer": "4",
+                "hint": "Fourth means 4 equal parts.",
+                "skill": "fourths"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Make Halves, Thirds, and Fourths",
+            "teaching_points": [
+              "Halves split into 2 equal parts.",
+              "Thirds split into 3 equal parts.",
+              "Fourths split into 4 equal parts."
+            ],
+            "example": {
+              "prompt": "Show a rectangle divided into fourths.",
+              "visual_type": "shape",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "4 equal parts, each is 1/4"
+            },
+            "vocabulary": ["halves", "thirds", "fourths", "partition"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "halves_thirds_fourths",
+            "prompt": "Divide a circle into 3 equal parts. What fraction is one part?",
+            "correct_answer": "1/3",
+            "hint": "One of three equal parts.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "halves_thirds_fourths",
+            "question_count": 6,
+            "instructions": "Partition each shape into the given number of equal parts and name one part."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Halves, Thirds, Fourths",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review halves, thirds, and fourths.",
+            "deckId": "lesson-g3-u26-w1-d2-halves-thirds-fourths"
+          },
+          "bigIdea": {
+            "title": "Make Halves, Thirds, and Fourths",
+            "subtitle": "Partition into equal parts",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "When you split a whole into 2, 3, or 4 equal parts, you have halves, thirds, or fourths. Each part is named with a unit fraction.",
+            "bigQuestion": "How do you make equal parts look the same?",
+            "starTip": {
+              "title": "Same size",
+              "lines": ["2 parts = halves", "3 parts = thirds", "4 parts = fourths"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Halves",
+                "equation": "2 equal parts",
+                "badge": "1/2",
+                "description": "Each part is one of two equal parts."
+              },
+              {
+                "eyebrow": "Fourths",
+                "equation": "4 equal parts",
+                "badge": "1/4",
+                "description": "Each part is one of four equal parts."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u26-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Make Sixths and Eighths",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by partitioning shapes into 6 and 8 equal parts.",
+          "concept": "A whole can be split into more equal parts. Sixths are 6 equal parts and eighths are 8 equal parts. The more parts, the smaller each part is.",
+          "practice": "Partition shapes into sixths and eighths and name each part.",
+          "objective": "Make sixths and eighths.",
+          "practice_type": "sixths_eighths",
+          "skills": [
+            "fractions",
+            "sixths",
+            "eighths",
+            "partitioning"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "partitioning_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with sixths and eighths.",
+            "questions": [
+              {
+                "id": "g3-u26-w1-d3-warmup-1",
+                "prompt": "How many equal parts are in sixths?",
+                "correct_answer": "6",
+                "hint": "Sixth means 6 equal parts.",
+                "skill": "sixths"
+              },
+              {
+                "id": "g3-u26-w1-d3-warmup-2",
+                "prompt": "How many equal parts are in eighths?",
+                "correct_answer": "8",
+                "hint": "Eighth means 8 equal parts.",
+                "skill": "eighths"
+              },
+              {
+                "id": "g3-u26-w1-d3-warmup-3",
+                "prompt": "Which is smaller: 1/6 or 1/8 of the same whole?",
+                "correct_answer": "1/8",
+                "hint": "More parts means smaller pieces.",
+                "skill": "sixths_eighths"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Make Sixths and Eighths",
+            "teaching_points": [
+              "Sixths split into 6 equal parts.",
+              "Eighths split into 8 equal parts.",
+              "More parts means each part is smaller."
+            ],
+            "example": {
+              "prompt": "Show a rectangle divided into eighths.",
+              "visual_type": "shape",
+              "groups": 8,
+              "items_per_group": 1,
+              "equation": "8 equal parts, each is 1/8"
+            },
+            "vocabulary": ["sixths", "eighths", "partition", "smaller"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "sixths_eighths",
+            "prompt": "Divide a circle into 6 equal parts. What fraction is one part?",
+            "correct_answer": "1/6",
+            "hint": "One of six equal parts.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "sixths_eighths",
+            "question_count": 6,
+            "instructions": "Partition each shape into sixths or eighths and name one part."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Sixths and Eighths",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review sixths and eighths.",
+            "deckId": "lesson-g3-u26-w1-d3-sixths-eighths"
+          },
+          "bigIdea": {
+            "title": "Make Sixths and Eighths",
+            "subtitle": "More parts, smaller pieces",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "As you split a whole into more equal parts, each part gets smaller. Sixths are smaller than fourths, and eighths are smaller than sixths.",
+            "bigQuestion": "Why is 1/8 smaller than 1/6?",
+            "starTip": {
+              "title": "More parts",
+              "lines": ["6 parts = sixths", "8 parts = eighths"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Sixths",
+                "equation": "6 equal parts",
+                "badge": "1/6",
+                "description": "Each part is one of six equal parts."
+              },
+              {
+                "eyebrow": "Eighths",
+                "equation": "8 equal parts",
+                "badge": "1/8",
+                "description": "Each part is smaller because the whole is split into more pieces."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u26-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Name Unit Fractions of Partitioned Shapes",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by naming one part of shapes divided into 2, 3, 4, 6, and 8 parts.",
+          "concept": "A unit fraction names one equal part of a whole. It has 1 on top and the total number of equal parts on the bottom. One of four equal parts is 1/4.",
+          "practice": "Name unit fractions for partitioned shapes.",
+          "objective": "Name unit fractions of partitioned shapes.",
+          "practice_type": "name_unit_fractions",
+          "skills": [
+            "fractions",
+            "unit_fractions",
+            "naming",
+            "partitioning"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "unit_fraction_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with unit fractions.",
+            "questions": [
+              {
+                "id": "g3-u26-w1-d4-warmup-1",
+                "prompt": "One part of a shape divided into 4 equal parts is what fraction?",
+                "correct_answer": "1/4",
+                "hint": "1 over 4.",
+                "skill": "name_unit_fractions"
+              },
+              {
+                "id": "g3-u26-w1-d4-warmup-2",
+                "prompt": "One part of a shape divided into 8 equal parts is what fraction?",
+                "correct_answer": "1/8",
+                "hint": "1 over 8.",
+                "skill": "name_unit_fractions"
+              },
+              {
+                "id": "g3-u26-w1-d4-warmup-3",
+                "prompt": "What is the name for one of three equal parts?",
+                "correct_answer": "one third",
+                "hint": "1/3.",
+                "skill": "name_unit_fractions"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Name Unit Fractions of Partitioned Shapes",
+            "teaching_points": [
+              "A unit fraction has 1 as the numerator.",
+              "The denominator is the total number of equal parts.",
+              "Count the equal parts to write the fraction."
+            ],
+            "example": {
+              "prompt": "A circle is divided into 5 equal parts. What fraction is one part?",
+              "visual_type": "shape",
+              "groups": 5,
+              "items_per_group": 1,
+              "equation": "1/5"
+            },
+            "vocabulary": ["unit fraction", "numerator", "denominator", "whole"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "name_unit_fractions",
+            "prompt": "A rectangle is divided into 6 equal parts. What fraction is one part?",
+            "correct_answer": "1/6",
+            "hint": "1 over 6.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "name_unit_fractions",
+            "question_count": 6,
+            "instructions": "Name the unit fraction for one shaded part of each shape."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit Fractions",
+            "type": "fraction_terms",
+            "card_count": 6,
+            "instructions": "Review unit fraction naming.",
+            "deckId": "lesson-g3-u26-w1-d4-unit-fractions"
+          },
+          "bigIdea": {
+            "title": "Name Unit Fractions of Partitioned Shapes",
+            "subtitle": "One part of the whole",
+            "thumbnail": "/images/learn/thumbnails/fractions.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A unit fraction tells about one equal part. The bottom number tells how many equal parts the whole is divided into. The top number is always 1 for a unit fraction.",
+            "bigQuestion": "What does the bottom number of a unit fraction tell you?",
+            "starTip": {
+              "title": "Top and bottom",
+              "lines": ["Top = 1 part", "Bottom = total parts"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Unit fraction",
+                "equation": "1 part of the whole",
+                "badge": "1 on top",
+                "description": "The numerator is 1 because it is one part."
+              },
+              {
+                "eyebrow": "Denominator",
+                "equation": "total equal parts",
+                "badge": "Bottom number",
+                "description": "The denominator tells how many equal parts make the whole."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u26-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Equal Parts and Unit Fractions",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of equal and unequal parts, halves/thirds/fourths, sixths/eighths, and naming unit fractions.",
+          "concept": "Review the four big ideas from this unit: equal and unequal parts, halves/thirds/fourths, sixths/eighths, and naming unit fractions.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about equal parts and unit fractions.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "equal_unequal_parts",
+            "halves_thirds_fourths",
+            "sixths_eighths",
+            "name_unit_fractions"
+          ],
+          "skills": [
+            "fractions",
+            "equal_parts",
+            "partitioning",
+            "halves",
+            "thirds",
+            "fourths",
+            "sixths",
+            "eighths",
+            "unit_fractions"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u26-w1-d5-warmup-1",
+                "prompt": "A shape is split into 5 equal parts. What fraction is one part?",
+                "correct_answer": "1/5",
+                "hint": "1 over 5.",
+                "skill": "name_unit_fractions"
+              },
+              {
+                "id": "g3-u26-w1-d5-warmup-2",
+                "prompt": "Which is smaller: 1/4 or 1/8?",
+                "correct_answer": "1/8",
+                "hint": "More parts means smaller pieces.",
+                "skill": "sixths_eighths"
+              },
+              {
+                "id": "g3-u26-w1-d5-warmup-3",
+                "prompt": "A circle is split into two parts of different sizes. Can you name a fraction?",
+                "correct_answer": "no",
+                "hint": "Parts must be equal.",
+                "skill": "equal_unequal_parts"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "equal/unequal + halves/thirds/fourths + sixths/eighths + unit fractions = equal parts and unit fractions"
+            },
+            "vocabulary": ["evaluation", "review", "fractions"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "A rectangle is divided into 4 equal parts. What fraction is one part?",
+            "correct_answer": "1/4",
+            "hint": "1 over 4.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 1
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 26 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 26 before the evaluation.",
+            "deckId": "lesson-g3-u26-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Equal Parts and Unit Fractions",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: equal and unequal parts, halves/thirds/fourths, sixths/eighths, and naming unit fractions.",
+            "bigQuestion": "What do you know about equal parts and unit fractions?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Equal parts",
+                "equation": "needed for fractions",
+                "badge": "Same size",
+                "description": "Fractions only work when parts are equal."
+              },
+              {
+                "eyebrow": "Unit fraction",
+                "equation": "1 / total parts",
+                "badge": "One part",
+                "description": "The numerator is 1; the denominator is the number of equal parts."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

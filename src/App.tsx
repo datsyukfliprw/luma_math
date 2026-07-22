@@ -23,6 +23,7 @@ function AppContent() {
   const { studentState } = useStudentProgress();
   const location = useLocation();
   const isHomeScreen = location.pathname === "/";
+  const isLearningPath = location.pathname === "/learning-path";
   const starNameReady = studentState.starProfile.starName.trim().length > 0;
 
   return (
@@ -49,6 +50,7 @@ function AppContent() {
                 ? "overflow-y-hidden"
                 : "app-scroll-region overflow-y-auto overscroll-contain"
             }`}
+            style={isLearningPath ? { overscrollBehavior: "none" } : undefined}
           >
             <Routes>
               <Route path="/" element={<HomeScreen />} />

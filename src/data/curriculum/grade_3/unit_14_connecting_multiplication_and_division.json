@@ -1,0 +1,630 @@
+{
+  "grade_level": 3,
+  "unit_number": 14,
+  "unit_title": "Connecting Multiplication and Division",
+  "unit_slug": "connecting_multiplication_and_division",
+  "unit_description": "This unit connects multiplication and division. Students model division with arrays and number lines, build fact families, and use multiplication facts to solve division problems.",
+  "unit_goals": [
+    "Model division with arrays.",
+    "Model division on number lines.",
+    "Build multiplication and division fact families.",
+    "Use multiplication to solve division problems.",
+    "Understand the inverse relationship between multiplication and division."
+  ],
+  "fact_focus": ["multiplication", "division", "3.RA.A.2", "3.RA.B.6"],
+  "weeks": [
+    {
+      "week_number": 1,
+      "week_title": "Connecting Multiplication and Division",
+      "weekly_focus": "Students see how arrays and number lines represent division, build fact families, and use known multiplication facts to divide.",
+      "lessons": [
+        {
+          "lesson_id": "g3-u14-w1-l1",
+          "day_number": 1,
+          "day_name": "Monday",
+          "lesson_title": "Model Division with Arrays",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by drawing arrays for multiplication and division facts.",
+          "concept": "An array can show both multiplication and division. If 3 rows of 5 make 15, then 15 ÷ 3 = 5 and 15 ÷ 5 = 3.",
+          "practice": "Use arrays to solve division problems.",
+          "objective": "Model division with arrays.",
+          "practice_type": "division_arrays",
+          "skills": [
+            "division",
+            "arrays",
+            "rows",
+            "columns",
+            "inverse"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "array_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by looking at arrays.",
+            "questions": [
+              {
+                "id": "g3-u14-w1-d1-warmup-1",
+                "prompt": "An array has 18 items in 3 rows. How many columns?",
+                "correct_answer": "6",
+                "hint": "18 ÷ 3 = 6.",
+                "skill": "division_arrays"
+              },
+              {
+                "id": "g3-u14-w1-d1-warmup-2",
+                "prompt": "A 4 by 7 array has how many items?",
+                "correct_answer": "28",
+                "hint": "4 × 7 = 28.",
+                "skill": "arrays"
+              },
+              {
+                "id": "g3-u14-w1-d1-warmup-3",
+                "prompt": "24 items in 6 columns. How many rows?",
+                "correct_answer": "4",
+                "hint": "24 ÷ 6 = 4.",
+                "skill": "division_arrays"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Model Division with Arrays",
+            "teaching_points": [
+              "The total is the dividend.",
+              "A row or column count is the divisor.",
+              "The missing dimension is the quotient."
+            ],
+            "example": {
+              "prompt": "Use an array to solve 20 ÷ 4.",
+              "visual_type": "array",
+              "groups": 4,
+              "items_per_group": 5,
+              "equation": "20 ÷ 4 = 5 because 4 rows of 5 make 20."
+            },
+            "vocabulary": ["array", "row", "column", "inverse"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "division_arrays",
+            "prompt": "Use an array to solve 27 ÷ 3.",
+            "correct_answer": "9",
+            "hint": "3 rows of 9 make 27.",
+            "visual_data": {
+              "groups": 3,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "division_arrays",
+            "question_count": 6,
+            "instructions": "Use arrays to find each quotient."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Division with Arrays",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review division using arrays.",
+            "deckId": "lesson-g3-u14-w1-d1-division-arrays"
+          },
+          "bigIdea": {
+            "title": "Model Division with Arrays",
+            "subtitle": "Arrays show multiplication and division together",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "An array with 3 rows and 6 columns shows 3 × 6 = 18. It also shows 18 ÷ 3 = 6 and 18 ÷ 6 = 3.",
+            "bigQuestion": "How does an array show both multiplication and division?",
+            "starTip": {
+              "title": "Total and one side",
+              "lines": ["Total", "Find the missing side"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Multiplication",
+                "equation": "4 × 5 = 20",
+                "badge": "Array total",
+                "description": "Multiply the number of rows by the number of columns."
+              },
+              {
+                "eyebrow": "Division",
+                "equation": "20 ÷ 4 = 5",
+                "badge": "Missing side",
+                "description": "Use the total and one side to find the other side."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u14-w1-l2",
+          "day_number": 2,
+          "day_name": "Tuesday",
+          "lesson_title": "Model Division on Number Lines",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by making equal jumps backward on a number line.",
+          "concept": "A number line can show division by counting how many equal jumps fit into the total. 15 ÷ 5 is how many jumps of 5 reach 15.",
+          "practice": "Use number lines to solve division problems.",
+          "objective": "Model division on number lines.",
+          "practice_type": "division_number_line",
+          "skills": [
+            "division",
+            "number_line",
+            "jumps",
+            "counting"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "number_line_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by counting jumps on a number line.",
+            "questions": [
+              {
+                "id": "g3-u14-w1-d2-warmup-1",
+                "prompt": "How many jumps of 4 reach 20?",
+                "correct_answer": "5",
+                "hint": "20 ÷ 4 = 5.",
+                "skill": "division_number_line"
+              },
+              {
+                "id": "g3-u14-w1-d2-warmup-2",
+                "prompt": "How many jumps of 3 reach 18?",
+                "correct_answer": "6",
+                "hint": "18 ÷ 3 = 6.",
+                "skill": "division_number_line"
+              },
+              {
+                "id": "g3-u14-w1-d2-warmup-3",
+                "prompt": "Start at 0. How many jumps of 5 to reach 30?",
+                "correct_answer": "6",
+                "hint": "30 ÷ 5 = 6.",
+                "skill": "division_number_line"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Model Division on Number Lines",
+            "teaching_points": [
+              "Start at 0.",
+              "Jump forward by the divisor until you reach the dividend.",
+              "Count the jumps to find the quotient."
+            ],
+            "example": {
+              "prompt": "Solve 24 ÷ 6 on a number line.",
+              "visual_type": "number_line",
+              "groups": 4,
+              "items_per_group": 6,
+              "equation": "4 jumps of 6 reach 24, so 24 ÷ 6 = 4"
+            },
+            "vocabulary": ["number line", "jump", "divisor", "quotient"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "division_number_line",
+            "prompt": "Solve 35 ÷ 5 on a number line.",
+            "correct_answer": "7",
+            "hint": "Count jumps of 5 to reach 35.",
+            "visual_data": {
+              "groups": 7,
+              "items_per_group": 5
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "division_number_line",
+            "question_count": 6,
+            "instructions": "Use number-line jumps to find each quotient."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Number Line Division",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review division using number lines.",
+            "deckId": "lesson-g3-u14-w1-d2-number-line-division"
+          },
+          "bigIdea": {
+            "title": "Model Division on Number Lines",
+            "subtitle": "Count equal jumps",
+            "thumbnail": "/images/learn/thumbnails/number-line.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "On a number line, division asks how many equal jumps fit into the total. The jump size is the divisor, and the number of jumps is the quotient.",
+            "bigQuestion": "How are division jumps on a number line like equal groups?",
+            "starTip": {
+              "title": "Jump by the divisor",
+              "lines": ["Count the jumps", "That is the quotient"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Jump size",
+                "equation": "24 ÷ 6",
+                "badge": "Jump 6",
+                "description": "The divisor tells how far each jump is."
+              },
+              {
+                "eyebrow": "Number of jumps",
+                "equation": "24 ÷ 6 = 4",
+                "badge": "4 jumps",
+                "description": "The number of jumps to reach the total is the quotient."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u14-w1-l3",
+          "day_number": 3,
+          "day_name": "Wednesday",
+          "lesson_title": "Build Multiplication and Division Fact Families",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by listing related multiplication and division facts.",
+          "concept": "A fact family uses the same three numbers to make two multiplication and two division equations. For 3, 5, 15: 3×5=15, 5×3=15, 15÷3=5, 15÷5=3.",
+          "practice": "Write the fact family for a set of three numbers.",
+          "objective": "Build multiplication and division fact families.",
+          "practice_type": "fact_families",
+          "skills": [
+            "multiplication",
+            "division",
+            "fact_families",
+            "inverse"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "fact_family_warmup",
+            "question_count": 3,
+            "instructions": "Warm up with fact families.",
+            "questions": [
+              {
+                "id": "g3-u14-w1-d3-warmup-1",
+                "prompt": "4 × 6 = 24. What is 24 ÷ 6?",
+                "correct_answer": "4",
+                "hint": "Inverse of multiplication.",
+                "skill": "fact_families"
+              },
+              {
+                "id": "g3-u14-w1-d3-warmup-2",
+                "prompt": "Write a fact family for 2, 8, 16.",
+                "correct_answer": "2 x 8 = 16, 8 x 2 = 16, 16 / 2 = 8, 16 / 8 = 2",
+                "hint": "Two multiplications and two divisions.",
+                "skill": "fact_families"
+              },
+              {
+                "id": "g3-u14-w1-d3-warmup-3",
+                "prompt": "If 7 × 4 = 28, then 28 ÷ 7 = ?",
+                "correct_answer": "4",
+                "hint": "Use the same three numbers.",
+                "skill": "fact_families"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Build Multiplication and Division Fact Families",
+            "teaching_points": [
+              "Use the same three numbers.",
+              "Write two multiplication facts.",
+              "Write two division facts."
+            ],
+            "example": {
+              "prompt": "Write the fact family for 3, 7, 21.",
+              "visual_type": "array",
+              "groups": 3,
+              "items_per_group": 7,
+              "equation": "3×7=21, 7×3=21, 21÷3=7, 21÷7=3"
+            },
+            "vocabulary": ["fact family", "inverse", "related facts"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "fact_families",
+            "prompt": "Write the fact family for 5, 9, 45.",
+            "correct_answer": "5 x 9 = 45, 9 x 5 = 45, 45 / 5 = 9, 45 / 9 = 5",
+            "hint": "Two multiplications and two divisions with 5, 9, 45.",
+            "visual_data": {
+              "groups": 5,
+              "items_per_group": 9
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "fact_families",
+            "question_count": 6,
+            "instructions": "Write all four facts in each fact family."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Fact Families",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review multiplication and division fact families.",
+            "deckId": "lesson-g3-u14-w1-d3-fact-families"
+          },
+          "bigIdea": {
+            "title": "Build Multiplication and Division Fact Families",
+            "subtitle": "Same three numbers, four facts",
+            "thumbnail": "/images/learn/thumbnails/arrays.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "A fact family shows how multiplication and division are connected. The same three numbers make two multiplication and two division facts.",
+            "bigQuestion": "Why are multiplication and division called inverse operations?",
+            "starTip": {
+              "title": "Four facts",
+              "lines": ["× and ×", "÷ and ÷"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Two multiplications",
+                "equation": "3 × 7 = 21 and 7 × 3 = 21",
+                "badge": "Same product",
+                "description": "Use the factors to find the product."
+              },
+              {
+                "eyebrow": "Two divisions",
+                "equation": "21 ÷ 3 = 7 and 21 ÷ 7 = 3",
+                "badge": "Same quotient",
+                "description": "Use the product and one factor to find the other."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u14-w1-l4",
+          "day_number": 4,
+          "day_name": "Thursday",
+          "lesson_title": "Use Multiplication to Solve Division Problems",
+          "lesson_type": "lesson",
+          "fact_drill": "Warm up by finding the missing factor in multiplication facts.",
+          "concept": "Division is asking for a missing factor. 24 ÷ 6 = ? is the same as 6 × ? = 24. If you know the multiplication fact, you know the division fact.",
+          "practice": "Solve division problems by thinking of the related multiplication fact.",
+          "objective": "Use multiplication facts to solve division problems.",
+          "practice_type": "multiplication_for_division",
+          "skills": [
+            "division",
+            "multiplication",
+            "missing_factor",
+            "fact_families"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 5,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "missing_factor_warmup",
+            "question_count": 3,
+            "instructions": "Warm up by finding missing factors.",
+            "questions": [
+              {
+                "id": "g3-u14-w1-d4-warmup-1",
+                "prompt": "6 × __ = 42",
+                "correct_answer": "7",
+                "hint": "42 ÷ 6 = 7.",
+                "skill": "missing_factor"
+              },
+              {
+                "id": "g3-u14-w1-d4-warmup-2",
+                "prompt": "8 × __ = 56",
+                "correct_answer": "7",
+                "hint": "56 ÷ 8 = 7.",
+                "skill": "missing_factor"
+              },
+              {
+                "id": "g3-u14-w1-d4-warmup-3",
+                "prompt": "9 × __ = 54",
+                "correct_answer": "6",
+                "hint": "54 ÷ 9 = 6.",
+                "skill": "missing_factor"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Use Multiplication to Solve Division Problems",
+            "teaching_points": [
+              "Division is asking for a missing factor.",
+              "Think: divisor times what equals the dividend?",
+              "Use known multiplication facts."
+            ],
+            "example": {
+              "prompt": "Solve 32 ÷ 8 using multiplication.",
+              "visual_type": "groups",
+              "groups": 8,
+              "items_per_group": 4,
+              "equation": "8 × 4 = 32, so 32 ÷ 8 = 4"
+            },
+            "vocabulary": ["missing factor", "inverse", "related fact"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "multiplication_for_division",
+            "prompt": "Solve 48 ÷ 6 using multiplication.",
+            "correct_answer": "8",
+            "hint": "6 × 8 = 48.",
+            "visual_data": {
+              "groups": 6,
+              "items_per_group": 8
+            }
+          },
+          "practice_block": {
+            "title": "Practice Time",
+            "type": "multiplication_for_division",
+            "question_count": 6,
+            "instructions": "Think of the related multiplication fact to find each quotient."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Multiplication Helps Division",
+            "type": "division_terms",
+            "card_count": 6,
+            "instructions": "Review how multiplication helps division.",
+            "deckId": "lesson-g3-u14-w1-d4-multiplication-division"
+          },
+          "bigIdea": {
+            "title": "Use Multiplication to Solve Division Problems",
+            "subtitle": "Division asks for a missing factor",
+            "thumbnail": "/images/learn/thumbnails/groups.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "If you know 6 × 7 = 42, then you know 42 ÷ 6 = 7. Multiplication facts are the key to solving division problems.",
+            "bigQuestion": "How is division like a missing-factor problem?",
+            "starTip": {
+              "title": "Think multiplication",
+              "lines": ["Divisor × ? = dividend", "? is the quotient"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Missing factor",
+                "equation": "32 ÷ 8 = ?",
+                "badge": "8 × ? = 32",
+                "description": "Ask what number times the divisor gives the dividend."
+              },
+              {
+                "eyebrow": "Known fact",
+                "equation": "8 × 4 = 32",
+                "badge": "Use it",
+                "description": "Use a known multiplication fact to find the quotient."
+              }
+            ]
+          }
+        },
+        {
+          "lesson_id": "g3-u14-w1-eval",
+          "day_number": 5,
+          "day_name": "Friday",
+          "lesson_title": "Unit Evaluation: Multiplication and Division Connections",
+          "lesson_type": "evaluation",
+          "fact_drill": "Rapid review of array division, number-line division, fact families, and using multiplication for division.",
+          "concept": "Review the four big ideas from this unit: arrays, number lines, fact families, and using multiplication to divide.",
+          "practice": "Complete a balanced evaluation covering the skills from this unit.",
+          "objective": "Show what you know about multiplication and division connections.",
+          "practice_type": "evaluation",
+          "evaluation_scope": "unit",
+          "review_types": [
+            "division_arrays",
+            "division_number_line",
+            "fact_families",
+            "multiplication_for_division"
+          ],
+          "skills": [
+            "division",
+            "multiplication",
+            "arrays",
+            "number_line",
+            "fact_families",
+            "missing_factor",
+            "inverse"
+          ],
+          "lesson_video_url": "",
+          "worksheet_url": "",
+          "quiz_question_count": 8,
+          "warmup": {
+            "title": "Luma Charge",
+            "type": "evaluation_warmup",
+            "question_count": 3,
+            "instructions": "Get ready to show what you know.",
+            "questions": [
+              {
+                "id": "g3-u14-w1-d5-warmup-1",
+                "prompt": "Use an array: 28 ÷ 4 = ?",
+                "correct_answer": "7",
+                "hint": "4 rows of 7 make 28.",
+                "skill": "division_arrays"
+              },
+              {
+                "id": "g3-u14-w1-d5-warmup-2",
+                "prompt": "How many jumps of 9 reach 54?",
+                "correct_answer": "6",
+                "hint": "54 ÷ 9 = 6.",
+                "skill": "division_number_line"
+              },
+              {
+                "id": "g3-u14-w1-d5-warmup-3",
+                "prompt": "If 8 × 6 = 48, then 48 ÷ 8 = ?",
+                "correct_answer": "6",
+                "hint": "Same fact family.",
+                "skill": "fact_families"
+              }
+            ]
+          },
+          "learn": {
+            "title": "Ready to Show What You Know",
+            "teaching_points": [
+              "Take your time.",
+              "Read each question carefully.",
+              "Use any strategy that helps you."
+            ],
+            "example": {
+              "prompt": "You have learned four big ideas this unit.",
+              "visual_type": "review",
+              "groups": 4,
+              "items_per_group": 1,
+              "equation": "arrays + number lines + fact families + multiplication for division = connections"
+            },
+            "vocabulary": ["evaluation", "review", "multiplication", "division"]
+          },
+          "try_it": {
+            "title": "Try one together",
+            "type": "evaluation_preview",
+            "prompt": "What is the fact family for 4, 6, 24?",
+            "correct_answer": "4 x 6 = 24, 6 x 4 = 24, 24 / 4 = 6, 24 / 6 = 4",
+            "hint": "Two multiplications and two divisions.",
+            "visual_data": {
+              "groups": 4,
+              "items_per_group": 6
+            }
+          },
+          "practice_block": {
+            "title": "Unit Evaluation",
+            "type": "evaluation",
+            "question_count": 8,
+            "instructions": "Answer all questions carefully to show your understanding."
+          },
+          "flashcards": {
+            "enabled": true,
+            "required": false,
+            "title": "Unit 14 Review",
+            "type": "unit_review",
+            "card_count": 8,
+            "instructions": "Review key terms from Unit 14 before the evaluation.",
+            "deckId": "lesson-g3-u14-w1-d5-unit-review"
+          },
+          "bigIdea": {
+            "title": "Unit Evaluation: Multiplication and Division Connections",
+            "subtitle": "Show what you know",
+            "thumbnail": "/images/learn/thumbnails/evaluation.webp",
+            "videoUrl": "",
+            "videoCaption": "",
+            "intro": "This evaluation checks your understanding of the four big ideas from this unit: modeling division with arrays, modeling division on number lines, building fact families, and using multiplication to solve division.",
+            "bigQuestion": "What do you know about multiplication and division connections?",
+            "starTip": {
+              "title": "Take your time",
+              "lines": ["Read carefully", "Show your thinking"]
+            },
+            "ruleCards": [
+              {
+                "eyebrow": "Inverse operations",
+                "equation": "Multiplication and division undo each other",
+                "badge": "Same facts",
+                "description": "Multiplication and division use the same numbers in different ways."
+              },
+              {
+                "eyebrow": "Use what you know",
+                "equation": "48 ÷ 6 = ? → 6 × 8 = 48",
+                "badge": "Known facts",
+                "description": "Use multiplication facts to solve division problems quickly."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
