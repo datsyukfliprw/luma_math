@@ -1,64 +1,64 @@
 # LumaMath Roadmap
 
 ## Completed
-- ✅ Phase 1: Content Consolidation (Hybrid Model)
-  - JSON curriculum structure for Week 1
-  - Curriculum loader with helper functions
-  - Week-aware lesson ID mapping
-  - BigIdea and flashcard integration
 
-- ✅ Phase 2: State Management Migration
-  - StudentProgressContext with centralized state
-  - Migration of all 10 screens to context
-  - Deprecation of old localStorage helpers
-  - ESLint compliance (0 errors, 0 warnings)
+### Documentation Foundation
 
-## In Progress
-- 🔄 Documentation and Architecture
-  - Architecture documentation
-  - Roadmap and decision tracking
-  - Code conventions
+- `manifesto.md`, `vision.md`, `product_philosophy.md`, `learning_model.md`, `curriculum.md`
+- `content_architecture.md`, `blueprint.md`, `design_system.md`, `project_rules.md`, `glossary.md`
+- `docs/README.md` authority hierarchy and index
+- `implementation_status.md` as the living current-state snapshot
+
+### Grade 3 Vertical Slice
+
+- JSON curriculum data for Grade 3 with Zod validation
+- Canonical lesson contract enforcing Warm-Up, Learn, Try It, and Practice for `lesson_type: "lesson"`
+- Student learning path with Warm-Up, Learn, Try It, Practice, and Evaluation
+- Guided, Independent, and Challenge practice modes
+- Flashcard sessions and categories
+- Student progress tracking via `StudentProgressContext`
+- `curriculum:check` validation workflow
+
+## Active
+
+- Documentation maintenance and stale-document resolution
+- Alignment of the runtime with `blueprint.md` and `content_architecture.md`
 
 ## Planned
 
-### Phase 3: Responsive Design Strategy
-- **Tablet-First Student Experience**
-  - Optimize layouts for iPad/tablet screens
-  - Touch-friendly interactions
-  - Larger touch targets and spacing
+### Phase 1: Runtime Alignment
 
-- **Browser-First Technology**
-  - Ensure web compatibility across browsers
-  - Progressive enhancement approach
-  - Feature detection and fallbacks
+- Refactor runtime to consume Content Contracts directly
+- Replace temporary adapters with contract-driven content loading
+- Generalize content loading from Grade 3 to a K–6 grade abstraction
 
-- **Phone-Friendly Parent Controls**
-  - Mobile-optimized settings and reports
-  - Compact layouts for smaller screens
-  - Parent dashboard responsive design
+### Phase 2: Responsive Design
 
-### Phase 4: Content Expansion
-- Extend JSON curriculum beyond Week 1
-- Migrate remaining lessonExperience data to JSON
-- Add more flashcard decks
-- Evaluation and assessment content
+- Tablet-first student experience per `design_system.md`
+- Phone-friendly parent controls and reports
+- Cross-browser compatibility and progressive enhancement
 
-### Phase 5: Feature Enhancements
+### Phase 3: Parent and Multi-Student Features
+
+- Multi-student profile support
+- Parent reporting dashboard
+- Persistent, multi-device progress storage
+
+### Phase 4: Mastery and Assessment
+
 - Skill assessments and placement
 - Mastery tracking and gap analysis
-- Parent reporting dashboard
-- Multiple student profiles
-- Star Garden gamification
+- Expanded adaptive practice and recommendations
 
-### Phase 6: Polish and Optimization
+### Phase 5: Polish and Scale
+
 - Performance optimization
 - Accessibility improvements
-- Error handling and edge cases
 - Testing and QA
+- Offline support, sync, and optional AI tutoring
 
 ## Future Considerations
-- Native app wrappers (React Native / Capacitor)
-- Offline support with service workers
-- Sync across devices
+
+- Native app wrappers
 - Advanced analytics
-- AI-powered recommendations
+- Broader ecosystem integrations

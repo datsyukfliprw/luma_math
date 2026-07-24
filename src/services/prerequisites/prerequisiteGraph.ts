@@ -5,11 +5,7 @@
 // skill progress map, so it can be called from UI, hooks, or mission planners.
 
 import type { Concept, PrerequisiteEdge } from "../../data/curriculum/curriculumGraph";
-import {
-  getConceptById,
-  getSkillById,
-  masteryGraph,
-} from "../../data/curriculum/curriculumGraph";
+import { getConceptById, getSkillById, masteryGraph } from "../../data/curriculum/curriculumGraph";
 import type { MasteryStatus, PrerequisiteType, SkillProgress } from "../../types/mastery";
 import { evaluateConceptMastery } from "../mastery/evaluateMastery";
 import { MasteryStatusRank } from "../mastery/evaluateMastery";
@@ -168,9 +164,12 @@ export function getConceptUnlockState(
     ? evaluateConceptMastery(previousConcept, getSkillProgress)
     : null;
 
+  // Progression readiness: a student may continue once the previous concept
+  // has been introduced (e.g., one successful Guided Practice session).
+  // Hard skill-prerequisite edges below still enforce mastery thresholds.
   const previousConceptBlocking =
     previousConceptStatus !== null &&
-    MasteryStatusRank[previousConceptStatus] < MasteryStatusRank["developing"];
+    MasteryStatusRank[previousConceptStatus] < MasteryStatusRank["introduced"];
 
   const edges = ConceptPrerequisiteEdges[conceptId] ?? [];
   const blockingEdges = edges.filter(

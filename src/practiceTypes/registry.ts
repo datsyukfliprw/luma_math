@@ -1,5 +1,6 @@
 import { generateArrayRowsColumnsProblems } from "./arrayRowsColumns";
 import { generateCommutativePropertyProblems } from "./commutativeProperty";
+import { generateDefaultPracticeProblems } from "./default";
 import { generateDrawArraysProblems } from "./drawArrays";
 import { generateEqualGroupsProblems } from "./equalGroups";
 import { generateEqualGroupsWithObjectsProblems } from "./equalGroupsWithObjects";
@@ -44,9 +45,9 @@ export function generateProblemsForPracticeType(
 ): PracticeProblem[] {
   const generator = practiceRegistry[practiceType];
 
-  if (!generator) {
-    return [];
+  if (generator) {
+    return generator(options);
   }
 
-  return generator(options);
+  return generateDefaultPracticeProblems(options);
 }

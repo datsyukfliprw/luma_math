@@ -54,6 +54,7 @@ function buildBigIdea(
 
 function buildLessonHero(
   lesson: NonNullable<ReturnType<typeof findCurriculumLessonById>>["lesson"],
+  gradeLevel: number,
 ): CurriculumLessonExperience["lessonHero"] {
   const teachingPoints = lesson.learn?.teaching_points;
   const missionSteps =
@@ -62,7 +63,7 @@ function buildLessonHero(
       : [lesson.objective || lesson.concept || "Explore the lesson idea."];
 
   return {
-    eyebrow: "Grade 3",
+    eyebrow: `Grade ${gradeLevel}`,
     title: lesson.lesson_title,
     subtitle: lesson.day_name || "",
     missionTitle: "Today's Mission",
@@ -133,9 +134,10 @@ function buildCompletion(
     (l) => l.lesson_type === "lesson" && isInstructionalLessonAvailable(l),
   );
   const maxDay = normalLessons.length;
+  const gradeLevel = unit.grade_level;
   const nextLessonId =
     lesson.lesson_type === "lesson" && weekDayNumber < maxDay
-      ? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber + 1}`
+      ? `g${gradeLevel}-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber + 1}`
       : undefined;
 
   return {
@@ -168,8 +170,8 @@ export function getAdaptedLessonExperience(
   const base: CurriculumLessonExperience = {
     source: "curriculum",
     id: lessonId,
-    grade: 3,
-    unitId: `g3-u${unit.unit_number}`,
+    grade: unit.grade_level,
+    unitId: `g${unit.grade_level}-u${unit.unit_number}`,
     unitNumber: unit.unit_number,
     unitTitle: unit.unit_title,
     week: week.week_number,
@@ -183,7 +185,7 @@ export function getAdaptedLessonExperience(
     topic,
     practiceType: lesson.practice_type,
     flashcardDeckId: lesson.flashcards?.deckId,
-    lessonHero: buildLessonHero(lesson),
+    lessonHero: buildLessonHero(lesson, unit.grade_level),
     bigIdea: buildBigIdea(lesson),
     practice: buildPractice(lesson),
     completion: buildCompletion(found),

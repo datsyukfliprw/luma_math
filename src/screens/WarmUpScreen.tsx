@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { getLessonById } from "../lib/lessonLookup";
+import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
 import type { WarmUpData, WarmUpQuestion } from "../types/warmup";
 import { getWarmUpRounds } from "../types/warmup";
 
@@ -10,8 +11,13 @@ type LessonWithWarmUp = {
   warmup?: WarmUpData;
 };
 
-function normalizeAnswer(answer: string) {
-  return answer.trim().toLowerCase().replaceAll(" ", "");
+function isNumericString(value: string): boolean {
+  const normalized = normalizeNumericAnswer(value);
+  return normalized.length > 0 && !Number.isNaN(Number(normalized));
+}
+
+function normalizeForQuestion(answer: string, expected: string): string {
+  return isNumericString(expected) ? normalizeNumericAnswer(answer) : normalizeTextAnswer(answer);
 }
 
 function getFallbackWarmup(): WarmUpData {
@@ -129,8 +135,9 @@ function WarmUpScreen() {
       return;
     }
 
-    const userAnswer = normalizeAnswer(answer);
-    const correctAnswer = normalizeAnswer(activeQuestion.correct_answer);
+    const expected = activeQuestion.correct_answer;
+    const userAnswer = normalizeForQuestion(answer, expected);
+    const correctAnswer = normalizeForQuestion(expected, expected);
 
     if (userAnswer === correctAnswer) {
       setFeedback("correct");
@@ -149,15 +156,9 @@ function WarmUpScreen() {
 
   return (
     <PageLayout>
-      <div
-        data-name="warm-up-screen"
-        className="flex min-h-full flex-col gap-4"
-      >
+      <div data-name="warm-up-screen" className="flex min-h-full flex-col gap-4">
         {/* @SECTION Warm-up header */}
-        <header
-          data-name="warm-up-header"
-          className="flex items-center justify-between gap-4"
-        >
+        <header data-name="warm-up-header" className="flex items-center justify-between gap-4">
           <button
             type="button"
             onClick={backToLesson}
@@ -167,9 +168,7 @@ function WarmUpScreen() {
           </button>
 
           <div className="flex items-center gap-3">
-            <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              Warm-Up
-            </p>
+            <p className="text-sm font-black uppercase tracking-[0.18em] text-[#0081A7]">Warm-Up</p>
 
             <div className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 text-sm font-black text-[#073B5A] shadow-sm lg:px-6 lg:py-4 lg:text-base">
               ◷ {warmup.estimated_minutes ?? 5}:00
@@ -178,10 +177,7 @@ function WarmUpScreen() {
         </header>
 
         {/* @SECTION Warm-up rounds */}
-        <section
-          data-name="warm-up-rounds"
-          className="flex gap-3 overflow-x-auto pb-1"
-        >
+        <section data-name="warm-up-rounds" className="flex gap-3 overflow-x-auto pb-1">
           {rounds.map((round, index) => {
             const isActive = index === (activeQuestion?.roundIndex ?? 0);
             const isDone = index < (activeQuestion?.roundIndex ?? 0);
@@ -242,7 +238,8 @@ function WarmUpScreen() {
             <div className="relative z-10 flex w-full flex-col p-6 lg:p-8">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <span className="rounded-full bg-white/85 px-4 py-2 text-sm font-black text-[#073B5A] shadow-sm lg:px-5 lg:py-3 lg:text-base">
-                  Question {Math.min(questionIndex + 1, Math.max(totalQuestions, 1))} of {totalQuestions}
+                  Question {Math.min(questionIndex + 1, Math.max(totalQuestions, 1))} of{" "}
+                  {totalQuestions}
                 </span>
 
                 <span className="rounded-full bg-white/85 px-4 py-2 text-sm font-black capitalize text-[#0081A7] shadow-sm lg:px-5 lg:py-3 lg:text-base">
@@ -303,10 +300,7 @@ function WarmUpScreen() {
           </main>
 
           {/* @SECTION Warm-up support rail */}
-          <aside
-            data-name="warm-up-support-rail"
-            className="flex min-h-0 flex-col gap-5"
-          >
+          <aside data-name="warm-up-support-rail" className="flex min-h-0 flex-col gap-5">
             <section
               data-name="warm-up-progress-card"
               className="flex min-h-[315px] flex-1 flex-col rounded-[1.75rem] border border-[#073B5A]/10 bg-white p-5 shadow-sm"
@@ -336,8 +330,7 @@ function WarmUpScreen() {
               <div className="mt-5 flex flex-wrap gap-2">
                 {questions.map((question, index) => {
                   const isDone =
-                    index < questionIndex ||
-                    (index === questionIndex && feedback === "correct");
+                    index < questionIndex || (index === questionIndex && feedback === "correct");
                   const isCurrent = index === questionIndex && !isDone;
 
                   return (

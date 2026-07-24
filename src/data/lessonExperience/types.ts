@@ -53,9 +53,9 @@ export type TryItProblem = {
 
 export type LessonExperience = {
   id: string;
-  grade: 3;
+  grade: number;
   unitId: string;
-  unitNumber: 1;
+  unitNumber: number;
   unitTitle: string;
   week: number;
   lessonNumber: number;
@@ -65,7 +65,7 @@ export type LessonExperience = {
   label: string;
   objective: string;
   kidGoal: string;
-  topic: "multiplication" | "review";
+  topic: string;
   practiceType: LessonPracticeType;
   flashcardDeckId?: string;
 
@@ -207,7 +207,7 @@ export type AuthoredLessonExperience = LessonExperience & {
 export type CurriculumLessonExperience = {
   source: "curriculum";
   id: string;
-  grade: 3;
+  grade: number;
   unitId: string;
   unitNumber: number;
   unitTitle: string;
@@ -219,7 +219,7 @@ export type CurriculumLessonExperience = {
   label: string;
   objective: string;
   kidGoal: string;
-  topic: "multiplication" | "review";
+  topic: string;
   practiceType: string;
   flashcardDeckId?: string;
   lessonHero: LessonExperience["lessonHero"];

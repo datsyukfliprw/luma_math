@@ -4,8 +4,8 @@
 // This layer keeps legacy lesson IDs stable while exposing a hierarchy of
 // pathways, chapters, concepts, missions, and skills.
 
-import { curriculum } from "./index";
-import type { Lesson } from "./curriculumSchema";
+import { getAllCurricula } from "./index";
+import type { Curriculum, Lesson } from "./curriculumSchema";
 import type { MasteryStatus, EvidenceType, PrerequisiteType } from "../../types/mastery";
 
 export type { MasteryStatus, EvidenceType, PrerequisiteType };
@@ -104,51 +104,62 @@ function getConceptSlugFromTitle(title: string): string {
   return toSlug(title);
 }
 
-function getConceptId(lesson: Lesson): string {
+function getConceptId(lesson: Lesson, curriculum: Curriculum): string {
   const slug = getConceptSlugFromTitle(lesson.lesson_title);
-  return `g3-u1-c-${slug}`;
+  return `g${curriculum.grade_level}-u${curriculum.unit_number}-c-${slug}`;
 }
 
-function getMissionId(lesson: Lesson, conceptSlug: string): string {
-  return lesson.lesson_id ?? `g3-u1-m-${conceptSlug}`;
+function getMissionId(lesson: Lesson, curriculum: Curriculum, conceptSlug: string): string {
+  return (
+    lesson.lesson_id ?? `g${curriculum.grade_level}-u${curriculum.unit_number}-m-${conceptSlug}`
+  );
 }
 
-function getChapterId(weekTitle: string): string {
-  return `g3-u1-ch-${toSlug(weekTitle)}`;
+function getChapterId(weekTitle: string, curriculum: Curriculum): string {
+  return `g${curriculum.grade_level}-u${curriculum.unit_number}-ch-${toSlug(weekTitle)}`;
+}
+
+function getSkillId(skillSlug: string, curriculum: Curriculum): string {
+  return `g${curriculum.grade_level}-s-${skillSlug}`;
 }
 
 // @SECTION GRAPH_BUILDER
-function buildSkillRegistry(lessons: Lesson[]): Map<string, Skill> {
+function buildSkillRegistry(curricula: Curriculum[]): Map<string, Skill> {
   const registry = new Map<string, Skill>();
 
-  for (const lesson of lessons) {
-    for (const skillSlug of lesson.skills) {
-      if (registry.has(skillSlug)) {
-        continue;
-      }
+  for (const curriculum of curricula) {
+    for (const week of curriculum.weeks) {
+      for (const lesson of week.lessons) {
+        for (const skillSlug of lesson.skills) {
+          const skillId = getSkillId(skillSlug, curriculum);
+          if (registry.has(skillId)) {
+            continue;
+          }
 
-      registry.set(skillSlug, {
-        id: `g3-s-${skillSlug}`,
-        slug: skillSlug,
-        title: humanizeSkillSlug(skillSlug),
-      });
+          registry.set(skillId, {
+            id: skillId,
+            slug: skillSlug,
+            title: humanizeSkillSlug(skillSlug),
+          });
+        }
+      }
     }
   }
 
   return registry;
 }
 
-function buildMissionForLesson(lesson: Lesson, concept: Concept): Mission {
-  const conceptSlug = concept.id.replace(/^g3-u1-c-/, "");
+function buildMissionForLesson(lesson: Lesson, curriculum: Curriculum, concept: Concept): Mission {
+  const conceptSlug = concept.id.replace(/^g\d+-u\d+-c-/, "");
   const type: MissionType = lesson.lesson_type === "evaluation" ? "mastery_check" : "introduce";
 
   return {
-    id: getMissionId(lesson, conceptSlug),
+    id: getMissionId(lesson, curriculum, conceptSlug),
     title: lesson.lesson_title,
     type,
-    lessonId: lesson.lesson_id ?? getMissionId(lesson, conceptSlug),
+    lessonId: lesson.lesson_id ?? getMissionId(lesson, curriculum, conceptSlug),
     conceptId: concept.id,
-    skillIds: lesson.skills.map((slug) => `g3-s-${slug}`),
+    skillIds: lesson.skills.map((slug) => getSkillId(slug, curriculum)),
     practiceType: lesson.practice_type,
     deckId: lesson.flashcards?.deckId,
     evaluationScope: lesson.evaluation_scope,
@@ -166,41 +177,41 @@ function buildMissionForLesson(lesson: Lesson, concept: Concept): Mission {
 
 function buildConceptForLesson(
   lesson: Lesson,
+  curriculum: Curriculum,
   chapterId: string,
   skillRegistry: Map<string, Skill>,
 ): Concept {
   const concept: Concept = {
-    id: getConceptId(lesson),
+    id: getConceptId(lesson, curriculum),
     title: lesson.lesson_title,
     subtitle: lesson.objective,
     chapterId,
-    skillIds: lesson.skills.map((slug) => `g3-s-${slug}`),
+    skillIds: lesson.skills.map((slug) => getSkillId(slug, curriculum)),
     skills: lesson.skills
-      .map((slug) => skillRegistry.get(slug))
+      .map((slug) => skillRegistry.get(getSkillId(slug, curriculum)))
       .filter((skill): skill is Skill => skill !== undefined),
     missions: [],
     prerequisiteEdges: [],
   };
 
-  concept.missions.push(buildMissionForLesson(lesson, concept));
+  concept.missions.push(buildMissionForLesson(lesson, curriculum, concept));
 
   return concept;
 }
 
-function buildMasteryGraph(): Pathway {
-  const allLessons = curriculum.weeks.flatMap((week) => week.lessons);
-  const skillRegistry = buildSkillRegistry(allLessons);
-
+function buildUnitPathway(curriculum: Curriculum, skillRegistry: Map<string, Skill>): Chapter[] {
   const chapters: Chapter[] = curriculum.weeks.map((week) => {
-    const chapterId = getChapterId(week.week_title);
+    const chapterId = getChapterId(week.week_title, curriculum);
 
     return {
       id: chapterId,
       title: week.week_title,
       subtitle: week.weekly_focus,
-      pathwayId: "g3-u1-pw-multiplication-foundations",
+      pathwayId: `g${curriculum.grade_level}-u${curriculum.unit_number}`,
       conceptIds: [],
-      concepts: week.lessons.map((lesson) => buildConceptForLesson(lesson, chapterId, skillRegistry)),
+      concepts: week.lessons.map((lesson) =>
+        buildConceptForLesson(lesson, curriculum, chapterId, skillRegistry),
+      ),
     };
   });
 
@@ -208,14 +219,26 @@ function buildMasteryGraph(): Pathway {
     chapter.conceptIds = chapter.concepts.map((concept) => concept.id);
   }
 
+  return chapters;
+}
+
+function buildMasteryGraph(): Pathway {
+  const curricula = getAllCurricula();
+  const skillRegistry = buildSkillRegistry(curricula);
+
+  const allChapters: Chapter[] = [];
+  for (const curriculum of curricula) {
+    allChapters.push(...buildUnitPathway(curriculum, skillRegistry));
+  }
+
   return {
-    id: "g3-u1-pw-multiplication-foundations",
-    gradeLevel: curriculum.grade_level,
-    unitNumber: curriculum.unit_number,
-    title: curriculum.unit_title,
-    subtitle: `Grade ${curriculum.grade_level} • Unit ${curriculum.unit_number} Pathway`,
-    chapterIds: chapters.map((chapter) => chapter.id),
-    chapters,
+    id: "all-units",
+    gradeLevel: 0,
+    unitNumber: 0,
+    title: "LumaMath Curriculum",
+    subtitle: "All registered grades and units",
+    chapterIds: allChapters.map((chapter) => chapter.id),
+    chapters: allChapters,
   };
 }
 

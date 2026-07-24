@@ -4,6 +4,7 @@ import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { generateProblemsForPracticeType } from "../practiceTypes/registry";
+import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
 import type { PracticeMode } from "../practiceTypes/types";
 
 // @SECTION PRACTICE_HELPERS
@@ -14,8 +15,16 @@ function formatPracticeType(practiceType: string) {
     .join(" ");
 }
 
-function normalizeAnswer(answer: string) {
-  return answer.toLowerCase().replaceAll(" ", "").replaceAll("×", "x").replaceAll("*", "x");
+function isNumericString(value: string): boolean {
+  const normalized = normalizeNumericAnswer(value);
+  return normalized.length > 0 && !Number.isNaN(Number(normalized));
+}
+
+function normalizeForComparison(answer: string, expected: string): string {
+  if (isNumericString(expected)) {
+    return normalizeNumericAnswer(answer);
+  }
+  return normalizeTextAnswer(answer).replaceAll("×", "x").replaceAll("*", "x");
 }
 
 function normalizePracticeMode(mode: string | null): PracticeMode {
@@ -312,7 +321,8 @@ function PracticeScreen() {
 
     if (isEqualGroupsChoiceMode) {
       recordFeedback(
-        normalizeAnswer(selectedChoice) === normalizeAnswer(currentProblem.correctAnswer),
+        normalizeForComparison(selectedChoice, currentProblem.correctAnswer) ===
+          normalizeForComparison(currentProblem.correctAnswer, currentProblem.correctAnswer),
       );
 
       return;
@@ -321,21 +331,26 @@ function PracticeScreen() {
     if (currentProblem.visualType === "factor_product") {
       const expected = currentProblem.answerData;
 
+      const expectedFactorA = expected?.factorA ?? "";
+      const expectedFactorB = expected?.factorB ?? "";
+      const expectedProduct = expected?.product ?? "";
+
       const studentFactors = [
-        normalizeAnswer(factorAAnswer),
-        normalizeAnswer(factorBAnswer),
+        normalizeForComparison(factorAAnswer, expectedFactorA),
+        normalizeForComparison(factorBAnswer, expectedFactorB),
       ].sort();
 
       const expectedFactors = [
-        normalizeAnswer(expected?.factorA ?? ""),
-        normalizeAnswer(expected?.factorB ?? ""),
+        normalizeForComparison(expectedFactorA, expectedFactorA),
+        normalizeForComparison(expectedFactorB, expectedFactorB),
       ].sort();
 
       const factorsAreCorrect =
         studentFactors[0] === expectedFactors[0] && studentFactors[1] === expectedFactors[1];
 
       const productIsCorrect =
-        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? "");
+        normalizeForComparison(productAnswer, expectedProduct) ===
+        normalizeForComparison(expectedProduct, expectedProduct);
 
       recordFeedback(factorsAreCorrect && productIsCorrect);
       return;
@@ -344,13 +359,21 @@ function PracticeScreen() {
     if (currentProblem.visualType === "array_rows_columns") {
       const expected = currentProblem.answerData;
 
-      const rowsAreCorrect = normalizeAnswer(rowsAnswer) === normalizeAnswer(expected?.rows ?? "");
+      const expectedRows = expected?.rows ?? "";
+      const expectedColumns = expected?.columns ?? "";
+      const expectedProduct = expected?.product ?? "";
+
+      const rowsAreCorrect =
+        normalizeForComparison(rowsAnswer, expectedRows) ===
+        normalizeForComparison(expectedRows, expectedRows);
 
       const columnsAreCorrect =
-        normalizeAnswer(columnsAnswer) === normalizeAnswer(expected?.columns ?? "");
+        normalizeForComparison(columnsAnswer, expectedColumns) ===
+        normalizeForComparison(expectedColumns, expectedColumns);
 
       const productIsCorrect =
-        normalizeAnswer(productAnswer) === normalizeAnswer(expected?.product ?? "");
+        normalizeForComparison(productAnswer, expectedProduct) ===
+        normalizeForComparison(expectedProduct, expectedProduct);
 
       recordFeedback(rowsAreCorrect && columnsAreCorrect && productIsCorrect);
       return;
@@ -369,7 +392,8 @@ function PracticeScreen() {
 
     if (currentProblem.visualType === "multiple_choice") {
       recordFeedback(
-        normalizeAnswer(selectedChoice) === normalizeAnswer(currentProblem.correctAnswer),
+        normalizeForComparison(selectedChoice, currentProblem.correctAnswer) ===
+          normalizeForComparison(currentProblem.correctAnswer, currentProblem.correctAnswer),
       );
 
       return;
@@ -377,14 +401,19 @@ function PracticeScreen() {
 
     if (currentProblem.visualType === "fair_sharing") {
       const expected = currentProblem.answerData;
+      const expectedQuotient = expected?.quotient ?? "";
 
-      recordFeedback(normalizeAnswer(quotientAnswer) === normalizeAnswer(expected?.quotient ?? ""));
+      recordFeedback(
+        normalizeForComparison(quotientAnswer, expectedQuotient) ===
+          normalizeForComparison(expectedQuotient, expectedQuotient),
+      );
 
       return;
     }
 
-    const userAnswer = normalizeAnswer(answer);
-    const correctAnswer = normalizeAnswer(currentProblem.correctAnswer);
+    const expected = currentProblem.correctAnswer;
+    const userAnswer = normalizeForComparison(answer, expected);
+    const correctAnswer = normalizeForComparison(expected, expected);
 
     recordFeedback(userAnswer === correctAnswer);
   }
