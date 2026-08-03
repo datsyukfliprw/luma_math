@@ -434,7 +434,12 @@ describe("markPracticeRewardTransaction", () => {
       { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
     );
 
-    expect(result).toEqual({ ok: false, reason: "insufficient_accuracy" });
+    expect(result).toEqual({
+      ok: false,
+      reason: "insufficient_accuracy",
+      accuracy: 0.7,
+      requiredAccuracy: 0.8,
+    });
     expect(nextState).toBe(state);
     expect(nextState.practiceRewards[LESSON_ID]).not.toHaveProperty("independent");
     expect(nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(1);
@@ -536,5 +541,215 @@ describe("markPracticeRewardTransaction", () => {
     expect(nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(2);
     expect(nextState.skillProgress["g3-s-test-a"].status).toBe("developing");
     expect(nextState.lessonProgress).toBe(state.lessonProgress);
+  });
+
+  describe("Challenge transaction", () => {
+    it("succeeds after Guided and Independent and creates a Challenge reward without evidence or mastery changes", () => {
+      const state = buildStudentState({
+        practiceRewards: {
+          [LESSON_ID]: {
+            guided: {
+              completed: true,
+              rewardId: "common_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+            independent: {
+              completed: true,
+              rewardId: "rare_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+          },
+        },
+        skillProgress: {
+          "g3-s-test-a": buildSkill("g3-s-test-a", {
+            totalAttempts: 2,
+            totalCorrect: 2,
+            currentStreak: 2,
+            bestStreak: 2,
+            status: "developing",
+            evidenceCounts: { conceptual: 0, procedural: 2, transfer: 0, retention: 0 },
+          }),
+          "g3-s-test-b": buildSkill("g3-s-test-b", {
+            totalAttempts: 2,
+            totalCorrect: 2,
+            currentStreak: 2,
+            bestStreak: 2,
+            status: "developing",
+            evidenceCounts: { conceptual: 0, procedural: 2, transfer: 0, retention: 0 },
+          }),
+        },
+      });
+
+      const { result, nextState } = markPracticeRewardTransaction(
+        state,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+
+      expect(result).toEqual({ ok: true, mode: "challenge" });
+      expect(nextState.practiceRewards[LESSON_ID].challenge).toEqual({
+        completed: true,
+        rewardId: "epic_star_accessory",
+        completedAt: TIMESTAMP,
+      });
+      expect(nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+      expect(nextState.skillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+      expect(nextState.skillProgress["g3-s-test-a"].status).toBe("developing");
+      expect(nextState.lessonProgress).toBe(state.lessonProgress);
+    });
+
+    it("rejects Challenge below 80% first-attempt accuracy and preserves the entire StudentState", () => {
+      const state = buildStudentState({
+        practiceRewards: {
+          [LESSON_ID]: {
+            guided: {
+              completed: true,
+              rewardId: "common_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+            independent: {
+              completed: true,
+              rewardId: "rare_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+          },
+        },
+        skillProgress: {
+          "g3-s-test-a": buildSkill("g3-s-test-a", {
+            totalAttempts: 2,
+            totalCorrect: 2,
+            currentStreak: 2,
+            bestStreak: 2,
+            status: "developing",
+            evidenceCounts: { conceptual: 0, procedural: 2, transfer: 0, retention: 0 },
+          }),
+        },
+      });
+
+      const { result, nextState } = markPracticeRewardTransaction(
+        state,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
+      );
+
+      expect(result).toEqual({
+        ok: false,
+        reason: "insufficient_accuracy",
+        accuracy: 0.7,
+        requiredAccuracy: 0.8,
+      });
+      expect(nextState).toBe(state);
+      expect(nextState.practiceRewards[LESSON_ID]).not.toHaveProperty("challenge");
+      expect(nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+    });
+
+    it("rejects invalid Challenge metrics and preserves the entire StudentState", () => {
+      const state = buildStudentState({
+        practiceRewards: {
+          [LESSON_ID]: {
+            guided: {
+              completed: true,
+              rewardId: "common_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+            independent: {
+              completed: true,
+              rewardId: "rare_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+          },
+        },
+      });
+
+      const { result, nextState } = markPracticeRewardTransaction(
+        state,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 6, firstAttemptTotalCount: 5 },
+      );
+
+      expect(result).toEqual({ ok: false, reason: "invalid_session_result" });
+      expect(nextState).toBe(state);
+      expect(nextState.practiceRewards[LESSON_ID]).not.toHaveProperty("challenge");
+    });
+
+    it("prevents duplicate Challenge rewards when called twice in rapid succession", () => {
+      const state = buildStudentState({
+        practiceRewards: {
+          [LESSON_ID]: {
+            guided: {
+              completed: true,
+              rewardId: "common_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+            independent: {
+              completed: true,
+              rewardId: "rare_star_accessory",
+              completedAt: TIMESTAMP,
+            },
+          },
+        },
+      });
+
+      const first = markPracticeRewardTransaction(state, LESSON_ID, "challenge", TIMESTAMP, {
+        firstAttemptCorrectCount: 8,
+        firstAttemptTotalCount: 10,
+      });
+      expect(first.result).toEqual({ ok: true, mode: "challenge" });
+      expect(first.nextState.practiceRewards[LESSON_ID].challenge).toEqual({
+        completed: true,
+        rewardId: "epic_star_accessory",
+        completedAt: TIMESTAMP,
+      });
+
+      const second = markPracticeRewardTransaction(
+        first.nextState,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(second.result).toEqual({ ok: false, reason: "already_completed" });
+      expect(second.nextState).toBe(first.nextState);
+    });
+
+    it("rejects Challenge before Guided and before Independent", () => {
+      const missingGuided = markPracticeRewardTransaction(
+        buildStudentState(),
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(missingGuided.result).toEqual({ ok: false, reason: "guided_required" });
+      expect(missingGuided.nextState.practiceRewards).toEqual({});
+
+      const missingIndependent = markPracticeRewardTransaction(
+        buildStudentState({
+          practiceRewards: {
+            [LESSON_ID]: {
+              guided: {
+                completed: true,
+                rewardId: "common_star_accessory",
+                completedAt: TIMESTAMP,
+              },
+            },
+          },
+        }),
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(missingIndependent.result).toEqual({
+        ok: false,
+        reason: "independent_required",
+      });
+    });
   });
 });

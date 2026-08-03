@@ -29,7 +29,12 @@ export function markPracticeRewardTransaction(
 
   if (!completion.ok) {
     return {
-      result: { ok: false, reason: completion.reason },
+      result: {
+        ok: false,
+        reason: completion.reason,
+        accuracy: completion.accuracy,
+        requiredAccuracy: completion.requiredAccuracy,
+      },
       nextState: currentState,
     };
   }

@@ -451,7 +451,12 @@ describe("applyPracticeCompletion", () => {
       TIMESTAMP,
       { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
     );
-    expect(below80).toEqual({ ok: false, reason: "insufficient_accuracy" });
+    expect(below80).toEqual({
+      ok: false,
+      reason: "insufficient_accuracy",
+      accuracy: 0.7,
+      requiredAccuracy: 0.8,
+    });
     expect(below80).not.toHaveProperty("nextPracticeRewards");
     expect(guided.nextPracticeRewards[LESSON_ID]).not.toHaveProperty("independent");
     expect(guided.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(1);
@@ -464,7 +469,12 @@ describe("applyPracticeCompletion", () => {
       TIMESTAMP,
       { firstAttemptCorrectCount: 3, firstAttemptTotalCount: 4 },
     );
-    expect(fractional).toEqual({ ok: false, reason: "insufficient_accuracy" });
+    expect(fractional).toEqual({
+      ok: false,
+      reason: "insufficient_accuracy",
+      accuracy: 0.75,
+      requiredAccuracy: 0.8,
+    });
 
     const boundaryOk = applyPracticeCompletion(
       guided.nextPracticeRewards,
@@ -486,7 +496,12 @@ describe("applyPracticeCompletion", () => {
       TIMESTAMP,
       { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
     );
-    expect(eventualCorrectInflated).toEqual({ ok: false, reason: "insufficient_accuracy" });
+    expect(eventualCorrectInflated).toEqual({
+      ok: false,
+      reason: "insufficient_accuracy",
+      accuracy: 0.7,
+      requiredAccuracy: 0.8,
+    });
   });
 
   it("rejects invalid Independent metrics and preserves state", () => {
@@ -596,7 +611,7 @@ describe("applyPracticeCompletion", () => {
     expect(duplicate).toEqual({ ok: false, reason: "already_completed" });
   });
 
-  it("does not require metrics for Guided or Challenge", () => {
+  it("does not require metrics for Guided and requires valid first-attempt metrics for Challenge", () => {
     const { practiceRewards, skillProgress } = buildEmptyState();
 
     const guided = applyPracticeCompletion(
@@ -632,5 +647,398 @@ describe("applyPracticeCompletion", () => {
     expect(challenge.ok).toBe(true);
     if (!challenge.ok) return;
     expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+  });
+
+  describe("Challenge scoring", () => {
+    it("completes Challenge at exactly 80% first-attempt accuracy", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
+
+      const challenge = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(challenge.ok).toBe(true);
+      if (!challenge.ok) return;
+
+      expect(challenge.rewardRecord.rewardId).toBe("epic_star_accessory");
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+    });
+
+    it("completes Challenge above 80% and at the 4/5 fractional boundary", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
+
+      const above80 = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 9, firstAttemptTotalCount: 10 },
+      );
+      expect(above80.ok).toBe(true);
+
+      const boundary = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 4, firstAttemptTotalCount: 5 },
+      );
+      expect(boundary.ok).toBe(true);
+    });
+
+    it("rejects Challenge below 80% first-attempt accuracy and preserves state", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
+
+      const below80 = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
+      );
+      expect(below80).toEqual({
+        ok: false,
+        reason: "insufficient_accuracy",
+        accuracy: 0.7,
+        requiredAccuracy: 0.8,
+      });
+      expect(independent.nextPracticeRewards[LESSON_ID]).not.toHaveProperty("challenge");
+      expect(independent.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+
+      const fractional = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 3, firstAttemptTotalCount: 4 },
+      );
+      expect(fractional).toEqual({
+        ok: false,
+        reason: "insufficient_accuracy",
+        accuracy: 0.75,
+        requiredAccuracy: 0.8,
+      });
+    });
+
+    it("rejects retry-inflated Challenge metrics when first-attempt accuracy is below 80%", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
+
+      // 10 problems eventually solved, but only 7 were correct on the first
+      // attempt. The metrics must reflect 7/10, not 10/10.
+      const eventualCorrectInflated = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
+      );
+      expect(eventualCorrectInflated).toEqual({
+        ok: false,
+        reason: "insufficient_accuracy",
+        accuracy: 0.7,
+        requiredAccuracy: 0.8,
+      });
+    });
+
+    it("rejects invalid Challenge metrics and preserves state", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
+
+      const cases: {
+        label: string;
+        metrics: { firstAttemptCorrectCount: number; firstAttemptTotalCount: number };
+      }[] = [
+        {
+          label: "zero total",
+          metrics: { firstAttemptCorrectCount: 0, firstAttemptTotalCount: 0 },
+        },
+        {
+          label: "negative correct",
+          metrics: { firstAttemptCorrectCount: -1, firstAttemptTotalCount: 5 },
+        },
+        {
+          label: "negative total",
+          metrics: { firstAttemptCorrectCount: 0, firstAttemptTotalCount: -5 },
+        },
+        {
+          label: "correct greater than total",
+          metrics: { firstAttemptCorrectCount: 6, firstAttemptTotalCount: 5 },
+        },
+        {
+          label: "non-finite correct",
+          metrics: { firstAttemptCorrectCount: NaN, firstAttemptTotalCount: 5 },
+        },
+        {
+          label: "non-finite total",
+          metrics: { firstAttemptCorrectCount: 3, firstAttemptTotalCount: Infinity },
+        },
+        {
+          label: "fractional correct",
+          metrics: { firstAttemptCorrectCount: 7.5, firstAttemptTotalCount: 10 },
+        },
+        {
+          label: "fractional total",
+          metrics: { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10.5 },
+        },
+      ];
+
+      for (const { label, metrics } of cases) {
+        const result = applyPracticeCompletion(
+          independent.nextPracticeRewards,
+          independent.nextSkillProgress,
+          LESSON_ID,
+          "challenge",
+          TIMESTAMP,
+          metrics,
+        );
+        expect(result, label).toEqual({ ok: false, reason: "invalid_session_result" });
+        expect(independent.nextPracticeRewards[LESSON_ID], label).not.toHaveProperty("challenge");
+      }
+    });
+
+    it("rejects Challenge before Guided and before Independent", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const missingGuided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(missingGuided).toEqual({ ok: false, reason: "guided_required" });
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const missingIndependent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(missingIndependent).toEqual({ ok: false, reason: "independent_required" });
+    });
+
+    it("rejects a duplicate Challenge completion before validating new metrics", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
+
+      const challenge = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(challenge.ok).toBe(true);
+      if (!challenge.ok) return;
+
+      const duplicate = applyPracticeCompletion(
+        challenge.nextPracticeRewards,
+        challenge.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
+      );
+      expect(duplicate).toEqual({ ok: false, reason: "already_completed" });
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+    });
+
+    it("does not record skill evidence or change lesson progress on successful Challenge completion", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
+
+      const beforeAttempts = independent.nextSkillProgress["g3-s-test-a"].totalAttempts;
+
+      const challenge = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(challenge.ok).toBe(true);
+      if (!challenge.ok) return;
+
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(beforeAttempts);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].status).toBe("developing");
+    });
   });
 });

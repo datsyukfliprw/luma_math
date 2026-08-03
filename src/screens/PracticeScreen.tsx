@@ -221,6 +221,8 @@ function PracticeScreen() {
     reason: PracticeCompletionRejectionReason;
     firstAttemptCorrectCount?: number;
     firstAttemptTotalCount?: number;
+    accuracy?: number;
+    requiredAccuracy?: number;
   } | null>(null);
 
   // Tracks whether each problem was correct on its first submitted attempt.
@@ -339,6 +341,8 @@ function PracticeScreen() {
                 reason: result.reason,
                 firstAttemptCorrectCount: metrics.firstAttemptCorrectCount,
                 firstAttemptTotalCount: metrics.firstAttemptTotalCount,
+                accuracy: result.accuracy,
+                requiredAccuracy: result.requiredAccuracy,
               });
             }
           } else {
@@ -1568,7 +1572,10 @@ function PracticeScreen() {
               {rejectionModal.reason === "independent_required" &&
                 "Show what you can do on your own before taking on the Challenge."}
               {rejectionModal.reason === "insufficient_accuracy" &&
-                `You answered ${rejectionModal.firstAttemptCorrectCount ?? 0} out of ${rejectionModal.firstAttemptTotalCount ?? 0} correctly on your first try. Independent Practice needs 80% correct on the first try to earn the reward and record mastery evidence. Keep practicing — you still solved the problems!`}
+                (practiceMode === "challenge"
+                  ? `You solved every problem, but Challenge Practice needs at least 80% correct on the first try. You got ${Math.round((rejectionModal.accuracy ?? 0) * 100)}% correct on the first try. Give it another shot!`
+                  : `You answered ${rejectionModal.firstAttemptCorrectCount ?? 0} out of ${rejectionModal.firstAttemptTotalCount ?? 0} correctly on your first try. Independent Practice needs 80% correct on the first try to earn the reward and record mastery evidence. Keep practicing — you still solved the problems!`)}
+              `
               {rejectionModal.reason === "invalid_session_result" &&
                 "We could not save this practice result. Let's go back to the lesson and try again."}
             </p>

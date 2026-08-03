@@ -22,6 +22,8 @@ export type ApplyPracticeCompletionResult =
   | {
       ok: false;
       reason: PracticeCompletionRejectionReason;
+      accuracy?: number;
+      requiredAccuracy?: number;
     };
 
 const REWARD_IDS: Record<PracticeMode, string> = {
@@ -30,7 +32,7 @@ const REWARD_IDS: Record<PracticeMode, string> = {
   challenge: "epic_star_accessory",
 };
 
-const INDEPENDENT_ACCURACY_THRESHOLD = 0.8;
+const FIRST_ATTEMPT_ACCURACY_THRESHOLD = 0.8;
 
 function isValidMetrics(metrics: PracticeCompletionMetrics): boolean {
   const { firstAttemptCorrectCount, firstAttemptTotalCount } = metrics;
@@ -76,14 +78,21 @@ export function applyPracticeCompletion(
     }
   }
 
-  if (mode === "independent") {
+  // Independent and Challenge both require a trustworthy first-attempt score.
+  // Guided intentionally has no accuracy gate.
+  if (mode === "independent" || mode === "challenge") {
     if (!isValidMetrics(metrics)) {
       return { ok: false, reason: "invalid_session_result" };
     }
 
     const accuracy = metrics.firstAttemptCorrectCount / metrics.firstAttemptTotalCount;
-    if (accuracy < INDEPENDENT_ACCURACY_THRESHOLD) {
-      return { ok: false, reason: "insufficient_accuracy" };
+    if (accuracy < FIRST_ATTEMPT_ACCURACY_THRESHOLD) {
+      return {
+        ok: false,
+        reason: "insufficient_accuracy",
+        accuracy,
+        requiredAccuracy: FIRST_ATTEMPT_ACCURACY_THRESHOLD,
+      };
     }
   }
 

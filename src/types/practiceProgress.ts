@@ -39,6 +39,9 @@ export type PracticeCompletionRejectionReason =
 // @SECTION PRACTICE_COMPLETION_RESULT
 // Public result returned by the progress context when a practice mode
 // completion is attempted. The UI uses this to decide feedback and next steps.
+// For insufficient_accuracy, the domain returns the actual and required accuracy
+// so the screen can render precise, mode-appropriate retry messaging without
+// duplicating threshold logic.
 
 export type PracticeCompletionResult =
   | {
@@ -48,4 +51,6 @@ export type PracticeCompletionResult =
   | {
       ok: false;
       reason: PracticeCompletionRejectionReason;
+      accuracy?: number;
+      requiredAccuracy?: number;
     };
