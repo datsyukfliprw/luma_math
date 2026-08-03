@@ -33,16 +33,16 @@ const REWARD_IDS: Record<PracticeMode, string> = {
 const INDEPENDENT_ACCURACY_THRESHOLD = 0.8;
 
 function isValidMetrics(metrics: PracticeCompletionMetrics): boolean {
-  const { correctCount, totalCount } = metrics;
+  const { firstAttemptCorrectCount, firstAttemptTotalCount } = metrics;
 
   return (
-    Number.isFinite(correctCount) &&
-    Number.isFinite(totalCount) &&
-    Number.isInteger(correctCount) &&
-    Number.isInteger(totalCount) &&
-    totalCount > 0 &&
-    correctCount >= 0 &&
-    correctCount <= totalCount
+    Number.isFinite(firstAttemptCorrectCount) &&
+    Number.isFinite(firstAttemptTotalCount) &&
+    Number.isInteger(firstAttemptCorrectCount) &&
+    Number.isInteger(firstAttemptTotalCount) &&
+    firstAttemptTotalCount > 0 &&
+    firstAttemptCorrectCount >= 0 &&
+    firstAttemptCorrectCount <= firstAttemptTotalCount
   );
 }
 
@@ -81,7 +81,7 @@ export function applyPracticeCompletion(
       return { ok: false, reason: "invalid_session_result" };
     }
 
-    const accuracy = metrics.correctCount / metrics.totalCount;
+    const accuracy = metrics.firstAttemptCorrectCount / metrics.firstAttemptTotalCount;
     if (accuracy < INDEPENDENT_ACCURACY_THRESHOLD) {
       return { ok: false, reason: "insufficient_accuracy" };
     }

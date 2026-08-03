@@ -25,8 +25,8 @@ export type PracticeRewardsState = Record<string, LessonPracticeRewardState>;
 // to calculate accuracy and decide whether a practice session qualifies.
 
 export type PracticeCompletionMetrics = {
-  correctCount: number;
-  totalCount: number;
+  firstAttemptCorrectCount: number;
+  firstAttemptTotalCount: number;
 };
 
 export type PracticeCompletionRejectionReason =

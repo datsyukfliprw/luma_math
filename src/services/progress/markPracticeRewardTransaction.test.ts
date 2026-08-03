@@ -79,7 +79,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: true, mode: "guided" });
@@ -113,7 +113,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: false, reason: "guided_required" });
@@ -141,7 +141,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "challenge",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: false, reason: "independent_required" });
@@ -199,7 +199,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 8, totalCount: 10 },
+      { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
     );
 
     expect(result).toEqual({ ok: true, mode: "independent" });
@@ -258,7 +258,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "challenge",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: true, mode: "challenge" });
@@ -293,7 +293,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: false, reason: "guided_required" });
@@ -348,8 +348,8 @@ describe("markPracticeRewardTransaction", () => {
     });
 
     const first = markPracticeRewardTransaction(state, LESSON_ID, "independent", TIMESTAMP, {
-      correctCount: 8,
-      totalCount: 10,
+      firstAttemptCorrectCount: 8,
+      firstAttemptTotalCount: 10,
     });
     expect(first.result).toEqual({ ok: true, mode: "independent" });
     expect(first.nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(2);
@@ -360,7 +360,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(second.result).toEqual({ ok: false, reason: "already_completed" });
     expect(second.nextState).toBe(first.nextState);
@@ -387,7 +387,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "challenge",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: false, reason: "guided_required" });
@@ -431,7 +431,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 7, totalCount: 10 },
+      { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
     );
 
     expect(result).toEqual({ ok: false, reason: "insufficient_accuracy" });
@@ -454,11 +454,23 @@ describe("markPracticeRewardTransaction", () => {
       },
     });
 
-    const cases: { label: string; metrics: { correctCount: number; totalCount: number } }[] = [
-      { label: "zero total", metrics: { correctCount: 0, totalCount: 0 } },
-      { label: "negative correct", metrics: { correctCount: -1, totalCount: 5 } },
-      { label: "correct greater than total", metrics: { correctCount: 6, totalCount: 5 } },
-      { label: "non-finite values", metrics: { correctCount: NaN, totalCount: 5 } },
+    const cases: {
+      label: string;
+      metrics: { firstAttemptCorrectCount: number; firstAttemptTotalCount: number };
+    }[] = [
+      { label: "zero total", metrics: { firstAttemptCorrectCount: 0, firstAttemptTotalCount: 0 } },
+      {
+        label: "negative correct",
+        metrics: { firstAttemptCorrectCount: -1, firstAttemptTotalCount: 5 },
+      },
+      {
+        label: "correct greater than total",
+        metrics: { firstAttemptCorrectCount: 6, firstAttemptTotalCount: 5 },
+      },
+      {
+        label: "non-finite values",
+        metrics: { firstAttemptCorrectCount: NaN, firstAttemptTotalCount: 5 },
+      },
     ];
 
     for (const { label, metrics } of cases) {
@@ -512,7 +524,7 @@ describe("markPracticeRewardTransaction", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 4, totalCount: 5 },
+      { firstAttemptCorrectCount: 4, firstAttemptTotalCount: 5 },
     );
 
     expect(result).toEqual({ ok: true, mode: "independent" });

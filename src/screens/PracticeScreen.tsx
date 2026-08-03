@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
@@ -7,6 +7,11 @@ import { generateProblemsForPracticeType } from "../practiceTypes/registry";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
 import type { PracticeMode } from "../practiceTypes/types";
 import type { PracticeCompletionRejectionReason } from "../types/practiceProgress";
+import {
+  buildFirstAttemptMetrics,
+  recordFirstAttemptResult,
+  type FirstAttemptResults,
+} from "../services/progress/firstAttemptScoring";
 
 // @SECTION PRACTICE_HELPERS
 function formatPracticeType(practiceType: string) {
@@ -214,7 +219,13 @@ function PracticeScreen() {
   const [completionModal, setCompletionModal] = useState<CompletionModalState | null>(null);
   const [rejectionModal, setRejectionModal] = useState<{
     reason: PracticeCompletionRejectionReason;
+    firstAttemptCorrectCount?: number;
+    firstAttemptTotalCount?: number;
   } | null>(null);
+
+  // Tracks whether each problem was correct on its first submitted attempt.
+  // A ref is used so retries in the same render cycle cannot rewrite the result.
+  const firstAttemptResultsRef = useRef<FirstAttemptResults>({});
 
   useEffect(() => {
     // Reset state when practiceMode or currentLessonId changes
@@ -236,6 +247,7 @@ function PracticeScreen() {
     setCurrentStreak(0);
     setCompletionModal(null);
     setRejectionModal(null);
+    firstAttemptResultsRef.current = {};
   }, [practiceMode, currentLessonId]);
 
   const currentProblem = problems[currentProblemIndex];
@@ -263,8 +275,10 @@ function PracticeScreen() {
   const visualData = currentProblem.visualData;
 
   const lessonPath = lessonId ? `/lesson/${lessonId}` : "/lesson";
-  const correctCount = correctProblemIndexes.length;
-  const rewardChargePercent = problems.length > 0 ? (correctCount / problems.length) * 100 : 0;
+  const solvedProblemCount = correctProblemIndexes.length;
+  const rewardChargePercent =
+    problems.length > 0 ? (solvedProblemCount / problems.length) * 100 : 0;
+
   const isEqualGroupsChoiceMode =
     (practiceMode === "guided" || practiceMode === "independent") &&
     currentProblem?.visualType === "equal_groups";
@@ -283,6 +297,15 @@ function PracticeScreen() {
 
   function recordFeedback(isCorrect: boolean) {
     setFeedback(isCorrect ? "correct" : "incorrect");
+
+    // Record the first submitted attempt for this problem. Later retries do not
+    // rewrite the first-attempt result, so the metrics are not inflated by
+    // eventually-correct answers.
+    firstAttemptResultsRef.current = recordFirstAttemptResult(
+      firstAttemptResultsRef.current,
+      currentProblemIndex,
+      isCorrect,
+    );
 
     // In Challenge mode, judgment + reason are checked together.
     // If either part is wrong, the streak resets.
@@ -303,17 +326,20 @@ function PracticeScreen() {
 
       if (justFinishedLastQuestion) {
         const firstCompletion = !hasPracticeReward(currentLessonId, practiceMode);
-        const result = markPracticeReward(currentLessonId, practiceMode, {
-          correctCount: nextCorrectIndexes.length,
-          totalCount: problems.length,
-        });
+        const metrics = buildFirstAttemptMetrics(firstAttemptResultsRef.current, problems.length);
+
+        const result = markPracticeReward(currentLessonId, practiceMode, metrics);
 
         window.setTimeout(() => {
           if (!result.ok) {
             if (result.reason === "already_completed") {
               openCompletionModal(false);
             } else {
-              setRejectionModal({ reason: result.reason });
+              setRejectionModal({
+                reason: result.reason,
+                firstAttemptCorrectCount: metrics.firstAttemptCorrectCount,
+                firstAttemptTotalCount: metrics.firstAttemptTotalCount,
+              });
             }
           } else {
             openCompletionModal(firstCompletion);
@@ -1349,7 +1375,7 @@ function PracticeScreen() {
               </div>
 
               <p className="text-xs font-black text-[#073B5A]/70">
-                {correctCount}/{problems.length} correct
+                {solvedProblemCount}/{problems.length} solved
               </p>
             </div>
           </div>
@@ -1542,7 +1568,7 @@ function PracticeScreen() {
               {rejectionModal.reason === "independent_required" &&
                 "Show what you can do on your own before taking on the Challenge."}
               {rejectionModal.reason === "insufficient_accuracy" &&
-                `You answered ${correctCount} out of ${problems.length} correctly. Independent Practice needs 80% correct to earn the reward and record mastery evidence.`}
+                `You answered ${rejectionModal.firstAttemptCorrectCount ?? 0} out of ${rejectionModal.firstAttemptTotalCount ?? 0} correctly on your first try. Independent Practice needs 80% correct on the first try to earn the reward and record mastery evidence. Keep practicing — you still solved the problems!`}
               {rejectionModal.reason === "invalid_session_result" &&
                 "We could not save this practice result. Let's go back to the lesson and try again."}
             </p>

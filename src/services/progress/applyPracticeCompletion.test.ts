@@ -58,7 +58,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result.ok).toBe(true);
@@ -94,7 +94,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: false, reason: "guided_required" });
@@ -111,7 +111,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "challenge",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: false, reason: "guided_required" });
@@ -140,7 +140,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "challenge",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(result).toEqual({ ok: false, reason: "independent_required" });
@@ -157,7 +157,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -172,7 +172,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 4, totalCount: 5 },
+      { firstAttemptCorrectCount: 4, firstAttemptTotalCount: 5 },
     );
     expect(independent.ok).toBe(true);
     if (!independent.ok) return;
@@ -202,7 +202,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "challenge",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(challenge.ok).toBe(true);
     if (!challenge.ok) return;
@@ -227,7 +227,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(first.ok).toBe(true);
     if (!first.ok) return;
@@ -238,7 +238,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
 
     expect(second).toEqual({ ok: false, reason: "already_completed" });
@@ -255,7 +255,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -266,7 +266,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 5, totalCount: 5 },
+      { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
     );
     expect(independent.ok).toBe(true);
     if (!independent.ok) return;
@@ -291,7 +291,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -302,7 +302,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 4, totalCount: 5 },
+      { firstAttemptCorrectCount: 4, firstAttemptTotalCount: 5 },
     );
     expect(independent.ok).toBe(true);
     if (!independent.ok) return;
@@ -313,7 +313,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 4, totalCount: 5 },
+      { firstAttemptCorrectCount: 4, firstAttemptTotalCount: 5 },
     );
     expect(second).toEqual({ ok: false, reason: "already_completed" });
     expect(independent.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
@@ -329,7 +329,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       "2026-01-01T00:00:00.000Z",
-      { correctCount: 5, totalCount: 5 },
+      { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -340,7 +340,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       "2026-01-02T00:00:00.000Z",
-      { correctCount: 8, totalCount: 10 },
+      { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
     );
     expect(independent.ok).toBe(true);
     if (!independent.ok) return;
@@ -351,7 +351,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "challenge",
       "2026-01-03T00:00:00.000Z",
-      { correctCount: 5, totalCount: 5 },
+      { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
     );
     expect(challenge.ok).toBe(true);
     if (!challenge.ok) return;
@@ -373,7 +373,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -385,7 +385,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 8, totalCount: 10 },
+      { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
     );
     expect(exactly80.ok).toBe(true);
     if (!exactly80.ok) return;
@@ -399,7 +399,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 9, totalCount: 10 },
+      { firstAttemptCorrectCount: 9, firstAttemptTotalCount: 10 },
     );
     // It still requires Guided, so this call returns guided_required. We test
     // the accuracy logic separately by completing Guided first and using a
@@ -413,7 +413,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(aboveState.ok).toBe(true);
     if (!aboveState.ok) return;
@@ -424,12 +424,12 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 9, totalCount: 10 },
+      { firstAttemptCorrectCount: 9, firstAttemptTotalCount: 10 },
     );
     expect(aboveIndependent.ok).toBe(true);
   });
 
-  it("rejects Independent below 80% accuracy and preserves state", () => {
+  it("rejects Independent first-attempt accuracy below 80% even when all problems are eventually solved", () => {
     const { practiceRewards, skillProgress } = buildEmptyState();
 
     const guided = applyPracticeCompletion(
@@ -438,7 +438,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -449,7 +449,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 7, totalCount: 10 },
+      { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
     );
     expect(below80).toEqual({ ok: false, reason: "insufficient_accuracy" });
     expect(below80).not.toHaveProperty("nextPracticeRewards");
@@ -462,7 +462,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 3, totalCount: 4 },
+      { firstAttemptCorrectCount: 3, firstAttemptTotalCount: 4 },
     );
     expect(fractional).toEqual({ ok: false, reason: "insufficient_accuracy" });
 
@@ -472,9 +472,21 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 4, totalCount: 5 },
+      { firstAttemptCorrectCount: 4, firstAttemptTotalCount: 5 },
     );
     expect(boundaryOk.ok).toBe(true);
+
+    // The domain must reject first-attempt accuracy below 80% even if every
+    // problem was eventually answered correctly after retries.
+    const eventualCorrectInflated = applyPracticeCompletion(
+      guided.nextPracticeRewards,
+      guided.nextSkillProgress,
+      LESSON_ID,
+      "independent",
+      TIMESTAMP,
+      { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
+    );
+    expect(eventualCorrectInflated).toEqual({ ok: false, reason: "insufficient_accuracy" });
   });
 
   it("rejects invalid Independent metrics and preserves state", () => {
@@ -486,18 +498,36 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
 
-    const cases: { label: string; metrics: { correctCount: number; totalCount: number } }[] = [
-      { label: "zero total", metrics: { correctCount: 0, totalCount: 0 } },
-      { label: "negative correct", metrics: { correctCount: -1, totalCount: 5 } },
-      { label: "negative total", metrics: { correctCount: 0, totalCount: -5 } },
-      { label: "correct greater than total", metrics: { correctCount: 6, totalCount: 5 } },
-      { label: "non-finite correct", metrics: { correctCount: NaN, totalCount: 5 } },
-      { label: "non-finite total", metrics: { correctCount: 3, totalCount: Infinity } },
+    const cases: {
+      label: string;
+      metrics: { firstAttemptCorrectCount: number; firstAttemptTotalCount: number };
+    }[] = [
+      { label: "zero total", metrics: { firstAttemptCorrectCount: 0, firstAttemptTotalCount: 0 } },
+      {
+        label: "negative correct",
+        metrics: { firstAttemptCorrectCount: -1, firstAttemptTotalCount: 5 },
+      },
+      {
+        label: "negative total",
+        metrics: { firstAttemptCorrectCount: 0, firstAttemptTotalCount: -5 },
+      },
+      {
+        label: "correct greater than total",
+        metrics: { firstAttemptCorrectCount: 6, firstAttemptTotalCount: 5 },
+      },
+      {
+        label: "non-finite correct",
+        metrics: { firstAttemptCorrectCount: NaN, firstAttemptTotalCount: 5 },
+      },
+      {
+        label: "non-finite total",
+        metrics: { firstAttemptCorrectCount: 3, firstAttemptTotalCount: Infinity },
+      },
     ];
 
     for (const { label, metrics } of cases) {
@@ -524,7 +554,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 8, totalCount: 10 },
+      { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
     );
     expect(result).toEqual({ ok: false, reason: "guided_required" });
     expect(practiceRewards).toEqual({});
@@ -539,7 +569,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -550,7 +580,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 8, totalCount: 10 },
+      { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
     );
     expect(independent.ok).toBe(true);
     if (!independent.ok) return;
@@ -561,7 +591,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 8, totalCount: 10 },
+      { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
     );
     expect(duplicate).toEqual({ ok: false, reason: "already_completed" });
   });
@@ -575,7 +605,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "guided",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(guided.ok).toBe(true);
     if (!guided.ok) return;
@@ -586,7 +616,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "independent",
       TIMESTAMP,
-      { correctCount: 5, totalCount: 5 },
+      { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
     );
     expect(independent.ok).toBe(true);
     if (!independent.ok) return;
@@ -597,7 +627,7 @@ describe("applyPracticeCompletion", () => {
       LESSON_ID,
       "challenge",
       TIMESTAMP,
-      { correctCount: 1, totalCount: 1 },
+      { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
     );
     expect(challenge.ok).toBe(true);
     if (!challenge.ok) return;
