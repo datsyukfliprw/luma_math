@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
+import TargetDigitQuestion from "../components/warmup/TargetDigitQuestion";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { getLessonById } from "../lib/lessonLookup";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
@@ -105,6 +106,10 @@ function WarmUpScreen() {
   const progressPercent =
     totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
   const isTransitioning = feedback === "correct";
+  const skillLabel =
+    activeQuestion?.question_type === "target_digit_value"
+      ? "Place Value"
+      : (activeQuestion?.skill.replaceAll("_", " ") ?? currentRound?.title);
 
   function finishWarmUp() {
     updateLessonProgress(currentLessonId, {
@@ -185,7 +190,7 @@ function WarmUpScreen() {
             return (
               <div
                 key={round.id}
-                className={`min-w-[220px] flex-1 rounded-[1.5rem] border px-5 py-4 shadow-sm ${
+                className={`min-w-[220px] flex-1 rounded-[1.5rem] border px-5 py-2 shadow-sm ${
                   isActive
                     ? "border-[#00AFB9]/45 bg-[#00AFB9] text-white"
                     : isDone
@@ -243,18 +248,27 @@ function WarmUpScreen() {
                 </span>
 
                 <span className="rounded-full bg-white/85 px-4 py-2 text-sm font-black capitalize text-[#0081A7] shadow-sm lg:px-5 lg:py-3 lg:text-base">
-                  {activeQuestion?.skill.replaceAll("_", " ") ?? currentRound?.title}
+                  {skillLabel}
                 </span>
               </div>
 
-              <div className="flex flex-1 flex-col items-center justify-center py-8 text-center">
-                <p className="text-sm font-black uppercase tracking-[0.16em] text-[#0081A7]">
-                  {activeQuestion?.roundTitle ?? currentRound?.title}
-                </p>
-
-                <h1 className="mt-5 max-w-[760px] text-3xl font-black leading-tight text-[#073B5A] sm:text-4xl lg:text-[2.75rem]">
-                  {activeQuestion?.prompt ?? "Ready?"}
-                </h1>
+              <div className="flex flex-1 flex-col items-center justify-start pt-10 pb-0 text-center">
+                {activeQuestion?.question_type === "target_digit_value" &&
+                typeof activeQuestion.number === "string" &&
+                activeQuestion.number.length > 0 &&
+                typeof activeQuestion.target_digit_index === "number" ? (
+                  <div className="mt-7">
+                    <TargetDigitQuestion
+                      number={activeQuestion.number}
+                      targetDigitIndex={activeQuestion.target_digit_index}
+                      prompt={activeQuestion.prompt}
+                    />
+                  </div>
+                ) : (
+                  <h1 className="mt-5 max-w-[760px] text-3xl font-black leading-tight text-[#073B5A] sm:text-4xl lg:text-[2.75rem]">
+                    {activeQuestion?.prompt ?? "Ready?"}
+                  </h1>
+                )}
 
                 <input
                   value={answer}
@@ -268,7 +282,13 @@ function WarmUpScreen() {
                     }
                   }}
                   disabled={isTransitioning}
-                  className="mt-8 block w-full max-w-[560px] rounded-2xl border-2 border-[#00AFB9] bg-white px-6 py-5 text-center text-xl font-black text-[#073B5A] outline-none transition focus:border-[#F07167] disabled:cursor-not-allowed disabled:opacity-70 lg:text-2xl"
+                  className={`mt-10 block w-full max-w-[560px] rounded-2xl border-2 bg-white px-6 py-5 text-center text-xl font-black text-[#073B5A] outline-none transition disabled:cursor-not-allowed disabled:opacity-70 lg:text-2xl ${
+                    feedback === "incorrect"
+                      ? "border-[#F07167] focus:border-[#D85B52] focus:ring-4 focus:ring-[#F07167]/10"
+                      : feedback === "correct"
+                        ? "border-[#54C95B] focus:border-[#2F9E44] focus:ring-4 focus:ring-[#54C95B]/10"
+                        : "border-[#00AFB9] focus:border-[#0081A7] focus:ring-4 focus:ring-[#00AFB9]/10"
+                  }`}
                   placeholder="Type your answer"
                   autoFocus
                 />
@@ -286,15 +306,15 @@ function WarmUpScreen() {
                   {isTransitioning ? "Great work!" : "Check Answer"}
                 </button>
 
-                <div className="mt-4 min-h-6 text-sm font-black lg:text-base">
-                  {feedback === "correct" && (
-                    <p className="text-[#2F9E44]">That’s correct. Moving to the next question!</p>
-                  )}
-
-                  {feedback === "incorrect" && (
-                    <p className="text-[#D85B52]">Not quite yet. Take a look at the hint.</p>
-                  )}
-                </div>
+                {feedback && (
+                  <div className="mt-2 text-sm font-black lg:text-base">
+                    {feedback === "correct" ? (
+                      <p className="text-[#2F9E44]">That’s correct. Moving to the next question!</p>
+                    ) : (
+                      <p className="text-[#D85B52]">Not quite yet. Take a look at the hint.</p>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </main>
