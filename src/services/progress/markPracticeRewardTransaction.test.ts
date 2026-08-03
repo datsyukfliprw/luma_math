@@ -222,7 +222,7 @@ describe("markPracticeRewardTransaction", () => {
     expect(nextState.skillProgress["g3-s-test-b"].status).toBe("developing");
   });
 
-  it("succeeds for Challenge after Guided and Independent without changing lesson progress or skills", () => {
+  it("succeeds for Challenge after Guided and Independent with transfer evidence and unchanged lesson progress", () => {
     const state = buildStudentState({
       practiceRewards: {
         [LESSON_ID]: {
@@ -267,8 +267,10 @@ describe("markPracticeRewardTransaction", () => {
       rewardId: "epic_star_accessory",
       completedAt: TIMESTAMP,
     });
+    expect(nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(1);
+    expect(nextState.skillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
+    expect(nextState.skillProgress["g3-s-test-b"].evidenceCounts.transfer).toBe(1);
     expect(nextState.lessonProgress).toBe(state.lessonProgress);
-    expect(nextState.skillProgress).toBe(state.skillProgress);
   });
 
   it("rejects Independent before Guided and records no evidence or lesson progress", () => {
@@ -544,7 +546,7 @@ describe("markPracticeRewardTransaction", () => {
   });
 
   describe("Challenge transaction", () => {
-    it("succeeds after Guided and Independent and creates a Challenge reward without evidence or mastery changes", () => {
+    it("succeeds after Guided and Independent and creates a Challenge reward with transfer evidence and mastery reevaluation", () => {
       const state = buildStudentState({
         practiceRewards: {
           [LESSON_ID]: {
@@ -594,8 +596,12 @@ describe("markPracticeRewardTransaction", () => {
         rewardId: "epic_star_accessory",
         completedAt: TIMESTAMP,
       });
-      expect(nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+      expect(nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(3);
+      expect(nextState.skillProgress["g3-s-test-a"].totalCorrect).toBe(3);
+      expect(nextState.skillProgress["g3-s-test-a"].bestStreak).toBe(3);
       expect(nextState.skillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+      expect(nextState.skillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
+      expect(nextState.skillProgress["g3-s-test-b"].evidenceCounts.transfer).toBe(1);
       expect(nextState.skillProgress["g3-s-test-a"].status).toBe("developing");
       expect(nextState.lessonProgress).toBe(state.lessonProgress);
     });
@@ -706,6 +712,8 @@ describe("markPracticeRewardTransaction", () => {
         rewardId: "epic_star_accessory",
         completedAt: TIMESTAMP,
       });
+      expect(first.nextState.skillProgress["g3-s-test-a"].totalAttempts).toBe(1);
+      expect(first.nextState.skillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
 
       const second = markPracticeRewardTransaction(
         first.nextState,
@@ -716,6 +724,7 @@ describe("markPracticeRewardTransaction", () => {
       );
       expect(second.result).toEqual({ ok: false, reason: "already_completed" });
       expect(second.nextState).toBe(first.nextState);
+      expect(second.nextState.skillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
     });
 
     it("rejects Challenge before Guided and before Independent", () => {

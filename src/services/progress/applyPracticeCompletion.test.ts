@@ -148,7 +148,7 @@ describe("applyPracticeCompletion", () => {
     expect(skillProgress["g3-s-test-a"].totalAttempts).toBe(0);
   });
 
-  it("allows the full sequence in order and records evidence for Guided and Independent only", () => {
+  it("allows the full sequence in order and records evidence for Guided, Independent, and Challenge", () => {
     const { practiceRewards, skillProgress } = buildEmptyState();
 
     const guided = applyPracticeCompletion(
@@ -207,9 +207,11 @@ describe("applyPracticeCompletion", () => {
     expect(challenge.ok).toBe(true);
     if (!challenge.ok) return;
 
-    // Challenge records no skill evidence.
-    expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+    // Challenge records one transfer evidence entry per linked Skill.
+    expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(3);
+    expect(challenge.nextSkillProgress["g3-s-test-a"].totalCorrect).toBe(3);
     expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+    expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
     expect(challenge.nextSkillProgress["g3-s-test-a"].status).toBe("developing");
     expect(challenge.nextPracticeRewards[LESSON_ID].challenge).toEqual({
       completed: true,
@@ -646,7 +648,8 @@ describe("applyPracticeCompletion", () => {
     );
     expect(challenge.ok).toBe(true);
     if (!challenge.ok) return;
-    expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+    expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(3);
+    expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
   });
 
   describe("Challenge scoring", () => {
@@ -687,8 +690,11 @@ describe("applyPracticeCompletion", () => {
       if (!challenge.ok) return;
 
       expect(challenge.rewardRecord.rewardId).toBe("epic_star_accessory");
-      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(3);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalCorrect).toBe(3);
       expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
+      expect(challenge.nextSkillProgress["g3-s-test-b"].evidenceCounts.transfer).toBe(1);
     });
 
     it("completes Challenge above 80% and at the 4/5 fractional boundary", () => {
@@ -995,10 +1001,10 @@ describe("applyPracticeCompletion", () => {
         { firstAttemptCorrectCount: 7, firstAttemptTotalCount: 10 },
       );
       expect(duplicate).toEqual({ ok: false, reason: "already_completed" });
-      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(2);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(3);
     });
 
-    it("does not record skill evidence or change lesson progress on successful Challenge completion", () => {
+    it("records one transfer evidence entry per linked Skill on successful Challenge completion", () => {
       const { practiceRewards, skillProgress } = buildEmptyState();
 
       const guided = applyPracticeCompletion(
@@ -1023,7 +1029,49 @@ describe("applyPracticeCompletion", () => {
       expect(independent.ok).toBe(true);
       if (!independent.ok) return;
 
-      const beforeAttempts = independent.nextSkillProgress["g3-s-test-a"].totalAttempts;
+      const challenge = applyPracticeCompletion(
+        independent.nextPracticeRewards,
+        independent.nextSkillProgress,
+        LESSON_ID,
+        "challenge",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 8, firstAttemptTotalCount: 10 },
+      );
+      expect(challenge.ok).toBe(true);
+      if (!challenge.ok) return;
+
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(3);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].totalCorrect).toBe(3);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
+      expect(challenge.nextSkillProgress["g3-s-test-b"].evidenceCounts.transfer).toBe(1);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].status).toBe("developing");
+    });
+
+    it("does not advance to a status that requires conceptual evidence when only procedural and transfer evidence exist", () => {
+      const { practiceRewards, skillProgress } = buildEmptyState();
+
+      const guided = applyPracticeCompletion(
+        practiceRewards,
+        skillProgress,
+        LESSON_ID,
+        "guided",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 1, firstAttemptTotalCount: 1 },
+      );
+      expect(guided.ok).toBe(true);
+      if (!guided.ok) return;
+
+      const independent = applyPracticeCompletion(
+        guided.nextPracticeRewards,
+        guided.nextSkillProgress,
+        LESSON_ID,
+        "independent",
+        TIMESTAMP,
+        { firstAttemptCorrectCount: 5, firstAttemptTotalCount: 5 },
+      );
+      expect(independent.ok).toBe(true);
+      if (!independent.ok) return;
 
       const challenge = applyPracticeCompletion(
         independent.nextPracticeRewards,
@@ -1036,8 +1084,11 @@ describe("applyPracticeCompletion", () => {
       expect(challenge.ok).toBe(true);
       if (!challenge.ok) return;
 
-      expect(challenge.nextSkillProgress["g3-s-test-a"].totalAttempts).toBe(beforeAttempts);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.conceptual).toBe(0);
       expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.procedural).toBe(2);
+      expect(challenge.nextSkillProgress["g3-s-test-a"].evidenceCounts.transfer).toBe(1);
+      // Provisionally mastered and mastered both require conceptual evidence, so
+      // the skill must remain no higher than developing.
       expect(challenge.nextSkillProgress["g3-s-test-a"].status).toBe("developing");
     });
   });

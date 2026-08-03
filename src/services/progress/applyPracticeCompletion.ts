@@ -115,14 +115,14 @@ export function applyPracticeCompletion(
   let nextSkillProgress = currentSkillProgress;
 
   // Guided and Independent Practice each record one procedural evidence entry
-  // per lesson-linked Skill. The source is mode-specific so the two activities
-  // are distinct evidence identities. Challenge does not record evidence.
-  if (mode === "guided" || mode === "independent") {
+  // per lesson-linked Skill. Challenge records one transfer evidence entry.
+  // Source identities are mode-specific so the three activities remain distinct.
+  if (mode === "guided" || mode === "independent" || mode === "challenge") {
     nextSkillProgress = { ...currentSkillProgress };
     for (const skill of getSkillsForLesson(lessonId)) {
       const current = nextSkillProgress[skill.id] ?? createEmptySkillProgress(skill.id);
       nextSkillProgress[skill.id] = applySkillEvidence(current, {
-        evidenceType: "procedural",
+        evidenceType: mode === "challenge" ? "transfer" : "procedural",
         source: `${mode}-practice-${lessonId}`,
         correct: true,
         timestamp,
