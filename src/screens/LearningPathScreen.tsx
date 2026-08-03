@@ -9,9 +9,9 @@ import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
 import {
   useStudentProgress,
   type LessonProgress,
-  type LessonPracticeRewardState,
   type FlashcardDeckProgress,
 } from "../contexts/StudentProgressContext";
+import type { LessonPracticeRewardState } from "../types/practiceProgress";
 import type { SkillProgress } from "../types/mastery";
 
 function getFlashcardDeckIdForLesson(lessonId: string) {

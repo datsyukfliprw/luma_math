@@ -11,9 +11,9 @@ import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
 import {
   useStudentProgress,
   type LessonProgress,
-  type LessonPracticeRewardState,
   type FlashcardDeckProgress,
 } from "../contexts/StudentProgressContext";
+import type { LessonPracticeRewardState } from "../types/practiceProgress";
 import type { WarmUpData } from "../types/warmup";
 import { getLessonExperience } from "../data/lessonExperience";
 import { getChapterForConcept, getConceptByLessonId } from "../data/curriculum/curriculumGraph";

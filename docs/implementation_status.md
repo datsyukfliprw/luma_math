@@ -37,7 +37,7 @@ The following functionality exists today:
 - **Try It**: A scaffolded Try It section is rendered before full practice.
 - **Flashcards**: `FlashcardSessionScreen` and `FlashcardCategoryScreen` support spaced retrieval practice.
 - **Evaluations**: Evaluation Lessons with `lesson_type: "evaluation"` are supported and excluded from the instructional-section contract.
-- **Progress tracking**: `StudentProgressContext` tracks lesson progress, practice rewards, flashcard progress, and star profile, persisted to `localStorage`.
+- **Progress tracking**: `StudentProgressContext` tracks lesson progress, practice rewards, flashcard progress, and star profile, persisted to `localStorage`. Skill mastery is automatically re-evaluated using the canonical `evaluateSkillMastery` service after each evidence commit. Guided Practice sets `practiceComplete` and records one procedural evidence entry per lesson-linked Skill; Independent Practice records a second, distinct procedural evidence entry and can advance a Skill to `developing` without changing lesson progression or completion state. The 80% accuracy requirement for Independent Practice is enforced inside the domain transaction (`applyPracticeCompletion`) using the typed `PracticeCompletionMetrics` so no caller can grant the reward or record evidence for a non-qualifying session.
 - **Curriculum validation**: `CurriculumSchema` enforces the canonical lesson contract and `npm run curriculum:check` validates every Grade 3 unit.
 - **Target digit questions**: A structured `target_digit_value` question type and renderer exist, replacing Markdown-style digit emphasis.
 

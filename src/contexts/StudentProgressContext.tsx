@@ -1,11 +1,16 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { PracticeMode } from "../practiceTypes/types";
 import type { MasteryStatus, SkillEvidence, SkillProgress } from "../types/mastery";
-import { EvidenceTypeValues } from "../types/mastery";
-import {
-  getInitialRefreshDueDate,
-  recordRetentionAttempt,
-} from "../services/retention/retentionSchedule";
+import type {
+  LessonPracticeRewardState,
+  PracticeCompletionMetrics,
+  PracticeCompletionResult,
+  PracticeRewardsState,
+} from "../types/practiceProgress";
+import { applySkillEvidence } from "../services/mastery/applySkillEvidence";
+import { applyMasteryStatusEffects } from "../services/mastery/applyMasteryStatusEffects";
+import { createEmptySkillProgress } from "../services/mastery/createEmptySkillProgress";
+import { markPracticeRewardTransaction } from "../services/progress/markPracticeRewardTransaction";
 import { getAllSkills, getSkillsForLesson } from "../data/curriculum/curriculumGraph";
 
 // Types from existing files
@@ -34,14 +39,6 @@ export type FlashcardDeckProgress = {
   completedAt?: string;
 };
 
-export type PracticeRewardRecord = {
-  completed: boolean;
-  rewardId: string;
-  completedAt: string;
-};
-
-export type LessonPracticeRewardState = Partial<Record<PracticeMode, PracticeRewardRecord>>;
-
 export type StarItemSlot = "hat" | "glasses" | "neck" | "shoes" | "handheld" | "trail";
 
 export type EquippedStarItems = {
@@ -67,7 +64,7 @@ export type StudentState = {
   lessonProgress: Record<string, LessonProgress>;
   skillProgress: Record<string, SkillProgress>;
   flashcardProgress: Record<string, FlashcardDeckProgress>;
-  practiceRewards: Record<string, LessonPracticeRewardState>;
+  practiceRewards: PracticeRewardsState;
   starProfile: StarProfile;
 };
 
@@ -98,7 +95,11 @@ type StudentProgressContextValue = {
   ) => void;
   resetFlashcardDeckProgress: (deckId: string) => void;
   getPracticeRewardState: (lessonId: string) => LessonPracticeRewardState;
-  markPracticeReward: (lessonId: string, mode: PracticeMode) => void;
+  markPracticeReward: (
+    lessonId: string,
+    mode: PracticeMode,
+    metrics: PracticeCompletionMetrics,
+  ) => PracticeCompletionResult;
   hasPracticeReward: (lessonId: string, mode: PracticeMode) => boolean;
   getRecommendedNextPracticeMode: (
     lessonId: string,
@@ -156,25 +157,6 @@ function getNextUnansweredCardIndex(
   }
 
   return cardIds.length - 1;
-}
-
-function createEmptySkillProgress(skillId: string): SkillProgress {
-  const evidenceCounts = Object.fromEntries(
-    EvidenceTypeValues.map((evidenceType) => [evidenceType, 0]),
-  ) as Record<"conceptual" | "procedural" | "transfer" | "retention", number>;
-
-  return {
-    skillId,
-    status: "not_started",
-    evidenceCounts,
-    totalCorrect: 0,
-    totalAttempts: 0,
-    currentStreak: 0,
-    bestStreak: 0,
-    masteryCheckAttempts: 0,
-    masteryCheckPassed: false,
-    successfulRetentionCount: 0,
-  };
 }
 
 function deriveSkillProgressFromLegacy(
@@ -277,6 +259,19 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       },
     };
   });
+
+  // Authoritative ref synchronized with the committed React state. This is the
+  // source of truth for synchronous transactions such as markPracticeReward.
+  const studentStateRef = useRef<StudentState>(studentState);
+
+  useEffect(() => {
+    studentStateRef.current = studentState;
+  }, [studentState]);
+
+  function commitStudentState(nextState: StudentState) {
+    studentStateRef.current = nextState;
+    setStudentState(nextState);
+  }
 
   // Persist state to localStorage when it changes
   useEffect(() => {
@@ -395,53 +390,6 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     return studentState.skillProgress[skillId] ?? createEmptySkillProgress(skillId);
   };
 
-  function applySkillEvidence(
-    current: SkillProgress,
-    evidence: Omit<SkillEvidence, "skillId" | "timestamp"> & { timestamp: string },
-  ): SkillProgress {
-    const nextCorrect = current.totalCorrect + (evidence.correct ? 1 : 0);
-    const nextAttempts = current.totalAttempts + 1;
-    const nextCurrentStreak = evidence.correct ? current.currentStreak + 1 : 0;
-    const nextBestStreak = Math.max(current.bestStreak, nextCurrentStreak);
-
-    const nextEvidenceCounts = { ...current.evidenceCounts };
-    nextEvidenceCounts[evidence.evidenceType] =
-      (nextEvidenceCounts[evidence.evidenceType] ?? 0) + 1;
-
-    let nextProgress: SkillProgress = {
-      ...current,
-      lastWorkedAt: evidence.timestamp,
-      evidenceCounts: nextEvidenceCounts,
-      totalCorrect: nextCorrect,
-      totalAttempts: nextAttempts,
-      currentStreak: nextCurrentStreak,
-      bestStreak: nextBestStreak,
-      status: current.status === "not_started" ? "introduced" : current.status,
-    };
-
-    if (!nextProgress.introducedAt) {
-      nextProgress.introducedAt = evidence.timestamp;
-    }
-
-    // Retention reviews for mastered skills reschedule the next review or
-    // drop the skill back to developing on a failed review.
-    if (
-      evidence.evidenceType === "retention" &&
-      (current.status === "mastered" || current.status === "refresh_scheduled")
-    ) {
-      const attempt = recordRetentionAttempt(current, evidence.correct, evidence.timestamp);
-      nextProgress = {
-        ...nextProgress,
-        status: attempt.status,
-        refreshDueAt: attempt.refreshDueAt,
-        successfulRetentionCount: attempt.successfulRetentionCount,
-        masteredAt: attempt.masteredAt,
-      };
-    }
-
-    return nextProgress;
-  }
-
   const recordSkillEvidence = (
     skillId: string,
     evidence: Omit<SkillEvidence, "skillId" | "timestamp">,
@@ -464,31 +412,7 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     setStudentState((prev) => {
       const current = prev.skillProgress[skillId] ?? createEmptySkillProgress(skillId);
       const timestamp = new Date().toISOString();
-
-      const nextProgress: SkillProgress = {
-        ...current,
-        skillId,
-        status,
-        lastWorkedAt: timestamp,
-      };
-
-      if (status === "mastered") {
-        nextProgress.masteredAt = timestamp;
-        nextProgress.successfulRetentionCount = 0;
-        nextProgress.refreshDueAt = getInitialRefreshDueDate(timestamp);
-      } else if (status === "refresh_scheduled") {
-        if (!nextProgress.masteredAt) {
-          nextProgress.masteredAt = timestamp;
-        }
-      } else {
-        nextProgress.masteredAt = undefined;
-        nextProgress.refreshDueAt = undefined;
-        nextProgress.successfulRetentionCount = 0;
-      }
-
-      if (!nextProgress.introducedAt) {
-        nextProgress.introducedAt = timestamp;
-      }
+      const nextProgress = applyMasteryStatusEffects({ ...current, skillId }, status, timestamp);
 
       return {
         ...prev,
@@ -617,58 +541,28 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     return getPracticeRewardState(lessonId)[mode]?.completed === true;
   };
 
-  const markPracticeReward = (lessonId: string, mode: PracticeMode) => {
-    const REWARD_IDS: Record<PracticeMode, string> = {
-      guided: "common_star_accessory",
-      independent: "rare_star_accessory",
-      challenge: "epic_star_accessory",
-    };
+  const markPracticeReward = (
+    lessonId: string,
+    mode: PracticeMode,
+    metrics: PracticeCompletionMetrics,
+  ): PracticeCompletionResult => {
+    const snapshot = studentStateRef.current;
+    const timestamp = new Date().toISOString();
 
-    setStudentState((prev) => {
-      const lessonRewards = prev.practiceRewards[lessonId] ?? {};
+    const { result, nextState } = markPracticeRewardTransaction(
+      snapshot,
+      lessonId,
+      mode,
+      timestamp,
+      metrics,
+    );
 
-      if (lessonRewards[mode]?.completed) {
-        return prev;
-      }
+    if (!result.ok) {
+      return result;
+    }
 
-      const timestamp = new Date().toISOString();
-
-      const rewardRecord: PracticeRewardRecord = {
-        completed: true,
-        rewardId: REWARD_IDS[mode],
-        completedAt: timestamp,
-      };
-
-      const nextSkillProgress = { ...prev.skillProgress };
-
-      // Record one legitimate procedural evidence entry the first time Guided
-      // Practice is completed. This contributes to long-term skill mastery but
-      // is not duplicated to force a particular mastery status.
-      if (mode === "guided") {
-        for (const skill of getSkillsForLesson(lessonId)) {
-          const current = nextSkillProgress[skill.id] ?? createEmptySkillProgress(skill.id);
-          nextSkillProgress[skill.id] = applySkillEvidence(current, {
-            evidenceType: "procedural",
-            source: `guided-practice-${lessonId}`,
-            correct: true,
-            timestamp,
-            strength: 1,
-          });
-        }
-      }
-
-      return {
-        ...prev,
-        practiceRewards: {
-          ...prev.practiceRewards,
-          [lessonId]: {
-            ...lessonRewards,
-            [mode]: rewardRecord,
-          },
-        },
-        skillProgress: nextSkillProgress,
-      };
-    });
+    commitStudentState(nextState);
+    return result;
   };
 
   // Practice recommendation function

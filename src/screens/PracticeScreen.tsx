@@ -6,6 +6,7 @@ import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { generateProblemsForPracticeType } from "../practiceTypes/registry";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
 import type { PracticeMode } from "../practiceTypes/types";
+import type { PracticeCompletionRejectionReason } from "../types/practiceProgress";
 
 // @SECTION PRACTICE_HELPERS
 function formatPracticeType(practiceType: string) {
@@ -179,12 +180,8 @@ function PracticeScreen() {
   const modeConfig = PRACTICE_MODE_CONFIG[practiceMode];
 
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
-  const {
-    updateLessonProgress,
-    getRecommendedNextPracticeMode,
-    hasPracticeReward,
-    markPracticeReward,
-  } = useStudentProgress();
+  const { getRecommendedNextPracticeMode, hasPracticeReward, markPracticeReward } =
+    useStudentProgress();
 
   const currentLessonId =
     lessonId ?? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`;
@@ -215,6 +212,9 @@ function PracticeScreen() {
   const [correctProblemIndexes, setCorrectProblemIndexes] = useState<number[]>([]);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [completionModal, setCompletionModal] = useState<CompletionModalState | null>(null);
+  const [rejectionModal, setRejectionModal] = useState<{
+    reason: PracticeCompletionRejectionReason;
+  } | null>(null);
 
   useEffect(() => {
     // Reset state when practiceMode or currentLessonId changes
@@ -235,6 +235,7 @@ function PracticeScreen() {
     setCorrectProblemIndexes([]);
     setCurrentStreak(0);
     setCompletionModal(null);
+    setRejectionModal(null);
   }, [practiceMode, currentLessonId]);
 
   const currentProblem = problems[currentProblemIndex];
@@ -302,14 +303,21 @@ function PracticeScreen() {
 
       if (justFinishedLastQuestion) {
         const firstCompletion = !hasPracticeReward(currentLessonId, practiceMode);
-
-        markPracticeReward(currentLessonId, practiceMode);
-        updateLessonProgress(currentLessonId, {
-          practiceComplete: true,
+        const result = markPracticeReward(currentLessonId, practiceMode, {
+          correctCount: nextCorrectIndexes.length,
+          totalCount: problems.length,
         });
 
         window.setTimeout(() => {
-          openCompletionModal(firstCompletion);
+          if (!result.ok) {
+            if (result.reason === "already_completed") {
+              openCompletionModal(false);
+            } else {
+              setRejectionModal({ reason: result.reason });
+            }
+          } else {
+            openCompletionModal(firstCompletion);
+          }
         }, 350);
       }
 
@@ -1513,6 +1521,55 @@ function PracticeScreen() {
                   Continue to next lesson instead ›
                 </Link>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {rejectionModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/45 px-4 backdrop-blur-sm">
+          <div className="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 text-center shadow-2xl">
+            <h2 className="text-2xl font-black text-[#073B5A]">
+              {rejectionModal.reason === "guided_required" && "Complete Guided Practice First"}
+              {rejectionModal.reason === "independent_required" &&
+                "Complete Independent Practice First"}
+              {rejectionModal.reason === "insufficient_accuracy" && "Keep Practicing!"}
+              {rejectionModal.reason === "invalid_session_result" && "Oops, something went wrong"}
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
+              {rejectionModal.reason === "guided_required" &&
+                "Start with Guided Practice to build confidence before trying this activity."}
+              {rejectionModal.reason === "independent_required" &&
+                "Show what you can do on your own before taking on the Challenge."}
+              {rejectionModal.reason === "insufficient_accuracy" &&
+                `You answered ${correctCount} out of ${problems.length} correctly. Independent Practice needs 80% correct to earn the reward and record mastery evidence.`}
+              {rejectionModal.reason === "invalid_session_result" &&
+                "We could not save this practice result. Let's go back to the lesson and try again."}
+            </p>
+            <div className="mt-6 grid gap-3">
+              {(rejectionModal.reason === "guided_required" ||
+                rejectionModal.reason === "independent_required") && (
+                <Link
+                  to={
+                    rejectionModal.reason === "guided_required"
+                      ? getModePath(currentLessonId, "guided")
+                      : getModePath(currentLessonId, "independent")
+                  }
+                  onClick={() => setRejectionModal(null)}
+                  className="rounded-2xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7] lg:px-7 lg:py-4 lg:text-base"
+                >
+                  {rejectionModal.reason === "guided_required"
+                    ? "Start Guided Practice ›"
+                    : "Start Independent Practice ›"}
+                </Link>
+              )}
+              <Link
+                to={lessonPath}
+                onClick={() => setRejectionModal(null)}
+                className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB] lg:px-7 lg:py-4 lg:text-base"
+              >
+                Back to Lesson
+              </Link>
             </div>
           </div>
         </div>
