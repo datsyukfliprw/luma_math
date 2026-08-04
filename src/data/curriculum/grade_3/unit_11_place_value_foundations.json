@@ -1,6 +1,6 @@
 {
   "grade_level": 3,
-  "unit_number": 1,
+  "unit_number": 11,
   "unit_title": "Place Value Foundations",
   "unit_slug": "place_value_foundations",
   "unit_description": "This unit builds the foundation for working with whole numbers through 100,000. Students learn what a digit's place means, build numbers with base-ten models, write numbers in standard and expanded form, and read and write numbers in words.",
@@ -11,7 +11,10 @@
     "Read and identify numbers through 100,000.",
     "Use place-value language to describe and compare numbers."
   ],
-  "fact_focus": ["place value", "3.NBT.A.2"],
+  "fact_focus": [
+    "place value",
+    "3.NBT.A.2"
+  ],
   "weeks": [
     {
       "week_number": 1,
@@ -19,7 +22,7 @@
       "weekly_focus": "Students learn that digits have different values depending on their position, build numbers with base-ten models, and connect standard, expanded, and word forms.",
       "lessons": [
         {
-          "lesson_id": "g3-u1-w1-l1",
+          "lesson_id": "g3-u11-w1-l1",
           "day_number": 1,
           "day_name": "Monday",
           "lesson_title": "What a Digit's Place Tells Us",
@@ -29,7 +32,12 @@
           "practice": "Match digits in a number to their place-value labels and tell the value of each digit.",
           "objective": "Understand that a digit's value depends on its place in a number.",
           "practice_type": "place_value_digits",
-          "skills": ["place_value", "digit_value", "base_ten", "number_sense"],
+          "skills": [
+            "place_value",
+            "digit_value",
+            "base_ten",
+            "number_sense"
+          ],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -40,7 +48,7 @@
             "instructions": "Warm up by naming the value of the bold digit.",
             "questions": [
               {
-                "id": "g3-u1-w1-d1-warmup-1",
+                "id": "g3-u11-w1-d1-warmup-1",
                 "question_type": "target_digit_value",
                 "number": "456",
                 "target_digit_index": 0,
@@ -50,7 +58,7 @@
                 "skill": "digit_value"
               },
               {
-                "id": "g3-u1-w1-d1-warmup-2",
+                "id": "g3-u11-w1-d1-warmup-2",
                 "question_type": "target_digit_value",
                 "number": "3721",
                 "target_digit_index": 0,
@@ -60,7 +68,7 @@
                 "skill": "digit_value"
               },
               {
-                "id": "g3-u1-w1-d1-warmup-3",
+                "id": "g3-u11-w1-d1-warmup-3",
                 "prompt": "Count by tens: 30, 40, 50, __",
                 "correct_answer": "60",
                 "hint": "Add ten more.",
@@ -82,7 +90,12 @@
               "items_per_group": 1,
               "equation": "3 is in the hundreds place, so it means 300."
             },
-            "vocabulary": ["digit", "place", "value", "base-ten"]
+            "vocabulary": [
+              "digit",
+              "place",
+              "value",
+              "base-ten"
+            ]
           },
           "try_it": {
             "title": "Try one together",
@@ -108,7 +121,7 @@
             "type": "place_value_terms",
             "card_count": 6,
             "instructions": "Review place-value words and digit values.",
-            "deckId": "lesson-g3-u1-w1-d1-place-value-terms"
+            "deckId": "lesson-g3-u11-w1-d1-place-value-terms"
           },
           "bigIdea": {
             "title": "What a Digit's Place Tells Us",
@@ -120,7 +133,10 @@
             "bigQuestion": "Why does the same digit mean different amounts?",
             "starTip": {
               "title": "Read the place",
-              "lines": ["Find the digit", "Name its place"]
+              "lines": [
+                "Find the digit",
+                "Name its place"
+              ]
             },
             "ruleCards": [
               {
@@ -139,7 +155,7 @@
           }
         },
         {
-          "lesson_id": "g3-u1-w1-l2",
+          "lesson_id": "g3-u11-w1-l2",
           "day_number": 2,
           "day_name": "Tuesday",
           "lesson_title": "Build Numbers With Base-Ten Models",
@@ -149,7 +165,12 @@
           "practice": "Build a number with base-ten blocks and write it in standard form.",
           "objective": "Use base-ten models to represent numbers.",
           "practice_type": "base_ten_models",
-          "skills": ["base_ten_models", "place_value", "standard_form", "number_sense"],
+          "skills": [
+            "base_ten_models",
+            "place_value",
+            "standard_form",
+            "number_sense"
+          ],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -160,21 +181,21 @@
             "instructions": "Warm up by counting base-ten blocks.",
             "questions": [
               {
-                "id": "g3-u1-w1-d2-warmup-1",
+                "id": "g3-u11-w1-d2-warmup-1",
                 "prompt": "1 ten rod equals how many ones cubes?",
                 "correct_answer": "10",
                 "hint": "A ten rod is made of ten ones.",
                 "skill": "base_ten"
               },
               {
-                "id": "g3-u1-w1-d2-warmup-2",
+                "id": "g3-u11-w1-d2-warmup-2",
                 "prompt": "1 hundred flat equals how many ten rods?",
                 "correct_answer": "10",
                 "hint": "A hundred flat is ten ten-rods wide.",
                 "skill": "base_ten"
               },
               {
-                "id": "g3-u1-w1-d2-warmup-3",
+                "id": "g3-u11-w1-d2-warmup-3",
                 "prompt": "If you have 2 tens and 5 ones, what number do you build?",
                 "correct_answer": "25",
                 "hint": "20 plus 5 more.",
@@ -197,7 +218,13 @@
               "items_per_group": 1,
               "equation": "2 hundreds + 4 tens + 3 ones = 243"
             },
-            "vocabulary": ["base-ten", "ones", "tens", "hundreds", "thousands"]
+            "vocabulary": [
+              "base-ten",
+              "ones",
+              "tens",
+              "hundreds",
+              "thousands"
+            ]
           },
           "try_it": {
             "title": "Try one together",
@@ -223,7 +250,7 @@
             "type": "base_ten_terms",
             "card_count": 6,
             "instructions": "Review base-ten block names and values.",
-            "deckId": "lesson-g3-u1-w1-d2-base-ten-models"
+            "deckId": "lesson-g3-u11-w1-d2-base-ten-models"
           },
           "bigIdea": {
             "title": "Build Numbers With Base-Ten Models",
@@ -235,7 +262,10 @@
             "bigQuestion": "How do base-ten blocks show a number?",
             "starTip": {
               "title": "Build it",
-              "lines": ["Start with ones", "Group by tens"]
+              "lines": [
+                "Start with ones",
+                "Group by tens"
+              ]
             },
             "ruleCards": [
               {
@@ -254,7 +284,7 @@
           }
         },
         {
-          "lesson_id": "g3-u1-w1-l3",
+          "lesson_id": "g3-u11-w1-l3",
           "day_number": 3,
           "day_name": "Wednesday",
           "lesson_title": "Write Numbers in Standard and Expanded Form",
@@ -264,7 +294,12 @@
           "practice": "Convert numbers between standard and expanded form.",
           "objective": "Write numbers in standard and expanded form.",
           "practice_type": "expanded_form",
-          "skills": ["expanded_form", "standard_form", "place_value", "number_sense"],
+          "skills": [
+            "expanded_form",
+            "standard_form",
+            "place_value",
+            "number_sense"
+          ],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -275,21 +310,21 @@
             "instructions": "Warm up by breaking a number into parts.",
             "questions": [
               {
-                "id": "g3-u1-w1-d3-warmup-1",
+                "id": "g3-u11-w1-d3-warmup-1",
                 "prompt": "Write 52 in expanded form.",
                 "correct_answer": "50 + 2",
                 "hint": "5 tens and 2 ones.",
                 "skill": "expanded_form"
               },
               {
-                "id": "g3-u1-w1-d3-warmup-2",
+                "id": "g3-u11-w1-d3-warmup-2",
                 "prompt": "Write 300 + 40 + 7 as one number.",
                 "correct_answer": "347",
                 "hint": "3 hundreds, 4 tens, and 7 ones.",
                 "skill": "standard_form"
               },
               {
-                "id": "g3-u1-w1-d3-warmup-3",
+                "id": "g3-u11-w1-d3-warmup-3",
                 "prompt": "What is the value of the 6 in 6,214?",
                 "correct_answer": "6000",
                 "hint": "The 6 is in the thousands place.",
@@ -311,7 +346,12 @@
               "items_per_group": 1,
               "equation": "4,000 + 100 + 50 + 9"
             },
-            "vocabulary": ["standard form", "expanded form", "digit value", "addend"]
+            "vocabulary": [
+              "standard form",
+              "expanded form",
+              "digit value",
+              "addend"
+            ]
           },
           "try_it": {
             "title": "Try one together",
@@ -337,7 +377,7 @@
             "type": "expanded_form",
             "card_count": 6,
             "instructions": "Practice matching standard and expanded forms.",
-            "deckId": "lesson-g3-u1-w1-d3-expanded-form"
+            "deckId": "lesson-g3-u11-w1-d3-expanded-form"
           },
           "bigIdea": {
             "title": "Write Numbers in Standard and Expanded Form",
@@ -349,7 +389,10 @@
             "bigQuestion": "How does expanded form show a digit's value?",
             "starTip": {
               "title": "Break it apart",
-              "lines": ["Name each place", "Add the parts"]
+              "lines": [
+                "Name each place",
+                "Add the parts"
+              ]
             },
             "ruleCards": [
               {
@@ -368,7 +411,7 @@
           }
         },
         {
-          "lesson_id": "g3-u1-w1-l4",
+          "lesson_id": "g3-u11-w1-l4",
           "day_number": 4,
           "day_name": "Thursday",
           "lesson_title": "Read and Write Numbers in Words",
@@ -378,7 +421,12 @@
           "practice": "Convert numbers to words and words to numbers.",
           "objective": "Read and write numbers using words.",
           "practice_type": "number_words",
-          "skills": ["number_words", "standard_form", "place_value", "number_sense"],
+          "skills": [
+            "number_words",
+            "standard_form",
+            "place_value",
+            "number_sense"
+          ],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
@@ -389,21 +437,21 @@
             "instructions": "Warm up by writing numbers in words.",
             "questions": [
               {
-                "id": "g3-u1-w1-d4-warmup-1",
+                "id": "g3-u11-w1-d4-warmup-1",
                 "prompt": "Write 47 in words.",
                 "correct_answer": "forty-seven",
                 "hint": "Use a hyphen for the tens and ones.",
                 "skill": "number_words"
               },
               {
-                "id": "g3-u1-w1-d4-warmup-2",
+                "id": "g3-u11-w1-d4-warmup-2",
                 "prompt": "Write 123 in words.",
                 "correct_answer": "one hundred twenty-three",
                 "hint": "Start with the hundreds place.",
                 "skill": "number_words"
               },
               {
-                "id": "g3-u1-w1-d4-warmup-3",
+                "id": "g3-u11-w1-d4-warmup-3",
                 "prompt": "What number is 'six hundred five'?",
                 "correct_answer": "605",
                 "hint": "6 hundreds, 0 tens, and 5 ones.",
@@ -426,7 +474,12 @@
               "items_per_group": 1,
               "equation": "three thousand, five hundred eight"
             },
-            "vocabulary": ["number words", "period", "hyphen", "thousands"]
+            "vocabulary": [
+              "number words",
+              "period",
+              "hyphen",
+              "thousands"
+            ]
           },
           "try_it": {
             "title": "Try one together",
@@ -452,7 +505,7 @@
             "type": "number_words",
             "card_count": 6,
             "instructions": "Practice reading and writing numbers in words.",
-            "deckId": "lesson-g3-u1-w1-d4-number-words"
+            "deckId": "lesson-g3-u11-w1-d4-number-words"
           },
           "bigIdea": {
             "title": "Read and Write Numbers in Words",
@@ -464,7 +517,10 @@
             "bigQuestion": "How do commas and hyphens help write numbers?",
             "starTip": {
               "title": "Say it out loud",
-              "lines": ["Read the number", "Write what you hear"]
+              "lines": [
+                "Read the number",
+                "Write what you hear"
+              ]
             },
             "ruleCards": [
               {
@@ -483,7 +539,7 @@
           }
         },
         {
-          "lesson_id": "g3-u1-w1-eval",
+          "lesson_id": "g3-u11-w1-eval",
           "day_number": 5,
           "day_name": "Friday",
           "lesson_title": "Unit Evaluation: Place Value Foundations",
@@ -518,21 +574,21 @@
             "instructions": "Get ready to show what you know.",
             "questions": [
               {
-                "id": "g3-u1-w1-d5-warmup-1",
+                "id": "g3-u11-w1-d5-warmup-1",
                 "prompt": "What is the value of 2 in 2,405?",
                 "correct_answer": "2000",
                 "hint": "The 2 is in the thousands place.",
                 "skill": "digit_value"
               },
               {
-                "id": "g3-u1-w1-d5-warmup-2",
+                "id": "g3-u11-w1-d5-warmup-2",
                 "prompt": "Write 500 + 30 + 8 as a single number.",
                 "correct_answer": "538",
                 "hint": "5 hundreds, 3 tens, and 8 ones.",
                 "skill": "standard_form"
               },
               {
-                "id": "g3-u1-w1-d5-warmup-3",
+                "id": "g3-u11-w1-d5-warmup-3",
                 "prompt": "Write 72 in words.",
                 "correct_answer": "seventy-two",
                 "hint": "Use a hyphen between seventy and two.",
@@ -554,7 +610,11 @@
               "items_per_group": 1,
               "equation": "digit value + base-ten models + expanded form + number words = place value foundations"
             },
-            "vocabulary": ["evaluation", "review", "place value"]
+            "vocabulary": [
+              "evaluation",
+              "review",
+              "place value"
+            ]
           },
           "try_it": {
             "title": "Try one together",
@@ -580,7 +640,7 @@
             "type": "unit_review",
             "card_count": 8,
             "instructions": "Review key terms from Unit 1 before the evaluation.",
-            "deckId": "lesson-g3-u1-w1-d5-unit-review"
+            "deckId": "lesson-g3-u11-w1-d5-unit-review"
           },
           "bigIdea": {
             "title": "Unit Evaluation: Place Value Foundations",
@@ -592,7 +652,10 @@
             "bigQuestion": "What do you know about place value?",
             "starTip": {
               "title": "Take your time",
-              "lines": ["Read carefully", "Show your thinking"]
+              "lines": [
+                "Read carefully",
+                "Show your thinking"
+              ]
             },
             "ruleCards": [
               {

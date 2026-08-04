@@ -1,39 +1,43 @@
 {
   "grade_level": 3,
-  "unit_number": 11,
-  "unit_title": "Multiplying by 0, 1, 2, 5, and 10",
-  "unit_slug": "multiplying_by_0_1_2_5_10",
-  "unit_description": "This unit builds fact fluency for multiplying by 0, 1, 2, 5, and 10. Students learn the zero and identity rules, use doubles for multiplying by 2, recognize patterns for 5 and 10, and practice mixed facts.",
+  "unit_number": 1,
+  "unit_title": "Multiplication Foundations",
+  "unit_slug": "multiplication_foundations",
+  "unit_description": "This unit introduces multiplication foundations. Students learn the zero and identity rules, connect repeated addition to multiplication, identify factors and products, and build equal groups with objects.",
   "unit_goals": [
     "Use the zero and identity rules for multiplication.",
-    "Multiply by 2 using doubles.",
-    "Multiply by 5 using patterns.",
-    "Multiply by 10.",
-    "Practice mixed facts for 0, 1, 2, 5, and 10."
+    "Connect repeated addition to multiplication.",
+    "Identify factors and products.",
+    "Build equal groups with objects.",
+    "Review the week's multiplication skills."
   ],
-  "fact_focus": ["multiplication", "3.RA.B.6", "3.RA.C.7"],
+  "fact_focus": [
+    "multiplication",
+    "3.RA.B.6",
+    "3.RA.C.7"
+  ],
   "weeks": [
     {
       "week_number": 1,
-      "week_title": "Multiplying by 0, 1, 2, 5, and 10",
-      "weekly_focus": "Students build fluency with the 0, 1, 2, 5, and 10 multiplication facts using patterns and strategies.",
+      "week_title": "Multiplication Foundations",
+      "weekly_focus": "Students build the foundations of multiplication: zero and identity rules, repeated addition, factors and products, and equal groups with objects.",
       "lessons": [
         {
-          "lesson_id": "g3-u11-w1-l1",
+          "lesson_id": "g3-u1-w1-l1",
           "day_number": 1,
           "day_name": "Monday",
           "lesson_title": "Zero and Identity Rules",
           "lesson_type": "lesson",
-          "fact_drill": "Warm up by quickly saying any number times 0 and times 1.",
-          "concept": "Any number times 0 is 0. Any number times 1 is the same number. These rules make multiplying by 0 and 1 easy.",
-          "practice": "Solve multiplication facts with 0 and 1.",
+          "fact_drill": "Warm up by saying any number times 0 and times 1.",
+          "concept": "Any number times 0 is 0. Any number times 1 is the same number.",
+          "practice": "Solve multiplication facts with 0 and 1 by building equal groups.",
           "objective": "Use the zero and identity rules for multiplication.",
-          "practice_type": "zero_identity_rules",
+          "practice_type": "equal_groups",
           "skills": [
             "multiplication",
-            "zero_rule",
-            "identity_rule",
-            "facts"
+            "zero_property",
+            "identity_property",
+            "multiplication_expressions"
           ],
           "lesson_video_url": "",
           "worksheet_url": "",
@@ -45,25 +49,25 @@
             "instructions": "Warm up with 0 and 1 facts.",
             "questions": [
               {
-                "id": "g3-u11-w1-d1-warmup-1",
+                "id": "g3-u1-w1-d1-warmup-1",
                 "prompt": "7 × 0 = ?",
                 "correct_answer": "0",
                 "hint": "Any number times 0 is 0.",
-                "skill": "zero_rule"
+                "skill": "zero_property"
               },
               {
-                "id": "g3-u11-w1-d1-warmup-2",
+                "id": "g3-u1-w1-d1-warmup-2",
                 "prompt": "9 × 1 = ?",
                 "correct_answer": "9",
                 "hint": "Any number times 1 is itself.",
-                "skill": "identity_rule"
+                "skill": "identity_property"
               },
               {
-                "id": "g3-u11-w1-d1-warmup-3",
+                "id": "g3-u1-w1-d1-warmup-3",
                 "prompt": "0 × 5 = ?",
                 "correct_answer": "0",
                 "hint": "Zero groups of 5 is 0.",
-                "skill": "zero_rule"
+                "skill": "zero_property"
               }
             ]
           },
@@ -81,7 +85,12 @@
               "items_per_group": 1,
               "equation": "6 × 0 = 0 and 6 × 1 = 6"
             },
-            "vocabulary": ["zero rule", "identity rule", "factor", "product"]
+            "vocabulary": [
+              "zero rule",
+              "identity rule",
+              "factor",
+              "product"
+            ]
           },
           "try_it": {
             "title": "Try one together",
@@ -96,7 +105,7 @@
           },
           "practice_block": {
             "title": "Practice Time",
-            "type": "zero_identity_rules",
+            "type": "equal_groups",
             "question_count": 6,
             "instructions": "Solve each multiplication fact with 0 or 1."
           },
@@ -107,7 +116,7 @@
             "type": "multiplication_facts",
             "card_count": 6,
             "instructions": "Review zero and identity multiplication rules.",
-            "deckId": "lesson-g3-u11-w1-d1-zero-identity"
+            "deckId": "lesson-g3-u1-w1-d1-zero-identity"
           },
           "bigIdea": {
             "title": "Zero and Identity Rules",
@@ -119,7 +128,10 @@
             "bigQuestion": "Why is any number times 1 the same number?",
             "starTip": {
               "title": "Special rules",
-              "lines": ["×0 = 0", "×1 = same"]
+              "lines": [
+                "×0 = 0",
+                "×1 = same"
+              ]
             },
             "ruleCards": [
               {
@@ -138,56 +150,56 @@
           }
         },
         {
-          "lesson_id": "g3-u11-w1-l2",
+          "lesson_id": "g3-u1-w1-l2",
           "day_number": 2,
           "day_name": "Tuesday",
-          "lesson_title": "Multiply by 2 Using Doubles",
+          "lesson_title": "Repeated Addition to Multiplication",
           "lesson_type": "lesson",
-          "fact_drill": "Warm up with doubles facts: 4+4, 7+7, 9+9.",
-          "concept": "Multiplying by 2 is the same as adding a number to itself. This is called a double.",
-          "practice": "Multiply numbers by 2 using doubles.",
-          "objective": "Multiply by 2 using doubles.",
-          "practice_type": "multiply_by_2",
+          "fact_drill": "Warm up by adding equal groups and writing the matching multiplication.",
+          "concept": "Multiplication is a short way to show repeated addition. 4 + 4 + 4 can be written as 3 × 4.",
+          "practice": "Write repeated addition as multiplication and find the product.",
+          "objective": "Connect repeated addition to multiplication equations.",
+          "practice_type": "repeated_addition_to_multiplication",
           "skills": [
             "multiplication",
-            "doubles",
-            "facts",
-            "multiply_by_2"
+            "repeated_addition",
+            "equal_groups",
+            "multiplication_expressions"
           ],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
           "warmup": {
             "title": "Luma Charge",
-            "type": "doubles_warmup",
+            "type": "repeated_addition_warmup",
             "question_count": 3,
-            "instructions": "Warm up with doubles.",
+            "instructions": "Warm up by adding equal groups.",
             "questions": [
               {
-                "id": "g3-u11-w1-d2-warmup-1",
-                "prompt": "6 + 6 = ?",
+                "id": "g3-u1-w1-d2-warmup-1",
+                "prompt": "3 + 3 + 3 + 3 = ?",
                 "correct_answer": "12",
-                "hint": "6 × 2 = 12.",
-                "skill": "doubles"
+                "hint": "Four 3s make 12. That matches 4 × 3.",
+                "skill": "repeated_addition"
               },
               {
-                "id": "g3-u11-w1-d2-warmup-2",
-                "prompt": "8 × 2 = ?",
-                "correct_answer": "16",
-                "hint": "8 + 8.",
-                "skill": "multiply_by_2"
-              },
-              {
-                "id": "g3-u11-w1-d2-warmup-3",
+                "id": "g3-u1-w1-d2-warmup-2",
                 "prompt": "5 + 5 = ?",
                 "correct_answer": "10",
-                "hint": "5 × 2 = 10.",
-                "skill": "doubles"
+                "hint": "Two 5s make 10. That matches 2 × 5.",
+                "skill": "repeated_addition"
+              },
+              {
+                "id": "g3-u1-w1-d2-warmup-3",
+                "prompt": "4 + 4 + 4 = ?",
+                "correct_answer": "12",
+                "hint": "Three 4s make 12. That matches 3 × 4.",
+                "skill": "repeated_addition"
               }
             ]
           },
           "learn": {
-            "title": "Multiply by 2 Using Doubles",
+            "title": "Repeated Addition to Multiplication",
             "teaching_points": [
               "2 × a number means add it to itself.",
               "Doubles facts are addition facts.",
@@ -200,37 +212,42 @@
               "items_per_group": 7,
               "equation": "7 + 7 = 14, so 7 × 2 = 14"
             },
-            "vocabulary": ["double", "multiply by 2", "sum", "product"]
+            "vocabulary": [
+              "double",
+              "multiply by 2",
+              "sum",
+              "product"
+            ]
           },
           "try_it": {
             "title": "Try one together",
-            "type": "multiply_by_2",
-            "prompt": "What is 9 × 2?",
-            "correct_answer": "18",
-            "hint": "9 + 9.",
+            "type": "repeated_addition_to_multiplication",
+            "prompt": "4 + 4 + 4 + 4 + 4 = ? Write it as multiplication.",
+            "correct_answer": "20; 5 × 4 = 20",
+            "hint": "Five 4s make 20. Write 5 × 4.",
             "visual_data": {
-              "groups": 2,
-              "items_per_group": 9
+              "groups": 5,
+              "items_per_group": 4
             }
           },
           "practice_block": {
             "title": "Practice Time",
-            "type": "multiply_by_2",
+            "type": "repeated_addition_to_multiplication",
             "question_count": 6,
-            "instructions": "Use doubles to multiply each number by 2."
+            "instructions": "Write each repeated addition as multiplication and find the product."
           },
           "flashcards": {
             "enabled": true,
             "required": false,
-            "title": "Doubles and Times 2",
-            "type": "multiplication_facts",
+            "title": "Repeated Addition",
+            "type": "math_facts",
             "card_count": 6,
-            "instructions": "Review multiplying by 2 using doubles.",
-            "deckId": "lesson-g3-u11-w1-d2-times-2"
+            "instructions": "Review equal groups and repeated addition.",
+            "deckId": "lesson-g3-u1-w1-d2-repeated-addition"
           },
           "bigIdea": {
-            "title": "Multiply by 2 Using Doubles",
-            "subtitle": "Doubles are the key",
+            "title": "Repeated Addition to Multiplication",
+            "subtitle": "A short way to add equal groups",
             "thumbnail": "/images/learn/thumbnails/groups.webp",
             "videoUrl": "",
             "videoCaption": "",
@@ -238,7 +255,10 @@
             "bigQuestion": "How are doubles and multiplying by 2 related?",
             "starTip": {
               "title": "Add to itself",
-              "lines": ["2 × n", "= n + n"]
+              "lines": [
+                "2 × n",
+                "= n + n"
+              ]
             },
             "ruleCards": [
               {
@@ -257,56 +277,56 @@
           }
         },
         {
-          "lesson_id": "g3-u11-w1-l3",
+          "lesson_id": "g3-u1-w1-l3",
           "day_number": 3,
           "day_name": "Wednesday",
-          "lesson_title": "Multiply by 5 Using Patterns",
+          "lesson_title": "Factors and Products",
           "lesson_type": "lesson",
-          "fact_drill": "Warm up by counting by fives to 50.",
-          "concept": "Multiples of 5 end in 0 or 5. To multiply by 5, you can count by fives or use the fact that 5 is half of 10.",
-          "practice": "Multiply numbers by 5 using skip counting and the 10-and-half strategy.",
-          "objective": "Multiply by 5 using patterns and strategies.",
-          "practice_type": "multiply_by_5",
+          "fact_drill": "Warm up by naming the factors and products in multiplication equations.",
+          "concept": "In a multiplication equation, the factors are the numbers being multiplied. The product is the answer.",
+          "practice": "Identify the factors and product in multiplication equations.",
+          "objective": "Identify factors and products in multiplication.",
+          "practice_type": "factor_product_identification",
           "skills": [
             "multiplication",
-            "multiply_by_5",
-            "patterns",
-            "facts"
+            "factors",
+            "products",
+            "repeated_addition"
           ],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
           "warmup": {
             "title": "Luma Charge",
-            "type": "skip_counting_warmup",
+            "type": "factor_product_warmup",
             "question_count": 3,
-            "instructions": "Warm up by counting by fives.",
+            "instructions": "Warm up by finding factors and products.",
             "questions": [
               {
-                "id": "g3-u11-w1-d3-warmup-1",
-                "prompt": "5, 10, 15, 20, __",
-                "correct_answer": "25",
-                "hint": "Add 5.",
-                "skill": "skip_counting"
+                "id": "g3-u1-w1-d3-warmup-1",
+                "prompt": "In 3 × 4 = 12, what is the product?",
+                "correct_answer": "12",
+                "hint": "The product is the answer to the multiplication.",
+                "skill": "products"
               },
               {
-                "id": "g3-u11-w1-d3-warmup-2",
-                "prompt": "6 × 5 = ?",
-                "correct_answer": "30",
-                "hint": "5, 10, 15, 20, 25, 30.",
-                "skill": "multiply_by_5"
+                "id": "g3-u1-w1-d3-warmup-2",
+                "prompt": "In 5 × 2 = 10, what are the factors?",
+                "correct_answer": "5 and 2",
+                "hint": "The factors are the numbers being multiplied.",
+                "skill": "factors"
               },
               {
-                "id": "g3-u11-w1-d3-warmup-3",
-                "prompt": "Which is a multiple of 5: 27 or 35?",
-                "correct_answer": "35",
-                "hint": "Multiples of 5 end in 0 or 5.",
-                "skill": "patterns"
+                "id": "g3-u1-w1-d3-warmup-3",
+                "prompt": "What is the product of 6 and 2?",
+                "correct_answer": "12",
+                "hint": "6 × 2 = 12.",
+                "skill": "products"
               }
             ]
           },
           "learn": {
-            "title": "Multiply by 5 Using Patterns",
+            "title": "Factors and Products",
             "teaching_points": [
               "Count by fives to find the product.",
               "Multiples of 5 end in 0 or 5.",
@@ -319,37 +339,42 @@
               "items_per_group": 5,
               "equation": "8 × 10 = 80, half is 40, so 8 × 5 = 40"
             },
-            "vocabulary": ["multiple", "pattern", "skip count", "multiply by 5"]
+            "vocabulary": [
+              "multiple",
+              "pattern",
+              "skip count",
+              "multiply by 5"
+            ]
           },
           "try_it": {
             "title": "Try one together",
-            "type": "multiply_by_5",
-            "prompt": "What is 7 × 5?",
-            "correct_answer": "35",
-            "hint": "7 × 10 = 70, take half = 35.",
+            "type": "factor_product_identification",
+            "prompt": "In 4 × 3 = 12, what are the factors and what is the product?",
+            "correct_answer": "factors: 4 and 3; product: 12",
+            "hint": "The factors are 4 and 3. The product is 12.",
             "visual_data": {
-              "groups": 7,
-              "items_per_group": 5
+              "groups": 4,
+              "items_per_group": 3
             }
           },
           "practice_block": {
             "title": "Practice Time",
-            "type": "multiply_by_5",
+            "type": "factor_product_identification",
             "question_count": 6,
-            "instructions": "Use a pattern or strategy to multiply each number by 5."
+            "instructions": "Identify the factors and the product in each equation."
           },
           "flashcards": {
             "enabled": true,
             "required": false,
-            "title": "Times 5 Patterns",
-            "type": "multiplication_facts",
+            "title": "Factors and Products",
+            "type": "vocabulary",
             "card_count": 6,
-            "instructions": "Review patterns for multiplying by 5.",
-            "deckId": "lesson-g3-u11-w1-d3-times-5"
+            "instructions": "Review factor and product vocabulary.",
+            "deckId": "lesson-g3-u1-w1-d3-factors-products"
           },
           "bigIdea": {
-            "title": "Multiply by 5 Using Patterns",
-            "subtitle": "Use the 5s pattern",
+            "title": "Factors and Products",
+            "subtitle": "The numbers multiplied and the answer",
             "thumbnail": "/images/learn/thumbnails/number-line.webp",
             "videoUrl": "",
             "videoCaption": "",
@@ -357,7 +382,10 @@
             "bigQuestion": "Why do multiples of 5 end in 0 or 5?",
             "starTip": {
               "title": "End in 0 or 5",
-              "lines": ["Skip count by 5", "Or halve ×10"]
+              "lines": [
+                "Skip count by 5",
+                "Or halve ×10"
+              ]
             },
             "ruleCards": [
               {
@@ -376,56 +404,56 @@
           }
         },
         {
-          "lesson_id": "g3-u11-w1-l4",
+          "lesson_id": "g3-u1-w1-l4",
           "day_number": 4,
           "day_name": "Thursday",
-          "lesson_title": "Multiply by 10 and Practice Mixed Facts",
+          "lesson_title": "Equal Groups With Objects",
           "lesson_type": "lesson",
-          "fact_drill": "Warm up by multiplying numbers by 10.",
-          "concept": "Multiplying by 10 adds a zero to the ones place. When you multiply a one-digit number by 10, the product is that number with a 0 after it.",
-          "practice": "Multiply by 10 and practice mixed 0, 1, 2, 5, and 10 facts.",
-          "objective": "Multiply by 10 and practice mixed facts.",
-          "practice_type": "multiply_by_10_and_mixed",
+          "fact_drill": "Warm up by counting equal groups of objects and finding the total.",
+          "concept": "Multiplication can be shown with equal groups of objects. The number of groups times the number in each group equals the total.",
+          "practice": "Use objects to build equal groups and connect them to a multiplication equation.",
+          "objective": "Use objects to build equal groups and connect them to multiplication.",
+          "practice_type": "equal_groups_with_objects",
           "skills": [
             "multiplication",
-            "multiply_by_10",
-            "facts",
-            "mixed_facts"
+            "equal_groups",
+            "hands_on_modeling",
+            "multiplication_expressions"
           ],
           "lesson_video_url": "",
           "worksheet_url": "",
           "quiz_question_count": 5,
           "warmup": {
             "title": "Luma Charge",
-            "type": "facts_warmup",
+            "type": "object_groups_warmup",
             "question_count": 3,
-            "instructions": "Warm up with ×10 and mixed facts.",
+            "instructions": "Warm up by counting equal groups of objects.",
             "questions": [
               {
-                "id": "g3-u11-w1-d4-warmup-1",
-                "prompt": "4 × 10 = ?",
-                "correct_answer": "40",
-                "hint": "Add a zero.",
-                "skill": "multiply_by_10"
+                "id": "g3-u1-w1-d4-warmup-1",
+                "prompt": "3 groups of 2 blocks. How many total?",
+                "correct_answer": "6",
+                "hint": "3 × 2 = 6.",
+                "skill": "equal_groups"
               },
               {
-                "id": "g3-u11-w1-d4-warmup-2",
-                "prompt": "7 × 5 = ?",
-                "correct_answer": "35",
-                "hint": "Multiply by 10, then take half.",
-                "skill": "multiply_by_5"
+                "id": "g3-u1-w1-d4-warmup-2",
+                "prompt": "4 groups of 3 blocks. How many total?",
+                "correct_answer": "12",
+                "hint": "4 × 3 = 12.",
+                "skill": "equal_groups"
               },
               {
-                "id": "g3-u11-w1-d4-warmup-3",
-                "prompt": "9 × 2 = ?",
-                "correct_answer": "18",
-                "hint": "9 + 9.",
-                "skill": "multiply_by_2"
+                "id": "g3-u1-w1-d4-warmup-3",
+                "prompt": "2 groups of 5 blocks. How many total?",
+                "correct_answer": "10",
+                "hint": "2 × 5 = 10.",
+                "skill": "equal_groups"
               }
             ]
           },
           "learn": {
-            "title": "Multiply by 10 and Practice Mixed Facts",
+            "title": "Equal Groups With Objects",
             "teaching_points": [
               "To multiply by 10, add a zero.",
               "10 groups of a number is that number tens.",
@@ -438,37 +466,42 @@
               "items_per_group": 6,
               "equation": "6 × 10 = 60"
             },
-            "vocabulary": ["multiply by 10", "zero", "mixed facts", "fluency"]
+            "vocabulary": [
+              "multiply by 10",
+              "zero",
+              "mixed facts",
+              "fluency"
+            ]
           },
           "try_it": {
             "title": "Try one together",
-            "type": "multiply_by_10_and_mixed",
-            "prompt": "What is 9 × 10?",
-            "correct_answer": "90",
-            "hint": "Add a zero to 9.",
+            "type": "equal_groups_with_objects",
+            "prompt": "Use objects to show 3 × 4. How many total?",
+            "correct_answer": "12",
+            "hint": "Make 3 groups with 4 in each group. Then count the total.",
             "visual_data": {
-              "groups": 10,
-              "items_per_group": 9
+              "groups": 3,
+              "items_per_group": 4
             }
           },
           "practice_block": {
             "title": "Practice Time",
-            "type": "multiply_by_10_and_mixed",
+            "type": "equal_groups_with_objects",
             "question_count": 6,
-            "instructions": "Answer each multiplication fact. Watch for 0, 1, 2, 5, and 10."
+            "instructions": "Build equal groups with objects and write the multiplication equation."
           },
           "flashcards": {
             "enabled": true,
             "required": false,
-            "title": "Times 10 and Mixed Facts",
-            "type": "multiplication_facts",
+            "title": "Equal Groups With Objects",
+            "type": "visual_models",
             "card_count": 6,
-            "instructions": "Review multiplying by 10 and mixed facts.",
-            "deckId": "lesson-g3-u11-w1-d4-times-10"
+            "instructions": "Review equal groups with objects.",
+            "deckId": "lesson-g3-u1-w1-d4-object-groups"
           },
           "bigIdea": {
-            "title": "Multiply by 10 and Practice Mixed Facts",
-            "subtitle": "Add a zero for ×10",
+            "title": "Equal Groups With Objects",
+            "subtitle": "Build groups and find the total",
             "thumbnail": "/images/learn/thumbnails/groups.webp",
             "videoUrl": "",
             "videoCaption": "",
@@ -476,7 +509,10 @@
             "bigQuestion": "How is multiplying by 10 different from multiplying by 5?",
             "starTip": {
               "title": "Add a zero",
-              "lines": ["×10", "Put a 0 at the end"]
+              "lines": [
+                "×10",
+                "Put a 0 at the end"
+              ]
             },
             "ruleCards": [
               {
@@ -495,31 +531,33 @@
           }
         },
         {
-          "lesson_id": "g3-u11-w1-eval",
+          "lesson_id": "g3-u1-w1-eval",
           "day_number": 5,
           "day_name": "Friday",
-          "lesson_title": "Unit Evaluation: Facts for 0, 1, 2, 5, and 10",
+          "lesson_title": "Week 1 Evaluation",
           "lesson_type": "evaluation",
-          "fact_drill": "Rapid review of the 0, 1, 2, 5, and 10 multiplication facts.",
-          "concept": "Review the multiplication facts for 0, 1, 2, 5, and 10. Use the rules and patterns from this unit.",
-          "practice": "Complete a balanced evaluation covering the skills from this unit.",
-          "objective": "Show fluency with facts for 0, 1, 2, 5, and 10.",
-          "practice_type": "evaluation",
+          "fact_drill": "Rapid review of equal groups, repeated addition, factors, and products.",
+          "concept": "Review the multiplication foundations from this week: equal groups, repeated addition, factors, and products.",
+          "practice": "Complete a balanced evaluation covering the skills from this week.",
+          "objective": "Show understanding of the week's multiplication foundations.",
+          "practice_type": "mixed_evaluation",
           "evaluation_scope": "unit",
           "review_types": [
-            "zero_identity_rules",
-            "multiply_by_2",
-            "multiply_by_5",
-            "multiply_by_10_and_mixed"
+            "equal_groups",
+            "repeated_addition_to_multiplication",
+            "factor_product_identification",
+            "equal_groups_with_objects"
           ],
           "skills": [
             "multiplication",
-            "zero_rule",
-            "identity_rule",
-            "multiply_by_2",
-            "multiply_by_5",
-            "multiply_by_10",
-            "facts"
+            "zero_property",
+            "identity_property",
+            "equal_groups",
+            "repeated_addition",
+            "multiplication_expressions",
+            "factors",
+            "products",
+            "hands_on_modeling"
           ],
           "lesson_video_url": "",
           "worksheet_url": "",
@@ -531,25 +569,25 @@
             "instructions": "Get ready to show what you know.",
             "questions": [
               {
-                "id": "g3-u11-w1-d5-warmup-1",
-                "prompt": "8 × 5 = ?",
-                "correct_answer": "40",
-                "hint": "8 × 10 = 80, half is 40.",
-                "skill": "multiply_by_5"
-              },
-              {
-                "id": "g3-u11-w1-d5-warmup-2",
-                "prompt": "7 × 10 = ?",
-                "correct_answer": "70",
-                "hint": "Add a zero.",
-                "skill": "multiply_by_10"
-              },
-              {
-                "id": "g3-u11-w1-d5-warmup-3",
-                "prompt": "6 × 2 = ?",
+                "id": "g3-u1-w1-d5-warmup-1",
+                "prompt": "3 × 4 = ?",
                 "correct_answer": "12",
-                "hint": "6 + 6.",
-                "skill": "multiply_by_2"
+                "hint": "3 groups of 4 make 12.",
+                "skill": "equal_groups"
+              },
+              {
+                "id": "g3-u1-w1-d5-warmup-2",
+                "prompt": "What is the product of 2 and 6?",
+                "correct_answer": "12",
+                "hint": "2 × 6 = 12.",
+                "skill": "products"
+              },
+              {
+                "id": "g3-u1-w1-d5-warmup-3",
+                "prompt": "2 + 2 + 2 = ? Write it as multiplication.",
+                "correct_answer": "6; 3 × 2 = 6",
+                "hint": "Three 2s make 6. Write 3 × 2.",
+                "skill": "repeated_addition"
               }
             ]
           },
@@ -567,7 +605,11 @@
               "items_per_group": 1,
               "equation": "0/1 rules + doubles for 2 + 5s pattern + 10s = facts for 0,1,2,5,10"
             },
-            "vocabulary": ["evaluation", "review", "multiplication"]
+            "vocabulary": [
+              "evaluation",
+              "review",
+              "multiplication"
+            ]
           },
           "try_it": {
             "title": "Try one together",
@@ -589,11 +631,11 @@
           "flashcards": {
             "enabled": true,
             "required": false,
-            "title": "Unit 11 Review",
-            "type": "unit_review",
-            "card_count": 8,
-            "instructions": "Review key terms from Unit 11 before the evaluation.",
-            "deckId": "lesson-g3-u11-w1-d5-unit-review"
+            "title": "Week 1 Review",
+            "type": "math_facts",
+            "card_count": 6,
+            "instructions": "Review equal groups, repeated addition, factors, and products.",
+            "deckId": "lesson-g3-u1-w1-d5-week-review"
           },
           "bigIdea": {
             "title": "Unit Evaluation: Facts for 0, 1, 2, 5, and 10",
@@ -605,7 +647,10 @@
             "bigQuestion": "What do you know about multiplying by 0, 1, 2, 5, and 10?",
             "starTip": {
               "title": "Take your time",
-              "lines": ["Read carefully", "Show your thinking"]
+              "lines": [
+                "Read carefully",
+                "Show your thinking"
+              ]
             },
             "ruleCards": [
               {

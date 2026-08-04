@@ -57,6 +57,7 @@ Recent implementation work completed before this maintenance effort includes:
 - `curriculum:check` validation workflow integration.
 - UI filtering to exclude incomplete instructional Lessons from availability.
 - Place-value prompt migration to structured `target_digit_value` questions.
+- Grade 3 Unit 1 / Unit 11 content swap to make Unit 1 the **Multiplication Foundations** entry point while preserving the place-value curriculum in Unit 11. Existing Unit 1 multiplication lesson IDs (`g3-u1-w1-l1` … `g3-u1-w1-eval`) were retained. Historical place-value progress stored under those IDs is not automatically migrated or reinterpreted.
 
 ## Known Technical Debt
 

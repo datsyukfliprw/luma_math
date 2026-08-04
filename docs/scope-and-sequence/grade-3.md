@@ -2,17 +2,19 @@
 
 This document defines the 36-unit, 180-day scope and sequence for Grade 3 LumaMath. Each unit contains five lessons: four teaching/practice lessons followed by an evaluation and spiral review. Unit numbers are intended for parent visibility; children see concept titles such as “Building Big Numbers” rather than “Unit 2.”
 
+> **Content swap note:** Canonical Grade 3 Unit 1 is now **Multiplication Foundations** and Unit 11 is now **Place Value Foundations**. The existing authored Unit 1 multiplication experiences and the existing place-value curriculum were preserved; only their unit numbers were swapped. Part groupings will be reconciled in the scope-and-sequence re-architecture.
+
 ## Part 1: Place Value and Addition
 
-### Unit 1: Place Value Foundations
+### Unit 1: Multiplication Foundations
 
-**Standards:** 3.NBT.A.2
+**Standards:** 3.RA.A.1, 3.RA.A.3, 3.RA.B.6
 
-- What a digit’s place tells us
-- Build numbers with base-ten models
-- Write numbers in standard and expanded form
-- Read and write numbers in words
-- **Unit Evaluation:** Place Value Foundations
+- Zero and identity rules
+- Repeated addition to multiplication
+- Factors and products
+- Equal groups with objects
+- **Unit Evaluation:** Multiplication Foundations
 
 ### Unit 2: Numbers Through 100,000
 
@@ -108,15 +110,15 @@ This document defines the 36-unit, 180-day scope and sequence for Grade 3 LumaMa
 - Connect models, equations, and stories
 - **Unit Evaluation:** Multiplication Models
 
-### Unit 11: Multiplying by 0, 1, 2, 5, and 10
+### Unit 11: Place Value Foundations
 
-**Standards:** 3.RA.B.6, 3.RA.C.7
+**Standards:** 3.NBT.A.2
 
-- Zero and identity rules
-- Multiply by 2 using doubles
-- Multiply by 5 using patterns
-- Multiply by 10 and practice mixed facts
-- **Unit Evaluation:** Facts for 0, 1, 2, 5, and 10
+- What a digit’s place tells us
+- Build numbers with base-ten models
+- Write numbers in standard and expanded form
+- Read and write numbers in words
+- **Unit Evaluation:** Place Value Foundations
 
 ### Unit 12: Multiplying by 3 and 4
 
@@ -386,7 +388,7 @@ Some standards should not be treated as concepts that disappear after one unit.
 
 ### Multiplication Fluency
 
-**3.RA.C.8** begins during Unit 11 and continues through the remainder of the year through short reviews, games, and spaced practice.
+**3.RA.C.8** begins during Unit 1 and continues through the remainder of the year through short reviews, games, and spaced practice.
 
 ### Two-Step Problem Solving
 

@@ -1,4 +1,4 @@
-import grade3Unit1Data from "./grade_3/unit_01_place_value_foundations.json";
+import grade3Unit1Data from "./grade_3/unit_01_multiplication_foundations.json";
 import grade3Unit2Data from "./grade_3/unit_02_numbers_through_100000.json";
 import grade3Unit3Data from "./grade_3/unit_03_rounding_and_estimation.json";
 import grade3Unit4Data from "./grade_3/unit_04_addition_strategies.json";
@@ -8,7 +8,7 @@ import grade3Unit7Data from "./grade_3/unit_07_subtraction_with_regrouping.json"
 import grade3Unit8Data from "./grade_3/unit_08_addition_subtraction_problem_solving.json";
 import grade3Unit9Data from "./grade_3/unit_09_equal_groups.json";
 import grade3Unit10Data from "./grade_3/unit_10_arrays_and_number_lines.json";
-import grade3Unit11Data from "./grade_3/unit_11_multiplying_by_0_1_2_5_10.json";
+import grade3Unit11Data from "./grade_3/unit_11_place_value_foundations.json";
 import grade3Unit12Data from "./grade_3/unit_12_multiplying_by_3_and_4.json";
 import grade3Unit13Data from "./grade_3/unit_13_understanding_division.json";
 import grade3Unit14Data from "./grade_3/unit_14_connecting_multiplication_and_division.json";
