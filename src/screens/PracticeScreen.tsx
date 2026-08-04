@@ -7,6 +7,7 @@ import { generateProblemsForPracticeType } from "../practiceTypes/registry";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
 import type { PracticeMode } from "../practiceTypes/types";
 import type { PracticeCompletionRejectionReason } from "../types/practiceProgress";
+import type { EvaluationCompletionRejectionReason } from "../types/evaluationProgress";
 import {
   buildFirstAttemptMetrics,
   recordFirstAttemptResult,
@@ -90,6 +91,26 @@ type CompletionModalState = {
   firstCompletion: boolean;
   recommendedMode: PracticeMode | null;
 };
+
+type EvaluationModalState =
+  | {
+      status: "passed";
+      firstAttemptCorrectCount: number;
+      firstAttemptTotalCount: number;
+      accuracy: number;
+      alreadyCompleted: boolean;
+    }
+  | {
+      status: "retry";
+      firstAttemptCorrectCount: number;
+      firstAttemptTotalCount: number;
+      accuracy: number;
+      requiredAccuracy: number;
+    }
+  | {
+      status: "error";
+      reason: EvaluationCompletionRejectionReason;
+    };
 
 function getHintText(visualType?: string) {
   if (visualType === "fair_sharing") {
@@ -177,6 +198,10 @@ function getNextLessonPath({
   return `/lesson/g3-u${unitNumber}-w${weekNumber}-l${dayNumber + 1}`;
 }
 
+function getNextUnitPath(unitNumber: number) {
+  return unitNumber >= 36 ? "/learning-path" : `/lesson/g3-u${unitNumber + 1}-w1-l1`;
+}
+
 // @SECTION PRACTICE_SCREEN
 function PracticeScreen() {
   const { lessonId } = useParams();
@@ -185,16 +210,26 @@ function PracticeScreen() {
   const modeConfig = PRACTICE_MODE_CONFIG[practiceMode];
 
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
-  const { getRecommendedNextPracticeMode, hasPracticeReward, markPracticeReward } =
-    useStudentProgress();
+  const {
+    studentState,
+    getRecommendedNextPracticeMode,
+    hasPracticeReward,
+    markPracticeReward,
+    markEvaluationComplete,
+  } = useStudentProgress();
 
+  const isEvaluation = lesson.lesson_type === "evaluation";
   const currentLessonId =
-    lessonId ?? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`;
+    lessonId ??
+    (isEvaluation
+      ? `g3-u${unit.unit_number}-w${week.week_number}-eval`
+      : `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`);
   const nextLessonPath = getNextLessonPath({
     unitNumber: unit.unit_number,
     weekNumber: week.week_number,
     dayNumber: weekDayNumber,
   });
+  const nextUnitPath = getNextUnitPath(unit.unit_number);
 
   const problems = generateProblemsForPracticeType(lesson.practice_type, {
     mode: practiceMode,
@@ -212,11 +247,12 @@ function PracticeScreen() {
   const [selectedChoice, setSelectedChoice] = useState("");
   const [mistakeJudgment, setMistakeJudgment] = useState("");
   const [mistakeReason, setMistakeReason] = useState("");
-  const [showHint, setShowHint] = useState(practiceMode === "guided");
+  const [showHint, setShowHint] = useState(!isEvaluation && practiceMode === "guided");
   const [feedback, setFeedback] = useState<"correct" | "incorrect" | null>(null);
   const [correctProblemIndexes, setCorrectProblemIndexes] = useState<number[]>([]);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [completionModal, setCompletionModal] = useState<CompletionModalState | null>(null);
+  const [evaluationModal, setEvaluationModal] = useState<EvaluationModalState | null>(null);
   const [rejectionModal, setRejectionModal] = useState<{
     reason: PracticeCompletionRejectionReason;
     firstAttemptCorrectCount?: number;
@@ -228,6 +264,7 @@ function PracticeScreen() {
   // Tracks whether each problem was correct on its first submitted attempt.
   // A ref is used so retries in the same render cycle cannot rewrite the result.
   const firstAttemptResultsRef = useRef<FirstAttemptResults>({});
+  const [firstAttemptResults, setFirstAttemptResults] = useState<FirstAttemptResults>({});
 
   useEffect(() => {
     // Reset state when practiceMode or currentLessonId changes
@@ -243,14 +280,16 @@ function PracticeScreen() {
     setSelectedChoice("");
     setMistakeJudgment("");
     setMistakeReason("");
-    setShowHint(practiceMode === "guided");
+    setShowHint(!isEvaluation && practiceMode === "guided");
     setFeedback(null);
     setCorrectProblemIndexes([]);
     setCurrentStreak(0);
     setCompletionModal(null);
+    setEvaluationModal(null);
     setRejectionModal(null);
     firstAttemptResultsRef.current = {};
-  }, [practiceMode, currentLessonId]);
+    setFirstAttemptResults({});
+  }, [practiceMode, currentLessonId, isEvaluation]);
 
   const currentProblem = problems[currentProblemIndex];
 
@@ -280,6 +319,10 @@ function PracticeScreen() {
   const solvedProblemCount = correctProblemIndexes.length;
   const rewardChargePercent =
     problems.length > 0 ? (solvedProblemCount / problems.length) * 100 : 0;
+  const submittedFirstAttempts = Object.keys(firstAttemptResults).length;
+  const correctFirstAttempts = Object.values(firstAttemptResults).filter(Boolean).length;
+  const liveFirstAttemptAccuracy =
+    submittedFirstAttempts > 0 ? correctFirstAttempts / submittedFirstAttempts : 0;
 
   const isEqualGroupsChoiceMode =
     (practiceMode === "guided" || practiceMode === "independent") &&
@@ -303,11 +346,13 @@ function PracticeScreen() {
     // Record the first submitted attempt for this problem. Later retries do not
     // rewrite the first-attempt result, so the metrics are not inflated by
     // eventually-correct answers.
-    firstAttemptResultsRef.current = recordFirstAttemptResult(
+    const nextFirstAttemptResults = recordFirstAttemptResult(
       firstAttemptResultsRef.current,
       currentProblemIndex,
       isCorrect,
     );
+    firstAttemptResultsRef.current = nextFirstAttemptResults;
+    setFirstAttemptResults(nextFirstAttemptResults);
 
     // In Challenge mode, judgment + reason are checked together.
     // If either part is wrong, the streak resets.
@@ -327,9 +372,64 @@ function PracticeScreen() {
         currentProblemIndex >= problems.length - 1 && !current.includes(currentProblemIndex);
 
       if (justFinishedLastQuestion) {
-        const firstCompletion = !hasPracticeReward(currentLessonId, practiceMode);
         const metrics = buildFirstAttemptMetrics(firstAttemptResultsRef.current, problems.length);
 
+        if (isEvaluation) {
+          const result = markEvaluationComplete(currentLessonId, metrics);
+
+          window.setTimeout(() => {
+            if (result.ok) {
+              setEvaluationModal({
+                status: "passed",
+                firstAttemptCorrectCount: result.completion.firstAttemptCorrectCount,
+                firstAttemptTotalCount: result.completion.firstAttemptTotalCount,
+                accuracy: result.accuracy,
+                alreadyCompleted: false,
+              });
+              return;
+            }
+
+            if (result.reason === "already_completed") {
+              const savedCompletion = studentState.evaluationCompletions[currentLessonId];
+
+              if (savedCompletion) {
+                setEvaluationModal({
+                  status: "passed",
+                  firstAttemptCorrectCount: savedCompletion.firstAttemptCorrectCount,
+                  firstAttemptTotalCount: savedCompletion.firstAttemptTotalCount,
+                  accuracy: savedCompletion.accuracy,
+                  alreadyCompleted: true,
+                });
+              } else {
+                setEvaluationModal({
+                  status: "error",
+                  reason: result.reason,
+                });
+              }
+              return;
+            }
+
+            if (result.reason === "insufficient_accuracy") {
+              setEvaluationModal({
+                status: "retry",
+                firstAttemptCorrectCount: metrics.firstAttemptCorrectCount,
+                firstAttemptTotalCount: metrics.firstAttemptTotalCount,
+                accuracy: result.accuracy ?? 0,
+                requiredAccuracy: result.requiredAccuracy ?? 0.8,
+              });
+              return;
+            }
+
+            setEvaluationModal({
+              status: "error",
+              reason: result.reason,
+            });
+          }, 350);
+
+          return nextCorrectIndexes;
+        }
+
+        const firstCompletion = !hasPracticeReward(currentLessonId, practiceMode);
         const result = markPracticeReward(currentLessonId, practiceMode, metrics);
 
         window.setTimeout(() => {
@@ -467,12 +567,33 @@ function PracticeScreen() {
     setSelectedChoice("");
     setMistakeJudgment("");
     setMistakeReason("");
-    setShowHint(practiceMode === "guided");
+    setShowHint(!isEvaluation && practiceMode === "guided");
     setFeedback(null);
 
     if (currentProblemIndex < problems.length - 1) {
       setCurrentProblemIndex((current) => current + 1);
     }
+  }
+
+  function restartEvaluation() {
+    setCurrentProblemIndex(0);
+    setAnswer("");
+    setFactorAAnswer("");
+    setFactorBAnswer("");
+    setProductAnswer("");
+    setRowsAnswer("");
+    setColumnsAnswer("");
+    setQuotientAnswer("");
+    setSelectedChoice("");
+    setMistakeJudgment("");
+    setMistakeReason("");
+    setShowHint(false);
+    setFeedback(null);
+    setCorrectProblemIndexes([]);
+    setCurrentStreak(0);
+    setEvaluationModal(null);
+    firstAttemptResultsRef.current = {};
+    setFirstAttemptResults({});
   }
 
   function renderHintVisual() {
@@ -792,26 +913,49 @@ function PracticeScreen() {
             {visualData.equation}
           </p>
 
-          <div className="mt-4 flex flex-wrap justify-center gap-3">
-            {Array.from({ length: visualData.groupsToShare ?? 0 }).map((_, groupIndex) => (
-              <div
-                key={groupIndex}
-                className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-4 py-3 shadow-sm"
-              >
-                <p className="mb-2 text-xs font-black uppercase tracking-wide text-[#0081A7]">
-                  Group {groupIndex + 1}
-                </p>
-
-                <div className="grid grid-cols-2 gap-1.5 text-xl">
-                  {Array.from({
-                    length: visualData.itemsPerGroup ?? 0,
-                  }).map((_, itemIndex) => (
-                    <span key={itemIndex}>🍎</span>
-                  ))}
-                </div>
+          {isEvaluation ? (
+            <>
+              <div className="mx-auto mt-4 flex max-w-xl flex-wrap justify-center gap-1 text-xl">
+                {Array.from({ length: visualData.items ?? 0 }).map((_, itemIndex) => (
+                  <span key={itemIndex}>🍎</span>
+                ))}
               </div>
-            ))}
-          </div>
+
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                {Array.from({ length: visualData.groupsToShare ?? 0 }).map((_, groupIndex) => (
+                  <div
+                    key={groupIndex}
+                    className="min-h-20 min-w-24 rounded-2xl border-2 border-dashed border-[#00AFB9]/35 bg-[#E9F7F8]/55 px-4 py-3"
+                  >
+                    <p className="text-xs font-black uppercase tracking-wide text-[#0081A7]">
+                      Group {groupIndex + 1}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              {Array.from({ length: visualData.groupsToShare ?? 0 }).map((_, groupIndex) => (
+                <div
+                  key={groupIndex}
+                  className="rounded-2xl border border-[#00AFB9]/35 bg-[#E9F7F8] px-4 py-3 shadow-sm"
+                >
+                  <p className="mb-2 text-xs font-black uppercase tracking-wide text-[#0081A7]">
+                    Group {groupIndex + 1}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-1.5 text-xl">
+                    {Array.from({
+                      length: visualData.itemsPerGroup ?? 0,
+                    }).map((_, itemIndex) => (
+                      <span key={itemIndex}>🍎</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           <p className="mx-auto mt-3 max-w-xl text-sm font-bold text-[#073B5A]/70">
             Share {visualData.items} items equally into {visualData.groupsToShare} groups.
@@ -830,7 +974,7 @@ function PracticeScreen() {
         <div>
           <div className="flex flex-wrap items-center gap-3">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-[#00AFB9]">
-              {modeConfig.eyebrow}
+              {isEvaluation ? "Unit review" : modeConfig.eyebrow}
             </p>
 
             <span className="hidden h-4 w-px bg-[#073B5A]/15 sm:block" />
@@ -841,11 +985,13 @@ function PracticeScreen() {
           </div>
 
           <h1 className="mt-0.5 text-[1.35rem] font-black leading-tight tracking-[-0.02em] text-[#073B5A]">
-            {modeConfig.title}
+            {isEvaluation ? lesson.lesson_title : modeConfig.title}
           </h1>
 
           <p className="mt-0.5 max-w-2xl text-sm font-bold leading-snug text-[#073B5A]/70">
-            {modeConfig.description}
+            {isEvaluation
+              ? "Show what you know across this unit. You need 80% correct on the first try to pass."
+              : modeConfig.description}
           </p>
         </div>
 
@@ -1243,19 +1389,23 @@ function PracticeScreen() {
 
                 <div>
                   <p className="text-base font-black text-[#073B5A]">
-                    {practiceMode === "challenge"
-                      ? "Pattern detective mode!"
-                      : practiceMode === "guided"
-                        ? "Step-by-step power!"
-                        : "You’ve got this!"}
+                    {isEvaluation
+                      ? "Take your time and trust your thinking."
+                      : practiceMode === "challenge"
+                        ? "Pattern detective mode!"
+                        : practiceMode === "guided"
+                          ? "Step-by-step power!"
+                          : "You’ve got this!"}
                   </p>
 
                   <p className="text-sm font-bold text-[#073B5A]/70">
-                    {practiceMode === "challenge"
-                      ? "Every solved mistake powers up your Epic Reward!"
-                      : practiceMode === "guided"
-                        ? "Every correct answer powers up your Common Reward!"
-                        : "Every correct answer powers up your Rare Reward!"}
+                    {isEvaluation
+                      ? "Your first answer on each question counts toward the 80% passing score."
+                      : practiceMode === "challenge"
+                        ? "Every solved mistake powers up your Epic Reward!"
+                        : practiceMode === "guided"
+                          ? "Every correct answer powers up your Common Reward!"
+                          : "Every correct answer powers up your Rare Reward!"}
                   </p>
                 </div>
               </div>
@@ -1264,11 +1414,13 @@ function PracticeScreen() {
             {feedback === "correct" && (
               <div className="mx-auto mt-2.5 max-w-2xl rounded-2xl border border-[#00AFB9]/30 bg-[#E9F7F8] p-2.5 text-center">
                 <p className="font-black text-[#073B5A]">
-                  {practiceMode === "independent"
-                    ? "Nice solo solve! Rare reward charge +1 ⚡"
-                    : practiceMode === "challenge"
-                      ? "Great detective work! Epic reward charge +1 👑"
-                      : "Nice guided solve! Common reward charge +1 🎒"}
+                  {isEvaluation
+                    ? "Answer locked in. Keep going! ✓"
+                    : practiceMode === "independent"
+                      ? "Nice solo solve! Rare reward charge +1 ⚡"
+                      : practiceMode === "challenge"
+                        ? "Great detective work! Epic reward charge +1 👑"
+                        : "Nice guided solve! Common reward charge +1 🎒"}
                 </p>
               </div>
             )}
@@ -1282,9 +1434,11 @@ function PracticeScreen() {
                 </p>
 
                 <p className="mt-1 text-sm font-semibold text-[#073B5A]/70">
-                  {currentProblem.visualType === "mistake_check"
-                    ? currentProblem.challengeData?.feedback
-                    : getHintText(currentProblem.visualType)}
+                  {isEvaluation
+                    ? "Take another look, work it through, and try again."
+                    : currentProblem.visualType === "mistake_check"
+                      ? currentProblem.challengeData?.feedback
+                      : getHintText(currentProblem.visualType)}
                 </p>
               </div>
             )}
@@ -1341,33 +1495,56 @@ function PracticeScreen() {
         )}
 
         <aside className="space-y-3">
-          <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
-              {practiceMode === "challenge"
-                ? "👑 Epic Reward"
-                : practiceMode === "guided"
-                  ? "🎒 Common Reward"
-                  : "✨ Rare Reward"}
-            </p>
-
-            <div className="mt-2 flex items-center gap-3">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
-                {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
-              </div>
-
-              <p className="text-sm font-black leading-relaxed text-[#073B5A]">
-                {practiceMode === "challenge"
-                  ? "Finish Challenge Practice to unlock an epic accessory!"
-                  : practiceMode === "guided"
-                    ? "Finish Guided Practice to unlock a common accessory!"
-                    : "Finish Independent Practice to unlock a rare accessory!"}
+          {isEvaluation ? (
+            <div className="overflow-hidden rounded-[1.5rem] border border-[#00AFB9]/25 bg-[radial-gradient(circle_at_80%_25%,rgba(255,255,255,0.95),transparent_34%),linear-gradient(135deg,#E9F7F8,#FFFDF7)] p-4 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#0081A7]">
+                ⭐ Evaluation Goal
               </p>
+
+              <div className="mt-3 flex items-center gap-3">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
+                  80%
+                </div>
+
+                <div>
+                  <p className="text-sm font-black leading-relaxed text-[#073B5A]">
+                    Get at least 80% correct on your first try to pass.
+                  </p>
+                  <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
+                    You can retry each question, but the first answer sets your score.
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
+                {practiceMode === "challenge"
+                  ? "👑 Epic Reward"
+                  : practiceMode === "guided"
+                    ? "🎒 Common Reward"
+                    : "✨ Rare Reward"}
+              </p>
+
+              <div className="mt-2 flex items-center gap-3">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
+                  {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
+                </div>
+
+                <p className="text-sm font-black leading-relaxed text-[#073B5A]">
+                  {practiceMode === "challenge"
+                    ? "Finish Challenge Practice to unlock an epic accessory!"
+                    : practiceMode === "guided"
+                      ? "Finish Guided Practice to unlock a common accessory!"
+                      : "Finish Independent Practice to unlock a rare accessory!"}
+                </p>
+              </div>
+            </div>
+          )}
 
           <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              {getRewardChargeLabel(practiceMode)}
+              {isEvaluation ? "Evaluation Progress" : getRewardChargeLabel(practiceMode)}
             </p>
 
             <div className="mt-3 flex items-center gap-3">
@@ -1379,12 +1556,12 @@ function PracticeScreen() {
               </div>
 
               <p className="text-xs font-black text-[#073B5A]/70">
-                {solvedProblemCount}/{problems.length} solved
+                {solvedProblemCount}/{problems.length} {isEvaluation ? "finished" : "solved"}
               </p>
             </div>
           </div>
 
-          {practiceMode !== "guided" && (
+          {!isEvaluation && practiceMode !== "guided" && (
             <div className="rounded-[1.5rem] border border-[#FED9B7] bg-[#FFF4E3] p-4 shadow-sm">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-[#F07167]">
                 🔥 Streak
@@ -1407,33 +1584,55 @@ function PracticeScreen() {
           )}
         </aside>
 
-        <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FFFDF7] p-4 shadow-sm">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-            {modeConfig.hintTitle}
-          </p>
-
-          {showHint ? (
-            <>
-              {renderHintVisual()}
-
-              <p className="mt-3 rounded-2xl bg-white p-3 text-sm font-bold leading-relaxed text-[#073B5A]/80">
-                {getHintText(currentProblem?.visualType)}
-              </p>
-            </>
-          ) : (
-            <p className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-sm font-bold leading-relaxed text-[#073B5A]/60">
-              Use a hint if you get stuck.
+        {isEvaluation ? (
+          <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FFFDF7] p-4 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+              First-Try Score
             </p>
-          )}
 
-          <button
-            type="button"
-            onClick={() => setShowHint((current) => !current)}
-            className="mt-3 w-full rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2.5 text-sm lg:px-6 lg:py-3.5 lg:text-base font-black text-[#0081A7]"
-          >
-            {showHint ? "Hide Hint" : "💡 Show Hint"}
-          </button>
-        </div>
+            <div className="mt-3 rounded-2xl bg-white p-4 text-center shadow-sm">
+              <p className="text-3xl font-black text-[#073B5A]">
+                {submittedFirstAttempts > 0 ? Math.round(liveFirstAttemptAccuracy * 100) : 0}%
+              </p>
+              <p className="mt-1 text-xs font-bold text-[#073B5A]/65">
+                {correctFirstAttempts} correct out of {submittedFirstAttempts} first answers
+              </p>
+            </div>
+
+            <p className="mt-3 text-sm font-bold leading-relaxed text-[#073B5A]/70">
+              No hints during the evaluation. Read carefully, work it out, and choose your best
+              first answer.
+            </p>
+          </div>
+        ) : (
+          <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-[#FFFDF7] p-4 shadow-sm">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
+              {modeConfig.hintTitle}
+            </p>
+
+            {showHint ? (
+              <>
+                {renderHintVisual()}
+
+                <p className="mt-3 rounded-2xl bg-white p-3 text-sm font-bold leading-relaxed text-[#073B5A]/80">
+                  {getHintText(currentProblem?.visualType)}
+                </p>
+              </>
+            ) : (
+              <p className="mt-3 rounded-2xl bg-[#E9F7F8] p-3 text-sm font-bold leading-relaxed text-[#073B5A]/60">
+                Use a hint if you get stuck.
+              </p>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setShowHint((current) => !current)}
+              className="mt-3 w-full rounded-xl border border-[#00AFB9]/40 bg-white px-4 py-2.5 text-sm lg:px-6 lg:py-3.5 lg:text-base font-black text-[#0081A7]"
+            >
+              {showHint ? "Hide Hint" : "💡 Show Hint"}
+            </button>
+          </div>
+        )}
 
         <div className="rounded-[1.5rem] border border-[#F4D589] bg-[#FEF3D9] p-4 shadow-sm">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
@@ -1447,23 +1646,28 @@ function PracticeScreen() {
 
             <div className="space-y-2 text-sm font-bold text-[#073B5A]/80">
               <p>◎ Finish {problems.length} questions</p>
-              <p>◎ Score 80% or higher</p>
+              <p>◎ Score 80% or higher on the first try</p>
               <p>
-                ◎ Earn {practiceMode === "challenge" ? "an" : "a"}{" "}
-                {getModeRewardLabel(practiceMode)}
+                {isEvaluation
+                  ? `◎ ${unit.unit_number >= 36 ? "Finish Grade 3 strong" : `Unlock Unit ${unit.unit_number + 1}`}`
+                  : `◎ Earn ${practiceMode === "challenge" ? "an" : "a"} ${getModeRewardLabel(practiceMode)}`}
               </p>
             </div>
           </div>
 
           <div className="mt-4 border-t border-[#F4D589] pt-3">
             <p className="font-black text-[#073B5A]">
-              {practiceMode === "independent" ? "You're on your way! ⭐" : "You've got this! ⭐"}
+              {isEvaluation
+                ? "Show what you know! ⭐"
+                : practiceMode === "independent"
+                  ? "You're on your way! ⭐"
+                  : "You've got this! ⭐"}
             </p>
           </div>
         </div>
       </section>
 
-      {completionModal && (
+      {!isEvaluation && completionModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/45 px-4 backdrop-blur-sm">
           <div className="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 text-center shadow-2xl">
             <div className="absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_30%_20%,rgba(253,252,220,0.95),transparent_34%),radial-gradient(circle_at_75%_30%,rgba(0,175,185,0.20),transparent_36%)]" />
@@ -1556,7 +1760,160 @@ function PracticeScreen() {
         </div>
       )}
 
-      {rejectionModal && (
+      {evaluationModal && (
+        <div
+          data-name="evaluation-results-overlay"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/45 px-4 backdrop-blur-sm"
+        >
+          <div
+            data-name="evaluation-results-card"
+            className="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 text-center shadow-2xl"
+          >
+            <div className="absolute inset-x-0 top-0 h-28 bg-[radial-gradient(circle_at_25%_20%,rgba(253,252,220,0.95),transparent_34%),radial-gradient(circle_at_75%_25%,rgba(0,175,185,0.22),transparent_38%)]" />
+
+            <div className="relative z-10">
+              {evaluationModal.status === "passed" && (
+                <>
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-[#E9F7F8] text-5xl shadow-sm">
+                    🌟
+                  </div>
+
+                  <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-[#00AFB9]">
+                    Evaluation Passed
+                  </p>
+
+                  <h2 className="mt-2 text-3xl font-black text-[#073B5A]">
+                    {evaluationModal.alreadyCompleted ? "Still shining!" : "You did it!"}
+                  </h2>
+
+                  <div className="mx-auto mt-5 grid max-w-md grid-cols-2 gap-3">
+                    <div className="rounded-2xl border border-[#00AFB9]/20 bg-[#E9F7F8] p-4">
+                      <p className="text-3xl font-black text-[#0081A7]">
+                        {Math.round(evaluationModal.accuracy * 100)}%
+                      </p>
+                      <p className="mt-1 text-xs font-black uppercase tracking-wide text-[#073B5A]/60">
+                        First-try score
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-[#F4D589] bg-[#FFF3D9] p-4">
+                      <p className="text-3xl font-black text-[#C78300]">
+                        {evaluationModal.firstAttemptCorrectCount}/
+                        {evaluationModal.firstAttemptTotalCount}
+                      </p>
+                      <p className="mt-1 text-xs font-black uppercase tracking-wide text-[#073B5A]/60">
+                        Correct
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="mx-auto mt-4 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
+                    {unit.unit_number >= 36
+                      ? "You completed the final Grade 3 evaluation. That is a huge finish!"
+                      : `Unit ${unit.unit_number + 1} is now ready for you.`}
+                  </p>
+
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    <Link
+                      to={nextUnitPath}
+                      onClick={() => setEvaluationModal(null)}
+                      className="rounded-2xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7] lg:px-7 lg:py-4 lg:text-base"
+                    >
+                      {unit.unit_number >= 36 ? "Back to Learning Path ›" : `Start Unit ${unit.unit_number + 1} ›`}
+                    </Link>
+
+                    <Link
+                      to="/learning-path"
+                      onClick={() => setEvaluationModal(null)}
+                      className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB] lg:px-7 lg:py-4 lg:text-base"
+                    >
+                      View Learning Path
+                    </Link>
+                  </div>
+                </>
+              )}
+
+              {evaluationModal.status === "retry" && (
+                <>
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-[#FFF3D9] text-5xl shadow-sm">
+                    🌱
+                  </div>
+
+                  <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
+                    Almost There
+                  </p>
+
+                  <h2 className="mt-2 text-3xl font-black text-[#073B5A]">Give it another try!</h2>
+
+                  <div className="mx-auto mt-5 max-w-sm rounded-2xl border border-[#F4D589] bg-[#FFF8E9] p-5">
+                    <p className="text-4xl font-black text-[#C78300]">
+                      {Math.round(evaluationModal.accuracy * 100)}%
+                    </p>
+                    <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
+                      {evaluationModal.firstAttemptCorrectCount} of{" "}
+                      {evaluationModal.firstAttemptTotalCount} correct on the first try
+                    </p>
+                  </div>
+
+                  <p className="mx-auto mt-4 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
+                    You need {Math.round(evaluationModal.requiredAccuracy * 100)}% to pass. Review
+                    the tricky spots, then take a fresh run at the evaluation.
+                  </p>
+
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={restartEvaluation}
+                      className="rounded-2xl bg-[#00AFB9] px-5 py-3 font-black text-white shadow-sm transition hover:bg-[#0081A7] lg:px-7 lg:py-4 lg:text-base"
+                    >
+                      Try Evaluation Again
+                    </button>
+
+                    <Link
+                      to={lessonPath}
+                      onClick={() => setEvaluationModal(null)}
+                      className="rounded-2xl border border-[#073B5A]/10 bg-white px-5 py-3 font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB] lg:px-7 lg:py-4 lg:text-base"
+                    >
+                      Back to Lesson
+                    </Link>
+                  </div>
+                </>
+              )}
+
+              {evaluationModal.status === "error" && (
+                <>
+                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-[#FCE9E5] text-5xl shadow-sm">
+                    🛠️
+                  </div>
+
+                  <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-[#F07167]">
+                    Score Not Saved
+                  </p>
+
+                  <h2 className="mt-2 text-3xl font-black text-[#073B5A]">
+                    Let&apos;s get you back on track
+                  </h2>
+
+                  <p className="mx-auto mt-4 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
+                    We could not save this evaluation result. Return to the lesson and start the
+                    evaluation again.
+                  </p>
+
+                  <Link
+                    to={lessonPath}
+                    onClick={() => setEvaluationModal(null)}
+                    className="mx-auto mt-6 inline-flex rounded-2xl bg-[#00AFB9] px-7 py-4 font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+                  >
+                    Back to Lesson
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!isEvaluation && rejectionModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#073B5A]/45 px-4 backdrop-blur-sm">
           <div className="relative w-full max-w-xl overflow-hidden rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 text-center shadow-2xl">
             <h2 className="text-2xl font-black text-[#073B5A]">

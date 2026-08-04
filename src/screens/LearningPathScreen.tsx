@@ -5,14 +5,17 @@ import { isInstructionalLessonAvailable, type Curriculum } from "../data/curricu
 import { getAllCurricula, getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
 import { getConceptByLessonId } from "../data/curriculum/curriculumGraph";
 import { getConceptUnlockState } from "../services/prerequisites/prerequisiteGraph";
+import { isFirstLessonOfUnitUnlocked } from "../services/progress/evaluationProgression";
 import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
 import {
   useStudentProgress,
   type LessonProgress,
   type FlashcardDeckProgress,
+  type StudentState,
 } from "../contexts/StudentProgressContext";
 import type { LessonPracticeRewardState } from "../types/practiceProgress";
 import type { SkillProgress } from "../types/mastery";
+import type { EvaluationCompletionRecord } from "../types/evaluationProgress";
 
 function getFlashcardDeckIdForLesson(lessonId: string) {
   const match = lessonId.match(/^g3-u(\d+)-w(\d+)-l(\d+)$/);
@@ -32,6 +35,7 @@ function getLessonCompletionPercent(
   getLessonProgress: (id: string) => LessonProgress,
   getPracticeRewardState: (id: string) => LessonPracticeRewardState,
   getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
+  getEvaluationCompletion: (id: string) => EvaluationCompletionRecord | undefined,
 ) {
   const progress = getLessonProgress(lessonId);
   const practiceRewards = getPracticeRewardState(lessonId);
@@ -40,13 +44,7 @@ function getLessonCompletionPercent(
   const flashcardProgress = getFlashcardDeckProgress(flashcardDeckId, flashcardCardIds);
 
   if (lessonType === "evaluation") {
-    const items = [
-      progress.learnComplete,
-      progress.practiceComplete || progress.lessonComplete,
-      flashcardProgress.completed,
-    ];
-
-    return Math.round((items.filter(Boolean).length / items.length) * 100);
+    return getEvaluationCompletion(lessonId) ? 100 : 0;
   }
 
   const items = [
@@ -62,13 +60,33 @@ function getLessonCompletionPercent(
 
 function getUnitCardData(
   unit: Curriculum,
+  studentState: StudentState,
   getLessonProgress: (id: string) => LessonProgress,
   getPracticeRewardState: (id: string) => LessonPracticeRewardState,
   getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
   getSkillProgress: (skillId: string) => SkillProgress,
+  getEvaluationCompletion: (id: string) => EvaluationCompletionRecord | undefined,
 ) {
   let totalLessons = 0;
   let completeLessons = 0;
+
+  const firstInstructionalLesson = unit.weeks
+    .flatMap((week) =>
+      week.lessons
+        .filter(
+          (lesson) =>
+            isInstructionalLessonAvailable(lesson) && lesson.lesson_type === "lesson",
+        )
+        .map((lesson) => ({
+          weekNumber: week.week_number,
+          dayNumber: lesson.day_number,
+        })),
+    )
+    .at(0);
+
+  const firstInstructionalLessonId = firstInstructionalLesson
+    ? `g3-u${unit.unit_number}-w${firstInstructionalLesson.weekNumber}-l${firstInstructionalLesson.dayNumber}`
+    : undefined;
 
   const weeks = unit.weeks.map((week) => {
     let hasFoundCurrentLesson = false;
@@ -84,9 +102,16 @@ function getUnitCardData(
 
       const concept = getConceptByLessonId(lessonId);
       const unlockState = concept
-        ? getConceptUnlockState(concept.id, getSkillProgress)
+        ? getConceptUnlockState(
+            concept.id,
+            getSkillProgress,
+            (evaluationLessonId) => getEvaluationCompletion(evaluationLessonId),
+          )
         : { unlocked: true };
-      const isLessonAvailable = unlockState.unlocked;
+      const isFirstLessonOfUnit = lessonId === firstInstructionalLessonId;
+      const isLessonAvailable = isFirstLessonOfUnit
+        ? isFirstLessonOfUnitUnlocked(studentState, unit.unit_number)
+        : unlockState.unlocked;
 
       const percentComplete = isLessonAvailable
         ? getLessonCompletionPercent(
@@ -95,6 +120,7 @@ function getUnitCardData(
             getLessonProgress,
             getPracticeRewardState,
             getFlashcardDeckProgress,
+            getEvaluationCompletion,
           )
         : 0;
 
@@ -110,15 +136,20 @@ function getUnitCardData(
 
       totalLessons += 1;
 
+      const evaluationCompletion =
+        lesson.lesson_type === "evaluation" ? getEvaluationCompletion(lessonId) : undefined;
       const progressLabel =
         isLessonAvailable && percentComplete > 0 && percentComplete < 100
           ? ` • ${percentComplete}%`
           : "";
+      const evaluationLabel = evaluationCompletion
+        ? ` • Passed ${Math.round(evaluationCompletion.accuracy * 100)}%`
+        : "";
 
       return {
         id: lessonId,
         day: "",
-        title: `${lesson.lesson_title}${progressLabel}`,
+        title: `${lesson.lesson_title}${progressLabel}${evaluationLabel}`,
         status,
       };
     });
@@ -138,12 +169,18 @@ function getUnitCardData(
   return {
     weeks,
     progress,
+    isAccessible: weeks.some((week) => week.status !== "locked"),
   };
 }
 
 function LearningPathScreen() {
-  const { getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress, getSkillProgress } =
-    useStudentProgress();
+  const {
+    studentState,
+    getLessonProgress,
+    getPracticeRewardState,
+    getFlashcardDeckProgress,
+    getSkillProgress,
+  } = useStudentProgress();
   const currentUnitRef = useRef<HTMLDivElement | null>(null);
 
   const units = getAllCurricula().sort((a, b) => a.unit_number - b.unit_number);
@@ -152,15 +189,21 @@ function LearningPathScreen() {
     unit,
     ...getUnitCardData(
       unit,
+      studentState,
       getLessonProgress,
       getPracticeRewardState,
       getFlashcardDeckProgress,
       getSkillProgress,
+      (evaluationLessonId) => studentState.evaluationCompletions[evaluationLessonId],
     ),
   }));
 
   const currentUnitEntry =
-    unitData.find((entry) => entry.progress < 100) ?? unitData[unitData.length - 1];
+    [...unitData]
+      .reverse()
+      .find((entry) => entry.isAccessible && entry.progress < 100) ??
+    [...unitData].reverse().find((entry) => entry.isAccessible) ??
+    unitData[0];
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
