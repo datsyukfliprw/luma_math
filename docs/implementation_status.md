@@ -34,7 +34,7 @@ The following functionality exists today:
 - **Guided Practice**: Practice problems with scaffolding and hints are supported in `PracticeScreen`.
 - **Independent Practice**: Independent practice mode is implemented.
 - **Challenge**: Challenge practice mode exists for extending lesson Skills.
-- **Try It**: A scaffolded Try It section is rendered before full practice.
+- **Try It**: `TryItScreen` at `/try-it/:lessonId` presents authored multi-part Try It problems (groups, in each group, equation) and a shared, stable resolver produces fallback problems from `try_it`, canonical practice prompts, warm-up questions, learn examples, or a safe acknowledgement check for sparse data. `markTryItComplete` is idempotent, recomputes `lessonComplete` when all other steps are complete, and does not alter skill evidence, practice rewards, or mastery status.
 - **Flashcards**: `FlashcardSessionScreen` and `FlashcardCategoryScreen` support spaced retrieval practice.
 - **Evaluations**: Evaluation Lessons with `lesson_type: "evaluation"` are supported and excluded from the instructional-section contract.
 - **Progress tracking**: `StudentProgressContext` tracks lesson progress, practice rewards, flashcard progress, and star profile, persisted to `localStorage`. Skill mastery is automatically re-evaluated using the canonical `evaluateSkillMastery` service after each evidence commit. Guided Practice sets `practiceComplete` and records one procedural evidence entry per lesson-linked Skill; Independent Practice records a second, distinct procedural evidence entry and can advance a Skill to `developing` without changing lesson progression or completion state; Challenge Practice records one transfer evidence entry per lesson-linked Skill when the 80% first-attempt accuracy threshold is met, and the canonical evaluator reevaluates mastery from the complete evidence history. The 80% first-attempt accuracy requirement for Independent Practice and Challenge Practice is enforced inside the domain transaction (`applyPracticeCompletion`) using the typed `PracticeCompletionMetrics`. Retry attempts remain possible but do not rewrite the first-attempt score, and no caller can grant the reward or record evidence for a non-qualifying session. Historical sessions are not recalculated.
@@ -58,6 +58,7 @@ Recent implementation work completed before this maintenance effort includes:
 - UI filtering to exclude incomplete instructional Lessons from availability.
 - Place-value prompt migration to structured `target_digit_value` questions.
 - Grade 3 Unit 1 / Unit 11 content swap to make Unit 1 the **Multiplication Foundations** entry point while preserving the place-value curriculum in Unit 11. Existing Unit 1 multiplication lesson IDs (`g3-u1-w1-l1` … `g3-u1-w1-eval`) were retained. Historical place-value progress stored under those IDs is not automatically migrated or reinterpreted.
+- Interactive `/try-it/:lessonId` route, normalized Try It resolver, and idempotent `markTryItComplete` progress update, with whole-grade coverage and completion tests.
 
 ## Known Technical Debt
 

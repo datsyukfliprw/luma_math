@@ -11,7 +11,10 @@ import { applySkillEvidence } from "../services/mastery/applySkillEvidence";
 import { applyMasteryStatusEffects } from "../services/mastery/applyMasteryStatusEffects";
 import { createEmptySkillProgress } from "../services/mastery/createEmptySkillProgress";
 import { markPracticeRewardTransaction } from "../services/progress/markPracticeRewardTransaction";
+import { applyTryItComplete } from "../services/progress/applyTryItComplete";
+import { findCurriculumLessonById } from "../lib/curriculumLoader";
 import { getAllSkills, getSkillsForLesson } from "../data/curriculum/curriculumGraph";
+import type { TryItCompletionResult } from "../types/tryItProgress";
 
 // Types from existing files
 export type LessonProgress = {
@@ -100,6 +103,7 @@ type StudentProgressContextValue = {
     mode: PracticeMode,
     metrics: PracticeCompletionMetrics,
   ) => PracticeCompletionResult;
+  markTryItComplete: (lessonId: string) => TryItCompletionResult;
   hasPracticeReward: (lessonId: string, mode: PracticeMode) => boolean;
   getRecommendedNextPracticeMode: (
     lessonId: string,
@@ -565,6 +569,26 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     return result;
   };
 
+  const markTryItComplete = (lessonId: string): TryItCompletionResult => {
+    if (!findCurriculumLessonById(lessonId)) {
+      return { ok: false, reason: "lesson_not_found" };
+    }
+
+    const snapshot = studentStateRef.current;
+    const timestamp = new Date().toISOString();
+    const { result, nextState } = applyTryItComplete(snapshot, lessonId, timestamp);
+
+    if (!result.ok) {
+      return { ok: false, reason: "progress_update_failed" };
+    }
+
+    if (!result.alreadyCompleted) {
+      commitStudentState(nextState);
+    }
+
+    return result;
+  };
+
   // Practice recommendation function
   const getRecommendedNextPracticeMode = (
     lessonId: string,
@@ -647,6 +671,7 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     resetFlashcardDeckProgress,
     getPracticeRewardState,
     markPracticeReward,
+    markTryItComplete,
     hasPracticeReward,
     getRecommendedNextPracticeMode,
     updateStarProfile,
