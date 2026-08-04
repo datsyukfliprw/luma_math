@@ -141,16 +141,26 @@ The 144 regular lessons map to **15 families**. Families are grouped by mathemat
 
 **Excluded nearby practice types:** Addition word problems
 
-**Supported practice modes:** Guided: with number-line or expanded-form scaffold. Independent: bare equations. Challenge: missing digits and property reasoning.
+**Supported practice modes:**
+
+- **Guided/Independent/Challenge** for each configured practice type, using only that type's strategy-specific internal representation.
+- **addition_number_line**: decompose one addend into hundreds/tens/ones jumps (e.g., `245 + 100 + 20 + 3 = ?`).
+- **addition_expanded_form**: expand both addends by place value (e.g., `(200 + 40 + 1) + (300 + 20 + 6) = ?`).
+- **addition_compensation**: move a small amount to create a friendly multiple of 10/100 (e.g., `299 + 47 = 300 + 46`).
+- **addition_no_regroup/regroup_ones/regroup_tens/three_numbers**: direct equations, missing addends, word problems, missing digits, balanced equations, properties, and error identification as configured.
+- **missing_digits_properties**: missing-digit, balanced-equation, property, and error-identification tasks.
 
 **Expected question templates:**
 
-- {a} + {b} = ?
-- Add using expanded form: {a} + {b}.
-- Add with compensation: {a} + {b} = {a}+{} + {b}-{}
-- Find the missing digit: {a_} + {b} = {c}
+- `{start} + {jump} + {jump} + {jump} = ?`
+- `({expanded_a}) + ({expanded_b}) = ?`
+- `{a} + {b} = {friendly_target} + __`
+- `{a} + {b} = ?`
+- Find the missing digit: `{a_} + {b} = {c}`
+- Is `{a} + {b} = {c} + {d}` true or false?
+- Identify the error in `{a} + {b} = {claimed}`.
 
-**Required answer contract:** Numeric sum; missing-digit answers are single digits or sums.
+**Required answer contract:** Numeric sum or missing component; `true`/`false` for balanced equations and properties; `yes`/`no` plus a reason for error identification.
 
 **Supported existing visual types:** multiple_choice
 
@@ -1175,13 +1185,13 @@ If a task finishes early, start the next task in the same wave. Do not wait for 
 
 | practice_type                              | lesson_count | units | current_resolution | visual_type       | class | notes                                  |
 | ------------------------------------------ | ------------ | ----- | ------------------ | ----------------- | ----- | -------------------------------------- |
-| addition_compensation                      | 1            | 4     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
-| addition_expanded_form                     | 1            | 4     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
-| addition_no_regroup                        | 1            | 4     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
-| addition_number_line                       | 1            | 4     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
-| addition_regroup_ones                      | 1            | 5     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
-| addition_regroup_tens                      | 1            | 5     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
-| addition_three_numbers                     | 1            | 5     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
+| addition_compensation                      | 1            | 4     | addition           | multiple_choice   | A     | randomized compensation transformations |
+| addition_expanded_form                     | 1            | 4     | addition           | multiple_choice   | A     | randomized expanded-form decomposition |
+| addition_no_regroup                        | 1            | 4     | addition           | multiple_choice   | A     | randomized, includes word problems     |
+| addition_number_line                       | 1            | 4     | addition           | multiple_choice   | A     | randomized number-line jump decomposition |
+| addition_regroup_ones                      | 1            | 5     | addition           | multiple_choice   | A     | randomized, requires ones regrouping |
+| addition_regroup_tens                      | 1            | 5     | addition           | multiple_choice   | A     | randomized, requires tens regrouping |
+| addition_three_numbers                     | 1            | 5     | addition           | multiple_choice   | A     | randomized three-addend addition       |
 | area_introduction                          | 1            | 20    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
 | area_models_and_stories                    | 1            | 27    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
 | area_models_equivalence                    | 1            | 29    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
@@ -1254,7 +1264,7 @@ If a task finishes early, start the next task in the same wave. Do not wait for 
 | locate_unit_fractions_number_line          | 1            | 28    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
 | match_time_formats                         | 1            | 35    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
 | measurement_problems                       | 1            | 36    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
-| missing_digits_properties                  | 1            | 5     | default            | multiple_choice   | E     | cycles a small set of authored prompts |
+| missing_digits_properties                  | 1            | 5     | addition           | multiple_choice   | A     | missing digits / properties / error id |
 | missing_factors                            | 1            | 17    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
 | missing_numbers_division                   | 1            | 17    | default            | multiple_choice   | E     | cycles a small set of authored prompts |
 | missing_side_length                        | 1            | 22    | default            | multiple_choice   | E     | cycles a small set of authored prompts |

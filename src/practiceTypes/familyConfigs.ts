@@ -1,5 +1,8 @@
 export type AdditionRepresentation =
   | "direct"
+  | "number_line_jumps"
+  | "expanded_form"
+  | "compensation"
   | "missing_addend"
   | "word_problem"
   | "missing_digit"
@@ -32,7 +35,7 @@ export const additionFamilyConfigs: Record<string, AdditionFamilyConfig> = {
     resultRange: { min: 100, max: 999 },
     addendCount: 2,
     regrouping: "none",
-    representations: ["direct", "missing_addend"],
+    representations: ["number_line_jumps"],
     allowWordProblems: false,
   },
   addition_expanded_form: {
@@ -43,7 +46,7 @@ export const additionFamilyConfigs: Record<string, AdditionFamilyConfig> = {
     resultRange: { min: 100, max: 999 },
     addendCount: 2,
     regrouping: "none",
-    representations: ["direct", "missing_addend"],
+    representations: ["expanded_form"],
     allowWordProblems: false,
   },
   addition_compensation: {
@@ -54,7 +57,7 @@ export const additionFamilyConfigs: Record<string, AdditionFamilyConfig> = {
     resultRange: { min: 100, max: 999 },
     addendCount: 2,
     regrouping: "mixed",
-    representations: ["direct", "missing_addend"],
+    representations: ["compensation"],
     allowWordProblems: false,
     compensation: true,
   },

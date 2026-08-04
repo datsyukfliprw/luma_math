@@ -74,18 +74,22 @@ function generateCompensationAddends(
   rng: SeededRng,
 ): number[] {
   const maxTarget = Math.floor(range.max / 100) * 100;
-  if (maxTarget < 100) {
-    throw new Error("Compensation target max is too small");
+  const minTargetHundreds = Math.max(1, Math.ceil((range.min + 4) / 100));
+  const maxTargetHundreds = maxTarget / 100;
+
+  if (maxTargetHundreds < minTargetHundreds) {
+    throw new Error("Compensation target max is too small for the configured operand range");
   }
 
   for (let attempt = 0; attempt < MAX_ADDEND_GENERATION_ATTEMPTS; attempt += 1) {
-    const targetHundreds = rng.nextInt(1, maxTarget / 100);
+    const targetHundreds = rng.nextInt(minTargetHundreds, maxTargetHundreds);
     const target = targetHundreds * 100;
     const r = rng.nextInt(1, 4);
     const a = target - r;
     const b = rng.nextInt(10, 99);
     const sum = a + b;
 
+    if (a < range.min || a > range.max) continue;
     if (resultRange && (sum < resultRange.min || sum > resultRange.max)) continue;
     return [a, b];
   }
@@ -234,6 +238,22 @@ function sortAddends(addends: number[]): number[] {
   return [...addends].sort((a, b) => a - b);
 }
 
+export function decomposeAddend(n: number): number[] {
+  const parts: number[] = [];
+  const s = String(n);
+  for (let i = 0; i < s.length; i += 1) {
+    const digit = Number(s[i]);
+    if (digit === 0) continue;
+    const place = s.length - 1 - i;
+    parts.push(digit * 10 ** place);
+  }
+  return parts;
+}
+
+function formatExpandedAddend(n: number): string {
+  return decomposeAddend(n).join(" + ");
+}
+
 function questionTextForRepresentation(
   representation: AdditionRepresentation,
   config: AdditionFamilyConfig,
@@ -241,6 +261,12 @@ function questionTextForRepresentation(
   switch (representation) {
     case "direct":
       return `${config.skillLabel}.`;
+    case "number_line_jumps":
+      return "Use number-line jumps to find the total.";
+    case "expanded_form":
+      return "Add using expanded form.";
+    case "compensation":
+      return "Use compensation to make a friendly number.";
     case "missing_addend":
       return "Find the missing addend.";
     case "word_problem":
@@ -272,6 +298,167 @@ function formatMissingDigitNumber(n: number, position: number): string {
   const leftIndex = s.length - 1 - position;
   if (leftIndex < 0) return `${s}__`;
   return `${s.slice(0, leftIndex)}_${s.slice(leftIndex + 1)}`;
+}
+
+function makeNumberLineJumpsProblem(
+  addends: number[],
+  sum: number,
+  config: AdditionFamilyConfig,
+  mode: "guided" | "independent" | "challenge" | undefined,
+  rng: SeededRng,
+  baseKey: string,
+): Omit<PracticeProblem, "id"> {
+  const sorted = sortAddends(addends);
+  const [smaller, start] = sorted;
+  const jumps = decomposeAddend(smaller);
+
+  const useMissingJump = mode === "challenge" && jumps.length > 1 && rng.next() < 0.6;
+
+  if (useMissingJump) {
+    const hiddenIndex = rng.nextInt(0, jumps.length - 1);
+    const hiddenJump = jumps[hiddenIndex];
+    const displayedJumps = jumps.map((j, i) => (i === hiddenIndex ? "__" : String(j)));
+    const equation = `${start} + ${displayedJumps.join(" + ")} = ${sum}`;
+
+    return {
+      problemKey: `${baseKey}:number_line:${sorted.join("+")}:jumps=${jumps.join(",")}:hidden=${hiddenJump}`,
+      questionText: "What jump is missing on the number line?",
+      correctAnswer: String(hiddenJump),
+      visualType: "multiple_choice",
+      visualData: {
+        equation,
+        choices: buildNumericChoices(hiddenJump, [...jumps, sum], rng),
+      },
+    };
+  }
+
+  const equation = `${start} + ${jumps.join(" + ")} = ?`;
+
+  return {
+    problemKey: `${baseKey}:number_line:${sorted.join("+")}:jumps=${jumps.join(",")}`,
+    questionText: questionTextForRepresentation("number_line_jumps", config),
+    correctAnswer: String(sum),
+    visualType: "multiple_choice",
+    visualData: {
+      equation,
+      choices: buildNumericChoices(sum, [start, smaller, ...jumps], rng),
+    },
+  };
+}
+
+function makeExpandedFormProblem(
+  addends: number[],
+  sum: number,
+  config: AdditionFamilyConfig,
+  mode: "guided" | "independent" | "challenge" | undefined,
+  rng: SeededRng,
+  baseKey: string,
+): Omit<PracticeProblem, "id"> {
+  const [a, b] = sortAddends(addends);
+  const aParts = decomposeAddend(a);
+  const bParts = decomposeAddend(b);
+
+  type Term = { value: number; addend: 0 | 1; index: number };
+  const terms: Term[] = [
+    ...aParts.map((value, index) => ({ value, addend: 0 as const, index })),
+    ...bParts.map((value, index) => ({ value, addend: 1 as const, index })),
+  ];
+
+  const formatAddend = (addendIndex: 0 | 1, hiddenTerm?: Term): string => {
+    const parts = addendIndex === 0 ? aParts : bParts;
+    return parts
+      .map((value, index) => {
+        if (hiddenTerm && hiddenTerm.addend === addendIndex && hiddenTerm.index === index) {
+          return "__";
+        }
+        return String(value);
+      })
+      .join(" + ");
+  };
+
+  const hideTerm = mode === "challenge" && terms.length > 1 && rng.next() < 0.6;
+
+  if (hideTerm) {
+    const hiddenTerm = rng.pick(terms);
+    const equation = `(${formatAddend(0, hiddenTerm)}) + (${formatAddend(1, hiddenTerm)}) = ${sum}`;
+
+    return {
+      problemKey: `${baseKey}:expanded_form:${a}+${b}:hidden=${hiddenTerm.value}`,
+      questionText: "What place-value part is missing?",
+      correctAnswer: String(hiddenTerm.value),
+      visualType: "multiple_choice",
+      visualData: {
+        equation,
+        choices: buildNumericChoices(hiddenTerm.value, terms.map((t) => t.value), rng),
+      },
+    };
+  }
+
+  const equation = `(${formatExpandedAddend(a)}) + (${formatExpandedAddend(b)}) = ?`;
+  const termValues = terms.map((t) => t.value);
+
+  return {
+    problemKey: `${baseKey}:expanded_form:${a}+${b}`,
+    questionText: questionTextForRepresentation("expanded_form", config),
+    correctAnswer: String(sum),
+    visualType: "multiple_choice",
+    visualData: {
+      equation,
+      choices: buildNumericChoices(sum, [a, b, ...termValues], rng),
+    },
+  };
+}
+
+function makeCompensationProblem(
+  addends: number[],
+  sum: number,
+  config: AdditionFamilyConfig,
+  mode: "guided" | "independent" | "challenge" | undefined,
+  rng: SeededRng,
+  baseKey: string,
+): Omit<PracticeProblem, "id"> {
+  const [a, b] = sortAddends(addends);
+  const target = (Math.floor(a / 100) + 1) * 100;
+  const r = target - a;
+  const adjustedSecond = b - r;
+
+  const useTrueFalse = mode === "challenge" && rng.next() < 0.5;
+
+  if (useTrueFalse) {
+    const isTrue = rng.next() < 0.5;
+    let shownAdjustedSecond = adjustedSecond;
+    if (!isTrue) {
+      const deltas = [1, -1, 10, -10];
+      const delta = rng.pick(deltas.filter((d) => adjustedSecond + d >= 0 && adjustedSecond + d <= 999));
+      shownAdjustedSecond = adjustedSecond + delta;
+    }
+    const equation = `${a} + ${b} = ${target} + ${shownAdjustedSecond}`;
+    const correctAnswer: "true" | "false" = isTrue ? "true" : "false";
+
+    return {
+      problemKey: `${baseKey}:compensation:${a}+${b}=${target}+${shownAdjustedSecond}:${correctAnswer}`,
+      questionText: "Does this compensation equation keep the same total?",
+      correctAnswer,
+      visualType: "multiple_choice",
+      visualData: {
+        equation,
+        choices: buildTrueFalseChoices(correctAnswer, rng),
+      },
+    };
+  }
+
+  const equation = `${a} + ${b} = ${target} + __`;
+
+  return {
+    problemKey: `${baseKey}:compensation:${a}+${b}=${target}+${adjustedSecond}`,
+    questionText: questionTextForRepresentation("compensation", config),
+    correctAnswer: String(adjustedSecond),
+    visualType: "multiple_choice",
+    visualData: {
+      equation,
+      choices: buildNumericChoices(adjustedSecond, [a, b, target, sum], rng),
+    },
+  };
 }
 
 function makeDirectProblem(
@@ -610,16 +797,19 @@ function getReasonText(type: string): string {
   }
 }
 
-function determineErrorType(sum: number, claimedSum: number, addends: number[]): string {
+export function determineErrorType(sum: number, claimedSum: number, addends: number[]): string {
   if (claimedSum === sum) return "correct";
   const diff = claimedSum - sum;
 
+  // Forgotten-carry errors are specific regrouping mistakes; check them before
+  // the generic off-by-place classifications.
+  if (hasCarryOutAtPlace(addends, 0) && diff === -10) return "forgot_ones_carry";
+  if (hasCarryOutAtPlace(addends, 1) && diff === -100) return "forgot_tens_carry";
+
+  if (addends.includes(claimedSum)) return "used_operand";
   if (Math.abs(diff) === 1) return "off_by_one";
   if (Math.abs(diff) === 10) return "off_by_ten";
   if (Math.abs(diff) === 100) return "off_by_hundred";
-  if (addends.includes(claimedSum)) return "used_operand";
-  if (hasCarryOutAtPlace(addends, 0) && diff === -10) return "forgot_ones_carry";
-  if (hasCarryOutAtPlace(addends, 1) && diff === -100) return "forgot_tens_carry";
   return "added_wrong_place";
 }
 
@@ -688,6 +878,12 @@ function generateProblem(
   switch (representation) {
     case "direct":
       return makeDirectProblem(addends, sum, config, rng, baseKey);
+    case "number_line_jumps":
+      return makeNumberLineJumpsProblem(addends, sum, config, mode, rng, baseKey);
+    case "expanded_form":
+      return makeExpandedFormProblem(addends, sum, config, mode, rng, baseKey);
+    case "compensation":
+      return makeCompensationProblem(addends, sum, config, mode, rng, baseKey);
     case "missing_addend":
       return makeMissingAddendProblem(addends, sum, config, rng, baseKey);
     case "word_problem":

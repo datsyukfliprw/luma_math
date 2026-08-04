@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { generateAdditionProblems, hasAnyCarryOut, hasCarryOutAtPlace } from "./addition";
+import {
+  decomposeAddend,
+  determineErrorType,
+  generateAdditionProblems,
+  hasAnyCarryOut,
+  hasCarryOutAtPlace,
+} from "./addition";
 import { additionFamilyConfigs, additionPracticeTypes } from "./familyConfigs";
 import { generateProblemsForPracticeType, practiceRegistry } from "./registry";
 import { getCurriculum } from "../data/curriculum/curriculumRegistry";
@@ -46,6 +52,90 @@ function getAddends(problem: PracticeProblem): number[] {
   const { left } = parseEquation(equation);
   const prepared = prepareExpression(left, problem.correctAnswer);
   return extractAddends(prepared);
+}
+
+function verifyNumberLineProblem(problem: PracticeProblem): void {
+  expect(problem.visualType).toBe("multiple_choice");
+  const equation = problem.visualData?.equation ?? "";
+  const { left, right } = parseEquation(equation);
+  const preparedLeft = prepareExpression(left, problem.correctAnswer);
+  const terms = extractAddends(preparedLeft);
+  expect(terms.length).toBeGreaterThanOrEqual(2);
+
+  const jumps = terms.slice(1);
+  const expectedJumps = decomposeAddend(jumps.reduce((a, b) => a + b, 0));
+  expect(jumps).toEqual(expectedJumps);
+
+  const total = terms.reduce((a, b) => a + b, 0);
+  if (right === "?") {
+    expect(total).toBe(Number(problem.correctAnswer));
+  } else {
+    const preparedRight = prepareExpression(right, problem.correctAnswer);
+    expect(total).toBe(evaluateExpression(preparedRight));
+  }
+}
+
+function verifyExpandedFormProblem(problem: PracticeProblem): void {
+  expect(problem.visualType).toBe("multiple_choice");
+  const equation = problem.visualData?.equation ?? "";
+  const { left, right } = parseEquation(equation);
+  const preparedLeft = prepareExpression(left, problem.correctAnswer);
+
+  // Each parenthesised addend should be a decomposition of one original addend.
+  const addendMatches = preparedLeft.match(/\(([^)]+)\)/g) ?? [];
+  expect(addendMatches.length).toBe(2);
+
+  const originalAddends = addendMatches.map((group) => {
+    const value = evaluateExpression(group.replace(/[()]/g, ""));
+    return value;
+  });
+
+  const allTerms = extractAddends(preparedLeft);
+  const reconstructedA = decomposeAddend(originalAddends[0]).reduce((a, b) => a + b, 0);
+  const reconstructedB = decomposeAddend(originalAddends[1]).reduce((a, b) => a + b, 0);
+  expect(reconstructedA).toBe(originalAddends[0]);
+  expect(reconstructedB).toBe(originalAddends[1]);
+
+  if (right === "?") {
+    expect(originalAddends[0] + originalAddends[1]).toBe(Number(problem.correctAnswer));
+  } else {
+    const preparedRight = prepareExpression(right, problem.correctAnswer);
+    expect(originalAddends[0] + originalAddends[1]).toBe(evaluateExpression(preparedRight));
+  }
+
+  const expectedParts = [
+    ...decomposeAddend(originalAddends[0]),
+    ...decomposeAddend(originalAddends[1]),
+  ];
+  for (const term of allTerms) {
+    expect(expectedParts).toContain(term);
+  }
+}
+
+function verifyCompensationProblem(problem: PracticeProblem): void {
+  expect(problem.visualType).toBe("multiple_choice");
+  const equation = problem.visualData?.equation ?? "";
+  const { left, right } = parseEquation(equation);
+  const preparedLeft = prepareExpression(left, problem.correctAnswer);
+  const preparedRight = prepareExpression(right, problem.correctAnswer);
+  const leftValue = evaluateExpression(preparedLeft);
+  const rightValue = evaluateExpression(preparedRight);
+
+  if (problem.correctAnswer === "true" || problem.correctAnswer === "false") {
+    const expected = problem.correctAnswer === "true";
+    expect(leftValue === rightValue).toBe(expected);
+  } else {
+    expect(leftValue).toBe(rightValue);
+  }
+
+  const leftAddends = extractAddends(preparedLeft);
+  const rightAddends = extractAddends(preparedRight);
+  expect(leftAddends.length).toBe(2);
+  expect(rightAddends.length).toBe(2);
+
+  const [a] = leftAddends;
+  const [target] = rightAddends;
+  expect(target).toBe((Math.floor(a / 100) + 1) * 100);
 }
 
 function findAdditionLesson(practiceType: string) {
@@ -332,6 +422,55 @@ describe("Addition family generator", () => {
     }
   });
 
+  it("generates number-line problems with valid jump decompositions", () => {
+    const practiceType = "addition_number_line";
+    const lesson = findAdditionLesson(practiceType)!;
+
+    for (const mode of MODES) {
+      const problems = generateProblemsForPracticeType(practiceType, { mode, lesson });
+      for (const problem of problems) {
+        verifyNumberLineProblem(problem);
+      }
+    }
+  });
+
+  it("generates expanded-form problems that reconstruct both addends and the sum", () => {
+    const practiceType = "addition_expanded_form";
+    const lesson = findAdditionLesson(practiceType)!;
+
+    for (const mode of MODES) {
+      const problems = generateProblemsForPracticeType(practiceType, { mode, lesson });
+      for (const problem of problems) {
+        verifyExpandedFormProblem(problem);
+      }
+    }
+  });
+
+  it("generates compensation problems that preserve the original total", () => {
+    const practiceType = "addition_compensation";
+    const lesson = findAdditionLesson(practiceType)!;
+
+    for (const mode of MODES) {
+      const problems = generateProblemsForPracticeType(practiceType, { mode, lesson });
+      for (const problem of problems) {
+        verifyCompensationProblem(problem);
+      }
+    }
+  });
+
+  it("classifies regrouping errors with specific reason choices", () => {
+    // forgotten ones carry
+    expect(determineErrorType(95, 85, [49, 46])).toBe("forgot_ones_carry"); // 49+46=95; forgot ones carry → 85
+    // forgotten tens carry
+    expect(determineErrorType(620, 520, [250, 370])).toBe("forgot_tens_carry"); // 250+370=620; forgot tens carry → 520
+    // ordinary off-by-ten without a ones carry
+    expect(determineErrorType(30, 40, [10, 20])).toBe("off_by_ten");
+    // ordinary off-by-hundred without a tens carry
+    expect(determineErrorType(300, 400, [100, 200])).toBe("off_by_hundred");
+    // correct
+    expect(determineErrorType(123, 123, [100, 23])).toBe("correct");
+  });
+
   it("provides well-formed multiple-choice options", () => {
     const practiceType = "addition_no_regroup";
     const lesson = findAdditionLesson(practiceType)!;
@@ -374,6 +513,57 @@ describe("Addition family generator", () => {
         expect(keys.has(problem.problemKey)).toBe(false);
         keys.add(problem.problemKey);
         expect(["multiple_choice", "mistake_check"]).toContain(problem.visualType);
+      }
+    }
+  });
+
+  it("covers all four Unit 4 Addition strategies in the evaluation", () => {
+    const unit4EvalResult = findCurriculumLessonById("g3-u4-w1-eval");
+    expect(unit4EvalResult).toBeDefined();
+    const unit4Eval = unit4EvalResult!.lesson;
+    const problems = generateEvaluationProblems({ lesson: unit4Eval });
+    expect(problems.length).toBeGreaterThan(0);
+
+    const reviewTypes = new Set<string>();
+
+    for (const problem of problems) {
+      const keyParts = problem.problemKey.split(":");
+      const sourceLessonId = keyParts[1];
+      const sourceResult = findCurriculumLessonById(sourceLessonId);
+      expect(sourceResult).toBeDefined();
+      const sourceLesson = sourceResult!.lesson;
+      const reviewType = sourceLesson.practice_type ?? "";
+      expect(reviewType).toBeTruthy();
+      reviewTypes.add(reviewType);
+    }
+
+    const expectedReviewTypes = [
+      "addition_number_line",
+      "addition_expanded_form",
+      "addition_compensation",
+      "addition_no_regroup",
+    ];
+    for (const rt of expectedReviewTypes) {
+      expect(reviewTypes.has(rt)).toBe(true);
+    }
+
+    for (const problem of problems) {
+      const keyParts = problem.problemKey.split(":");
+      const sourceLessonId = keyParts[1];
+      const sourceResult = findCurriculumLessonById(sourceLessonId);
+      expect(sourceResult).toBeDefined();
+      const sourceLesson = sourceResult!.lesson;
+      const reviewType = sourceLesson.practice_type ?? "";
+
+      if (reviewType === "addition_number_line") {
+        verifyNumberLineProblem(problem);
+      } else if (reviewType === "addition_expanded_form") {
+        verifyExpandedFormProblem(problem);
+      } else if (reviewType === "addition_compensation") {
+        verifyCompensationProblem(problem);
+      } else if (reviewType === "addition_no_regroup") {
+        const addends = getAddends(problem);
+        expect(hasAnyCarryOut(addends)).toBe(false);
       }
     }
   });
