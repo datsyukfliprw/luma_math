@@ -172,14 +172,20 @@ The 144 regular lessons map to **15 families**. Families are grouped by mathemat
 
 | practice_type             | lesson_count | unit_count | current_resolution | visual_type     | class | notes                                  |
 | ------------------------- | ------------ | ---------- | ------------------ | --------------- | ----- | -------------------------------------- |
-| addition_number_line      | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
-| addition_expanded_form    | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
-| addition_compensation     | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
-| addition_no_regroup       | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
-| addition_regroup_ones     | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
-| addition_regroup_tens     | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
-| addition_three_numbers    | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
-| missing_digits_properties | 1            | 1          | default            | multiple_choice | E     | cycles a small set of authored prompts |
+| addition_number_line      | 1            | 1          | addition           | multiple_choice | A     | randomized, mode-aware, no regrouping  |
+| addition_expanded_form    | 1            | 1          | addition           | multiple_choice | A     | randomized, mode-aware, no regrouping  |
+| addition_compensation     | 1            | 1          | addition           | multiple_choice | A     | randomized compensation addends        |
+| addition_no_regroup       | 1            | 1          | addition           | multiple_choice | A     | randomized, includes word problems     |
+| addition_regroup_ones     | 1            | 1          | addition           | multiple_choice | A     | randomized, requires ones regrouping   |
+| addition_regroup_tens     | 1            | 1          | addition           | multiple_choice | A     | randomized, requires tens regrouping   |
+| addition_three_numbers    | 1            | 1          | addition           | multiple_choice | A     | randomized three-addend addition       |
+| missing_digits_properties | 1            | 1          | addition           | multiple_choice | A     | missing digits / properties / error id |
+
+**Implementation status:** Implemented in `src/practiceTypes/addition.ts` and registered in `src/practiceTypes/registry.ts`. All eight Addition practice types now route through `generateAdditionProblems`. Coverage moved from 5 family-backed / 139 default-backed Grade 3 regular lessons to **13 family-backed / 131 default-backed**.
+
+**Session-seed contract:** The generator accepts `options.seed` and is fully deterministic for a provided seed. `createPracticeSessionSeed` in `src/practiceTypes/random.ts` is the integration contract for `PracticeScreen` (owned by ChatGPT): create one seed per mounted lesson/mode session, retain it in component state or a ref, and pass it as `options.seed` on every render. If `options.seed` is omitted, `generateAdditionProblems` falls back to a deterministic key derived from `lessonId`, `practiceType`, and `mode` with no timestamps, `Math.random`, or global mutable state; repeated sessions with an omitted seed are therefore identical. To vary a newly started session, the UI must provide a fresh `sessionId` to `createPracticeSessionSeed`.
+
+Next family to implement: **Subtraction**.
 
 ### Subtraction
 

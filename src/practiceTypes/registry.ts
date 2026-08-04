@@ -1,3 +1,4 @@
+import { generateAdditionProblems } from "./addition";
 import { generateArrayRowsColumnsProblems } from "./arrayRowsColumns";
 import { generateCommutativePropertyProblems } from "./commutativeProperty";
 import { generateDefaultPracticeProblems } from "./default";
@@ -15,6 +16,15 @@ import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 type PracticeGenerator = (options?: PracticeGenerationOptions) => PracticeProblem[];
 
 export const practiceRegistry: Record<string, PracticeGenerator> = {
+  addition_number_line: generateAdditionProblems,
+  addition_expanded_form: generateAdditionProblems,
+  addition_compensation: generateAdditionProblems,
+  addition_no_regroup: generateAdditionProblems,
+  addition_regroup_ones: generateAdditionProblems,
+  addition_regroup_tens: generateAdditionProblems,
+  addition_three_numbers: generateAdditionProblems,
+  missing_digits_properties: generateAdditionProblems,
+
   equal_groups: generateEqualGroupsProblems,
   repeated_addition_to_multiplication: generateRepeatedAdditionProblems,
   factor_product_identification: generateFactorProductProblems,

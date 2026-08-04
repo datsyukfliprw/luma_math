@@ -1,6 +1,7 @@
 import type { PracticeGenerationOptions } from "./types";
 
 export function getPracticeProblemCount(options?: PracticeGenerationOptions): number {
+  if (options?.count !== undefined) return options.count;
   if (options?.mode === "independent") return 12;
   if (options?.mode === "challenge") return 10;
   return 8;
