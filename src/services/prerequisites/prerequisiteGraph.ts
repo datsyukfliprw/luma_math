@@ -6,7 +6,9 @@
 
 import type { Concept, PrerequisiteEdge } from "../../data/curriculum/curriculumGraph";
 import { getConceptById, getSkillById, masteryGraph } from "../../data/curriculum/curriculumGraph";
+import { findCurriculumLessonById } from "../../lib/curriculumLoader";
 import type { MasteryStatus, PrerequisiteType, SkillProgress } from "../../types/mastery";
+import type { EvaluationCompletionRecord } from "../../types/evaluationProgress";
 import { evaluateConceptMastery } from "../mastery/evaluateMastery";
 import { MasteryStatusRank } from "../mastery/evaluateMastery";
 
@@ -147,6 +149,7 @@ export type ConceptUnlockState = {
 export function getConceptUnlockState(
   conceptId: string,
   getSkillProgress: (skillId: string) => SkillProgress,
+  getEvaluationCompletion?: (lessonId: string) => EvaluationCompletionRecord | undefined,
 ): ConceptUnlockState {
   const concept = getConceptById(conceptId);
   if (!concept) {
@@ -160,9 +163,31 @@ export function getConceptUnlockState(
   }
 
   const previousConcept = getPreviousConcept(conceptId);
-  const previousConceptStatus = previousConcept
+  let previousConceptStatus: MasteryStatus | null = previousConcept
     ? evaluateConceptMastery(previousConcept, getSkillProgress)
     : null;
+
+  // A completed previous-unit evaluation satisfies the previous-concept
+  // progression gate at the "introduced" level without requiring mastery
+  // evidence. This keeps the evaluation path consistent with the rule that
+  // evaluation completion unlocks the next unit.
+  if (previousConcept && getEvaluationCompletion) {
+    for (const mission of previousConcept.missions) {
+      const found = findCurriculumLessonById(mission.lessonId);
+      if (found?.lesson.lesson_type === "evaluation") {
+        const completion = getEvaluationCompletion(mission.lessonId);
+        if (completion) {
+          if (
+            previousConceptStatus === null ||
+            MasteryStatusRank[previousConceptStatus] < MasteryStatusRank["introduced"]
+          ) {
+            previousConceptStatus = "introduced";
+          }
+          break;
+        }
+      }
+    }
+  }
 
   // Progression readiness: a student may continue once the previous concept
   // has been introduced (e.g., one successful Guided Practice session).

@@ -20,6 +20,7 @@ function emptyState(overrides?: Partial<StudentState>): StudentState {
     skillProgress: {},
     flashcardProgress: {},
     practiceRewards: {},
+    evaluationCompletions: {},
     starProfile: baseStarProfile(),
     ...overrides,
   };

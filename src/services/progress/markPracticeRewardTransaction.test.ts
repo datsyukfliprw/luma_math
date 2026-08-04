@@ -44,6 +44,7 @@ function buildStudentState(overrides: Partial<StudentState> = {}): StudentState 
     },
     flashcardProgress: {},
     practiceRewards: {},
+    evaluationCompletions: {},
     starProfile: {
       studentName: "",
       grade: 3,

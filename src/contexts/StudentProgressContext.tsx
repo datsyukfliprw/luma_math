@@ -15,6 +15,12 @@ import { applyTryItComplete } from "../services/progress/applyTryItComplete";
 import { findCurriculumLessonById } from "../lib/curriculumLoader";
 import { getAllSkills, getSkillsForLesson } from "../data/curriculum/curriculumGraph";
 import type { TryItCompletionResult } from "../types/tryItProgress";
+import type {
+  EvaluationCompletionMetrics,
+  EvaluationCompletionRecord,
+  EvaluationCompletionResult,
+} from "../types/evaluationProgress";
+import { applyEvaluationCompletion } from "../services/progress/applyEvaluationCompletion";
 
 // Types from existing files
 export type LessonProgress = {
@@ -68,6 +74,7 @@ export type StudentState = {
   skillProgress: Record<string, SkillProgress>;
   flashcardProgress: Record<string, FlashcardDeckProgress>;
   practiceRewards: PracticeRewardsState;
+  evaluationCompletions: Record<string, EvaluationCompletionRecord>;
   starProfile: StarProfile;
 };
 
@@ -104,6 +111,10 @@ type StudentProgressContextValue = {
     metrics: PracticeCompletionMetrics,
   ) => PracticeCompletionResult;
   markTryItComplete: (lessonId: string) => TryItCompletionResult;
+  markEvaluationComplete: (
+    evaluationLessonId: string,
+    metrics: EvaluationCompletionMetrics,
+  ) => EvaluationCompletionResult;
   hasPracticeReward: (lessonId: string, mode: PracticeMode) => boolean;
   getRecommendedNextPracticeMode: (
     lessonId: string,
@@ -121,6 +132,7 @@ const STORAGE_KEYS = {
   skillProgress: "lumamath.skill_progress",
   flashcardProgress: "lumamath.flashcardProgress",
   practiceRewards: "lumamath.practiceRewards",
+  evaluationCompletions: "lumamath.evaluationCompletions",
   starProfile: "lumamath_star_profiles",
 };
 
@@ -223,6 +235,9 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     const allPracticeRewards = readFromLocalStorage<
       Record<string, Record<string, LessonPracticeRewardState>>
     >(STORAGE_KEYS.practiceRewards, {});
+    const allEvaluationCompletions = readFromLocalStorage<
+      Record<string, Record<string, EvaluationCompletionRecord>>
+    >(STORAGE_KEYS.evaluationCompletions, {});
     const allSkillProgress = readFromLocalStorage<Record<string, Record<string, SkillProgress>>>(
       STORAGE_KEYS.skillProgress,
       {},
@@ -253,6 +268,7 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       skillProgress,
       flashcardProgress: allFlashcardProgress[studentId] ?? {},
       practiceRewards: allPracticeRewards[studentId] ?? {},
+      evaluationCompletions: allEvaluationCompletions[studentId] ?? {},
       starProfile: allStarProfiles[studentId] ?? {
         studentName: "",
         grade: 3,
@@ -297,6 +313,9 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
       STORAGE_KEYS.starProfile,
       {},
     );
+    const allEvaluationCompletions = readFromLocalStorage<
+      Record<string, Record<string, EvaluationCompletionRecord>>
+    >(STORAGE_KEYS.evaluationCompletions, {});
 
     writeToLocalStorage(STORAGE_KEYS.lessonProgress, {
       ...allLessonProgress,
@@ -313,6 +332,10 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     writeToLocalStorage(STORAGE_KEYS.practiceRewards, {
       ...allPracticeRewards,
       [studentId]: studentState.practiceRewards,
+    });
+    writeToLocalStorage(STORAGE_KEYS.evaluationCompletions, {
+      ...allEvaluationCompletions,
+      [studentId]: studentState.evaluationCompletions,
     });
     writeToLocalStorage(STORAGE_KEYS.starProfile, {
       ...allStarProfiles,
@@ -589,6 +612,28 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     return result;
   };
 
+  const markEvaluationComplete = (
+    evaluationLessonId: string,
+    metrics: EvaluationCompletionMetrics,
+  ): EvaluationCompletionResult => {
+    const snapshot = studentStateRef.current;
+    const timestamp = new Date().toISOString();
+
+    const { result, nextState } = applyEvaluationCompletion(
+      snapshot,
+      evaluationLessonId,
+      metrics,
+      timestamp,
+    );
+
+    if (!result.ok) {
+      return result;
+    }
+
+    commitStudentState(nextState);
+    return result;
+  };
+
   // Practice recommendation function
   const getRecommendedNextPracticeMode = (
     lessonId: string,
@@ -672,6 +717,7 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     getPracticeRewardState,
     markPracticeReward,
     markTryItComplete,
+    markEvaluationComplete,
     hasPracticeReward,
     getRecommendedNextPracticeMode,
     updateStarProfile,
