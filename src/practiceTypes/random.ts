@@ -81,3 +81,12 @@ export function createPracticeSessionSeed(
   const sessionPart = sessionId?.trim() || "default";
   return `practice:${lessonId}:${practiceType}:${mode}:${sessionPart}`;
 }
+
+/**
+ * Derive a stable child seed from a parent session seed and one or more semantic
+ * parts (e.g. evaluation lesson ID and review type). The result is pure and
+ * deterministic and contains no timestamps or mutable state.
+ */
+export function derivePracticeSeed(parentSeed: string | number, ...parts: string[]): string {
+  return [String(parentSeed), ...parts].join(":");
+}

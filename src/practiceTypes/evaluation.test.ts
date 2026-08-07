@@ -3,6 +3,7 @@ import { generateEvaluationProblems } from "./evaluation";
 import { EvaluationGenerationError } from "./evaluationError";
 import { findCurriculumLessonById } from "../lib/curriculumLoader";
 import { getAllCurricula } from "../data/curriculum";
+import { derivePracticeSeed } from "./random";
 import type { Lesson } from "../data/curriculum";
 
 function getEvaluationLesson(lessonId: string): Lesson {
@@ -114,5 +115,59 @@ describe("generateEvaluationProblems", () => {
   it("throws an EvaluationGenerationError for a missing evaluation lesson_id", () => {
     const lesson = { ...getEvaluationLesson("g3-u1-w1-eval"), lesson_id: undefined };
     expect(() => generateEvaluationProblems({ lesson })).toThrow(EvaluationGenerationError);
+  });
+
+  it("produces the identical Unit 4 evaluation when the same seed is supplied twice", () => {
+    const lesson = getEvaluationLesson("g3-u4-w1-eval");
+    const runA = generateEvaluationProblems({ lesson, seed: "unit4-stable" });
+    const runB = generateEvaluationProblems({ lesson, seed: "unit4-stable" });
+
+    expect(runA).toHaveLength(runB.length);
+    expect(JSON.stringify(runA)).toBe(JSON.stringify(runB));
+  });
+
+  it("produces different Addition problems for Unit 4 when given different seeds", () => {
+    const lesson = getEvaluationLesson("g3-u4-w1-eval");
+    const runA = generateEvaluationProblems({ lesson, seed: "unit4-seed-a" });
+    const runB = generateEvaluationProblems({ lesson, seed: "unit4-seed-b" });
+
+    expect(runA).toHaveLength(runB.length);
+
+    const differs = runA.some((problemA, index) => {
+      const problemB = runB[index];
+      return (
+        problemA.problemKey !== problemB.problemKey ||
+        problemA.questionText !== problemB.questionText ||
+        problemA.correctAnswer !== problemB.correctAnswer
+      );
+    });
+
+    expect(differs).toBe(true);
+  });
+
+  it("produces the identical Unit 4 evaluation when no seed is omitted twice", () => {
+    const lesson = getEvaluationLesson("g3-u4-w1-eval");
+    const runA = generateEvaluationProblems({ lesson });
+    const runB = generateEvaluationProblems({ lesson });
+
+    expect(runA).toHaveLength(runB.length);
+    expect(JSON.stringify(runA)).toBe(JSON.stringify(runB));
+  });
+
+  it("derives distinct child seeds for each review type in an evaluation", () => {
+    const parentSeed = "parent-42";
+    const lessonId = "g3-u4-w1-eval";
+    const reviewTypes = [
+      "addition_number_line",
+      "addition_expanded_form",
+      "addition_compensation",
+      "addition_no_regroup",
+    ];
+
+    const seeds = reviewTypes.map((reviewType) =>
+      derivePracticeSeed(parentSeed, "evaluation", lessonId, reviewType),
+    );
+
+    expect(new Set(seeds).size).toBe(seeds.length);
   });
 });

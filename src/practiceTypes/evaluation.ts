@@ -5,6 +5,7 @@ import { buildEvaluationPlan } from "./evaluationPlan";
 import { resolveEvaluationReviewSource } from "./evaluationReviewResolver";
 import { EvaluationGenerationError } from "./evaluationError";
 import { generateProblemsForPracticeType } from "./registry";
+import { derivePracticeSeed } from "./random";
 
 export function generateEvaluationProblems(options?: PracticeGenerationOptions): PracticeProblem[] {
   const evaluationLesson = options?.lesson as Lesson | undefined;
@@ -44,15 +45,23 @@ export function generateEvaluationProblems(options?: PracticeGenerationOptions):
   const pools: { reviewType: string; problems: PracticeProblem[] }[] = [];
   const usedKeys = new Set<string>();
 
+  const parentSeed = options?.seed;
+
   for (const entry of plan) {
     if (entry.count <= 0) {
       continue;
     }
 
     const resolved = resolveEvaluationReviewSource(evaluationLessonId, entry.reviewType);
+    const reviewSeed =
+      parentSeed !== undefined
+        ? derivePracticeSeed(parentSeed, "evaluation", evaluationLessonId, entry.reviewType)
+        : undefined;
+
     const pool = generateProblemsForPracticeType(resolved.generatorPracticeType, {
       mode: options?.mode,
       lesson: resolved.sourceLesson,
+      seed: reviewSeed,
     });
 
     const selected: PracticeProblem[] = [];
