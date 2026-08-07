@@ -1,18 +1,16 @@
 // @SECTION BUILDIT_IMPORTS
 import { useState } from "react";
-import { Sparkles, Star } from "lucide-react";
-import LumaAvatar from "../../components/luma/LumaAvatar";
+import { CircleDashed } from "lucide-react";
 import { getBuildRounds, type LearnLesson } from "../../lib/learnContent";
 
 // @SECTION BUILDIT_TYPES
 type BuildItPageProps = {
   lesson: LearnLesson;
-  starName: string;
   onBuildComplete?: () => void;
 };
 
 // @SECTION BUILDIT_PAGE
-function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
+function BuildItPage({ lesson, onBuildComplete }: BuildItPageProps) {
   // @SECTION BUILDIT_DATA
   const buildRounds = getBuildRounds(lesson);
 
@@ -26,14 +24,14 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
   const [hasChecked, setHasChecked] = useState(false);
   const [completedRounds, setCompletedRounds] = useState<number[]>([]);
 
-  const totalStars = groupCounts.reduce((sum, count) => sum + count, 0);
+  const totalItems = groupCounts.reduce((sum, count) => sum + count, 0);
   const isZeroRound = currentRound.targetCount === 0;
   const isCorrect = groupCounts.every((count) => count === currentRound.targetCount);
   const canMoveNextRound = hasChecked && isCorrect;
 
   // @SECTION BUILDIT_HELPERS
-  function getStarWord(count: number) {
-    return count === 1 ? "star" : "stars";
+  function getItemWord(count: number) {
+    return count === 1 ? "item" : "items";
   }
 
   function resetRound(nextRoundIndex: number) {
@@ -146,10 +144,24 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                 }`}
               >
                 {count === currentRound.targetCount && !isZeroRound ? (
-                  <span className="text-4xl drop-shadow-sm">⭐</span>
+                  <div
+                    aria-label={`${count} ${getItemWord(count)}`}
+                    className="flex max-w-[78px] flex-wrap items-center justify-center gap-1.5"
+                  >
+                    {Array.from({ length: count }).map((_, itemIndex) => (
+                      <span
+                        key={itemIndex}
+                        className="h-5 w-5 rounded-full bg-[#F7B733] shadow-inner"
+                      />
+                    ))}
+                  </div>
                 ) : isZeroRound ? (
                   <div className="text-center">
-                    <Sparkles size={17} strokeWidth={2.8} className="mx-auto mb-2 text-[#A9D7E1]" />
+                    <CircleDashed
+                      size={20}
+                      strokeWidth={2.6}
+                      className="mx-auto mb-2 text-[#A9D7E1]"
+                    />
                     <p className="text-sm font-black text-[#6D9AB1]">Empty</p>
                   </div>
                 ) : (
@@ -171,7 +183,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
           </div>
 
           <div className="flex items-center justify-center gap-3 border-t border-[#073B5A]/10 px-4 py-3 md:border-l md:border-t-0">
-            <span className="text-2xl text-[#00AFB9]">⭐</span>
+            <span className="h-5 w-5 rounded-full bg-[#F7B733] shadow-inner" />
             <p className="text-base font-black text-[#073B5A]">
               {currentRound.targetCount} in each
             </p>
@@ -181,7 +193,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#00AFB9] text-base font-black text-white">
               =
             </span>
-            <p className="text-base font-black text-[#073B5A]">{totalStars} total</p>
+            <p className="text-base font-black text-[#073B5A]">{totalItems} total</p>
           </div>
         </div>
 
@@ -242,12 +254,12 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
                 <p className="mt-1 text-sm font-bold leading-relaxed text-[#275875]">
                   {hasChecked && isCorrect
                     ? isZeroRound
-                      ? `You built ${currentRound.groups} equal groups with 0 stars in each.`
-                      : `You built ${currentRound.groups} equal groups with 1 star in each.`
+                      ? `You built ${currentRound.groups} equal groups with 0 items in each.`
+                      : `You built ${currentRound.groups} equal groups with 1 item in each.`
                     : hasChecked
                       ? `Almost! Each group needs exactly ${
                           currentRound.targetCount
-                        } ${getStarWord(currentRound.targetCount)}.`
+                        } ${getItemWord(currentRound.targetCount)}.`
                       : "Build the groups, then check your work."}
                 </p>
               </div>
@@ -271,10 +283,10 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
                   <div
-                    data-name="build-it-result-star-badge"
-                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#FFF6D8] text-3xl shadow-inner"
+                    data-name="build-it-result-item-badge"
+                    className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#FFF6D8] shadow-inner"
                   >
-                    ⭐
+                    <span className="h-7 w-7 rounded-full bg-[#F7B733]" />
                   </div>
 
                   <div data-name="build-it-result-success-text">
@@ -366,39 +378,6 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
           </div>
         </section>
 
-        {/* @SECTION BUILDIT_LUMA_TIP */}
-        <section
-          data-name="build-it-luma-tip-card"
-          className="relative min-h-[150px] overflow-hidden rounded-[1.5rem] border border-[#F7B733]/25 bg-[#FFF3D9] p-5 shadow-sm"
-        >
-          <div className="relative z-10">
-            <div className="mb-3 flex items-center gap-2">
-              <Star size={22} strokeWidth={2.7} className="fill-[#F7B733] text-[#F7B733]" />
-              <p className="text-lg font-black text-[#C78300]">{starName}'s Tip</p>
-            </div>
-
-            <div className="w-fit rounded-2xl bg-white px-5 py-4 text-xl font-black leading-tight text-[#073B5A] shadow-sm">
-              {isZeroRound ? (
-                <>
-                  Leave each box
-                  <br />
-                  empty!
-                </>
-              ) : (
-                <>
-                  Tap each box
-                  <br />
-                  to add 1 star!
-                </>
-              )}
-            </div>
-          </div>
-
-          <div className="absolute bottom-[-40px] right-[-10px] w-32">
-            <LumaAvatar size="lg" state="happy" showEnergy={false} />
-          </div>
-        </section>
-
         {/* @SECTION BUILDIT_PATTERN_CARD */}
         <section
           data-name="build-it-math-pattern-card"
@@ -406,7 +385,7 @@ function BuildItPage({ lesson, starName, onBuildComplete }: BuildItPageProps) {
         >
           <div className="mb-4 flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-xl font-black text-[#00AFB9] shadow-sm">
-              ✦
+              =
             </div>
 
             <div>

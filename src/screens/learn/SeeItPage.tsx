@@ -1,7 +1,6 @@
 // @SECTION SEEIT_IMPORTS
 import { useState } from "react";
-import { Binoculars, BookOpen, Search, Sparkles, Star } from "lucide-react";
-import LumaAvatar from "../../components/luma/LumaAvatar";
+import { Binoculars, BookOpen, Search } from "lucide-react";
 import { getSeeItClues, type LearnLesson } from "../../lib/learnContent";
 
 // @SECTION SEEIT_TYPES
@@ -19,10 +18,9 @@ type SeeItClue = {
 // @SECTION SEEIT_PAGE
 type SeeItPageProps = {
   lesson: LearnLesson;
-  starName: string;
 };
 
-function SeeItPage({ lesson, starName }: SeeItPageProps) {
+function SeeItPage({ lesson }: SeeItPageProps) {
   // @SECTION SEEIT_DATA
   const clues: SeeItClue[] = getSeeItClues(lesson);
 
@@ -63,8 +61,19 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
       <div className="flex flex-wrap items-center justify-center gap-3">
         {Array.from({ length: currentClue.groups }).map((_, groupIndex) => (
           <div key={groupIndex} className="flex items-center gap-3">
-            <div className="flex h-20 w-24 items-center justify-center rounded-[1.35rem] border border-[#F7B733]/35 bg-[#FFF9E8] text-4xl shadow-sm">
-              {currentClue.inEach === 0 ? <span className="text-[#9AB5C7]">∅</span> : "⭐"}
+            <div className="flex h-20 w-24 items-center justify-center rounded-[1.35rem] border border-[#F7B733]/35 bg-[#FFF9E8] shadow-sm">
+              {currentClue.inEach === 0 ? (
+                <span className="text-4xl text-[#9AB5C7]">∅</span>
+              ) : (
+                <div className="flex max-w-[76px] flex-wrap items-center justify-center gap-1.5">
+                  {Array.from({ length: currentClue.inEach }).map((_, itemIndex) => (
+                    <span
+                      key={`${groupIndex}-${itemIndex}`}
+                      className="h-5 w-5 rounded-full bg-[#F7B733] shadow-inner"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
             {groupIndex < currentClue.groups - 1 && (
@@ -101,8 +110,9 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
               </p>
 
               <p className="mt-2 max-w-[620px] text-sm font-bold leading-relaxed text-[#275875]">
-                Look at the picture. One equation is trying to trick Luma. Tap the equation that
-                does <span className="font-black text-[#0081A7]">NOT</span> match.
+                Look at the picture. One equation does
+                <span className="font-black text-[#0081A7]"> NOT </span>match. Tap the equation
+                that does not belong.
               </p>
             </div>
           </div>
@@ -118,8 +128,6 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
           className="rounded-[1.75rem] border border-[#00AFB9]/20 bg-[#F7FCFD] p-5 shadow-sm"
         >
           <div className="mb-5 flex flex-wrap items-center justify-center gap-3">
-            <Sparkles size={22} strokeWidth={2.6} className="text-[#00AFB9]" />
-
             <div className="h-px w-16 bg-[#00AFB9]/45" />
 
             <h3 className="text-center text-xl font-black text-[#0081A7]">
@@ -127,8 +135,6 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
             </h3>
 
             <div className="h-px w-16 bg-[#00AFB9]/45" />
-
-            <Sparkles size={22} strokeWidth={2.6} className="text-[#00AFB9]" />
           </div>
 
           <div data-name="see-it-visual-model-groups">{renderGroupVisual()}</div>
@@ -179,8 +185,6 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
                   </span>
                 )}
 
-                <span className="absolute left-4 top-4 text-[#00AFB9]/45">✦</span>
-                <span className="absolute bottom-4 right-5 text-[#00AFB9]/35">✦</span>
               </button>
             );
           })}
@@ -204,7 +208,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
                   isSneakyFound ? "bg-[#FFF6D8]" : hasSelected ? "bg-white" : "bg-white"
                 }`}
               >
-                {isSneakyFound ? "🌟" : hasSelected ? "🔎" : "🕵️"}
+                {isSneakyFound ? "✓" : hasSelected ? "🔎" : "🕵️"}
               </div>
 
               <div>
@@ -252,56 +256,6 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
 
       {/* @SECTION SEEIT_SIDEBAR */}
       <aside data-name="see-it-right-sidebar" className="flex flex-col gap-4">
-        {/* @SECTION SEEIT_LUMA_TIP */}
-        <section
-          data-name="see-it-luma-tip-card"
-          className="relative min-h-[165px] overflow-hidden rounded-[1.5rem] border border-[#F7B733]/25 bg-[#FFF3D9] p-5 shadow-sm"
-        >
-          <div className="relative z-10">
-            <div data-name="see-it-luma-tip-title-row" className="mb-3 flex items-center gap-2">
-              <Star size={22} strokeWidth={2.7} className="fill-[#F7B733] text-[#F7B733]" />
-
-              <p className="text-lg font-black text-[#C78300]">{starName}'s Tip</p>
-            </div>
-
-            <div
-              data-name="see-it-luma-tip-content"
-              className="max-w-[230px] rounded-2xl bg-white px-4 py-3 shadow-sm"
-            >
-              <p className="text-sm font-black uppercase tracking-[0.12em] text-[#0081A7]">
-                Spot the pattern
-              </p>
-
-              <p className="mt-1 text-lg font-black leading-tight text-[#073B5A]">
-                Check groups.
-                <br />
-                Check in each.
-                <br />
-                Check total.
-              </p>
-            </div>
-
-            <div
-              data-name="see-it-luma-tip-mini-steps"
-              className="mt-3 flex max-w-[230px] items-center gap-1.5 rounded-full bg-white/65 px-3 py-2 shadow-sm"
-            >
-              <span className="rounded-full bg-[#00AFB9] px-2.5 py-1 text-xs font-black text-white">
-                1
-              </span>
-              <span className="text-xs font-black text-[#073B5A]/70">Picture</span>
-              <span className="text-[#9AB5C7]">→</span>
-              <span className="rounded-full bg-[#00AFB9] px-2.5 py-1 text-xs font-black text-white">
-                2
-              </span>
-              <span className="text-xs font-black text-[#073B5A]/70">Equation</span>
-            </div>
-          </div>
-
-          <div className="absolute bottom-[-34px] right-[-8px] w-32">
-            <LumaAvatar size="lg" state="happy" showEnergy={false} />
-          </div>
-        </section>
-
         {/* @SECTION SEEIT_PATTERN_PATROL */}
         <section
           data-name="see-it-pattern-patrol-card"
@@ -344,7 +298,7 @@ function SeeItPage({ lesson, starName }: SeeItPageProps) {
                           : "border-[#073B5A]/10 bg-white text-[#9AB5C7]"
                     }`}
                   >
-                    ★
+                    {isFound ? "✓" : index + 1}
                   </button>
                 );
               })}

@@ -151,7 +151,7 @@ function LearnScreen() {
   const navigate = useNavigate();
   const { lessonId } = useParams();
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
-  const { updateLessonProgress, studentState } = useStudentProgress();
+  const { updateLessonProgress } = useStudentProgress();
 
   const currentLessonId = getCurrentLessonId({
     lessonId,
@@ -161,7 +161,6 @@ function LearnScreen() {
   });
 
   const lessonPath = `/lesson/${currentLessonId}`;
-  const starName = studentState.starProfile.starName;
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isCompactHeader, setIsCompactHeader] = useState(false);
@@ -253,7 +252,7 @@ function LearnScreen() {
     const steps: { label: string; component: ReactNode }[] = [
       {
         label: "Big Idea",
-        component: <BigIdeaPage lesson={learnLesson} starName={starName} />,
+        component: <BigIdeaPage lesson={learnLesson} />,
       },
     ];
 
@@ -263,7 +262,6 @@ function LearnScreen() {
         component: (
           <BuildItPage
             lesson={learnLesson}
-            starName={starName}
             onBuildComplete={() => {
               updateLessonProgress(currentLessonId, {
                 learnComplete: true,
@@ -277,26 +275,26 @@ function LearnScreen() {
     if (seeItClues.length > 0) {
       steps.push({
         label: "See It",
-        component: <SeeItPage lesson={learnLesson} starName={starName} />,
+        component: <SeeItPage lesson={learnLesson} />,
       });
     }
 
     if (vocab.length > 0) {
       steps.push({
         label: "Words",
-        component: <WordsPage lesson={learnLesson} starName={starName} />,
+        component: <WordsPage lesson={learnLesson} />,
       });
     }
 
     if (quickCheckQuestions.length > 0) {
       steps.push({
         label: "Quick Check",
-        component: <QuickCheckPage lessonId={currentLessonId} starName={starName} />,
+        component: <QuickCheckPage lessonId={currentLessonId} />,
       });
     }
 
     return steps;
-  }, [currentLessonId, learnLesson, starName, updateLessonProgress]);
+  }, [currentLessonId, learnLesson, updateLessonProgress]);
 
   function backToLesson() {
     navigate(lessonPath);
@@ -435,9 +433,12 @@ function LearnScreen() {
         <section
           data-name="learn-page-content-grid"
           className={`grid items-start gap-4 ${
-            availableSteps[currentStep].label === "Build It"
-              ? "xl:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.8fr)]"
-              : "xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,0.75fr)]"
+            availableSteps[currentStep].label === "Big Idea" ||
+            availableSteps[currentStep].label === "Quick Check"
+              ? "xl:grid-cols-1"
+              : availableSteps[currentStep].label === "Build It"
+                ? "xl:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.72fr)]"
+                : "xl:grid-cols-[minmax(0,1.38fr)_minmax(280px,0.62fr)]"
           }`}
         >
           {availableSteps[currentStep].component}
