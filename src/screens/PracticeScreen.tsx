@@ -4,6 +4,7 @@ import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { generateProblemsForPracticeType } from "../practiceTypes/registry";
+import { createPracticeSessionSeed } from "../practiceTypes/random";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
 import type { PracticeMode } from "../practiceTypes/types";
 import type { PracticeCompletionRejectionReason } from "../types/practiceProgress";
@@ -230,10 +231,18 @@ function PracticeScreen() {
     dayNumber: weekDayNumber,
   });
   const nextUnitPath = getNextUnitPath(unit.unit_number);
+  const [practiceSessionId, setPracticeSessionId] = useState(() => crypto.randomUUID());
+  const practiceSessionSeed = createPracticeSessionSeed(
+    currentLessonId,
+    lesson.practice_type,
+    practiceMode,
+    practiceSessionId,
+  );
 
   const problems = generateProblemsForPracticeType(lesson.practice_type, {
     mode: practiceMode,
     lesson,
+    seed: practiceSessionSeed,
   });
 
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
@@ -576,6 +585,7 @@ function PracticeScreen() {
   }
 
   function restartEvaluation() {
+    setPracticeSessionId(crypto.randomUUID());
     setCurrentProblemIndex(0);
     setAnswer("");
     setFactorAAnswer("");

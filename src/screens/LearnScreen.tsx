@@ -49,23 +49,26 @@ function LearnStepper({
   const stepCount = steps.length;
 
   return (
-    <div data-name="learn-stepper-nav" className="flex items-center justify-end gap-2">
+    <div data-name="learn-stepper-nav" className="flex w-full items-center gap-3">
       <button
         type="button"
         onClick={onPrevious}
         disabled={isFirstStep}
         aria-label="Previous Learn page"
         data-name="learn-stepper-previous-button"
-        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-sm font-black shadow-sm transition ${
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-sm font-black shadow-sm transition ${
           isFirstStep
             ? "cursor-not-allowed border-[#073B5A]/10 bg-[#F1F5F7] text-[#9AB5C7]"
             : "border-[#073B5A]/10 bg-white text-[#073B5A] hover:bg-[#F8FBFB]"
         }`}
       >
-        <ArrowLeft size={17} strokeWidth={3} />
+        <ArrowLeft size={18} strokeWidth={3} />
       </button>
 
-      <div data-name="learn-stepper-steps" className="flex items-start gap-0">
+      <div
+        data-name="learn-stepper-steps"
+        className="flex min-w-0 flex-1 items-start justify-center"
+      >
         {steps.map((step, index) => {
           const isActive = index === currentStep;
           const isDone = index < currentStep;
@@ -74,7 +77,7 @@ function LearnStepper({
             <div
               key={step.label}
               data-name={`learn-stepper-step-${index + 1}`}
-              className="flex items-start"
+              className="flex min-w-0 items-start"
             >
               <div
                 data-name={`learn-stepper-step-${index + 1}-content`}
@@ -82,21 +85,21 @@ function LearnStepper({
               >
                 <div
                   data-name={`learn-stepper-step-${index + 1}-circle`}
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${
+                  className={`flex h-9 w-9 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${
                     isActive
-                      ? "border-[#00AFB9] bg-[#00AFB9] text-white shadow-[0_0_16px_rgba(0,175,185,0.38)]"
+                      ? "border-[#00AFB9] bg-[#00AFB9] text-white shadow-[0_0_16px_rgba(0,175,185,0.30)]"
                       : isDone
                         ? "border-[#00AFB9] bg-[#E9F7F8] text-[#0081A7]"
                         : "border-[#9AB5C7]/55 bg-white text-[#275875]"
                   }`}
                 >
-                  {isDone ? <CheckCircle2 size={18} strokeWidth={3} /> : index + 1}
+                  {isDone ? <CheckCircle2 size={16} strokeWidth={3} /> : index + 1}
                 </div>
 
                 <p
                   data-name={`learn-stepper-step-${index + 1}-label`}
-                  className={`mt-1 whitespace-nowrap text-center text-[0.68rem] font-black ${
-                    isActive ? "text-[#073B5A]" : "text-[#275875]/75"
+                  className={`mt-1 whitespace-nowrap text-center text-xs font-black ${
+                    isActive ? "text-[#073B5A]" : "text-[#275875]/70"
                   }`}
                 >
                   {step.label}
@@ -106,7 +109,7 @@ function LearnStepper({
               {index < stepCount - 1 && (
                 <div
                   data-name={`learn-stepper-connector-${index + 1}`}
-                  className="mt-5 h-0.5 w-10 border-t-2 border-dashed border-[#9AB5C7]/45"
+                  className="mt-[1.08rem] h-0.5 w-8 border-t-2 border-dashed border-[#9AB5C7]/45 2xl:w-12"
                 />
               )}
             </div>
@@ -119,7 +122,7 @@ function LearnStepper({
         onClick={onNext}
         aria-label="Next Learn page"
         data-name="learn-stepper-next-button"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-white shadow-[0_8px_18px_rgba(0,175,185,0.28)] transition hover:bg-[#0081A7]"
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#00AFB9] text-white shadow-[0_8px_18px_rgba(0,175,185,0.24)] transition hover:bg-[#0081A7]"
       >
         <ArrowRight size={18} strokeWidth={3} />
       </button>
@@ -166,11 +169,15 @@ function LearnScreen() {
   const topSentinelRef = useRef<HTMLDivElement | null>(null);
   const pageContentRef = useRef<HTMLDivElement | null>(null);
 
-  const learnLesson = {
-    ...lesson,
-    unit_number: unit.unit_number,
-    week_number: week.week_number,
-  } as CurriculumLearnLesson;
+  const learnLesson = useMemo(
+    () =>
+      ({
+        ...lesson,
+        unit_number: unit.unit_number,
+        week_number: week.week_number,
+      }) as CurriculumLearnLesson,
+    [lesson, unit.unit_number, week.week_number],
+  );
 
   useEffect(() => {
     // Reset step when lesson changes
@@ -316,7 +323,7 @@ function LearnScreen() {
       <div
         ref={pageContentRef}
         data-name="learn-screen"
-        className="relative flex h-full min-h-0 flex-col gap-5 overflow-y-auto pr-1"
+        className="relative flex h-full min-h-0 flex-col gap-4 overflow-y-auto pb-3 pr-1"
       >
         <div ref={topSentinelRef} data-name="learn-top-sentinel" className="h-0" />
 
@@ -324,82 +331,96 @@ function LearnScreen() {
         <header
           data-name="learn-header"
           className={`sticky top-0 z-30 rounded-[1.5rem] border border-[#073B5A]/10 bg-white/95 shadow-sm backdrop-blur transition-all duration-300 ${
-            isCompactHeader ? "px-4 py-1.5" : "px-4 py-2.5"
+            isCompactHeader ? "px-3 py-1.5" : "px-4 py-2.5"
           }`}
         >
-          <div data-name="learn-header-row" className="flex items-center justify-between gap-6">
-            <div data-name="learn-header-left" className="flex min-w-0 items-center gap-4">
-              <button
-                type="button"
-                onClick={backToLesson}
-                data-name="back-to-lesson-button"
-                className={`inline-flex shrink-0 items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white text-sm font-black text-[#0081A7] shadow-sm transition hover:bg-[#E9F7F8] lg:px-5 lg:py-3 lg:text-base ${
-                  isCompactHeader ? "px-3 py-1.5" : "px-4 py-2"
-                }`}
-              >
-                <ArrowLeft size={18} strokeWidth={3} />
-                Back to Lesson
-              </button>
+          <div data-name="learn-header-summary-row" className="flex min-w-0 items-center gap-3">
+            <button
+              type="button"
+              onClick={backToLesson}
+              data-name="back-to-lesson-button"
+              className={`inline-flex shrink-0 items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white font-black text-[#0081A7] shadow-sm transition hover:bg-[#E9F7F8] ${
+                isCompactHeader ? "px-3 py-1.5 text-sm" : "px-4 py-2 text-sm"
+              }`}
+            >
+              <ArrowLeft size={17} strokeWidth={3} />
+              <span>{isCompactHeader ? "Lesson" : "Back to Lesson"}</span>
+            </button>
 
-              <div
-                data-name="learn-section-number-badge"
-                className={`flex shrink-0 items-center justify-center rounded-full bg-[#073B5A] font-black text-white shadow-sm transition-all ${
-                  isCompactHeader ? "h-8 w-8 text-sm" : "h-10 w-10 text-lg"
-                }`}
-              >
-                2
-              </div>
-
-              <div data-name="learn-header-title-block" className="min-w-0">
-                <div
-                  data-name="learn-header-meta-row"
-                  className="flex flex-wrap items-center gap-x-3 gap-y-1"
-                >
-                  <h1
-                    data-name="learn-header-title"
-                    className={`font-black text-[#073B5A] transition-all ${
-                      isCompactHeader ? "text-lg" : "text-xl"
-                    }`}
-                  >
-                    Learn
-                  </h1>
-
-                  <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
-
-                  <p
-                    data-name="learn-header-current-page"
-                    className="text-sm font-black text-[#00AFB9]"
-                  >
-                    Page {currentStep + 1} • {availableSteps[currentStep].label}
-                  </p>
-
-                  {!isCompactHeader && (
-                    <>
-                      <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
-
-                      <div
-                        data-name="learn-header-time"
-                        className="flex items-center gap-1.5 text-sm font-black text-[#275875]"
-                      >
-                        <Clock3 size={16} strokeWidth={2.7} />
-                        10 min
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {!isCompactHeader && (
-                  <p
-                    data-name="learn-header-lesson-title"
-                    className="mt-1 truncate text-base font-black text-[#073B5A]"
-                  >
-                    {lesson.lesson_title}
-                  </p>
-                )}
-              </div>
+            <div
+              data-name="learn-section-number-badge"
+              className={`flex shrink-0 items-center justify-center rounded-full bg-[#073B5A] font-black text-white shadow-sm transition-all ${
+                isCompactHeader ? "h-8 w-8 text-sm" : "h-9 w-9 text-base"
+              }`}
+            >
+              2
             </div>
 
-            <div data-name="learn-header-stepper-nav" className="hidden xl:block">
+            <div data-name="learn-header-title-block" className="min-w-0 flex-1">
+              <div
+                data-name="learn-header-meta-row"
+                className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5"
+              >
+                <h1
+                  data-name="learn-header-title"
+                  className={`font-black text-[#073B5A] transition-all ${
+                    isCompactHeader ? "text-base" : "text-lg"
+                  }`}
+                >
+                  Learn
+                </h1>
+
+                <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
+
+                <p data-name="learn-header-current-page" className="text-sm font-black text-[#00AFB9]">
+                  Page {currentStep + 1} of {availableSteps.length} • {availableSteps[currentStep].label}
+                </p>
+
+                {!isCompactHeader && (
+                  <>
+                    <span className="hidden h-1.5 w-1.5 rounded-full bg-[#9AB5C7] sm:block" />
+
+                    <div
+                      data-name="learn-header-time"
+                      className="flex items-center gap-1.5 text-sm font-black text-[#275875]"
+                    >
+                      <Clock3 size={15} strokeWidth={2.7} />
+                      10 min
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {!isCompactHeader && (
+                <p
+                  data-name="learn-header-lesson-title"
+                  className="mt-0.5 line-clamp-1 text-sm font-black text-[#073B5A]/80"
+                  title={lesson.lesson_title}
+                >
+                  {lesson.lesson_title}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div
+            data-name="learn-header-stepper-row"
+            className={`hidden items-center gap-4 border-t border-[#073B5A]/10 xl:flex ${
+              isCompactHeader ? "mt-1.5 pt-1.5" : "mt-2.5 pt-2.5"
+            }`}
+          >
+            <div data-name="learn-header-stepper-context" className="w-28 shrink-0">
+              <p className="text-[0.65rem] font-black uppercase tracking-[0.16em] text-[#0081A7]">
+                Inside Learn
+              </p>
+              {!isCompactHeader && (
+                <p className="mt-0.5 text-xs font-bold text-[#073B5A]/55">
+                  {availableSteps.length} mini pages
+                </p>
+              )}
+            </div>
+
+            <div data-name="learn-header-stepper-nav" className="min-w-0 flex-1">
               <LearnStepper
                 currentStep={currentStep}
                 onPrevious={goBack}
@@ -413,10 +434,10 @@ function LearnScreen() {
         {/* @SECTION LEARN_PAGE_CONTENT_GRID */}
         <section
           data-name="learn-page-content-grid"
-          className={`grid items-start gap-5 ${
+          className={`grid items-start gap-4 ${
             availableSteps[currentStep].label === "Build It"
-              ? "xl:grid-cols-[1.55fr_0.75fr]"
-              : "xl:grid-cols-[1.15fr_0.85fr]"
+              ? "xl:grid-cols-[minmax(0,1.5fr)_minmax(280px,0.8fr)]"
+              : "xl:grid-cols-[minmax(0,1.35fr)_minmax(300px,0.75fr)]"
           }`}
         >
           {availableSteps[currentStep].component}
