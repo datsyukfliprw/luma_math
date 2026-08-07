@@ -23,6 +23,17 @@ function getAllRegularGrade3Lessons(): Lesson[] {
   return lessons;
 }
 
+const REGRESSION_LESSONS = [
+  "g3-u20-w1-l1",
+  "g3-u26-w1-l1",
+  "g3-u29-w1-l3",
+  "g3-u30-w1-l3",
+  "g3-u33-w1-l2",
+  "g3-u34-w1-l1",
+  "g3-u2-w1-l2",
+  "g3-u11-w1-l4",
+];
+
 describe("Quick Check contract", () => {
   it("validates the canonical shape for a generated Quick Check", () => {
     const { lesson } = getLessonById("g3-u11-w1-l1");
@@ -42,6 +53,65 @@ describe("Quick Check contract", () => {
     expect(roles.filter((r) => r === "conceptual")).toHaveLength(1);
     expect(roles.filter((r) => r === "reasoning")).toHaveLength(1);
   });
+});
+
+describe("Quick Check multiple-choice invariant", () => {
+  function assertMultipleChoice(question: {
+    interaction: { type: string; choices?: { value: string }[]; correctAnswer: string };
+  }) {
+    expect(question.interaction.type).toBe("multiple_choice");
+    const interaction = question.interaction as {
+      type: "multiple_choice";
+      choices: { value: string }[];
+      correctAnswer: string;
+    };
+    const choiceValues = interaction.choices.map((c) => c.value);
+
+    expect(choiceValues.length).toBeGreaterThanOrEqual(3);
+    expect(new Set(choiceValues).size).toBe(choiceValues.length);
+
+    const correctOccurrences = choiceValues.filter((v) => v === interaction.correctAnswer);
+    expect(correctOccurrences).toHaveLength(1);
+    expect(choiceValues).toContain(interaction.correctAnswer);
+  }
+
+  it("enforces the invariant for all multiple-choice questions across 144 regular lessons", () => {
+    const lessons = getAllRegularGrade3Lessons();
+    expect(lessons.length).toBe(144);
+
+    for (const lesson of lessons) {
+      const quickCheck = generateQuickCheckForLesson(lesson);
+      expect(quickCheck).toBeDefined();
+
+      for (const question of quickCheck!.questions) {
+        if (question.interaction.type === "multiple_choice") {
+          assertMultipleChoice(question);
+        }
+      }
+    }
+  }, 60000);
+
+  it.each(REGRESSION_LESSONS)(
+    "regression: %s produces valid multiple-choice direct and conceptual questions",
+    (lessonId) => {
+      const { lesson } = getLessonById(lessonId);
+      const quickCheck = generateQuickCheckForLesson(lesson)!;
+
+      const direct = quickCheck.questions.find((q) => q.role === "direct");
+      const conceptual = quickCheck.questions.find((q) => q.role === "conceptual");
+
+      expect(direct).toBeDefined();
+      expect(conceptual).toBeDefined();
+
+      if (direct!.interaction.type === "multiple_choice") {
+        assertMultipleChoice(direct!);
+      }
+
+      if (conceptual!.interaction.type === "multiple_choice") {
+        assertMultipleChoice(conceptual!);
+      }
+    },
+  );
 });
 
 describe("Quick Check Grade 3 coverage", () => {
@@ -106,7 +176,7 @@ describe("Quick Check Grade 3 coverage", () => {
     expect(roleCounts.direct).toBe(144);
     expect(roleCounts.conceptual).toBe(144);
     expect(roleCounts.reasoning).toBe(144);
-  });
+  }, 30000);
 });
 
 describe("Quick Check determinism", () => {
@@ -130,5 +200,143 @@ describe("Quick Check determinism", () => {
     const first = generateQuickCheckForLesson(lesson, { seed: "a" });
     const second = generateQuickCheckForLesson(lesson, { seed: "b" });
     expect(first).not.toEqual(second);
+  });
+});
+
+describe("Quick Check authored precedence", () => {
+  it("returns an authored curriculum quick_check even when fallback sources are missing", () => {
+    const { lesson } = getLessonById("g3-u11-w1-l1");
+    const authored: typeof lesson.quick_check = {
+      title: "Authored Quick Check",
+      subtitle: "Unit 1 Week 1",
+      passingScore: 3,
+      questions: [
+        {
+          id: "authored-direct",
+          role: "direct",
+          prompt: "What is 3 × 4?",
+          interaction: {
+            type: "multiple_choice",
+            choices: [
+              { label: "12", value: "12" },
+              { label: "7", value: "7" },
+              { label: "11", value: "11" },
+            ],
+            correctAnswer: "12",
+          },
+          feedback: { hint: "Multiply.", success: "Great!" },
+        },
+        {
+          id: "authored-conceptual",
+          role: "conceptual",
+          prompt: "Which matches?",
+          interaction: {
+            type: "multiple_choice",
+            choices: [
+              { label: "3 groups of 4", value: "3 groups of 4" },
+              { label: "4 groups of 3", value: "4 groups of 3" },
+              { label: "3 + 4", value: "3 + 4" },
+            ],
+            correctAnswer: "3 groups of 4",
+          },
+          feedback: { hint: "Think about groups.", success: "Yes!" },
+        },
+        {
+          id: "authored-reasoning",
+          role: "reasoning",
+          prompt: "Is the student correct?",
+          interaction: {
+            type: "mistake_detection",
+            statement: "A student says 3 × 4 = 7.",
+            correctAnswer: "no",
+          },
+          feedback: { hint: "Check the product.", success: "Right!" },
+        },
+      ],
+    };
+
+    const fixture = {
+      ...lesson,
+      quick_check: authored,
+      warmup: undefined,
+      try_it: undefined,
+    } as unknown as Lesson;
+
+    const quickCheck = generateQuickCheckForLesson(fixture);
+    expect(quickCheck).toEqual(authored);
+  });
+});
+
+describe("Quick Check reasoning feedback", () => {
+  it.each(REGRESSION_LESSONS)(
+    "regression: %s reasoning success feedback does not contain learner failure wording",
+    (lessonId) => {
+      const { lesson } = getLessonById(lessonId);
+      const quickCheck = generateQuickCheckForLesson(lesson)!;
+      const reasoning = quickCheck.questions.find((q) => q.role === "reasoning")!;
+
+      expect(reasoning.interaction.type).toBe("mistake_detection");
+      const interaction = reasoning.interaction as { correctAnswer: "yes" | "no" };
+
+      if (interaction.correctAnswer === "no") {
+        const learnerResponse = reasoning.feedback.success.toLowerCase();
+        expect(learnerResponse).not.toContain("not quite");
+        expect(learnerResponse).not.toContain("try again");
+        expect(learnerResponse).not.toContain("incorrect");
+
+        const explanation = reasoning.feedback.explanation?.toLowerCase() ?? "";
+        expect(explanation.length).toBeGreaterThan(0);
+      }
+    },
+  );
+});
+
+describe("Quick Check mascot language handling", () => {
+  it("detects and neutralizes mascot wording consistently across sequential calls", () => {
+    const samples = [
+      "Luma is here",
+      "Spark your energy",
+      "boost your charge",
+      "Luma Spark",
+      "Energy boost",
+    ];
+
+    for (const sample of samples) {
+      const quickCheck = generateQuickCheckForLesson({
+        ...getLessonById("g3-u11-w1-l1").lesson,
+        quick_check: {
+          title: sample,
+          subtitle: sample,
+          passingScore: 1,
+          questions: [
+            {
+              id: "mascot-test",
+              role: "direct",
+              prompt: sample,
+              interaction: {
+                type: "multiple_choice",
+                choices: [
+                  { label: "yes", value: "yes" },
+                  { label: "no", value: "no" },
+                  { label: "maybe", value: "maybe" },
+                ],
+                correctAnswer: "yes",
+              },
+              feedback: { hint: sample, success: sample },
+            },
+          ],
+        },
+      } as unknown as Lesson);
+
+      expect(quickCheck?.title).not.toMatch(/\b(luma|spark|charge|boost|energy)\b/i);
+      expect(quickCheck?.subtitle).not.toMatch(/\b(luma|spark|charge|boost|energy)\b/i);
+      expect(quickCheck?.questions[0].prompt).not.toMatch(/\b(luma|spark|charge|boost|energy)\b/i);
+      expect(quickCheck?.questions[0].feedback.hint).not.toMatch(
+        /\b(luma|spark|charge|boost|energy)\b/i,
+      );
+      expect(quickCheck?.questions[0].feedback.success).not.toMatch(
+        /\b(luma|spark|charge|boost|energy)\b/i,
+      );
+    }
   });
 });

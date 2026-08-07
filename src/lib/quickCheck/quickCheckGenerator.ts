@@ -1,5 +1,11 @@
 import type { Lesson } from "../../data/curriculum";
-import type { QuickCheck, QuickCheckQuestion, QuickCheckVisual } from "./schema";
+import type {
+  QuickCheck,
+  QuickCheckFeedback,
+  QuickCheckInteraction,
+  QuickCheckQuestion,
+  QuickCheckVisual,
+} from "./schema";
 import { createSeededRng, type SeededRng } from "../../practiceTypes/random";
 import { normalizeNumericAnswer } from "../answerValidation";
 
@@ -7,18 +13,82 @@ export type QuickCheckGeneratorOptions = {
   seed?: string;
 };
 
-const MASCOT_PATTERNS = /\b(luma|spark|charge|boost|energy)\b/gi;
+// Detection pattern: no global flag so `test` does not carry state.
+const MASCOT_PATTERN = /\b(luma|spark|charge|boost|energy)\b/i;
+// Replacement pattern: global so all occurrences are removed.
+const MASCOT_PATTERN_GLOBAL = /\b(luma|spark|charge|boost|energy)\b/gi;
 
 function hasMascotLanguage(value: string): boolean {
-  return MASCOT_PATTERNS.test(value);
+  return MASCOT_PATTERN.test(value);
 }
 
 function removeMascotLanguage(value: string): string {
-  return value.replace(MASCOT_PATTERNS, "").replace(/\s+/g, " ").trim();
+  return value.replace(MASCOT_PATTERN_GLOBAL, "").replace(/\s+/g, " ").trim();
 }
 
 function ensureNeutral(value: string): string {
   return hasMascotLanguage(value) ? removeMascotLanguage(value) : value;
+}
+
+function neutralizeFeedback(feedback: QuickCheckFeedback): QuickCheckFeedback {
+  return {
+    hint: ensureNeutral(feedback.hint),
+    success: ensureNeutral(feedback.success),
+    explanation: feedback.explanation ? ensureNeutral(feedback.explanation) : undefined,
+  };
+}
+
+function neutralizeInteraction(interaction: QuickCheckInteraction): QuickCheckInteraction {
+  switch (interaction.type) {
+    case "multiple_choice":
+      return {
+        ...interaction,
+        choices: interaction.choices.map((c) => ({
+          label: ensureNeutral(c.label),
+          value: ensureNeutral(c.value),
+        })),
+      };
+    case "text_entry":
+      return {
+        ...interaction,
+        correctAnswer: ensureNeutral(interaction.correctAnswer),
+        placeholder: interaction.placeholder ? ensureNeutral(interaction.placeholder) : undefined,
+      };
+    case "true_false":
+      return interaction;
+    case "mistake_detection":
+      return {
+        ...interaction,
+        statement: ensureNeutral(interaction.statement),
+        reasonChoices: interaction.reasonChoices?.map(ensureNeutral),
+        correctReason: interaction.correctReason
+          ? ensureNeutral(interaction.correctReason)
+          : undefined,
+      };
+    default:
+      return interaction;
+  }
+}
+
+function neutralizeQuestion(question: QuickCheckQuestion): QuickCheckQuestion {
+  return {
+    ...question,
+    prompt: ensureNeutral(question.prompt),
+    stem: question.stem ? ensureNeutral(question.stem) : undefined,
+    interaction: neutralizeInteraction(question.interaction),
+    feedback: neutralizeFeedback(question.feedback),
+    topicTag: question.topicTag ? ensureNeutral(question.topicTag) : undefined,
+    skill: question.skill ? ensureNeutral(question.skill) : undefined,
+  };
+}
+
+function neutralizeQuickCheck(quickCheck: QuickCheck): QuickCheck {
+  return {
+    ...quickCheck,
+    title: ensureNeutral(quickCheck.title),
+    subtitle: ensureNeutral(quickCheck.subtitle),
+    questions: quickCheck.questions.map(neutralizeQuestion),
+  };
 }
 
 function buildQuickCheckSeed(lesson: Lesson): string {
@@ -30,10 +100,12 @@ export function generateQuickCheckForLesson(
   options?: QuickCheckGeneratorOptions,
 ): QuickCheck | undefined {
   if (lesson.lesson_type !== "lesson") return undefined;
-  if (!lesson.warmup || !lesson.learn || !lesson.try_it) return undefined;
 
-  // Optional authored override stored directly on the curriculum lesson.
-  if (lesson.quick_check) return lesson.quick_check;
+  // Authored curriculum Quick Check takes precedence and does not need
+  // generator fallback sources.
+  if (lesson.quick_check) return neutralizeQuickCheck(lesson.quick_check);
+
+  if (!lesson.warmup || !lesson.learn || !lesson.try_it) return undefined;
 
   const seed = options?.seed ?? buildQuickCheckSeed(lesson);
   const rng = createSeededRng(seed);
@@ -42,12 +114,12 @@ export function generateQuickCheckForLesson(
   const conceptual = buildConceptualQuestion(lesson, rng);
   const reasoning = buildReasoningQuestion(lesson, rng);
 
-  return {
+  return neutralizeQuickCheck({
     title: "Quick Check",
     subtitle: `Comprehension check for ${ensureNeutral(lesson.lesson_title)}`,
     passingScore: 3,
     questions: [direct, conceptual, reasoning],
-  };
+  });
 }
 
 function buildQuestionId(lesson: Lesson, role: string): string {
@@ -64,7 +136,7 @@ function baseFeedback(hint: string, success: string, explanation?: string) {
 }
 
 function extractNumbers(input: string): number[] {
-  const digitsOnly = input.replace(/[,]/g, "").match(/\d+/g);
+  const digitsOnly = input.replace(/[,\s]/g, "").match(/\d+/g);
   if (!digitsOnly) return [];
   return digitsOnly.map(Number).filter((n) => Number.isFinite(n));
 }
@@ -123,51 +195,390 @@ function shuffleChoices<T>(choices: T[], correct: T, rng: SeededRng): T[] {
   return shuffled;
 }
 
-function buildNumericDistractors(correct: number, rng: SeededRng, count = 2): number[] {
+function buildNumericDistractors(correct: number, rng: SeededRng, count = 3): number[] {
   const distractors = new Set<number>();
 
-  const addDistractor = (n: number) => {
-    if (Number.isFinite(n) && n >= 0 && n !== correct && n <= Math.max(correct * 5, 30)) {
+  const add = (n: number) => {
+    if (
+      Number.isFinite(n) &&
+      n >= 0 &&
+      n !== correct &&
+      n <= 999 &&
+      n <= Math.max(correct * 5, 30)
+    ) {
       distractors.add(n);
     }
   };
 
   const candidates = [
     correct + 1,
-    correct - 1,
+    Math.max(0, correct - 1),
     correct + 10,
-    correct - 10,
+    Math.max(0, correct - 10),
     correct + 100,
-    correct - 100,
+    Math.max(0, correct - 100),
     correct * 2,
     Math.floor(correct / 2),
     Math.abs(correct),
     Number(String(correct).split("").reverse().join("")),
+    correct + 2,
+    correct + 5,
+    correct + 20,
+    Math.max(0, correct - 2),
+    Math.max(0, correct - 5),
   ];
 
-  for (const n of candidates) addDistractor(n);
+  for (const n of candidates) add(n);
+
+  // Guaranteed fallback: adjacent whole numbers.
+  let delta = 1;
+  while (distractors.size < count && correct + delta <= 999) {
+    add(correct + delta);
+    delta += 1;
+  }
+  delta = 1;
+  while (distractors.size < count && correct - delta >= 0) {
+    add(correct - delta);
+    delta += 1;
+  }
 
   const result = rng.shuffle([...distractors]);
   return result.slice(0, count);
 }
 
-function buildChoicesForAnswer(
-  correct: string,
-  rng: SeededRng,
-  extras: string[] = [],
-  answerType: "numeric" | "text" = "numeric",
-): string[] {
-  const numeric = normalizeNumericAnswer(correct);
-  const value = Number(numeric);
+function isBooleanLike(
+  value: string,
+): { type: "true_false"; answer: "true" | "false" } | undefined {
+  const normalized = value.trim().toLowerCase();
+  if (normalized === "yes" || normalized === "true") return { type: "true_false", answer: "true" };
+  if (normalized === "no" || normalized === "false") return { type: "true_false", answer: "false" };
+  return undefined;
+}
 
-  if (answerType === "numeric" && !Number.isNaN(value)) {
-    const distractorValues = buildNumericDistractors(value, rng, 2);
-    return shuffleChoices(distractorValues.map(String), correct, rng).slice(0, 4);
+function buildFractionDistractors(
+  numerator: number,
+  denominator: number,
+  rng: SeededRng,
+  count = 3,
+): string[] {
+  const correctValue = numerator / denominator;
+  const distractors: string[] = [];
+
+  const candidates: Array<{ n: number; d: number }> = [
+    { n: numerator + 1, d: denominator },
+    { n: Math.max(0, numerator - 1), d: denominator },
+    { n: numerator, d: denominator + 1 },
+    { n: numerator, d: Math.max(1, denominator - 1) },
+    { n: numerator + 2, d: denominator },
+    { n: denominator, d: numerator },
+  ];
+
+  for (const { n, d } of candidates) {
+    if (d === 0) continue;
+    if (n === numerator && d === denominator) continue;
+    if (n / d === correctValue) continue;
+    if (distractors.some((existing) => existing === `${n}/${d}`)) continue;
+    distractors.push(`${n}/${d}`);
   }
 
-  const all = [correct, ...extras].filter((c) => c !== correct);
-  const selected = rng.shuffle(all).slice(0, 2);
-  return shuffleChoices(selected, correct, rng).slice(0, 4);
+  return rng.shuffle(distractors).slice(0, count);
+}
+
+// Antonym / opposite map used to generate plausible distractors.
+// Keys are lowercased. Replacements should be short, math-neutral phrases.
+const ANTONYM_MAP: Record<string, string[]> = {
+  big: ["small"],
+  small: ["big"],
+  bigger: ["smaller"],
+  smaller: ["bigger"],
+  larger: ["smaller"],
+  more: ["less", "fewer"],
+  less: ["more"],
+  inside: ["outside", "around", "on"],
+  outside: ["inside"],
+  same: ["different", "opposite"],
+  different: ["same"],
+  equal: ["unequal", "different"],
+  unequal: ["equal", "same"],
+  shaded: ["unshaded", "white"],
+  unshaded: ["shaded"],
+  point: ["line", "place"],
+  line: ["point"],
+  feet: ["inches", "yards"],
+  yards: ["inches", "feet"],
+  inches: ["feet", "yards"],
+  yard: ["inches", "feet"],
+  foot: ["inches", "yards"],
+  add: ["subtract"],
+  subtract: ["add"],
+  multiply: ["add", "divide"],
+  divide: ["multiply"],
+  true: ["false"],
+  false: ["true"],
+  yes: ["no"],
+  no: ["yes"],
+  always: ["sometimes", "never"],
+  never: ["always", "sometimes"],
+  all: ["some", "none"],
+  none: ["all", "some"],
+  parallel: ["not parallel", "crossing"],
+  parallelogram: ["rectangle", "trapezoid", "quadrilateral"],
+  quadrilateral: ["triangle", "rectangle", "parallelogram"],
+  triangle: ["rectangle", "square", "quadrilateral"],
+  pentagon: ["hexagon", "quadrilateral"],
+  hexagon: ["pentagon", "octagon"],
+};
+
+function escapeRegex(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function replaceWord(text: string, word: string, replacement: string): string | undefined {
+  const regex = new RegExp(`\\b${escapeRegex(word)}\\b`, "i");
+  if (!regex.test(text)) return undefined;
+  return text.replace(regex, replacement);
+}
+
+function applyMutations(
+  source: string,
+  mutations: Array<{ word: string; replacement: string }>,
+): string {
+  let result = source;
+  for (const { word, replacement } of mutations) {
+    const regex = new RegExp(`\\b${escapeRegex(word)}\\b`, "i");
+    result = result.replace(regex, replacement);
+  }
+  return result;
+}
+
+function buildWordMutations(
+  source: string,
+  replacementMap: Map<string, string[]>,
+  rng: SeededRng,
+  maxMutations = 2,
+): string[] {
+  const words = [...source.matchAll(/\b[\w']+\b/g)].map((m) => m[0]);
+  const availableMutations: Array<{ word: string; replacement: string }> = [];
+
+  for (const word of words) {
+    const lower = word.toLowerCase();
+    const replacements = replacementMap.get(lower);
+    if (!replacements) continue;
+    for (const replacement of replacements) {
+      availableMutations.push({ word, replacement });
+    }
+  }
+
+  if (availableMutations.length === 0) return [];
+
+  const results: string[] = [];
+
+  // Single mutations.
+  for (const mutation of availableMutations) {
+    const mutated = replaceWord(source, mutation.word, mutation.replacement);
+    if (mutated && mutated.toLowerCase() !== source.toLowerCase()) {
+      results.push(mutated);
+    }
+  }
+
+  // Multi-mutations (distinct words, distinct positions).
+  if (maxMutations >= 2) {
+    for (let i = 0; i < availableMutations.length; i += 1) {
+      for (let j = i + 1; j < availableMutations.length; j += 1) {
+        const a = availableMutations[i];
+        const b = availableMutations[j];
+        if (a.word.toLowerCase() === b.word.toLowerCase()) continue;
+
+        const ordered =
+          source.toLowerCase().indexOf(a.word.toLowerCase()) <=
+          source.toLowerCase().indexOf(b.word.toLowerCase())
+            ? [a, b]
+            : [b, a];
+
+        const mutated = applyMutations(source, ordered);
+        if (mutated.toLowerCase() !== source.toLowerCase()) {
+          results.push(mutated);
+        }
+      }
+    }
+  }
+
+  return rng.shuffle(results);
+}
+
+function distinctWords(value: string): string[] {
+  const words = value.toLowerCase().match(/\b[\w']+\b/g) ?? [];
+  return [...new Set(words)].sort();
+}
+
+function isRedundantConceptualDistractor(candidate: string, correct: string): boolean {
+  const candidateWords = distinctWords(candidate);
+  const correctWords = distinctWords(correct);
+
+  // Reject a distractor whose set of words is the same as the correct answer
+  // (e.g. a simple reorder like "feet or yards" for "Yards or feet").
+  if (
+    candidateWords.length === correctWords.length &&
+    candidateWords.every((w, i) => w === correctWords[i])
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function buildAnswerChoices(
+  correct: string,
+  lesson: Lesson,
+  rng: SeededRng,
+):
+  | { type: "multiple_choice"; choices: string[] }
+  | { type: "true_false"; correctAnswer: "true" | "false" } {
+  const normalized = normalizeNumericAnswer(correct);
+
+  const booleanCheck = isBooleanLike(correct);
+  if (booleanCheck) {
+    return { type: "true_false", correctAnswer: booleanCheck.answer };
+  }
+
+  const fractions = parseFractions(correct);
+  if (fractions.length > 0) {
+    const { numerator, denominator } = fractions[0];
+    const fractionDistractors = buildFractionDistractors(numerator, denominator, rng, 3);
+    if (fractionDistractors.length >= 2) {
+      const choices = shuffleChoices(fractionDistractors, correct, rng).slice(0, 4);
+      return { type: "multiple_choice", choices };
+    }
+  }
+
+  const value = Number(normalized);
+  let distractors: string[];
+
+  if (!Number.isNaN(value)) {
+    distractors = buildNumericDistractors(value, rng, 3).map(String);
+  } else {
+    const antonymMap = new Map<string, string[]>(Object.entries(ANTONYM_MAP));
+    const ordered: string[] = [];
+    const seen = new Set<string>([correct.toLowerCase()]);
+
+    const add = (value: string | undefined) => {
+      if (!value) return;
+      const lower = value.toLowerCase();
+      if (seen.has(lower)) return;
+      seen.add(lower);
+      ordered.push(value);
+    };
+
+    // 1. Word-level antonym / opposite mutations.
+    for (const m of buildWordMutations(correct, antonymMap, rng)) add(m);
+
+    // 2. Other lesson answers.
+    for (const q of lesson.warmup?.questions.slice(1) ?? []) add(q.correct_answer);
+    if (lesson.try_it?.correct_answer) add(lesson.try_it.correct_answer);
+
+    // 3. Generic antonym words as a last resort.
+    if (ordered.length < 3) {
+      for (const alts of Object.values(ANTONYM_MAP)) {
+        for (const alt of alts) {
+          if (ordered.length >= 3) break;
+          add(alt);
+        }
+      }
+    }
+
+    distractors = rng.shuffle(ordered.slice(0, 3));
+  }
+
+  // Ensure at least 3 distinct numeric or text distractors exist.
+  if (distractors.length < 3) {
+    const padding = buildNumericDistractors(0, rng, 3 - distractors.length).map(String);
+    distractors = [...distractors, ...padding];
+  }
+
+  const choices = shuffleChoices(distractors, correct, rng).slice(0, 4);
+  return { type: "multiple_choice", choices };
+}
+
+function buildNumberPattern(value: number): RegExp {
+  const digits = String(value);
+  const groups: string[] = [];
+  for (let i = digits.length; i > 0; i -= 3) {
+    groups.unshift(digits.slice(Math.max(0, i - 3), i));
+  }
+  const pattern = groups.map(escapeRegex).join(",?\\s*");
+  return new RegExp(`\\b${pattern}\\b`, "i");
+}
+
+function makeFalseEquation(equation: string, rng: SeededRng): string {
+  const numbers = extractNumbers(equation);
+
+  if (numbers.length === 0) {
+    // Place-value sentences may not contain raw numbers; try replacing place words.
+    return equation
+      .replace(/\bhundreds\b/gi, "tens")
+      .replace(/\bthousands\b/gi, "hundreds")
+      .replace(/\btens\b/gi, "ones");
+  }
+
+  const targetIndex = rng.nextInt(0, numbers.length - 1);
+  const target = numbers[targetIndex];
+  const falseValue = buildNumericDistractors(target, rng, 1)[0] ?? target + 1;
+
+  const regex = buildNumberPattern(target);
+  return equation.replace(regex, String(falseValue));
+}
+
+function buildConceptualFalseChoices(
+  lesson: Lesson,
+  correctEquation: string,
+  rng: SeededRng,
+): string[] {
+  const seen = new Set<string>();
+  const ordered: string[] = [];
+  const lowerCorrect = correctEquation.toLowerCase();
+
+  const add = (value: string | undefined) => {
+    if (!value) return;
+    const trimmed = value.trim();
+    const lower = trimmed.toLowerCase();
+    if (!trimmed || lower === lowerCorrect) return;
+    if (isRedundantConceptualDistractor(trimmed, correctEquation)) return;
+    if (seen.has(trimmed)) return;
+    seen.add(trimmed);
+    ordered.push(trimmed);
+  };
+
+  // 1. Numeric mutations of the example equation.
+  for (let i = 0; i < 6; i += 1) {
+    add(makeFalseEquation(correctEquation, rng));
+  }
+
+  // 2. Antonym / opposite word mutations (most plausible first).
+  const antonymMap = new Map<string, string[]>(Object.entries(ANTONYM_MAP));
+  const mutations = buildWordMutations(correctEquation, antonymMap, rng);
+  for (const m of mutations) add(m);
+
+  // 3. Lesson-sourced distractors: try it and warmup answers, and vocabulary.
+  const lessonSources: string[] = [];
+  if (lesson.try_it?.correct_answer) lessonSources.push(lesson.try_it.correct_answer);
+  for (const q of lesson.warmup?.questions ?? []) {
+    if (q.correct_answer) lessonSources.push(q.correct_answer);
+  }
+  for (const v of lesson.learn?.vocabulary ?? []) lessonSources.push(v);
+
+  for (const source of rng.shuffle(lessonSources)) {
+    if (source.toLowerCase() === lowerCorrect) continue;
+    add(source);
+  }
+
+  // 4. Final, safe fallback: simple mathematical contradictions.
+  if (ordered.length < 3) {
+    add(`It is not ${correctEquation}.`);
+    add(`The statement "${correctEquation}" is wrong.`);
+    add(`None of the above.`);
+  }
+
+  return rng.shuffle(ordered.slice(0, 3));
 }
 
 function buildVisualFromExample(lesson: Lesson): QuickCheckVisual | undefined {
@@ -292,13 +703,21 @@ function buildDirectQuestion(lesson: Lesson, rng: SeededRng): QuickCheckQuestion
 
     const prompt = ensureNeutral(`What is the value of the ${place} digit in ${number}?`);
     const correct = String(value);
-    const distractors = [
+
+    let distractors = [
       String(digit),
       String(value * 10),
       String(value / 10),
       String(value * 100),
+      String(Math.floor(value / 100)),
     ].filter((d) => d !== correct && Number.isFinite(Number(d)));
-    const choices = shuffleChoices(rng.shuffle(distractors).slice(0, 2), correct, rng).slice(0, 4);
+
+    if (distractors.length < 3) {
+      const extra = buildNumericDistractors(value, rng, 3 - distractors.length).map(String);
+      distractors = [...distractors, ...extra];
+    }
+
+    const choices = shuffleChoices(rng.shuffle(distractors).slice(0, 3), correct, rng).slice(0, 4);
 
     return {
       id: buildQuestionId(lesson, "direct"),
@@ -309,11 +728,7 @@ function buildDirectQuestion(lesson: Lesson, rng: SeededRng): QuickCheckQuestion
         choices: choices.map((c) => ({ label: c, value: c })),
         correctAnswer: correct,
       },
-      visual: {
-        type: "place_value_chart",
-        number,
-        highlightedPlace: place,
-      },
+      visual: { type: "place_value_chart", number, highlightedPlace: place },
       feedback: baseFeedback(
         warmupQuestion.hint,
         `Great! The ${place} digit in ${number} is worth ${correct}.`,
@@ -325,53 +740,25 @@ function buildDirectQuestion(lesson: Lesson, rng: SeededRng): QuickCheckQuestion
 
   const prompt = ensureNeutral(warmupQuestion.prompt);
   const correct = warmupQuestion.correct_answer;
-  const answerType: "numeric" | "text" = /^\d+$/.test(normalizeNumericAnswer(correct))
-    ? "numeric"
-    : "text";
-
-  const extraChoices = lesson.warmup.questions
-    .slice(1)
-    .map((q) => q.correct_answer)
-    .filter(Boolean);
-
-  const choices = buildChoicesForAnswer(correct, rng, extraChoices, answerType);
+  const choiceResult = buildAnswerChoices(correct, lesson, rng);
 
   return {
     id: buildQuestionId(lesson, "direct"),
     role: "direct",
     prompt,
-    interaction: {
-      type: "multiple_choice",
-      choices: choices.map((c) => ({ label: c, value: c })),
-      correctAnswer: correct,
-    },
+    interaction:
+      choiceResult.type === "true_false"
+        ? { type: "true_false", correctAnswer: choiceResult.correctAnswer }
+        : {
+            type: "multiple_choice",
+            choices: choiceResult.choices.map((c) => ({ label: c, value: c })),
+            correctAnswer: correct,
+          },
     visual: buildVisualFromExample(lesson),
     feedback: baseFeedback(warmupQuestion.hint, `Nice work! ${correct} is correct.`),
     topicTag: warmupQuestion.skill,
     skill: warmupQuestion.skill,
   };
-}
-
-function makeFalseEquation(equation: string, rng: SeededRng): string {
-  const numbers = extractNumbers(equation);
-
-  if (numbers.length === 0) {
-    // Place-value sentences may not contain raw numbers; try replacing place words.
-    return equation
-      .replace(/hundreds/g, "tens")
-      .replace(/thousands/g, "hundreds")
-      .replace(/tens/g, "ones");
-  }
-
-  const targetIndex = rng.nextInt(0, numbers.length - 1);
-  const target = numbers[targetIndex];
-  const falseValue = buildNumericDistractors(target, rng, 1)[0] ?? target + 1;
-
-  // Replace only the first occurrence of the target number to keep it deterministic-ish.
-  const asString = String(target);
-  const falseString = String(falseValue);
-  const regex = new RegExp(`\\b${asString}\\b`);
-  return equation.replace(regex, falseString);
 }
 
 function buildConceptualQuestion(lesson: Lesson, rng: SeededRng): QuickCheckQuestion {
@@ -384,17 +771,10 @@ function buildConceptualQuestion(lesson: Lesson, rng: SeededRng): QuickCheckQues
 
   // Prefer the example equation as the canonical representation.
   const correctEquation = example.equation;
-  const falseEquations: string[] = [];
-
-  for (let i = 0; i < 6 && falseEquations.length < 3; i += 1) {
-    const candidate = makeFalseEquation(correctEquation, rng);
-    if (candidate !== correctEquation && !falseEquations.includes(candidate)) {
-      falseEquations.push(candidate);
-    }
-  }
+  const falseEquations = buildConceptualFalseChoices(lesson, correctEquation, rng);
 
   const prompt = ensureNeutral(`Which statement matches what we learned?`);
-  const choices = shuffleChoices(falseEquations, correctEquation, rng).slice(0, 4);
+  const choices = shuffleChoices(falseEquations, correctEquation, rng);
 
   const visual = buildVisualFromExample(lesson);
 
@@ -428,14 +808,26 @@ function generateDistractor(correct: string, rng: SeededRng): string {
     return String(value + 1);
   }
 
+  const fractions = parseFractions(correct);
+  if (fractions.length > 0) {
+    const { numerator, denominator } = fractions[0];
+    const distractors = buildFractionDistractors(numerator, denominator, rng, 3);
+    if (distractors.length > 0) return rng.pick(distractors);
+  }
+
   const numbers = extractNumbers(correct);
   if (numbers.length > 0) {
     const targetIndex = rng.nextInt(0, numbers.length - 1);
     const target = numbers[targetIndex];
     const falseValue = buildNumericDistractors(target, rng, 1)[0] ?? target + 1;
-    const newText = correct.replace(new RegExp(`\\b${target}\\b`), String(falseValue));
+    const regex = buildNumberPattern(target);
+    const newText = correct.replace(regex, String(falseValue));
     if (newText !== correct) return newText;
   }
+
+  const antonymMap = new Map<string, string[]>(Object.entries(ANTONYM_MAP));
+  const mutations = buildWordMutations(correct, antonymMap, rng);
+  if (mutations.length > 0) return mutations[0];
 
   return rng.pick(["0", "1", "none", "all", "always"]);
 }
@@ -443,7 +835,7 @@ function generateDistractor(correct: string, rng: SeededRng): string {
 function makeFalseTryItStatement(
   tryIt: NonNullable<Lesson["try_it"]>,
   rng: SeededRng,
-): { statement: string; correct: "yes" | "no" } {
+): { statement: string; correct: "yes" | "no"; falseAnswer: string } {
   const prompt = ensureNeutral(tryIt.prompt);
   const correctAnswer = tryIt.correct_answer;
 
@@ -457,6 +849,7 @@ function makeFalseTryItStatement(
   return {
     statement: `A student answered "${prompt}" with "${falseAnswer}".`,
     correct: "no",
+    falseAnswer,
   };
 }
 
@@ -466,16 +859,20 @@ function buildReasoningQuestion(lesson: Lesson, rng: SeededRng): QuickCheckQuest
   }
 
   const tryIt = lesson.try_it;
-  const { statement, correct } = makeFalseTryItStatement(tryIt, rng);
+  const { statement, correct, falseAnswer } = makeFalseTryItStatement(tryIt, rng);
 
   const correctAnswer = tryIt.correct_answer;
-  const feedback =
+  const successText =
     correct === "no"
-      ? baseFeedback(
-          tryIt.hint,
-          `Not quite. The correct answer is "${correctAnswer}", not the student's answer.`,
-        )
-      : baseFeedback(tryIt.hint, `Yes, that is the correct answer.`);
+      ? `Great! You correctly noticed the mistake.`
+      : `That is right. The student's answer matches the correct answer.`;
+
+  const explanationText =
+    correct === "no"
+      ? `The example student answered "${falseAnswer}", but the correct answer is "${correctAnswer}".`
+      : `The example student's answer "${falseAnswer}" was correct.`;
+
+  const feedback = baseFeedback(tryIt.hint, successText, explanationText);
 
   return {
     id: buildQuestionId(lesson, "reasoning"),

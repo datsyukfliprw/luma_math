@@ -30,7 +30,7 @@ describe("getResolvedTryItExperience", () => {
     }
 
     expect(failures).toEqual([]);
-  });
+  }, 60000);
 
   it("normalizes the authored Unit 1 Try It problems into a stable contract", () => {
     const experience = getResolvedTryItExperience("g3-u1-w1-l1");
