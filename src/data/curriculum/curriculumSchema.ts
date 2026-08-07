@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { QuickCheckSchema } from "../../lib/quickCheck/schema";
 
 const markdownDigitRegex = /__[0-9][0-9,]*__/;
 const underlinedDigitRegex = /underlined digits?/i;
@@ -153,6 +154,7 @@ const LessonSchema = z
     try_it: TryItSchema.optional(),
     practice_block: PracticeBlockSchema.optional(),
     flashcards: FlashcardsSchema.optional(),
+    quick_check: QuickCheckSchema.optional(),
     bigIdea: BigIdeaSchema.optional(),
     timed_test: TimedTestSchema.optional(),
     evaluation_scope: z.string().optional(),

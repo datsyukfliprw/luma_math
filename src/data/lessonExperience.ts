@@ -8,7 +8,7 @@ import type {
   PracticeMode,
   LessonPracticeType,
   SeeItRuleFocus,
-  QuickCheckQuestion,
+  LegacyQuickCheckQuestion,
   TryItProblem,
   LessonExperience,
   LessonExperienceSource,
@@ -18,13 +18,14 @@ import type {
 } from "./lessonExperience/types";
 
 import { getAdaptedLessonExperience } from "../lib/lessonExperienceAdapter";
+import { toCanonicalQuickCheck } from "../lib/quickCheck";
 
 // Re-export types for consumers and authored lesson files
 export type {
   PracticeMode,
   LessonPracticeType,
   SeeItRuleFocus,
-  QuickCheckQuestion,
+  LegacyQuickCheckQuestion,
   TryItProblem,
   LessonExperience,
   LessonExperienceSource,
@@ -59,7 +60,11 @@ export function getLessonExperience(lessonId?: string): ResolvedLessonExperience
 
   const authored = lessonExperienceRegistry[lessonId];
   if (authored) {
-    return { ...authored, source: "authored" } as AuthoredLessonExperience;
+    return {
+      ...authored,
+      source: "authored",
+      canonicalQuickCheck: toCanonicalQuickCheck(authored.quickCheck),
+    } as AuthoredLessonExperience;
   }
 
   if (derivedExperienceCache[lessonId]) {

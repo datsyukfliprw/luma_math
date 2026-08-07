@@ -2,6 +2,7 @@ import type { CurriculumLessonExperience, LessonExperience } from "../data/lesso
 import { findCurriculumLessonById } from "./curriculumLoader";
 import { isInstructionalLessonAvailable } from "../data/curriculum";
 import { isRegisteredPracticeType } from "../practiceTypes/registry";
+import { generateQuickCheckForLesson, toLegacyQuickCheck } from "../lib/quickCheck";
 
 // Map curriculum visual_type values to the authored BuildIt activityType union.
 const BUILD_IT_ACTIVITY_MAP: Record<string, LessonExperience["buildIt"]["activityType"]> = {
@@ -147,6 +148,27 @@ function buildCompletion(
   };
 }
 
+function buildQuickCheck(
+  lesson: NonNullable<ReturnType<typeof findCurriculumLessonById>>["lesson"],
+): {
+  quickCheck: CurriculumLessonExperience["quickCheck"];
+  canonicalQuickCheck: CurriculumLessonExperience["canonicalQuickCheck"];
+} {
+  if (lesson.lesson_type !== "lesson") {
+    return { quickCheck: undefined, canonicalQuickCheck: undefined };
+  }
+
+  const canonicalQuickCheck = generateQuickCheckForLesson(lesson);
+  if (!canonicalQuickCheck) {
+    return { quickCheck: undefined, canonicalQuickCheck: undefined };
+  }
+
+  return {
+    quickCheck: toLegacyQuickCheck(canonicalQuickCheck),
+    canonicalQuickCheck,
+  };
+}
+
 // Adapt a curriculum lesson into a generic CurriculumLessonExperience.
 // Returns undefined when the lesson cannot be found or its required fields
 // (bigIdea, etc.) are missing.
@@ -192,13 +214,12 @@ export function getAdaptedLessonExperience(
   };
 
   const buildIt = buildBuildIt(lesson);
+  const { quickCheck, canonicalQuickCheck } = buildQuickCheck(lesson);
 
-  // Note: Quick Check is intentionally not populated from warmup data here.
-  // Once the curriculum schema gains explicit quick_check questions, those
-  // should take priority, followed by safely-adaptable assessment data, with
-  // warmup reuse as a temporary last-resort fallback.
   return {
     ...base,
     buildIt,
+    quickCheck,
+    canonicalQuickCheck,
   };
 }

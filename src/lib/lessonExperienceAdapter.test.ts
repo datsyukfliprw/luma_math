@@ -15,7 +15,10 @@ describe("getAdaptedLessonExperience", () => {
     expect(lesson!.buildIt).toBeUndefined();
     expect(lesson!.seeIt).toBeUndefined();
     expect(lesson!.words).toBeUndefined();
-    expect(lesson!.quickCheck).toBeUndefined();
+    expect(lesson!.quickCheck).toBeDefined();
+    expect(lesson!.quickCheck!.questions).toHaveLength(3);
+    expect(lesson!.canonicalQuickCheck).toBeDefined();
+    expect(lesson!.canonicalQuickCheck!.questions).toHaveLength(3);
     expect(lesson!.tryIt).toBeUndefined();
   });
 

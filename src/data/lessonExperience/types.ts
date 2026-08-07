@@ -1,3 +1,5 @@
+import type { QuickCheck } from "../../lib/quickCheck/schema";
+
 // Shared types for lesson experience data
 
 export type PracticeMode = "guided" | "independent" | "challenge";
@@ -16,7 +18,7 @@ export type SeeItRuleFocus =
   | "equal-groups"
   | "review";
 
-export type QuickCheckQuestion = {
+export type LegacyQuickCheckQuestion = {
   id: string;
   prompt: string;
   equationStart: string;
@@ -30,6 +32,13 @@ export type QuickCheckQuestion = {
   success: string;
   visualGroups: number;
   visualCount: number;
+};
+
+export type LegacyQuickCheck = {
+  title: string;
+  subtitle: string;
+  passingScore: number;
+  questions: LegacyQuickCheckQuestion[];
 };
 
 export type TryItProblem = {
@@ -161,12 +170,8 @@ export type LessonExperience = {
     }[];
   };
 
-  quickCheck: {
-    title: string;
-    subtitle: string;
-    passingScore: number;
-    questions: QuickCheckQuestion[];
-  };
+  quickCheck: LegacyQuickCheck;
+  canonicalQuickCheck?: QuickCheck;
 
   tryIt: {
     title: string;
@@ -228,6 +233,7 @@ export type CurriculumLessonExperience = {
   seeIt?: LessonExperience["seeIt"];
   words?: LessonExperience["words"];
   quickCheck?: LessonExperience["quickCheck"];
+  canonicalQuickCheck?: QuickCheck;
   tryIt?: LessonExperience["tryIt"];
   practice: LessonExperience["practice"];
   completion: LessonExperience["completion"];
