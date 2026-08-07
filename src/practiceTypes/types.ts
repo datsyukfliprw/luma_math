@@ -2,7 +2,10 @@ export type PracticeMode = "guided" | "independent" | "challenge";
 
 export type PracticeGenerationOptions = {
   mode?: PracticeMode;
+  seed?: string | number;
+  count?: number;
   lesson?: {
+    lesson_id?: string;
     lesson_title?: string;
     practice_type?: string;
     skills?: string[];
