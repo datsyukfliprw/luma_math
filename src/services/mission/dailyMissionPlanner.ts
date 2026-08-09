@@ -148,8 +148,8 @@ export function getCurrentMission(
     const isReview = isMasteryCheckMission(mission);
     const estimatedMinutes = isReview ? 15 : 10;
     const subtitle = isReview
-      ? "Show what you know and earn your mastery reward."
-      : "Learn, practice, and grow your math power.";
+      ? "Show what you know in a quick mastery check."
+      : "Learn, practice, and build your math confidence.";
     const rationale = isReview
       ? "You're ready to prove mastery of this concept."
       : "This is the next unlocked concept on your pathway.";

@@ -567,16 +567,21 @@ export const flashcardDecks = starterDecks;
 
 export const recommendedFlashcardDeckId = "lesson-g3-u1-w1-d1-zero-identity";
 
+export function findFlashcardDeck(deckId: string | undefined) {
+  if (!deckId) return undefined;
+  return flashcardDecks.find((deck) => deck.deckId === deckId);
+}
+
 export function getFlashcardDeck(deckId: string | undefined) {
   return (
-    flashcardDecks.find((deck) => deck.deckId === deckId) ??
-    flashcardDecks.find((deck) => deck.deckId === recommendedFlashcardDeckId) ??
+    findFlashcardDeck(deckId) ??
+    findFlashcardDeck(recommendedFlashcardDeckId) ??
     flashcardDecks[0]
   );
 }
 
 export function getFlashcardDeckCardIds(deckId: string | undefined) {
-  return getFlashcardDeck(deckId).cards.map((card) => card.id);
+  return findFlashcardDeck(deckId)?.cards.map((card) => card.id) ?? [];
 }
 
 export function getDecksByKind(kind: FlashcardDeck["kind"]) {

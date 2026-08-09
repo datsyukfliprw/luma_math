@@ -1,7 +1,6 @@
 import {
   BookOpen,
   ChartNoAxesColumnIncreasing,
-  ChevronDown,
   ChevronRight,
   House,
   Layers,
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useDailyMission } from "../../services/mission/useDailyMission";
+import { useStudentProgress } from "../../contexts/StudentProgressContext";
 
 const navItems = [
   { icon: House, label: "Home", to: "/" },
@@ -23,8 +23,19 @@ const navItems = [
   { icon: Users, label: "Parent Area", to: "/parent-area" },
 ];
 
+function getGradeLabel(grade: number) {
+  if (grade === 0) return "Kindergarten";
+  if (grade === 1) return "1st Grade";
+  if (grade === 2) return "2nd Grade";
+  if (grade === 3) return "3rd Grade";
+  return `${grade}th Grade`;
+}
+
 function Sidebar() {
   const { progress, summary, pathway } = useDailyMission();
+  const { studentState } = useStudentProgress();
+  const studentName = studentState.starProfile.studentName || "Student";
+  const gradeLabel = getGradeLabel(pathway.gradeLevel || 3);
 
   return (
     <>
@@ -103,21 +114,16 @@ function Sidebar() {
 
             <div className="rounded-2xl border border-white/15 bg-[#052A40]/55 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
               <div className="flex items-center gap-2.5">
-                <button
-                  type="button"
-                  className="flex min-w-0 flex-1 items-center gap-2 rounded-xl px-1.5 py-1.5 text-left transition hover:bg-white/10"
-                >
+                <div className="flex min-w-0 flex-1 items-center gap-2 rounded-xl px-1.5 py-1.5 text-left">
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FED9B7] text-lg shadow-sm">
-                    👧
+                    👤
                   </div>
 
                   <div className="min-w-0 flex-1 leading-tight">
-                    <p className="truncate text-sm font-black text-white">Ava J.</p>
-                    <p className="truncate text-xs font-bold text-white/65">3rd Grade</p>
+                    <p className="truncate text-sm font-black text-white">{studentName}</p>
+                    <p className="truncate text-xs font-bold text-white/65">{gradeLabel}</p>
                   </div>
-
-                  <ChevronDown size={15} strokeWidth={3} className="shrink-0 text-white/70" />
-                </button>
+                </div>
 
                 <NavLink
                   to="/settings"

@@ -7,7 +7,6 @@ import {
   Layers3,
   Map,
   PencilLine,
-  Star,
   Trophy,
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -101,31 +100,6 @@ const JOURNEY_TIMELINE_LABELS = [
   "After That",
 ] as const;
 
-const GARDEN_REWARD_TARGET = 150;
-
-function CompanionOrb() {
-  return (
-    <div
-      aria-hidden="true"
-      className="relative h-16 w-16 shrink-0 drop-shadow-[0_12px_18px_rgba(0,129,167,0.22)]"
-    >
-      <div className="absolute inset-[10%] rounded-[46%_54%_52%_48%/48%_42%_58%_52%] bg-gradient-to-br from-[#51D9E1] via-[#00AFB9] to-[#0081A7] shadow-[inset_0_5px_12px_rgba(255,255,255,0.38)]" />
-      <div className="absolute left-[32%] top-[43%] h-2 w-2 rounded-full bg-[#073B5A]" />
-      <div className="absolute right-[32%] top-[43%] h-2 w-2 rounded-full bg-[#073B5A]" />
-      <div className="absolute left-1/2 top-[58%] h-2 w-5 -translate-x-1/2 rounded-b-full border-b-[3px] border-[#073B5A]" />
-      <div className="absolute left-[26%] top-[53%] h-1.5 w-2.5 rounded-full bg-[#FFAAA2]/75" />
-      <div className="absolute right-[26%] top-[53%] h-1.5 w-2.5 rounded-full bg-[#FFAAA2]/75" />
-      <div className="absolute left-1/2 top-0 flex h-8 w-8 -translate-x-1/2 items-center justify-center rounded-full bg-[#FDFCDC] shadow-md">
-        <Star
-          className="h-5 w-5 fill-[#FFC61A] text-[#F3A900]"
-          strokeWidth={2.2}
-        />
-      </div>
-      <div className="absolute -bottom-1 left-1/2 h-4 w-[78%] -translate-x-1/2 rounded-[50%] bg-[#BCE8F0] blur-[1px]" />
-    </div>
-  );
-}
-
 function JourneyNode({
   step,
   stageImage,
@@ -204,10 +178,6 @@ function HomeScreen() {
   const studentName =
     studentState.starProfile.studentName || "Explorer";
 
-  const starsCollected = Object.values(studentState.practiceRewards)
-    .flatMap((lessonReward) => Object.values(lessonReward))
-    .filter((reward) => reward.completed).length;
-
   const lessonJourneySteps = journeySteps.filter((step) => {
     const normalizedTitle = step.title.trim().toLowerCase();
 
@@ -226,11 +196,6 @@ function HomeScreen() {
   const visibleJourneySteps = lessonJourneySteps.slice(
     currentStepIndex,
     currentStepIndex + 3,
-  );
-
-  const gardenProgress = Math.min(
-    100,
-    Math.round((starsCollected / GARDEN_REWARD_TARGET) * 100),
   );
 
   return (
@@ -275,19 +240,16 @@ function HomeScreen() {
             </div>
 
             <div className="flex min-w-[150px] items-center gap-3 rounded-2xl border border-[#DCE6EA] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(7,59,90,0.06)]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFF8D5] text-[#F2A900]">
-                <Star
-                  className="h-5 w-5 fill-[#FFC61A]"
-                  strokeWidth={2.4}
-                />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#EAF4FF] text-[#2789D9]">
+                <Trophy className="h-5 w-5" strokeWidth={2.6} />
               </div>
 
               <div>
                 <p className="text-lg font-black leading-none text-[#073B5A]">
-                  {starsCollected}
+                  {summary.conceptsComplete}
                 </p>
                 <p className="mt-1 text-xs font-bold text-[#6B7F91]">
-                  Stars collected
+                  Concepts strong
                 </p>
               </div>
             </div>
@@ -501,40 +463,6 @@ function HomeScreen() {
           })}
         </section>
 
-        {/* @SECTION Full-width garden reward */}
-        <section
-          data-name="home-garden-reward"
-          className="mt-4 flex min-h-[78px] items-center gap-5 rounded-[1.75rem] border border-[#D8E8EC] bg-gradient-to-r from-[#F5FCFD] via-white to-white px-5 py-3 shadow-[0_12px_30px_rgba(7,59,90,0.07)]"
-        >
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-black uppercase tracking-[0.12em] text-[#00A9B4]">
-              Next garden reward
-            </p>
-
-            <p className="mt-1 text-sm font-bold text-[#647A8D]">
-              Keep learning to grow a new star-garden surprise.
-            </p>
-          </div>
-
-          <CompanionOrb />
-
-          <p className="shrink-0 text-2xl font-black text-[#073B5A]">
-            {GARDEN_REWARD_TARGET} Stars
-          </p>
-
-          <div className="flex min-w-[250px] flex-1 items-center gap-3">
-            <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-[#E4EBEE]">
-              <div
-                className="h-full rounded-full bg-[#00AFB9]"
-                style={{ width: `${gardenProgress}%` }}
-              />
-            </div>
-
-            <p className="shrink-0 text-xs font-black text-[#587086]">
-              {starsCollected} / {GARDEN_REWARD_TARGET}
-            </p>
-          </div>
-        </section>
       </div>
     </main>
   );

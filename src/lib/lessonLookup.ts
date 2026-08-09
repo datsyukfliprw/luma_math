@@ -7,11 +7,18 @@ function getFallbackUnit(): Curriculum {
   return getCurriculum(DEFAULT_GRADE, 1)!;
 }
 
+function unknownLesson(lessonId: string): never {
+  throw new Error(`Unknown lesson: ${lessonId}`);
+}
+
 export function getLessonById(lessonId?: string) {
   const fallbackUnit = getFallbackUnit();
   const fallbackWeek = fallbackUnit.weeks[0];
   const fallbackLesson = fallbackWeek.lessons[0];
 
+  // Bare /lesson, /learn, /practice, etc. intentionally open the first
+  // instructional lesson. Explicit lesson IDs must resolve exactly and are
+  // never allowed to silently fall back to Unit 1 Lesson 1.
   if (!lessonId) {
     return {
       unit: fallbackUnit,
@@ -21,41 +28,37 @@ export function getLessonById(lessonId?: string) {
     };
   }
 
-  // Match formats: g3-u{unit}-w{week}-l{lesson} or g3-u{unit}-w{week}-eval
   const match = lessonId.match(/^g3-u(\d+)-w(\d+)-(?:l(\d+)|eval)$/);
-  if (!match) {
-    return {
-      unit: fallbackUnit,
-      week: fallbackWeek,
-      lesson: fallbackLesson,
-      weekDayNumber: 1,
-    };
-  }
+  if (!match) return unknownLesson(lessonId);
 
   const unitNumber = Number.parseInt(match[1], 10);
   const weekNumber = Number.parseInt(match[2], 10);
   const isEvaluation = !match[3];
   const dayNumber = isEvaluation ? undefined : Number.parseInt(match[3], 10);
 
-  const unit = getCurriculum(DEFAULT_GRADE, unitNumber) ?? fallbackUnit;
-  const week = unit.weeks.find((w) => w.week_number === weekNumber) ?? fallbackWeek;
+  const unit = getCurriculum(DEFAULT_GRADE, unitNumber);
+  if (!unit) return unknownLesson(lessonId);
 
-  let lesson: Lesson = fallbackLesson;
-  let weekDayNumber = fallbackLesson.day_number;
+  const week = unit.weeks.find((candidate) => candidate.week_number === weekNumber);
+  if (!week) return unknownLesson(lessonId);
+
+  let lesson: Lesson | undefined;
+  let weekDayNumber: number | undefined;
 
   if (isEvaluation) {
-    const found = week.lessons.find((l) => l.lesson_type === "evaluation");
-    if (found) {
-      lesson = found;
-      weekDayNumber = found.day_number;
-    }
+    lesson = week.lessons.find((candidate) => candidate.lesson_type === "evaluation");
+    weekDayNumber = lesson?.day_number;
   } else if (dayNumber !== undefined) {
-    const found = week.lessons.find((l) => l.day_number === dayNumber);
+    const found = week.lessons.find(
+      (candidate) => candidate.lesson_type === "lesson" && candidate.day_number === dayNumber,
+    );
     if (found && isInstructionalLessonAvailable(found)) {
       lesson = found;
       weekDayNumber = dayNumber;
     }
   }
+
+  if (!lesson || weekDayNumber === undefined) return unknownLesson(lessonId);
 
   return {
     unit,

@@ -2,20 +2,14 @@
 import { useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, BookOpen, Check, CheckCircle2, RotateCcw, Star } from "lucide-react";
+import { ArrowLeft, BookOpen, Check, CheckCircle2, RotateCcw } from "lucide-react";
 import PageLayout from "../components/layout/PageLayout";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
-import { getFlashcardDeck, recommendedFlashcardDeckId } from "../flashcards/deckRegistry";
+import { findFlashcardDeck, getFlashcardDeck, recommendedFlashcardDeckId } from "../flashcards/deckRegistry";
 import { getNextUnansweredCardIndex } from "../lib/flashcardProgress";
 import type { Flashcard } from "../flashcards/types";
 
-// @SECTION FLASHCARD_SESSION_ASSETS
-const MASCOT_ASSET_VERSION = "v1";
 const DEFAULT_DECK_ID = recommendedFlashcardDeckId;
-
-function mascotAsset(filename: string) {
-  return `${new URL(`../assets/images/mascot/${filename}`, import.meta.url).href}?${MASCOT_ASSET_VERSION}`;
-}
 
 // @SECTION FLASHCARD_SESSION_TYPES
 type AnswerResult = "correct" | "incorrect" | null;
@@ -69,7 +63,11 @@ function FlashcardSessionScreen() {
   const { deckId: routeDeckId } = useParams();
   const { getFlashcardDeckProgress, recordFlashcardAnswer, resetFlashcardDeckProgress } =
     useStudentProgress();
-  const deck = getFlashcardDeck(routeDeckId ?? DEFAULT_DECK_ID);
+  const requestedDeck = routeDeckId
+    ? findFlashcardDeck(routeDeckId)
+    : getFlashcardDeck(DEFAULT_DECK_ID);
+  const deckMissing = Boolean(routeDeckId && !requestedDeck);
+  const deck = requestedDeck ?? getFlashcardDeck(DEFAULT_DECK_ID);
   const deckId = deck.deckId;
   const cards = deck.cards;
   const cardIds = cards.map((card) => card.id);
@@ -95,6 +93,30 @@ function FlashcardSessionScreen() {
 
   const ringPercent = Math.round(progressPercent);
   const newCount = Math.max(cards.length - answeredCount, 0);
+
+  if (deckMissing) {
+    return (
+      <PageLayout>
+        <div className="flex min-h-full items-center justify-center p-4">
+          <section className="w-full max-w-xl rounded-[2rem] border border-[#073B5A]/10 bg-white p-8 text-center shadow-sm">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#E9F7F8] text-[#00AFB9]">
+              <BookOpen size={28} strokeWidth={2.7} />
+            </div>
+            <h1 className="mt-5 text-2xl font-black text-[#073B5A]">Flashcard deck unavailable</h1>
+            <p className="mt-2 text-base font-bold leading-relaxed text-[#073B5A]/70">
+              This lesson does not have a flashcard deck yet. Choose one of the available decks instead.
+            </p>
+            <Link
+              to="/flashcards"
+              className="mt-6 inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#00AFB9] px-7 text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+            >
+              Browse Flashcards
+            </Link>
+          </section>
+        </div>
+      </PageLayout>
+    );
+  }
 
   function submitAnswer(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -194,23 +216,6 @@ function FlashcardSessionScreen() {
               <p className="mt-2 text-base font-bold text-[#073B5A]/70">{deck.subtitle}</p>
             </div>
 
-            <div className="hidden items-center gap-3 2xl:flex">
-              <div className="flex items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white px-3.5 py-2.5 shadow-sm">
-                <Star size={22} className="text-[#F7B733]" fill="currentColor" />
-                <span className="text-lg font-black text-[#073B5A]">1,250</span>
-              </div>
-
-              <div className="flex items-center gap-3 rounded-2xl border border-[#073B5A]/10 bg-white px-3.5 py-2.5 shadow-sm">
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FED9B7] text-xl">
-                  👧
-                </div>
-
-                <div>
-                  <p className="text-[0.82rem] font-black text-[#073B5A]">Ava Johnson</p>
-                  <p className="text-xs font-bold text-[#073B5A]/60">3rd Grade</p>
-                </div>
-              </div>
-            </div>
           </header>
 
           {/* @SECTION FLASHCARD_SESSION_META */}
@@ -272,7 +277,7 @@ function FlashcardSessionScreen() {
               className="relative min-h-[330px] overflow-hidden rounded-[2rem] border border-[#073B5A]/10 bg-[radial-gradient(circle_at_20%_25%,rgba(253,252,220,0.75),transparent_20%),linear-gradient(180deg,#FFFFFF_0%,#FFFDF7_100%)] px-8 py-8 text-center shadow-[0_16px_35px_rgba(7,59,90,0.14)]"
             >
               <span className="absolute left-20 top-24 text-2xl text-[#FDFCDC]">✦</span>
-              <span className="absolute right-28 top-6 text-5xl text-[#F7B733]">★</span>
+              <span className="absolute right-28 top-6 text-4xl text-[#F7B733]">✦</span>
               <span className="absolute right-20 bottom-20 text-4xl text-[#FDFCDC]">✦</span>
               <span className="absolute left-14 bottom-24 text-2xl text-[#FDFCDC]">✦</span>
 
@@ -394,7 +399,7 @@ function FlashcardSessionScreen() {
                 to="/flashcards"
                 className="inline-flex h-16 items-center justify-center gap-2 rounded-2xl border border-[#F7B733] bg-[#FFF8E9] px-5 text-sm font-black text-[#073B5A] shadow-[0_0_0_5px_rgba(247,183,51,0.20),0_0_28px_rgba(247,183,51,0.55),0_16px_34px_rgba(247,183,51,0.34)] ring-4 ring-[#F7B733]/25 transition hover:bg-[#FDFCDC]"
               >
-                <Star size={18} fill="currentColor" className="text-[#F7B733]" />
+                <CheckCircle2 size={18} strokeWidth={3} className="text-[#0081A7]" />
                 Back to Flashcards
               </Link>
             )}
@@ -403,27 +408,26 @@ function FlashcardSessionScreen() {
           {/* @SECTION FLASHCARD_ENCOURAGEMENT */}
           <section
             data-name="flashcard-encouragement-card"
-            className="relative mx-auto flex max-w-[920px] items-center gap-5 overflow-hidden rounded-3xl border border-[#F4D589] bg-[#FFF8E9] px-6 py-4 shadow-sm"
+            className="mx-auto flex max-w-[920px] items-center gap-4 rounded-3xl border border-[#00AFB9]/20 bg-[#F7FCFD] px-6 py-4 shadow-sm"
           >
-            <img
-              src={mascotAsset("star-happy.webp")}
-              alt="Happy star mascot"
-              className="h-24 w-24 shrink-0 object-contain"
-            />
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-[#00AFB9] shadow-sm">
+              {isDeckComplete ? (
+                <CheckCircle2 size={30} strokeWidth={2.8} />
+              ) : (
+                <BookOpen size={28} strokeWidth={2.6} />
+              )}
+            </div>
 
-            <div className="relative z-10">
+            <div>
               <p className="text-xl font-black text-[#073B5A]">
-                {isDeckComplete ? "Deck complete! ⭐" : "Keep going! ⭐"}
+                {isDeckComplete ? "Deck complete!" : "Keep going!"}
               </p>
               <p className="mt-1 text-base font-bold text-[#275875]">
                 {isDeckComplete
-                  ? "Great review! Head back to Flashcards when you’re ready."
+                  ? "Great review. Head back to Flashcards when you’re ready."
                   : "Every card review builds stronger math confidence."}
               </p>
             </div>
-
-            <span className="absolute right-24 top-5 text-5xl text-white/60">★</span>
-            <span className="absolute bottom-4 right-44 text-3xl text-white/60">★</span>
           </section>
         </main>
 
@@ -560,24 +564,6 @@ function FlashcardSessionScreen() {
             </div>
           </section>
 
-          <section className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-5 shadow-sm">
-            <div className="flex items-center gap-4">
-              <div className="text-5xl">🔥</div>
-
-              <div>
-                <p className="text-lg font-black text-[#073B5A]">Current Streak</p>
-
-                <p className="mt-1 text-3xl font-black text-[#073B5A]">
-                  7 <span className="text-base text-[#275875]">days</span>
-                </p>
-
-                <p className="mt-1 text-sm font-bold text-[#275875]/80">
-                  Amazing streak! Keep it up! 🎉
-                </p>
-              </div>
-            </div>
-          </section>
-
           <Link
             to="/flashcards"
             className={`inline-flex w-full items-center justify-center gap-2 rounded-2xl border px-4 py-3 text-sm font-black shadow-sm transition ${
@@ -587,7 +573,7 @@ function FlashcardSessionScreen() {
             }`}
           >
             {isDeckComplete ? (
-              <Star size={18} fill="currentColor" className="text-[#F7B733]" />
+              <CheckCircle2 size={18} strokeWidth={3} className="text-[#0081A7]" />
             ) : (
               <ArrowLeft size={18} strokeWidth={3} />
             )}

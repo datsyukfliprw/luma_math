@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "test:run": "vitest run",
+    "test:run": "vitest run --maxWorkers=2",
     "curriculum:check": "vitest run src/data/curriculum/curriculumCompleteness.test.ts"
   },
   "dependencies": {

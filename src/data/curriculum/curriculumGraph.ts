@@ -231,12 +231,16 @@ function buildMasteryGraph(): Pathway {
     allChapters.push(...buildUnitPathway(curriculum, skillRegistry));
   }
 
+  const gradeLevels = Array.from(new Set(curricula.map((curriculum) => curriculum.grade_level)));
+  const gradeLevel = gradeLevels.length === 1 ? gradeLevels[0] : 0;
+
   return {
     id: "all-units",
-    gradeLevel: 0,
+    gradeLevel,
     unitNumber: 0,
-    title: "LumaMath Curriculum",
-    subtitle: "All registered grades and units",
+    title: gradeLevel > 0 ? `Grade ${gradeLevel} Curriculum` : "LumaMath Curriculum",
+    subtitle:
+      gradeLevel > 0 ? `All registered Grade ${gradeLevel} units` : "All registered grades and units",
     chapterIds: allChapters.map((chapter) => chapter.id),
     chapters: allChapters,
   };

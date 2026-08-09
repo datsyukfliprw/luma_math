@@ -1,23 +1,12 @@
+import type { Lesson } from "../data/curriculum";
+
 export type PracticeMode = "guided" | "independent" | "challenge";
 
 export type PracticeGenerationOptions = {
   mode?: PracticeMode;
   seed?: string | number;
   count?: number;
-  lesson?: {
-    lesson_id?: string;
-    lesson_title?: string;
-    practice_type?: string;
-    skills?: string[];
-    quiz_question_count?: number;
-    review_types?: string[];
-
-    practice_block?: {
-      question_count?: number;
-      type?: string;
-      instructions?: string;
-    };
-  };
+  lesson?: Partial<Lesson>;
 };
 
 export type PracticeProblem = {
@@ -30,6 +19,7 @@ export type PracticeProblem = {
     | "factor_product"
     | "array_rows_columns"
     | "multiple_choice"
+    | "text_entry"
     | "fair_sharing"
     | "mistake_check";
   problemKey: string;

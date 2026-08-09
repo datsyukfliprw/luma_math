@@ -23,7 +23,6 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Log error details for development
     console.error("ErrorBoundary caught an error:", error, errorInfo);
     console.error("Component stack:", errorInfo.componentStack);
     console.error("Error stack:", error.stack);
@@ -40,43 +39,40 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex min-h-[100dvh] w-full items-center justify-center bg-[#faf9f4] p-4 sm:p-8">
-          <div className="max-w-md rounded-2xl bg-white p-6 shadow-lg sm:p-8">
-            {/* LumaMath mascot branding */}
-            <div className="mb-6 flex justify-center">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#F4D589] bg-[#FEF3D9] text-4xl">
-                ⭐
-              </div>
+        <div className="flex min-h-[100dvh] w-full items-center justify-center bg-[#F0EEE7] p-4 sm:p-8">
+          <div className="w-full max-w-md rounded-[2rem] border border-[#073B5A]/10 bg-white p-6 text-center shadow-lg sm:p-8">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#E9F7F8] text-3xl font-black text-[#0081A7]">
+              !
             </div>
 
-            <h1 className="mb-3 text-center text-2xl font-black text-[#073B5A]">
-              Oops! Something went wrong
-            </h1>
-
-            <p className="mb-6 text-center text-base font-semibold text-[#073B5A]/75">
-              Don't worry, your progress is safe. Let's get you back to learning.
+            <p className="mt-5 text-xs font-black uppercase tracking-[0.2em] text-[#0081A7]">
+              Something Went Wrong
+            </p>
+            <h1 className="mt-2 text-2xl font-black text-[#073B5A]">We couldn&apos;t open that page.</h1>
+            <p className="mt-3 text-base font-semibold leading-7 text-[#073B5A]/70">
+              Your saved learning progress is still on this device. Return home or refresh and try again.
             </p>
 
-            {/* Action buttons */}
-            <div className="flex flex-col gap-3">
+            <div className="mt-6 flex flex-col gap-3">
               <button
+                type="button"
                 onClick={this.handleGoHome}
-                className="rounded-xl bg-[#00AFB9] px-6 py-3 text-base font-black text-white transition-colors hover:bg-[#0081A7]"
+                className="rounded-2xl bg-[#00AFB9] px-6 py-3 text-base font-black text-white transition-colors hover:bg-[#0081A7]"
               >
                 Go to Home
               </button>
 
               <button
+                type="button"
                 onClick={this.handleRefresh}
-                className="rounded-xl border-2 border-[#073B5A] px-6 py-3 text-base font-black text-[#073B5A] transition-colors hover:bg-[#073B5A]/5"
+                className="rounded-2xl border border-[#073B5A]/15 px-6 py-3 text-base font-black text-[#073B5A] transition-colors hover:bg-[#073B5A]/5"
               >
                 Refresh Page
               </button>
             </div>
 
-            {/* Error details only in development */}
             {isDevelopment && this.state.error && (
-              <details className="mt-6">
+              <details className="mt-6 text-left">
                 <summary className="cursor-pointer text-sm font-semibold text-[#073B5A]/70">
                   Development Error Details
                 </summary>

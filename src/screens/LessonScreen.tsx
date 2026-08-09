@@ -1,4 +1,5 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
+import { ClipboardCheck, CheckCircle2, RotateCcw } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import LearnCard from "../components/lesson/LearnCard";
@@ -17,6 +18,7 @@ import type { LessonPracticeRewardState } from "../types/practiceProgress";
 import type { WarmUpData } from "../types/warmup";
 import { getLessonExperience } from "../data/lessonExperience";
 import { getChapterForConcept, getConceptByLessonId } from "../data/curriculum/curriculumGraph";
+import type { Lesson } from "../data/curriculum";
 
 type LessonWithStructuredData = {
   warmup?: WarmUpData;
@@ -30,6 +32,46 @@ type NextLessonStep = {
   buttonLabel: string;
   to: string;
 };
+
+function formatGradeLabel(grade: number) {
+  if (grade === 0) return "Kindergarten";
+  if (grade === 1) return "1st Grade";
+  if (grade === 2) return "2nd Grade";
+  if (grade === 3) return "3rd Grade";
+  return `${grade}th Grade`;
+}
+
+function getCurriculumLessonId(unitNumber: number, weekNumber: number, lesson: Lesson) {
+  if (lesson.lesson_id) return lesson.lesson_id;
+  return lesson.lesson_type === "evaluation"
+    ? `g3-u${unitNumber}-w${weekNumber}-eval`
+    : `g3-u${unitNumber}-w${weekNumber}-l${lesson.day_number}`;
+}
+
+function getNextCurriculumLessonId({
+  unitNumber,
+  weekNumber,
+  currentLesson,
+  lessons,
+}: {
+  unitNumber: number;
+  weekNumber: number;
+  currentLesson: Lesson;
+  lessons: Lesson[];
+}) {
+  const currentIndex = lessons.findIndex((candidate) => {
+    if (currentLesson.lesson_id && candidate.lesson_id) {
+      return candidate.lesson_id === currentLesson.lesson_id;
+    }
+    return (
+      candidate.lesson_type === currentLesson.lesson_type &&
+      candidate.day_number === currentLesson.day_number
+    );
+  });
+
+  if (currentIndex < 0 || currentIndex >= lessons.length - 1) return undefined;
+  return getCurriculumLessonId(unitNumber, weekNumber, lessons[currentIndex + 1]);
+}
 
 function getNextStep({
   lessonId,
@@ -52,31 +94,30 @@ function getNextStep({
   const guidedComplete = practiceRewards.guided?.completed === true || progress.practiceComplete;
   const independentComplete = practiceRewards.independent?.completed === true;
   const challengeComplete = practiceRewards.challenge?.completed === true;
-
   const flashcardProgress = getDeckProgress(flashcardDeckId, flashcardCardIds);
 
   if (!progress.warmupComplete) {
     return {
       title: "Warm-Up",
-      description: "Start with quick review before today’s lesson.",
+      description: "Start with a quick review before today’s lesson.",
       buttonLabel: "Start Warm-Up ›",
-      to: `/learn/${lessonId}?step=warmup`,
+      to: `/warmup/${lessonId}`,
     };
   }
 
   if (!progress.learnComplete) {
     return {
       title: "Learn",
-      description: "Watch the short lesson and learn today’s skill.",
-      buttonLabel: "Continue Lesson ›",
-      to: `/learn/${lessonId}?step=learn`,
+      description: "Explore today’s big idea and finish the Quick Check.",
+      buttonLabel: "Continue Learn ›",
+      to: `/learn/${lessonId}`,
     };
   }
 
   if (!progress.tryItComplete) {
     return {
       title: "Try It",
-      description: "Try one guided problem before practice.",
+      description: "Try a guided example before practice.",
       buttonLabel: "Start Try It ›",
       to: `/try-it/${lessonId}`,
     };
@@ -85,7 +126,7 @@ function getNextStep({
   if (!guidedComplete) {
     return {
       title: "Guided Practice",
-      description: "Solve step-by-step problems with hints.",
+      description: "Solve step-by-step problems with support when you need it.",
       buttonLabel: "Start Guided Practice ›",
       to: `/practice/${lessonId}?mode=guided`,
     };
@@ -103,13 +144,13 @@ function getNextStep({
   if (!challengeComplete) {
     return {
       title: "Challenge",
-      description: "Try a tougher version for an epic reward.",
+      description: "Try a tougher version and explain your thinking.",
       buttonLabel: "Try Challenge ›",
       to: `/practice/${lessonId}?mode=challenge`,
     };
   }
 
-  if (!flashcardProgress.completed) {
+  if (flashcardCardIds.length > 0 && !flashcardProgress.completed) {
     return {
       title: "Flashcards",
       description: "Review this lesson’s deck and strengthen recall.",
@@ -119,16 +160,19 @@ function getNextStep({
   }
 
   if (nextLessonId) {
+    const isEvaluationNext = nextLessonId.endsWith("-eval");
     return {
-      title: "Lesson Complete",
-      description: "Great work! You’re ready for the next lesson.",
-      buttonLabel: "Next Lesson ›",
+      title: isEvaluationNext ? "Unit Evaluation" : "Lesson Complete",
+      description: isEvaluationNext
+        ? "You finished the unit lessons. The checkpoint is next."
+        : "Great work! You’re ready for the next lesson.",
+      buttonLabel: isEvaluationNext ? "Open Evaluation ›" : "Next Lesson ›",
       to: `/lesson/${nextLessonId}`,
     };
   }
 
   return {
-    title: "Unit Checkpoint",
+    title: "Unit Complete",
     description: "Great work! Head back to the learning path.",
     buttonLabel: "Back to Learning Path ›",
     to: "/learning-path",
@@ -157,7 +201,6 @@ function getSectionState(
   return progress.tryItComplete ? "active" : "future";
 }
 
-// @SECTION LESSON_CARD_FRAME
 function LessonCardFrame({ state, children }: { state: SectionState; children: ReactNode }) {
   const frameClass =
     state === "active"
@@ -173,7 +216,6 @@ function LessonCardFrame({ state, children }: { state: SectionState; children: R
   );
 }
 
-// @SECTION LESSON_ACTION_BAR
 function LessonActionBar({ nextStep }: { nextStep: NextLessonStep }) {
   const navigate = useNavigate();
 
@@ -183,8 +225,8 @@ function LessonActionBar({ nextStep }: { nextStep: NextLessonStep }) {
       className="mb-4 rounded-[1.5rem] border border-[#073B5A]/10 bg-white px-4 py-3 shadow-sm"
     >
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FFF3D9] text-xl">
-          🚀
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-lg font-black text-[#0081A7]">
+          →
         </div>
 
         <div className="min-w-0 flex-1">
@@ -208,50 +250,144 @@ function LessonActionBar({ nextStep }: { nextStep: NextLessonStep }) {
   );
 }
 
-// @SECTION LESSON_SCREEN
+function EvaluationOverview({
+  lessonId,
+  questionCount,
+  reviewTypes,
+  accuracy,
+  nextUnitPath,
+}: {
+  lessonId: string;
+  questionCount: number;
+  reviewTypes: string[];
+  accuracy?: number;
+  nextUnitPath: string;
+}) {
+  const navigate = useNavigate();
+  const passed = accuracy !== undefined;
+
+  return (
+    <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <article className="rounded-[1.75rem] border border-[#073B5A]/10 bg-white p-6 shadow-sm">
+        <div className="flex items-start gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#E9F7F8] text-[#00AFB9]">
+            <ClipboardCheck size={26} strokeWidth={2.6} />
+          </div>
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.16em] text-[#0081A7]">
+              Unit Checkpoint
+            </p>
+            <h2 className="mt-1 text-2xl font-black text-[#073B5A]">
+              {passed ? "Evaluation passed" : "Show what you know"}
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm font-bold leading-6 text-[#073B5A]/70">
+              {passed
+                ? "Your checkpoint is complete. You can continue to the next unit."
+                : `Answer ${questionCount} mixed review questions. Score at least 80% on your first attempts to pass.`}
+            </p>
+          </div>
+        </div>
+
+        {reviewTypes.length > 0 && (
+          <div className="mt-5">
+            <p className="text-xs font-black uppercase tracking-[0.14em] text-[#0081A7]">
+              Skills in this checkpoint
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {reviewTypes.map((reviewType) => (
+                <span
+                  key={reviewType}
+                  className="rounded-full border border-[#073B5A]/10 bg-[#F8FBFB] px-3 py-2 text-xs font-black text-[#073B5A]"
+                >
+                  {reviewType
+                    .split("_")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <button
+          type="button"
+          onClick={() => navigate(passed ? nextUnitPath : `/practice/${lessonId}`)}
+          className="mt-6 inline-flex min-h-12 items-center justify-center rounded-2xl bg-[#00AFB9] px-7 text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
+        >
+          {passed ? "Continue ›" : "Start Evaluation ›"}
+        </button>
+      </article>
+
+      <aside
+        className={`rounded-[1.75rem] border p-6 shadow-sm ${
+          passed
+            ? "border-[#7CCB5B]/25 bg-[#EEF9EA]"
+            : "border-[#F7B733]/30 bg-[#FFF8E8]"
+        }`}
+      >
+        <div
+          className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm ${
+            passed ? "text-[#2F7D32]" : "text-[#C78300]"
+          }`}
+        >
+          {passed ? (
+            <CheckCircle2 size={27} strokeWidth={2.7} />
+          ) : (
+            <RotateCcw size={25} strokeWidth={2.7} />
+          )}
+        </div>
+        <p className="mt-4 text-xs font-black uppercase tracking-[0.16em] text-[#0081A7]">
+          {passed ? "Result" : "Good to know"}
+        </p>
+        <h3 className="mt-2 text-xl font-black text-[#073B5A]">
+          {passed ? `${Math.round((accuracy ?? 0) * 100)}% first-attempt accuracy` : "You can retry if needed."}
+        </h3>
+        <p className="mt-2 text-sm font-bold leading-6 text-[#073B5A]/70">
+          {passed
+            ? "Passing this checkpoint unlocks the next Grade 3 unit."
+            : "A failed attempt does not change mastery or consume the checkpoint. Review and try again."}
+        </p>
+      </aside>
+    </section>
+  );
+}
+
 function LessonScreen() {
   const { lessonId } = useParams();
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
   const structuredLesson = lesson as typeof lesson & LessonWithStructuredData;
-
-  // Use context for state management
-  const { getLessonProgress, getPracticeRewardState, getFlashcardDeckProgress, studentState } =
-    useStudentProgress();
-
-  // @SECTION LESSON_EXPERIENCE
-  const lessonExperience = lessonId ? getLessonExperience(lessonId) : undefined;
+  const {
+    studentState,
+    getLessonProgress,
+    getPracticeRewardState,
+    getFlashcardDeckProgress,
+  } = useStudentProgress();
 
   const currentLessonId =
-    lessonId ?? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`;
+    lessonId ??
+    (lesson.lesson_type === "evaluation"
+      ? `g3-u${unit.unit_number}-w${week.week_number}-eval`
+      : `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`);
 
+  const lessonExperience = getLessonExperience(currentLessonId);
   const progress = getLessonProgress(currentLessonId);
-
-  const [starName, setStarName] = useState(() => studentState.starProfile.starName);
-
-  const currentStarName = studentState.starProfile.starName;
-
-  useEffect(() => {
-    // Sync starName when it changes
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setStarName(currentStarName);
-  }, [currentStarName]);
-
-  const currentWeekIndex = unit.weeks.findIndex(
-    (unitWeek) => unitWeek.week_number === week.week_number,
-  );
-  const nextLessonInSameWeek = week.lessons[weekDayNumber];
-  const nextWeek = unit.weeks[currentWeekIndex + 1];
-  const nextLessonId = nextLessonInSameWeek
-    ? `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber + 1}`
-    : nextWeek
-      ? `g3-u${unit.unit_number}-w${nextWeek.week_number}-l1`
-      : undefined;
+  const evaluationCompletion = studentState.evaluationCompletions[currentLessonId];
+  const displayProgress: LessonProgress = evaluationCompletion
+    ? { ...progress, practiceComplete: true, lessonComplete: true }
+    : progress;
 
   const flashcardDeckId = lesson.flashcards?.deckId ?? `lesson-${currentLessonId}`;
   const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
-
   const concept = getConceptByLessonId(currentLessonId);
   const chapter = concept ? getChapterForConcept(concept.id) : undefined;
+  const gradeLabel = formatGradeLabel(unit.grade_level);
+
+  const nextLessonId = getNextCurriculumLessonId({
+    unitNumber: unit.unit_number,
+    weekNumber: week.week_number,
+    currentLesson: lesson,
+    lessons: week.lessons,
+  });
 
   const nextStep = getNextStep({
     lessonId: currentLessonId,
@@ -263,83 +399,80 @@ function LessonScreen() {
     flashcardCardIds,
   });
 
+  const nextUnitPath =
+    unit.unit_number >= 36 ? "/learning-path" : `/lesson/g3-u${unit.unit_number + 1}-w1-l1`;
+
   return (
     <PageLayout>
-      {/* @SECTION LESSON_OVERVIEW_STACK */}
       <div data-name="lesson-overview-stack" className="flex min-h-0 flex-col">
         <LessonHero
           unitNumber={unit.unit_number}
           chapterTitle={chapter?.title}
           conceptTitle={concept?.title}
           title={lessonExperience?.title ?? lesson.lesson_title}
-          topic={unit.unit_title}
           description={lessonExperience?.kidGoal ?? lesson.objective}
           minutes={lesson.lesson_type === "evaluation" ? 35 : 25}
-          grade={`${unit.grade_level}rd Grade`}
+          grade={gradeLabel}
           lessonType={lesson.lesson_type}
-          quizQuestionCount={
-            lessonExperience?.quickCheck?.questions.length ?? lesson.quiz_question_count
-          }
-          progress={progress}
-          starName={starName}
+          quizQuestionCount={lesson.quiz_question_count ?? 0}
+          progress={displayProgress}
         />
 
-        <LessonActionBar nextStep={nextStep} />
+        {lesson.lesson_type === "evaluation" ? (
+          <EvaluationOverview
+            lessonId={currentLessonId}
+            questionCount={lesson.quiz_question_count ?? 0}
+            reviewTypes={lesson.review_types ?? []}
+            accuracy={evaluationCompletion?.accuracy}
+            nextUnitPath={nextUnitPath}
+          />
+        ) : (
+          <>
+            <LessonActionBar nextStep={nextStep} />
 
-        {/* @SECTION LESSON_STAGE_GRID */}
-        <section
-          data-name="lesson-stage-grid"
-          className="grid min-h-0 items-stretch gap-3 lg:grid-cols-2 xl:grid-cols-[0.95fr_0.95fr_1fr_1.08fr]"
-        >
-          <LessonCardFrame state={getSectionState("warmup", progress)}>
-            <WarmUpCard
-              factDrill={lesson.fact_drill}
-              warmup={structuredLesson.warmup}
-              lessonId={currentLessonId}
-              isComplete={progress.warmupComplete}
-            />
-          </LessonCardFrame>
+            <section
+              data-name="lesson-stage-grid"
+              className="grid min-h-0 items-stretch gap-3 lg:grid-cols-2 xl:grid-cols-[0.95fr_0.95fr_1fr_1.08fr]"
+            >
+              <LessonCardFrame state={getSectionState("warmup", progress)}>
+                <WarmUpCard
+                  factDrill={lesson.fact_drill}
+                  warmup={structuredLesson.warmup}
+                  lessonId={currentLessonId}
+                  isComplete={progress.warmupComplete}
+                />
+              </LessonCardFrame>
 
-          <LessonCardFrame state={getSectionState("learn", progress)}>
-            <LearnCard
-              lessonId={currentLessonId}
-              concept={lesson.concept}
-              isComplete={progress.learnComplete}
-            />
-          </LessonCardFrame>
+              <LessonCardFrame state={getSectionState("learn", progress)}>
+                <LearnCard
+                  lessonId={currentLessonId}
+                  concept={lesson.concept}
+                  isComplete={progress.learnComplete}
+                />
+              </LessonCardFrame>
 
-          <LessonCardFrame state={getSectionState("tryIt", progress)}>
-            <TryItCard
-              lessonId={currentLessonId}
-              practice={lesson.practice}
-              practiceType={lesson.practice_type}
-              isComplete={progress.tryItComplete}
-            />
-          </LessonCardFrame>
+              <LessonCardFrame state={getSectionState("tryIt", progress)}>
+                <TryItCard
+                  lessonId={currentLessonId}
+                  practice={lesson.practice}
+                  practiceType={lesson.practice_type}
+                  isComplete={progress.tryItComplete}
+                />
+              </LessonCardFrame>
 
-          <LessonCardFrame state={getSectionState("practice", progress)}>
-            <PracticeTimeCard
-              lessonId={currentLessonId}
-              activities={[
-                {
-                  icon: "🧮",
-                  title: "Guided Practice",
-                  subtitle: lesson.practice,
-                },
-                {
-                  icon: "✏️",
-                  title: "Independent Practice",
-                  subtitle: "Solve on your own",
-                },
-                {
-                  icon: "🏆",
-                  title: "Challenge Yourself",
-                  subtitle: "Take it up a notch!",
-                },
-              ]}
-            />
-          </LessonCardFrame>
-        </section>
+              <LessonCardFrame state={getSectionState("practice", progress)}>
+                <PracticeTimeCard
+                  lessonId={currentLessonId}
+                  activities={[
+                    { icon: "🧮", title: "Guided Practice", subtitle: lesson.practice },
+                    { icon: "✏️", title: "Independent Practice", subtitle: "Solve on your own" },
+                    { icon: "🏆", title: "Challenge Yourself", subtitle: "Take it up a notch!" },
+                  ]}
+                />
+              </LessonCardFrame>
+            </section>
+          </>
+        )}
       </div>
     </PageLayout>
   );

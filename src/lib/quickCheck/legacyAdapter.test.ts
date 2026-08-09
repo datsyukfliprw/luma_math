@@ -32,6 +32,37 @@ describe("toCanonicalQuickCheck (legacy adapter)", () => {
       }
     }
   });
+
+  it("balances Week 1 authored Quick Checks with direct, conceptual, and reasoning roles", () => {
+    const MASCOT_PATTERN = /\b(luma|spark|charge|boost|energy)\b/i;
+
+    for (const lessonId of WEEK_ONE_REGULAR_LESSONS) {
+      const lesson = getLessonExperience(lessonId);
+      expect(lesson, lessonId).toBeDefined();
+      expect(lesson!.source, lessonId).toBe("authored");
+
+      const canonical = lesson!.canonicalQuickCheck;
+      expect(canonical, `${lessonId} canonical quick check`).toBeDefined();
+      expect(canonical!.questions, `${lessonId} question count`).toHaveLength(3);
+
+      const roles = canonical!.questions.map((q) => q.role);
+      expect(new Set(roles), `${lessonId} roles`).toEqual(
+        new Set(["direct", "conceptual", "reasoning"]),
+      );
+
+      for (const question of canonical!.questions) {
+        const allText = [
+          question.prompt,
+          question.stem,
+          question.feedback.hint,
+          question.feedback.success,
+        ]
+          .filter(Boolean)
+          .join(" ");
+        expect(allText).not.toMatch(MASCOT_PATTERN);
+      }
+    }
+  });
 });
 
 describe("toLegacyQuickCheck (view-model adapter)", () => {

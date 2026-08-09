@@ -259,16 +259,7 @@ function LearnScreen() {
     if (buildRounds.length > 0) {
       steps.push({
         label: "Build It",
-        component: (
-          <BuildItPage
-            lesson={learnLesson}
-            onBuildComplete={() => {
-              updateLessonProgress(currentLessonId, {
-                learnComplete: true,
-              });
-            }}
-          />
-        ),
+        component: <BuildItPage lesson={learnLesson} />,
       });
     }
 
@@ -294,7 +285,7 @@ function LearnScreen() {
     }
 
     return steps;
-  }, [currentLessonId, learnLesson, updateLessonProgress]);
+  }, [currentLessonId, learnLesson]);
 
   function backToLesson() {
     navigate(lessonPath);

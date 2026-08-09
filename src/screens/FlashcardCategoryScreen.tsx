@@ -1,5 +1,5 @@
 // @SECTION FLASHCARD_CATEGORY_IMPORTS
-import { ArrowLeft, BookOpen, ChevronRight, Clock3, Layers3, Sparkles, Star } from "lucide-react";
+import { ArrowLeft, BookOpen, CheckCircle2, ChevronRight, Clock3, Layers3, Sparkles } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import {
@@ -69,7 +69,7 @@ function FlashcardDeckLibraryCard({
 
           {progress.completed && (
             <p className="ml-2 inline-flex items-center gap-1.5 rounded-full bg-[#FDFCDC] px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.14em] text-[#C78300]">
-              <Star size={12} fill="currentColor" />
+              <CheckCircle2 size={12} strokeWidth={3} />
               Complete
             </p>
           )}
@@ -183,23 +183,6 @@ function FlashcardCategoryScreen() {
             <p className="mt-1.5 text-sm font-bold text-[#073B5A]/70">{category.subtitle}</p>
           </div>
 
-          <div className="hidden items-center gap-3 xl:flex">
-            <div className="flex items-center gap-2 rounded-2xl border border-[#073B5A]/10 bg-white px-3.5 py-2.5 shadow-sm">
-              <Star size={22} className="text-[#F7B733]" fill="currentColor" />
-              <span className="text-lg font-black text-[#073B5A]">1,250</span>
-            </div>
-
-            <div className="flex items-center gap-3 rounded-2xl border border-[#073B5A]/10 bg-white px-3.5 py-2.5 shadow-sm">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FED9B7] text-xl">
-                👧
-              </div>
-
-              <div>
-                <p className="text-[0.82rem] font-black text-[#073B5A]">Ava Johnson</p>
-                <p className="text-xs font-bold text-[#073B5A]/60">3rd Grade</p>
-              </div>
-            </div>
-          </div>
         </header>
 
         <section

@@ -2,57 +2,38 @@ import { useEffect, useRef } from "react";
 import PageLayout from "../components/layout/PageLayout";
 import UnitCard from "../components/learning-path/UnitCard";
 import { isInstructionalLessonAvailable, type Curriculum } from "../data/curriculum";
-import { getAllCurricula, getFlashcardDeckIdFromCurriculum } from "../lib/curriculumLoader";
+import { getAllCurricula } from "../lib/curriculumLoader";
 import { getConceptByLessonId } from "../data/curriculum/curriculumGraph";
 import { getConceptUnlockState } from "../services/prerequisites/prerequisiteGraph";
 import { isFirstLessonOfUnitUnlocked } from "../services/progress/evaluationProgression";
-import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
 import {
   useStudentProgress,
   type LessonProgress,
-  type FlashcardDeckProgress,
   type StudentState,
 } from "../contexts/StudentProgressContext";
 import type { LessonPracticeRewardState } from "../types/practiceProgress";
 import type { SkillProgress } from "../types/mastery";
 import type { EvaluationCompletionRecord } from "../types/evaluationProgress";
 
-function getFlashcardDeckIdForLesson(lessonId: string) {
-  const match = lessonId.match(/^g3-u(\d+)-w(\d+)-l(\d+)$/);
-  if (match) {
-    const unitNumber = Number.parseInt(match[1], 10);
-    const weekNumber = Number.parseInt(match[2], 10);
-    const dayNumber = Number.parseInt(match[3], 10);
-    const deckId = getFlashcardDeckIdFromCurriculum(unitNumber, weekNumber, dayNumber);
-    if (deckId) return deckId;
-  }
-  return `lesson-${lessonId}`;
-}
-
 function getLessonCompletionPercent(
   lessonId: string,
   lessonType: string,
   getLessonProgress: (id: string) => LessonProgress,
   getPracticeRewardState: (id: string) => LessonPracticeRewardState,
-  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
   getEvaluationCompletion: (id: string) => EvaluationCompletionRecord | undefined,
 ) {
   const progress = getLessonProgress(lessonId);
   const practiceRewards = getPracticeRewardState(lessonId);
-  const flashcardDeckId = getFlashcardDeckIdForLesson(lessonId);
-  const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
-  const flashcardProgress = getFlashcardDeckProgress(flashcardDeckId, flashcardCardIds);
-
   if (lessonType === "evaluation") {
     return getEvaluationCompletion(lessonId) ? 100 : 0;
   }
 
+  const guidedComplete = practiceRewards.guided?.completed === true || progress.practiceComplete;
   const items = [
+    progress.warmupComplete,
     progress.learnComplete,
-    practiceRewards.guided?.completed === true,
-    practiceRewards.independent?.completed === true,
-    practiceRewards.challenge?.completed === true,
-    flashcardProgress.completed,
+    progress.tryItComplete,
+    guidedComplete,
   ];
 
   return Math.round((items.filter(Boolean).length / items.length) * 100);
@@ -63,7 +44,6 @@ function getUnitCardData(
   studentState: StudentState,
   getLessonProgress: (id: string) => LessonProgress,
   getPracticeRewardState: (id: string) => LessonPracticeRewardState,
-  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress,
   getSkillProgress: (skillId: string) => SkillProgress,
   getEvaluationCompletion: (id: string) => EvaluationCompletionRecord | undefined,
 ) {
@@ -119,7 +99,6 @@ function getUnitCardData(
             lesson.lesson_type,
             getLessonProgress,
             getPracticeRewardState,
-            getFlashcardDeckProgress,
             getEvaluationCompletion,
           )
         : 0;
@@ -178,7 +157,6 @@ function LearningPathScreen() {
     studentState,
     getLessonProgress,
     getPracticeRewardState,
-    getFlashcardDeckProgress,
     getSkillProgress,
   } = useStudentProgress();
   const currentUnitRef = useRef<HTMLDivElement | null>(null);
@@ -192,7 +170,6 @@ function LearningPathScreen() {
       studentState,
       getLessonProgress,
       getPracticeRewardState,
-      getFlashcardDeckProgress,
       getSkillProgress,
       (evaluationLessonId) => studentState.evaluationCompletions[evaluationLessonId],
     ),

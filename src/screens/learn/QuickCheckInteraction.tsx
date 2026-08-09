@@ -143,11 +143,11 @@ function QuickCheckInteraction({
       );
 
     case "mistake_detection": {
-      const reasonChoices = question.interaction.reasonChoices ?? [];
+      const interaction = question.interaction;
+      const reasonChoices = interaction.reasonChoices ?? [];
+      const correctReason = interaction.correctReason;
       const showReasonChoices = Boolean(
-        response?.answer === question.interaction.correctAnswer &&
-          question.interaction.correctReason &&
-          reasonChoices.length > 0,
+        response?.answer === interaction.correctAnswer && correctReason && reasonChoices.length > 0,
       );
 
       return (
@@ -170,7 +170,7 @@ function QuickCheckInteraction({
               <div className="mt-3 grid gap-2.5">
                 {reasonChoices.map((reason) => {
                   const isSelected = response?.reason === reason;
-                  const isCorrectReason = reason === question.interaction.correctReason;
+                  const isCorrectReason = reason === correctReason;
 
                   return (
                     <button

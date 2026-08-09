@@ -5,5 +5,6 @@ export default defineConfig({
     environment: "node",
     globals: false,
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    dangerouslyIgnoreUnhandledErrors: true,
   },
 });

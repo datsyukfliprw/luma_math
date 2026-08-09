@@ -9,6 +9,7 @@ const SUPPORTED_VISUAL_TYPES = new Set<PracticeProblem["visualType"]>([
   "factor_product",
   "array_rows_columns",
   "multiple_choice",
+  "text_entry",
   "fair_sharing",
   "mistake_check",
 ]);

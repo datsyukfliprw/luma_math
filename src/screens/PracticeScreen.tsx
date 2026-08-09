@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
@@ -7,7 +7,11 @@ import { generateProblemsForPracticeType } from "../practiceTypes/registry";
 import { createPracticeSessionSeed } from "../practiceTypes/random";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
 import type { PracticeMode } from "../practiceTypes/types";
-import type { PracticeCompletionRejectionReason } from "../types/practiceProgress";
+import type {
+  PracticeCompletionMetrics,
+  PracticeCompletionRejectionReason,
+} from "../types/practiceProgress";
+import type { SessionResult } from "../types/sessionResults";
 import type { EvaluationCompletionRejectionReason } from "../types/evaluationProgress";
 import {
   buildFirstAttemptMetrics,
@@ -49,12 +53,8 @@ const PRACTICE_MODE_CONFIG = {
     title: "Guided Practice",
     eyebrow: "Step-by-step support",
     description: "Use hints and visual support while you build confidence with today’s skill.",
-    rewardTitle: "Earn a Common Accessory",
-    rewardTier: "🎒 Common Reward",
-    rewardDescription:
-      "Complete Guided Practice to earn a common accessory for your star. Want something rarer? Try Independent Practice for rare rewards or Challenge Yourself for epic rewards.",
-    rewardIcon: "🎒",
-    skillDescription: "Use equal groups to find the total.",
+    completionIcon: "🧭",
+    skillDescription: "Use the model and your math thinking to solve each problem.",
     hintTitle: "Helpful Hint",
     accentClass: "border-[#00AFB9]/25 bg-[#E9F7F8]",
     badgeClass: "bg-[#E9F7F8] text-[#0081A7]",
@@ -62,12 +62,9 @@ const PRACTICE_MODE_CONFIG = {
   independent: {
     title: "Independent Practice",
     eyebrow: "Solo round",
-    description: "Your turn! Show what you know and power up a rare reward.",
-    rewardTitle: "Rare Reward",
-    rewardTier: "✨ Rare Reward",
-    rewardDescription: "Finish Independent Practice to unlock a rare accessory for your star.",
-    rewardIcon: "✨",
-    skillDescription: "Solve the skill on your own with fewer hints.",
+    description: "Your turn! Show what you know with less support.",
+    completionIcon: "✏️",
+    skillDescription: "Solve the skill on your own and check your thinking.",
     hintTitle: "Need a Hint?",
     accentClass: "border-[#F7B733]/30 bg-[#FFF3D9]",
     badgeClass: "bg-[#FFF3D9] text-[#C78300]",
@@ -75,12 +72,8 @@ const PRACTICE_MODE_CONFIG = {
   challenge: {
     title: "Challenge Yourself",
     eyebrow: "Bonus difficulty",
-    description: "Try a tougher version of the skill with less support and a bigger reward.",
-    rewardTitle: "Earn an Epic Accessory",
-    rewardTier: "👑 Epic Reward",
-    rewardDescription:
-      "Complete Challenge Practice to earn an epic accessory for your star. Challenge problems ask you to spot mistakes and explain your thinking.",
-    rewardIcon: "👑",
+    description: "Try a tougher version of the skill and explain your reasoning.",
+    completionIcon: "🧠",
     skillDescription: "Solve trickier questions that test your reasoning.",
     hintTitle: "Need a Hint?",
     accentClass: "border-[#F07167]/25 bg-[#FCE9E5]",
@@ -123,7 +116,11 @@ function getHintText(visualType?: string) {
   }
 
   if (visualType === "multiple_choice") {
-    return "The commutative property means you can switch the order of the factors and keep the same product.";
+    return "Read each choice carefully, solve the problem, and choose the answer that matches your work.";
+  }
+
+  if (visualType === "text_entry") {
+    return "Work the problem carefully, then type the answer that matches your reasoning.";
   }
 
   if (visualType === "repeated_addition") {
@@ -155,10 +152,10 @@ function buildAnswerChoices(correctAnswer: string, groups?: number) {
   return Array.from(new Set(["0", "1", String(correct)])).slice(0, 3);
 }
 
-function getRewardChargeLabel(mode: PracticeMode) {
-  if (mode === "guided") return "Common Reward Charge";
-  if (mode === "independent") return "Rare Reward Charge";
-  return "Epic Reward Charge";
+function getPracticeProgressLabel(mode: PracticeMode) {
+  if (mode === "guided") return "Guided Progress";
+  if (mode === "independent") return "Independent Progress";
+  return "Challenge Progress";
 }
 
 function getFactorProductSlotOrder(problemIndex: number) {
@@ -181,30 +178,13 @@ function getModeLabel(mode: PracticeMode) {
   return "Challenge Yourself";
 }
 
-function getModeRewardLabel(mode: PracticeMode) {
-  if (mode === "guided") return "common accessory";
-  if (mode === "independent") return "rare accessory";
-  return "epic accessory";
-}
-
-function getNextLessonPath({
-  unitNumber,
-  weekNumber,
-  dayNumber,
-}: {
-  unitNumber: number;
-  weekNumber: number;
-  dayNumber: number;
-}) {
-  return `/lesson/g3-u${unitNumber}-w${weekNumber}-l${dayNumber + 1}`;
-}
-
 function getNextUnitPath(unitNumber: number) {
   return unitNumber >= 36 ? "/learning-path" : `/lesson/g3-u${unitNumber + 1}-w1-l1`;
 }
 
 // @SECTION PRACTICE_SCREEN
 function PracticeScreen() {
+  const navigate = useNavigate();
   const { lessonId } = useParams();
   const [searchParams] = useSearchParams();
   const practiceMode = normalizePracticeMode(searchParams.get("mode"));
@@ -214,7 +194,6 @@ function PracticeScreen() {
   const {
     studentState,
     getRecommendedNextPracticeMode,
-    hasPracticeReward,
     markPracticeReward,
     markEvaluationComplete,
   } = useStudentProgress();
@@ -225,12 +204,23 @@ function PracticeScreen() {
     (isEvaluation
       ? `g3-u${unit.unit_number}-w${week.week_number}-eval`
       : `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`);
-  const nextLessonPath = getNextLessonPath({
-    unitNumber: unit.unit_number,
-    weekNumber: week.week_number,
-    dayNumber: weekDayNumber,
-  });
   const nextUnitPath = getNextUnitPath(unit.unit_number);
+  const currentLessonIndex = week.lessons.findIndex(
+    (candidate) =>
+      candidate.lesson_type === lesson.lesson_type &&
+      candidate.day_number === lesson.day_number,
+  );
+  const nextCurriculumLesson =
+    currentLessonIndex >= 0 ? week.lessons[currentLessonIndex + 1] : undefined;
+  const nextCurriculumLessonId = nextCurriculumLesson
+    ? nextCurriculumLesson.lesson_id ??
+      (nextCurriculumLesson.lesson_type === "evaluation"
+        ? `g3-u${unit.unit_number}-w${week.week_number}-eval`
+        : `g3-u${unit.unit_number}-w${week.week_number}-l${nextCurriculumLesson.day_number}`)
+    : undefined;
+  const nextLessonPath = nextCurriculumLessonId
+    ? `/lesson/${nextCurriculumLessonId}`
+    : nextUnitPath;
   const [practiceSessionId, setPracticeSessionId] = useState(() => crypto.randomUUID());
   const practiceSessionSeed = createPracticeSessionSeed(
     currentLessonId,
@@ -326,7 +316,7 @@ function PracticeScreen() {
 
   const lessonPath = lessonId ? `/lesson/${lessonId}` : "/lesson";
   const solvedProblemCount = correctProblemIndexes.length;
-  const rewardChargePercent =
+  const practiceProgressPercent =
     problems.length > 0 ? (solvedProblemCount / problems.length) * 100 : 0;
   const submittedFirstAttempts = Object.keys(firstAttemptResults).length;
   const correctFirstAttempts = Object.values(firstAttemptResults).filter(Boolean).length;
@@ -340,13 +330,29 @@ function PracticeScreen() {
     ? buildAnswerChoices(currentProblem.correctAnswer, visualData?.groups)
     : [];
 
-  function openCompletionModal(firstCompletion: boolean) {
+  function openPracticeResults(metrics: PracticeCompletionMetrics) {
     const recommendedMode = getRecommendedNextPracticeMode(currentLessonId, practiceMode);
+    const accuracy =
+      metrics.firstAttemptTotalCount > 0
+        ? metrics.firstAttemptCorrectCount / metrics.firstAttemptTotalCount
+        : 0;
 
-    setCompletionModal({
-      firstCompletion,
+    const result: SessionResult = {
+      kind: "practice",
+      lessonId: currentLessonId,
+      lessonTitle: lesson.lesson_title,
+      mode: practiceMode,
+      correctCount: problems.length,
+      totalCount: problems.length,
+      firstAttemptCorrectCount: metrics.firstAttemptCorrectCount,
+      firstAttemptTotalCount: metrics.firstAttemptTotalCount,
+      accuracy,
       recommendedMode,
-    });
+      nextLessonPath,
+      lessonPath,
+    };
+
+    navigate("/results", { state: { result } });
   }
 
   function recordFeedback(isCorrect: boolean) {
@@ -388,13 +394,22 @@ function PracticeScreen() {
 
           window.setTimeout(() => {
             if (result.ok) {
-              setEvaluationModal({
+              const sessionResult: SessionResult = {
+                kind: "evaluation",
+                lessonId: currentLessonId,
+                lessonTitle: lesson.lesson_title,
                 status: "passed",
                 firstAttemptCorrectCount: result.completion.firstAttemptCorrectCount,
                 firstAttemptTotalCount: result.completion.firstAttemptTotalCount,
                 accuracy: result.accuracy,
+                requiredAccuracy: 0.8,
                 alreadyCompleted: false,
-              });
+                nextUnitPath,
+                lessonPath,
+                retryPath: `/practice/${currentLessonId}`,
+              };
+
+              navigate("/results", { state: { result: sessionResult } });
               return;
             }
 
@@ -402,13 +417,22 @@ function PracticeScreen() {
               const savedCompletion = studentState.evaluationCompletions[currentLessonId];
 
               if (savedCompletion) {
-                setEvaluationModal({
+                const sessionResult: SessionResult = {
+                  kind: "evaluation",
+                  lessonId: currentLessonId,
+                  lessonTitle: lesson.lesson_title,
                   status: "passed",
                   firstAttemptCorrectCount: savedCompletion.firstAttemptCorrectCount,
                   firstAttemptTotalCount: savedCompletion.firstAttemptTotalCount,
                   accuracy: savedCompletion.accuracy,
+                  requiredAccuracy: 0.8,
                   alreadyCompleted: true,
-                });
+                  nextUnitPath,
+                  lessonPath,
+                  retryPath: `/practice/${currentLessonId}`,
+                };
+
+                navigate("/results", { state: { result: sessionResult } });
               } else {
                 setEvaluationModal({
                   status: "error",
@@ -419,13 +443,21 @@ function PracticeScreen() {
             }
 
             if (result.reason === "insufficient_accuracy") {
-              setEvaluationModal({
+              const sessionResult: SessionResult = {
+                kind: "evaluation",
+                lessonId: currentLessonId,
+                lessonTitle: lesson.lesson_title,
                 status: "retry",
                 firstAttemptCorrectCount: metrics.firstAttemptCorrectCount,
                 firstAttemptTotalCount: metrics.firstAttemptTotalCount,
                 accuracy: result.accuracy ?? 0,
                 requiredAccuracy: result.requiredAccuracy ?? 0.8,
-              });
+                nextUnitPath,
+                lessonPath,
+                retryPath: `/practice/${currentLessonId}`,
+              };
+
+              navigate("/results", { state: { result: sessionResult } });
               return;
             }
 
@@ -438,13 +470,12 @@ function PracticeScreen() {
           return nextCorrectIndexes;
         }
 
-        const firstCompletion = !hasPracticeReward(currentLessonId, practiceMode);
         const result = markPracticeReward(currentLessonId, practiceMode, metrics);
 
         window.setTimeout(() => {
           if (!result.ok) {
             if (result.reason === "already_completed") {
-              openCompletionModal(false);
+              openPracticeResults(metrics);
             } else {
               setRejectionModal({
                 reason: result.reason,
@@ -455,7 +486,7 @@ function PracticeScreen() {
               });
             }
           } else {
-            openCompletionModal(firstCompletion);
+            openPracticeResults(metrics);
           }
         }, 350);
       }
@@ -1005,16 +1036,6 @@ function PracticeScreen() {
           </p>
         </div>
 
-        <div className="hidden rounded-xl border border-[#073B5A]/10 bg-white px-3 py-1.5 shadow-sm md:flex md:items-center md:gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FED9B7] text-lg">
-            👧
-          </div>
-
-          <div>
-            <p className="text-xs font-black text-[#073B5A]">Ava Johnson</p>
-            <p className="text-[0.7rem] font-bold text-[#073B5A]/60">3rd Grade</p>
-          </div>
-        </div>
       </div>
 
       <section className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_300px]">
@@ -1394,7 +1415,7 @@ function PracticeScreen() {
             {feedback === null && (
               <div className="mx-auto mt-4 flex max-w-4xl items-center gap-4 rounded-3xl border border-[#00AFB9]/25 bg-[#E9F7F8] px-5 py-3 shadow-sm">
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#BDEFF2] text-3xl shadow-sm">
-                  {practiceMode === "challenge" ? "🕵️" : practiceMode === "guided" ? "🎒" : "🌟"}
+                  {isEvaluation ? "✓" : modeConfig.completionIcon}
                 </div>
 
                 <div>
@@ -1402,9 +1423,9 @@ function PracticeScreen() {
                     {isEvaluation
                       ? "Take your time and trust your thinking."
                       : practiceMode === "challenge"
-                        ? "Pattern detective mode!"
+                        ? "Use your reasoning!"
                         : practiceMode === "guided"
-                          ? "Step-by-step power!"
+                          ? "Work it step by step!"
                           : "You’ve got this!"}
                   </p>
 
@@ -1412,10 +1433,10 @@ function PracticeScreen() {
                     {isEvaluation
                       ? "Your first answer on each question counts toward the 80% passing score."
                       : practiceMode === "challenge"
-                        ? "Every solved mistake powers up your Epic Reward!"
+                        ? "Every solved mistake strengthens your reasoning."
                         : practiceMode === "guided"
-                          ? "Every correct answer powers up your Common Reward!"
-                          : "Every correct answer powers up your Rare Reward!"}
+                          ? "Every correct answer moves you closer to finishing Guided Practice."
+                          : "Every correct answer moves you closer to finishing Independent Practice."}
                   </p>
                 </div>
               </div>
@@ -1427,10 +1448,10 @@ function PracticeScreen() {
                   {isEvaluation
                     ? "Answer locked in. Keep going! ✓"
                     : practiceMode === "independent"
-                      ? "Nice solo solve! Rare reward charge +1 ⚡"
+                      ? "Nice solo solve! Keep going. ✓"
                       : practiceMode === "challenge"
-                        ? "Great detective work! Epic reward charge +1 👑"
-                        : "Nice guided solve! Common reward charge +1 🎒"}
+                        ? "Great reasoning! Keep going. ✓"
+                        : "Nice work! Keep going. ✓"}
                 </p>
               </div>
             )}
@@ -1508,7 +1529,7 @@ function PracticeScreen() {
           {isEvaluation ? (
             <div className="overflow-hidden rounded-[1.5rem] border border-[#00AFB9]/25 bg-[radial-gradient(circle_at_80%_25%,rgba(255,255,255,0.95),transparent_34%),linear-gradient(135deg,#E9F7F8,#FFFDF7)] p-4 shadow-sm">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-[#0081A7]">
-                ⭐ Evaluation Goal
+                Evaluation Goal
               </p>
 
               <div className="mt-3 flex items-center gap-3">
@@ -1530,23 +1551,23 @@ function PracticeScreen() {
             <div className="overflow-hidden rounded-[1.5rem] border border-[#F4D589] bg-[radial-gradient(circle_at_80%_35%,rgba(255,255,255,0.95),transparent_32%),linear-gradient(90deg,#FFF3D9,#FFF8E9)] p-4 shadow-sm">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-[#C78300]">
                 {practiceMode === "challenge"
-                  ? "👑 Epic Reward"
+                  ? "🧠 Challenge"
                   : practiceMode === "guided"
-                    ? "🎒 Common Reward"
-                    : "✨ Rare Reward"}
+                    ? "🧭 Guided"
+                    : "✏️ Independent"}
               </p>
 
               <div className="mt-2 flex items-center gap-3">
                 <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
-                  {practiceMode === "challenge" ? "👑" : practiceMode === "guided" ? "🎒" : "🎁"}
+                  {modeConfig.completionIcon}
                 </div>
 
                 <p className="text-sm font-black leading-relaxed text-[#073B5A]">
                   {practiceMode === "challenge"
-                    ? "Finish Challenge Practice to unlock an epic accessory!"
+                    ? "Finish Challenge Practice to complete this reasoning round."
                     : practiceMode === "guided"
-                      ? "Finish Guided Practice to unlock a common accessory!"
-                      : "Finish Independent Practice to unlock a rare accessory!"}
+                      ? "Finish Guided Practice to complete the lesson practice step."
+                      : "Finish Independent Practice to strengthen independent recall."}
                 </p>
               </div>
             </div>
@@ -1554,14 +1575,14 @@ function PracticeScreen() {
 
           <div className="rounded-[1.5rem] border border-[#073B5A]/10 bg-white p-4 shadow-sm">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0081A7]">
-              {isEvaluation ? "Evaluation Progress" : getRewardChargeLabel(practiceMode)}
+              {isEvaluation ? "Evaluation Progress" : getPracticeProgressLabel(practiceMode)}
             </p>
 
             <div className="mt-3 flex items-center gap-3">
               <div className="h-3 flex-1 overflow-hidden rounded-full bg-[#073B5A]/10">
                 <div
                   className="h-full rounded-full bg-[#00AFB9]"
-                  style={{ width: `${rewardChargePercent}%` }}
+                  style={{ width: `${practiceProgressPercent}%` }}
                 />
               </div>
 
@@ -1660,7 +1681,7 @@ function PracticeScreen() {
               <p>
                 {isEvaluation
                   ? `◎ ${unit.unit_number >= 36 ? "Finish Grade 3 strong" : `Unlock Unit ${unit.unit_number + 1}`}`
-                  : `◎ Earn ${practiceMode === "challenge" ? "an" : "a"} ${getModeRewardLabel(practiceMode)}`}
+                  : `◎ Complete ${getModeLabel(practiceMode)}`}
               </p>
             </div>
           </div>
@@ -1668,10 +1689,10 @@ function PracticeScreen() {
           <div className="mt-4 border-t border-[#F4D589] pt-3">
             <p className="font-black text-[#073B5A]">
               {isEvaluation
-                ? "Show what you know! ⭐"
+                ? "Show what you know!"
                 : practiceMode === "independent"
-                  ? "You're on your way! ⭐"
-                  : "You've got this! ⭐"}
+                  ? "You're on your way!"
+                  : "You've got this!"}
             </p>
           </div>
         </div>
@@ -1684,7 +1705,7 @@ function PracticeScreen() {
 
             <div className="relative z-10">
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-[#FFF3D9] text-5xl shadow-sm">
-                {modeConfig.rewardIcon}
+                {modeConfig.completionIcon}
               </div>
 
               <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-[#00AFB9]">
@@ -1697,19 +1718,16 @@ function PracticeScreen() {
 
               {completionModal.firstCompletion ? (
                 <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
-                  You completed {modeConfig.title} and earned a{" "}
-                  <span className="font-black text-[#0081A7]">
-                    {getModeRewardLabel(practiceMode)}
-                  </span>{" "}
-                  for your star.
+                  You completed <span className="font-black text-[#0081A7]">{modeConfig.title}</span>.
+                  Your progress has been saved.
                 </p>
               ) : completionModal.recommendedMode ? (
                 <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
-                  You already earned this reward. Try{" "}
+                  You completed this round again. Try{" "}
                   <span className="font-black text-[#0081A7]">
                     {getModeLabel(completionModal.recommendedMode)}
                   </span>{" "}
-                  to unlock more accessories.
+                  when you are ready for the next level of practice.
                 </p>
               ) : (
                 <p className="mx-auto mt-3 max-w-md text-base font-bold leading-relaxed text-[#073B5A]/75">
@@ -1719,11 +1737,10 @@ function PracticeScreen() {
 
               {completionModal.recommendedMode && (
                 <div className="mx-auto mt-5 rounded-2xl border border-[#00AFB9]/20 bg-[#E9F7F8] p-4">
-                  <p className="text-sm font-black text-[#073B5A]">Want something rarer?</p>
+                  <p className="text-sm font-black text-[#073B5A]">Ready for another level?</p>
 
                   <p className="mt-1 text-sm font-bold text-[#073B5A]/70">
-                    {getModeLabel(completionModal.recommendedMode)} can unlock a{" "}
-                    {getModeRewardLabel(completionModal.recommendedMode)}.
+                    {getModeLabel(completionModal.recommendedMode)} gives you a little less support and a little more independence.
                   </p>
                 </div>
               )}
@@ -1743,7 +1760,7 @@ function PracticeScreen() {
                     onClick={() => setCompletionModal(null)}
                     className="rounded-2xl bg-[#00AFB9] px-5 py-3 lg:px-7 lg:py-4 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
                   >
-                    Next Lesson ›
+                    {nextCurriculumLesson?.lesson_type === "evaluation" ? "Open Evaluation ›" : "Next Lesson ›"}
                   </Link>
                 )}
 
@@ -1762,7 +1779,9 @@ function PracticeScreen() {
                   onClick={() => setCompletionModal(null)}
                   className="mt-3 inline-flex text-sm lg:text-base font-black text-[#0081A7]"
                 >
-                  Continue to next lesson instead ›
+                  {nextCurriculumLesson?.lesson_type === "evaluation"
+                    ? "Continue to evaluation instead ›"
+                    : "Continue to next lesson instead ›"}
                 </Link>
               )}
             </div>
@@ -1785,7 +1804,7 @@ function PracticeScreen() {
               {evaluationModal.status === "passed" && (
                 <>
                   <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-[1.75rem] bg-[#E9F7F8] text-5xl shadow-sm">
-                    🌟
+                    ✓
                   </div>
 
                   <p className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-[#00AFB9]">
@@ -1793,7 +1812,7 @@ function PracticeScreen() {
                   </p>
 
                   <h2 className="mt-2 text-3xl font-black text-[#073B5A]">
-                    {evaluationModal.alreadyCompleted ? "Still shining!" : "You did it!"}
+                    {evaluationModal.alreadyCompleted ? "Passed again!" : "You did it!"}
                   </h2>
 
                   <div className="mx-auto mt-5 grid max-w-md grid-cols-2 gap-3">
@@ -1941,7 +1960,7 @@ function PracticeScreen() {
               {rejectionModal.reason === "insufficient_accuracy" &&
                 (practiceMode === "challenge"
                   ? `You solved every problem, but Challenge Practice needs at least 80% correct on the first try. You got ${Math.round((rejectionModal.accuracy ?? 0) * 100)}% correct on the first try. Give it another shot!`
-                  : `You answered ${rejectionModal.firstAttemptCorrectCount ?? 0} out of ${rejectionModal.firstAttemptTotalCount ?? 0} correctly on your first try. Independent Practice needs 80% correct on the first try to earn the reward and record mastery evidence. Keep practicing — you still solved the problems!`)}
+                  : `You answered ${rejectionModal.firstAttemptCorrectCount ?? 0} out of ${rejectionModal.firstAttemptTotalCount ?? 0} correctly on your first try. Independent Practice needs 80% correct on the first try to record mastery evidence. Keep practicing — you still solved the problems!`)}
               `
               {rejectionModal.reason === "invalid_session_result" &&
                 "We could not save this practice result. Let's go back to the lesson and try again."}

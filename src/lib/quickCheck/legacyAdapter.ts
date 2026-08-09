@@ -6,25 +6,33 @@ function inferLegacyRole(legacy: LegacyQuickCheckQuestion): QuickCheckRole {
   const prompt = legacy.prompt.toLowerCase();
   const ruleType = legacy.ruleType.toLowerCase();
 
+  // Reasoning: judge a claim, statement, or misconception.
   if (
+    ruleType.includes("reasoning") ||
     prompt.includes("is maya") ||
     prompt.includes("is the student") ||
     prompt.includes("is this correct") ||
+    prompt.includes("is that correct") ||
+    prompt.includes("is ... correct") ||
+    prompt.includes("who is right") ||
     prompt.includes("which statement is true") ||
     prompt.includes("which statement is false") ||
-    prompt.includes("who is right") ||
-    ruleType.includes("reasoning")
+    prompt.includes("is that reasoning")
   ) {
     return "reasoning";
   }
 
+  // Conceptual: match, choose, or interpret an equation, word, rule, or representation.
   if (
+    ruleType.includes("concept") ||
+    ruleType.includes("math word") ||
+    ruleType.includes("vocabulary") ||
     prompt.includes("which") ||
     prompt.includes("what does the word") ||
     prompt.includes("what is the word") ||
-    prompt.includes("matches") ||
-    prompt.includes("what is the product of") ||
-    ruleType.includes("concept")
+    prompt.includes("which word means") ||
+    prompt.includes("what does ... mean") ||
+    prompt.includes("matches")
   ) {
     return "conceptual";
   }

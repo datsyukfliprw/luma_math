@@ -6,11 +6,10 @@ import { getBuildRounds, type LearnLesson } from "../../lib/learnContent";
 // @SECTION BUILDIT_TYPES
 type BuildItPageProps = {
   lesson: LearnLesson;
-  onBuildComplete?: () => void;
 };
 
 // @SECTION BUILDIT_PAGE
-function BuildItPage({ lesson, onBuildComplete }: BuildItPageProps) {
+function BuildItPage({ lesson }: BuildItPageProps) {
   // @SECTION BUILDIT_DATA
   const buildRounds = getBuildRounds(lesson);
 
@@ -66,10 +65,6 @@ function BuildItPage({ lesson, onBuildComplete }: BuildItPageProps) {
     if (isCorrect && !completedRounds.includes(roundIndex)) {
       setCompletedRounds((currentCompletedRounds) => {
         const nextCompletedRounds = [...currentCompletedRounds, roundIndex];
-
-        if (nextCompletedRounds.length === buildRounds.length) {
-          onBuildComplete?.();
-        }
 
         return nextCompletedRounds;
       });

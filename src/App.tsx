@@ -1,13 +1,13 @@
+import { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import { DelightAnimationProvider } from "./components/animations/DelightAnimationProvider";
 import Sidebar from "./components/layout/Sidebar";
-import StarNamePrompt from "./components/luma/StarNamePrompt";
 import FlashcardsScreen from "./screens/FlashcardsScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LearningPathScreen from "./screens/LearningPathScreen";
 import LessonScreen from "./screens/LessonScreen";
 import ParentAreaScreen from "./screens/ParentAreaScreen";
 import PracticeScreen from "./screens/PracticeScreen";
+import ResultsScreen from "./screens/ResultsScreen";
 import ProgressScreen from "./screens/ProgressScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import WarmUpScreen from "./screens/WarmUpScreen";
@@ -15,24 +15,26 @@ import LearnScreen from "./screens/LearnScreen";
 import TryItScreen from "./screens/TryItScreen";
 import FlashcardSessionScreen from "./screens/FlashcardSessionScreen";
 import FlashcardCategoryScreen from "./screens/FlashcardCategoryScreen";
-import { StudentProgressProvider, useStudentProgress } from "./contexts/StudentProgressContext";
+import StudentPickerScreen from "./screens/StudentPickerScreen";
+import NotFoundScreen from "./screens/NotFoundScreen";
+import { StudentProgressProvider } from "./contexts/StudentProgressContext";
+import { getInitialActiveStudentId, setActiveStudentId } from "./lib/studentProfiles";
 
-const CURRENT_STUDENT_ID = "default-student";
+type AppContentProps = {
+  activeStudentId: string;
+  onSelectStudent: (studentId: string) => void;
+};
 
-function AppContent() {
-  const { studentState } = useStudentProgress();
+function AppContent({ activeStudentId, onSelectStudent }: AppContentProps) {
   const location = useLocation();
   const isHomeScreen = location.pathname === "/";
   const isLearningPath = location.pathname === "/learning-path";
-  const starNameReady = studentState.starProfile.starName.trim().length > 0;
 
   return (
-    <DelightAnimationProvider>
       <main
         data-name="lumamath-app-viewport"
         className="fixed inset-0 flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#F0EEE7] text-[#073B5A]"
       >
-        {!starNameReady && <StarNamePrompt onSaved={() => {}} />}
 
         {/* @SECTION Centered tablet-first application stage */}
         <div
@@ -72,21 +74,50 @@ function AppContent() {
               <Route path="/flashcards/deck/:deckId" element={<FlashcardSessionScreen />} />
               <Route path="/flashcards/:deckId" element={<FlashcardSessionScreen />} />
               <Route path="/practice/:lessonId" element={<PracticeScreen />} />
+              <Route path="/results" element={<ResultsScreen />} />
               <Route path="/progress" element={<ProgressScreen />} />
               <Route path="/parent-area" element={<ParentAreaScreen />} />
               <Route path="/settings" element={<SettingsScreen />} />
+              <Route
+                path="/students"
+                element={
+                  <StudentPickerScreen
+                    activeStudentId={activeStudentId}
+                    onSelectStudent={onSelectStudent}
+                  />
+                }
+              />
+              <Route path="*" element={<NotFoundScreen />} />
             </Routes>
           </div>
         </div>
       </main>
-    </DelightAnimationProvider>
   );
 }
 
 function App() {
+  const [activeStudentId, setActiveStudentIdState] = useState<string | null>(() =>
+    getInitialActiveStudentId(),
+  );
+
+  function selectStudent(studentId: string) {
+    setActiveStudentId(studentId);
+    setActiveStudentIdState(studentId);
+  }
+
+  if (!activeStudentId) {
+    return (
+      <StudentPickerScreen
+        activeStudentId={null}
+        onSelectStudent={selectStudent}
+        standalone
+      />
+    );
+  }
+
   return (
-    <StudentProgressProvider studentId={CURRENT_STUDENT_ID}>
-      <AppContent />
+    <StudentProgressProvider key={activeStudentId} studentId={activeStudentId}>
+      <AppContent activeStudentId={activeStudentId} onSelectStudent={selectStudent} />
     </StudentProgressProvider>
   );
 }
