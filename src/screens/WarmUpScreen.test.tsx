@@ -33,17 +33,20 @@ describe("WarmUpScreen", () => {
     expect(html).toContain("Question 1 of");
   });
 
-  it("auto-focuses the answer input", () => {
-    const html = renderWithDeps("/warmup/g3-u11-w1-l1");
+  it("renders tap choices for Grade 3 numeric warm-ups", () => {
+    const html = renderWithDeps("/warmup/g3-u1-w1-l1");
 
-    expect(html).toContain('autofocus=""');
+    expect(html).toContain('data-name="warm-up-answer-choices"');
+    expect(html).toContain(">0<");
+    expect(html).toContain(">7<");
+    expect(html).not.toContain('placeholder="Type your answer"');
   });
 
-  it("disables the Check Answer button when the answer is empty", () => {
-    const html = renderWithDeps("/warmup/g3-u11-w1-l1");
+  it("keeps text entry for complex Grade 3 text responses", () => {
+    const html = renderWithDeps("/warmup/g3-u2-w1-l2");
 
-    expect(html).toContain("Check Answer");
-    expect(html).toContain("disabled");
+    expect(html).toContain('placeholder="Type your answer"');
+    expect(html).toContain('autofocus=""');
   });
 
   it("starts with zero overall progress", () => {

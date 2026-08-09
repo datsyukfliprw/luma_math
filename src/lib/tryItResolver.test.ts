@@ -51,6 +51,27 @@ describe("getResolvedTryItExperience", () => {
     }
   });
 
+
+  it("keeps authored visual counts synchronized with the answer parts", () => {
+    const experience = getResolvedTryItExperience("g3-u1-w1-l1");
+    expect(experience).toBeDefined();
+
+    for (const problem of experience!.problems) {
+      if (!problem.visualData) continue;
+
+      const groupsPart = problem.parts.find((part) => part.key === "groups");
+      const inEachPart = problem.parts.find((part) => part.key === "inEach");
+
+      if (groupsPart) {
+        expect(problem.visualData.groups).toBe(Number(groupsPart.correctAnswer));
+      }
+
+      if (inEachPart) {
+        expect(problem.visualData.itemsPerGroup).toBe(Number(inEachPart.correctAnswer));
+      }
+    }
+  });
+
   it("produces fallback experiences for unauthored lessons", () => {
     const experience = getResolvedTryItExperience("g3-u9-w1-l1");
     expect(experience).toBeDefined();

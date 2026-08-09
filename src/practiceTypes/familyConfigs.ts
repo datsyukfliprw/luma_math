@@ -121,3 +121,119 @@ export const additionFamilyConfigs: Record<string, AdditionFamilyConfig> = {
 };
 
 export const additionPracticeTypes = Object.keys(additionFamilyConfigs);
+
+export type SubtractionRepresentation =
+  | "direct"
+  | "number_line_jumps"
+  | "expanded_form"
+  | "compensation"
+  | "missing_subtrahend"
+  | "missing_minuend"
+  | "missing_difference"
+  | "missing_digit"
+  | "balanced_equation"
+  | "error_identification"
+  | "word_problem";
+
+export type SubtractionFamilyConfig = {
+  family: "subtraction";
+  practiceType: string;
+  skillLabel: string;
+  operandRange: { min: number; max: number };
+  resultRange?: { min: number; max: number };
+  regrouping: RegroupingRequirement;
+  requiredColumn?: "ones" | "tens";
+  representations: readonly SubtractionRepresentation[];
+  allowWordProblems: boolean;
+  compensation?: boolean;
+  acrossZeros?: boolean;
+};
+
+export const subtractionFamilyConfigs: Record<string, SubtractionFamilyConfig> = {
+  subtraction_number_line: {
+    family: "subtraction",
+    practiceType: "subtraction_number_line",
+    skillLabel: "Solve using a number line",
+    operandRange: { min: 100, max: 499 },
+    resultRange: { min: 100, max: 999 },
+    regrouping: "none",
+    representations: ["number_line_jumps"],
+    allowWordProblems: false,
+  },
+  subtraction_expanded_form: {
+    family: "subtraction",
+    practiceType: "subtraction_expanded_form",
+    skillLabel: "Subtract using expanded form",
+    operandRange: { min: 100, max: 499 },
+    resultRange: { min: 100, max: 999 },
+    regrouping: "none",
+    representations: ["expanded_form"],
+    allowWordProblems: false,
+  },
+  subtraction_compensation: {
+    family: "subtraction",
+    practiceType: "subtraction_compensation",
+    skillLabel: "Subtract using compensation",
+    operandRange: { min: 200, max: 900 },
+    resultRange: { min: 10, max: 999 },
+    regrouping: "mixed",
+    representations: ["compensation"],
+    allowWordProblems: false,
+    compensation: true,
+  },
+  subtraction_no_regroup: {
+    family: "subtraction",
+    practiceType: "subtraction_no_regroup",
+    skillLabel: "Subtract without regrouping",
+    operandRange: { min: 100, max: 499 },
+    resultRange: { min: 100, max: 999 },
+    regrouping: "none",
+    representations: ["direct", "missing_subtrahend", "word_problem"],
+    allowWordProblems: true,
+  },
+  subtraction_regroup_ones: {
+    family: "subtraction",
+    practiceType: "subtraction_regroup_ones",
+    skillLabel: "Regroup ones when subtracting",
+    operandRange: { min: 100, max: 499 },
+    resultRange: { min: 1, max: 999 },
+    regrouping: "required",
+    requiredColumn: "ones",
+    representations: ["direct", "missing_subtrahend"],
+    allowWordProblems: false,
+  },
+  subtraction_regroup_tens: {
+    family: "subtraction",
+    practiceType: "subtraction_regroup_tens",
+    skillLabel: "Regroup tens when subtracting",
+    operandRange: { min: 100, max: 499 },
+    resultRange: { min: 10, max: 999 },
+    regrouping: "required",
+    requiredColumn: "tens",
+    representations: ["direct", "missing_subtrahend"],
+    allowWordProblems: false,
+  },
+  subtract_across_zeros: {
+    family: "subtraction",
+    practiceType: "subtract_across_zeros",
+    skillLabel: "Subtract across zeros",
+    operandRange: { min: 200, max: 999 },
+    resultRange: { min: 1, max: 999 },
+    regrouping: "mixed",
+    representations: ["direct", "missing_subtrahend"],
+    allowWordProblems: false,
+    acrossZeros: true,
+  },
+  subtraction_missing_digits: {
+    family: "subtraction",
+    practiceType: "subtraction_missing_digits",
+    skillLabel: "Find missing digits and balance equations",
+    operandRange: { min: 100, max: 499 },
+    resultRange: { min: 100, max: 999 },
+    regrouping: "none",
+    representations: ["missing_digit", "balanced_equation", "error_identification"],
+    allowWordProblems: false,
+  },
+};
+
+export const subtractionPracticeTypes = Object.keys(subtractionFamilyConfigs);

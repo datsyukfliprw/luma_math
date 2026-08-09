@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import { LessonFallbackScreen } from "../components/ui/LessonFallbackScreen";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
@@ -26,6 +26,64 @@ function partIsCorrect(
   const userAnswer = normalizeAnswer(answers[partKey] ?? "", part.correctAnswer);
   const expected = normalizeAnswer(part.correctAnswer, part.correctAnswer);
   return userAnswer === expected;
+}
+
+function getPartInstruction(
+  part: ResolvedTryItProblem["parts"][number],
+): string {
+  const rawLabel = typeof part.label === "string" ? part.label.trim() : "";
+  const label = rawLabel.toLowerCase();
+  const hasChoices = Boolean(part.choices && part.choices.length > 0);
+
+  if (part.key === "equation") {
+    return hasChoices ? "Which equation matches?" : "Write the equation.";
+  }
+
+  if (part.key === "groups") {
+    if (label.includes("factor")) {
+      return label === "factors" ? "Which values are the factors?" : "Choose the first factor.";
+    }
+
+    return "How many groups are there?";
+  }
+
+  if (part.key === "inEach") {
+    if (label.includes("factor") || label.includes("numbers being multiplied")) {
+      return "Choose the second factor.";
+    }
+
+    return "How many are in each group?";
+  }
+
+  if (hasChoices) {
+    return rawLabel
+      ? `Choose the best answer for ${rawLabel.toLowerCase()}.`
+      : "Choose the best answer.";
+  }
+
+  return rawLabel || "Enter your answer.";
+}
+
+function getPartHelperText(
+  part: ResolvedTryItProblem["parts"][number],
+): string | null {
+  if (part.key === "groups") {
+    return "Count the groups shown in the picture.";
+  }
+
+  if (part.key === "inEach") {
+    return "Look at how many items are inside one group.";
+  }
+
+  if (part.key === "equation") {
+    return "Use your first two answers to choose the matching equation.";
+  }
+
+  if (part.choices && part.choices.length > 0) {
+    return "Choose the answer that best matches the problem.";
+  }
+
+  return null;
 }
 
 function TryItScreen() {
@@ -118,26 +176,34 @@ function TryItScreen() {
   function renderVisual() {
     if (!currentProblem.visualData) return null;
 
-    const { groups, itemsPerGroup } = currentProblem.visualData;
-    const displayGroups = Math.min(groups, 6);
-    const displayItems = Math.min(itemsPerGroup, 8);
+    const groups = Math.max(0, currentProblem.visualData.groups);
+    const itemsPerGroup = Math.max(0, currentProblem.visualData.itemsPerGroup);
+    const visibleGroups = Math.min(groups, 12);
+    const remainingGroups = Math.max(0, groups - visibleGroups);
+    const useCompactItemCount = itemsPerGroup > 8;
 
     return (
-      <div data-name="try-it-visual" className="mt-4 flex flex-wrap gap-4">
-        {Array.from({ length: displayGroups }).map((_, groupIndex) => (
-          <div
-            key={groupIndex}
-            className="flex flex-col items-center gap-1 rounded-xl border border-[#073B5A]/10 bg-white p-2"
-          >
-            <div className="flex flex-wrap items-center justify-center gap-1">
-              {currentProblem.visualEmpty
-                ? Array.from({ length: displayItems }).map((_, itemIndex) => (
-                    <span
-                      key={itemIndex}
-                      className="flex h-7 w-7 items-center justify-center rounded-md bg-[#F3F7F8] text-sm"
-                    />
-                  ))
-                : Array.from({ length: displayItems }).map((_, itemIndex) => (
+      <div data-name="try-it-visual" className="mt-4">
+        <div className="flex flex-wrap gap-3">
+          {Array.from({ length: visibleGroups }).map((_, groupIndex) => (
+            <div
+              key={groupIndex}
+              data-name="try-it-visual-group"
+              className="flex min-h-12 min-w-12 flex-col items-center justify-center gap-1 rounded-xl border border-[#073B5A]/10 bg-white p-2"
+            >
+              {currentProblem.visualEmpty || itemsPerGroup === 0 ? (
+                <span
+                  aria-label="empty group"
+                  className="flex h-7 w-7 items-center justify-center rounded-full border border-[#073B5A]/12 bg-[#F8FBFB]"
+                />
+              ) : useCompactItemCount ? (
+                <div className="flex items-center gap-1.5 text-sm font-black text-[#073B5A]">
+                  <span>{currentProblem.visualEmoji ?? "⭐"}</span>
+                  <span>× {itemsPerGroup}</span>
+                </div>
+              ) : (
+                <div className="flex max-w-[120px] flex-wrap items-center justify-center gap-1">
+                  {Array.from({ length: itemsPerGroup }).map((_, itemIndex) => (
                     <span
                       key={itemIndex}
                       className="flex h-7 w-7 items-center justify-center rounded-md bg-[#E9F7F8] text-sm"
@@ -145,9 +211,23 @@ function TryItScreen() {
                       {currentProblem.visualEmoji ?? "⭐"}
                     </span>
                   ))}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          ))}
+
+          {remainingGroups > 0 && (
+            <div className="flex min-h-12 items-center rounded-xl border border-dashed border-[#00AFB9]/35 bg-[#E9F7F8] px-4 py-2 text-sm font-black text-[#0081A7]">
+              + {remainingGroups} more group{remainingGroups === 1 ? "" : "s"}
+            </div>
+          )}
+        </div>
+
+        {groups > 0 && (
+          <p className="mt-2 text-xs font-bold text-[#275875]/65">
+            {groups} group{groups === 1 ? "" : "s"} · {itemsPerGroup} in each
+          </p>
+        )}
       </div>
     );
   }
@@ -179,14 +259,14 @@ function TryItScreen() {
               🌟
             </div>
             <h2 className="text-2xl font-black text-[#073B5A] lg:text-3xl">
-              Great job! You did it.
+              Nice work! You finished Try It.
             </h2>
-            <p className="mt-3 text-base font-bold text-[#073B5A]/70 lg:text-lg">
+            <p className="mt-3 max-w-[560px] text-base font-bold leading-relaxed text-[#073B5A]/70 lg:text-lg">
               You completed {allSolvedCount} Try It problem
-              {allSolvedCount === 1 ? "" : "s"}.
+              {allSolvedCount === 1 ? "" : "s"}. Ready to practice what you learned?
             </p>
 
-            {completionResult?.ok === false && (
+            {completionResult?.ok === false ? (
               <div data-name="feedback-area" className="mt-6 max-w-md">
                 <p className="text-sm font-bold text-[#D85B52]">
                   We had trouble saving your progress. You can try again.
@@ -199,15 +279,25 @@ function TryItScreen() {
                   Retry Save
                 </button>
               </div>
-            )}
+            ) : (
+              <div className="mt-8 flex w-full max-w-[360px] flex-col gap-3">
+                <Link
+                  to={`/practice/${currentLessonId}?mode=guided`}
+                  data-name="try-it-start-practice-button"
+                  className="w-full rounded-2xl bg-[#00AFB9] px-8 py-4 text-center text-lg font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#0081A7]"
+                >
+                  Start Practice →
+                </Link>
 
-            <button
-              type="button"
-              onClick={backToLesson}
-              className="mt-8 min-w-[220px] rounded-2xl bg-[#00AFB9] px-8 py-4 text-lg font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#0081A7]"
-            >
-              Back to Lesson
-            </button>
+                <button
+                  type="button"
+                  onClick={backToLesson}
+                  className="w-full rounded-2xl border border-[#073B5A]/12 bg-white px-8 py-4 text-base font-black text-[#073B5A] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#F8FBFB]"
+                >
+                  Back to Lesson
+                </button>
+              </div>
+            )}
           </section>
         </div>
       </PageLayout>
@@ -253,34 +343,50 @@ function TryItScreen() {
 
                 {renderVisual()}
 
-                <div data-name="response-controls" className="mt-8 grid w-full max-w-[560px] gap-4">
+                {currentProblem.parts.length > 1 && (
+                  <div
+                    data-name="try-it-directions"
+                    className="mt-6 max-w-[560px] rounded-2xl border border-[#00AFB9]/20 bg-[#E9F7F8] px-4 py-3"
+                  >
+                    <p className="text-sm font-black text-[#073B5A]">
+                      Choose one answer in each row, then tap Check Answer.
+                    </p>
+                  </div>
+                )}
+
+                <div
+                  data-name="response-controls"
+                  className={`${currentProblem.parts.length > 1 ? "mt-5" : "mt-8"} grid w-full max-w-[560px] gap-4`}
+                >
                   {currentProblem.parts.map((part) => {
-                    const isCorrect = partIsCorrect(currentProblem, part.key, answers);
-                    const isTouched = touchedParts[part.key];
                     const partValue = answers[part.key] ?? "";
 
                     return (
                       <div key={part.key} data-name="try-it-part" className="w-full">
-                        <p className="text-sm font-black text-[#073B5A]">{part.label}</p>
+                        <p className="text-base font-black text-[#073B5A]">
+                          {getPartInstruction(part)}
+                        </p>
+
+                        {getPartHelperText(part) && (
+                          <p className="mt-0.5 text-xs font-bold leading-relaxed text-[#275875]/65">
+                            {getPartHelperText(part)}
+                          </p>
+                        )}
 
                         {part.choices && part.choices.length > 0 ? (
                           <div className="mt-2 flex flex-wrap gap-2">
                             {part.choices.map((choice) => {
                               const isSelected = partValue === choice;
-                              const choiceCorrect = isSelected && isTouched ? isCorrect : undefined;
 
                               return (
                                 <button
                                   key={choice}
                                   type="button"
                                   onClick={() => handleAnswerChange(part.key, String(choice))}
-                                  className={`rounded-xl border px-4 py-3 text-base font-black transition sm:px-6 sm:text-lg ${
+                                  aria-pressed={isSelected}
+                                  className={`rounded-xl border-2 px-4 py-3 text-base font-black transition sm:px-6 sm:text-lg ${
                                     isSelected
-                                      ? choiceCorrect === true
-                                        ? "border-[#54C95B] bg-[#EAF8EC] text-[#2F9E44]"
-                                        : choiceCorrect === false
-                                          ? "border-[#F07167] bg-[#FCE9E5] text-[#D85B52]"
-                                          : "border-[#00AFB9] bg-[#00AFB9] text-white"
+                                      ? "border-[#00AFB9] bg-[#E9F7F8] text-[#073B5A] shadow-[0_0_0_3px_rgba(0,175,185,0.10)]"
                                       : "border-[#073B5A]/10 bg-white text-[#073B5A] hover:border-[#00AFB9]/50"
                                   }`}
                                 >
@@ -299,13 +405,7 @@ function TryItScreen() {
                                 checkAnswer();
                               }
                             }}
-                            className={`mt-2 block w-full rounded-2xl border-2 bg-white px-6 py-4 text-center text-xl font-black text-[#073B5A] outline-none transition ${
-                              isTouched && isCorrect
-                                ? "border-[#54C95B] focus:border-[#2F9E44] focus:ring-4 focus:ring-[#54C95B]/10"
-                                : isTouched && !isCorrect && partValue.trim().length > 0
-                                  ? "border-[#F07167] focus:border-[#D85B52] focus:ring-4 focus:ring-[#F07167]/10"
-                                  : "border-[#00AFB9] focus:border-[#0081A7] focus:ring-4 focus:ring-[#00AFB9]/10"
-                            }`}
+                            className="mt-2 block w-full rounded-2xl border-2 border-[#00AFB9] bg-white px-6 py-4 text-center text-xl font-black text-[#073B5A] outline-none transition focus:border-[#0081A7] focus:ring-4 focus:ring-[#00AFB9]/10"
                             placeholder="Type your answer"
                             autoFocus={problemIndex === 0 && part === currentProblem.parts[0]}
                           />

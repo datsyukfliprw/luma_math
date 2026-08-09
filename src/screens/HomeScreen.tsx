@@ -31,7 +31,7 @@ type JourneyNodeProps = {
     title: string;
     status: JourneyStepStatus;
   };
-  stageImage: string;
+  stageNumber: number;
   timelineLabel: "Current" | "Up Next" | "After That";
   lessonLabel: string;
 };
@@ -86,14 +86,6 @@ const quickActions: QuickAction[] = [
 const DEFAULT_MISSION_BACKGROUND =
   "/images/missions/current-mission-generic.png";
 
-const JOURNEY_STAGE_IMAGES = [
-  "/images/journey/grade-3/unit-01/place-value-stage-1.png",
-  "/images/journey/grade-3/unit-01/place-value-stage-2.png",
-  "/images/journey/grade-3/unit-01/place-value-stage-3.png",
-  "/images/journey/grade-3/unit-01/place-value-stage-4.png",
-  "/images/journey/grade-3/unit-01/place-value-stage-5.png",
-] as const;
-
 const JOURNEY_TIMELINE_LABELS = [
   "Current",
   "Up Next",
@@ -102,7 +94,7 @@ const JOURNEY_TIMELINE_LABELS = [
 
 function JourneyNode({
   step,
-  stageImage,
+  stageNumber,
   timelineLabel,
   lessonLabel,
 }: JourneyNodeProps) {
@@ -136,17 +128,28 @@ function JourneyNode({
       </p>
 
       <div
-        className={`relative flex h-[108px] w-[108px] items-center justify-center overflow-hidden rounded-full border-2 ${circleClass}`}
+        className={`relative flex h-[108px] w-[108px] flex-col items-center justify-center rounded-full border-2 ${circleClass}`}
       >
-        <img
-          src={stageImage}
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-          className={`pointer-events-none h-[104px] w-[104px] select-none object-cover object-center ${
-            isNotYet ? "grayscale opacity-55" : ""
-          }`}
-        />
+        {lessonLabel === "Final Mission" ? (
+          <Trophy
+            className={`h-9 w-9 ${isNotYet ? "text-[#AAB5BE]" : "text-[#2789D9]"}`}
+            strokeWidth={2.4}
+          />
+        ) : (
+          <>
+            <BookOpen
+              className={`h-6 w-6 ${isNotYet ? "text-[#AAB5BE]" : "text-[#00AFB9]"}`}
+              strokeWidth={2.5}
+            />
+            <span
+              className={`mt-1 text-2xl font-black ${
+                isNotYet ? "text-[#8796A3]" : "text-[#073B5A]"
+              }`}
+            >
+              {stageNumber}
+            </span>
+          </>
+        )}
 
         {isComplete && (
           <span className="absolute right-0.5 top-0.5 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#42BF50] text-white shadow-md">
@@ -351,9 +354,8 @@ function HomeScreen() {
                   );
 
                   const unitStageIndex =
-                    Math.max(globalStepIndex, 0) % JOURNEY_STAGE_IMAGES.length;
+                    Math.max(globalStepIndex, 0) % 5;
 
-                  const stageImage = JOURNEY_STAGE_IMAGES[unitStageIndex];
                   const lessonLabel =
                     unitStageIndex === 4
                       ? "Final Mission"
@@ -363,7 +365,7 @@ function HomeScreen() {
                     <div key={step.id} className="contents">
                       <JourneyNode
                         step={step}
-                        stageImage={stageImage}
+                        stageNumber={unitStageIndex + 1}
                         timelineLabel={JOURNEY_TIMELINE_LABELS[index]}
                         lessonLabel={lessonLabel}
                       />

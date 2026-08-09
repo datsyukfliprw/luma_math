@@ -8,13 +8,7 @@ import PracticeTimeCard from "../components/lesson/PracticeTimeCard";
 import TryItCard from "../components/lesson/TryItCard";
 import WarmUpCard from "../components/lesson/WarmUpCard";
 import { getLessonById } from "../lib/lessonLookup";
-import { getFlashcardDeckCardIds } from "../flashcards/deckRegistry";
-import {
-  useStudentProgress,
-  type LessonProgress,
-  type FlashcardDeckProgress,
-} from "../contexts/StudentProgressContext";
-import type { LessonPracticeRewardState } from "../types/practiceProgress";
+import { useStudentProgress, type LessonProgress } from "../contexts/StudentProgressContext";
 import type { WarmUpData } from "../types/warmup";
 import { getLessonExperience } from "../data/lessonExperience";
 import { getChapterForConcept, getConceptByLessonId } from "../data/curriculum/curriculumGraph";
@@ -77,25 +71,11 @@ function getNextStep({
   lessonId,
   nextLessonId,
   progress,
-  getPracticeRewardState: getRewards,
-  getFlashcardDeckProgress: getDeckProgress,
-  flashcardDeckId,
-  flashcardCardIds,
 }: {
   lessonId: string;
   nextLessonId?: string;
   progress: LessonProgress;
-  getPracticeRewardState: (lessonId: string) => LessonPracticeRewardState;
-  getFlashcardDeckProgress: (deckId: string, cardIds: string[]) => FlashcardDeckProgress;
-  flashcardDeckId: string;
-  flashcardCardIds: string[];
 }): NextLessonStep {
-  const practiceRewards = getRewards(lessonId);
-  const guidedComplete = practiceRewards.guided?.completed === true || progress.practiceComplete;
-  const independentComplete = practiceRewards.independent?.completed === true;
-  const challengeComplete = practiceRewards.challenge?.completed === true;
-  const flashcardProgress = getDeckProgress(flashcardDeckId, flashcardCardIds);
-
   if (!progress.warmupComplete) {
     return {
       title: "Warm-Up",
@@ -123,39 +103,12 @@ function getNextStep({
     };
   }
 
-  if (!guidedComplete) {
+  if (!progress.practiceComplete) {
     return {
       title: "Guided Practice",
-      description: "Solve step-by-step problems with support when you need it.",
+      description: "Finish today’s required practice to complete the lesson.",
       buttonLabel: "Start Guided Practice ›",
       to: `/practice/${lessonId}?mode=guided`,
-    };
-  }
-
-  if (!independentComplete) {
-    return {
-      title: "Independent Practice",
-      description: "Show what you can do on your own.",
-      buttonLabel: "Start Independent Practice ›",
-      to: `/practice/${lessonId}?mode=independent`,
-    };
-  }
-
-  if (!challengeComplete) {
-    return {
-      title: "Challenge",
-      description: "Try a tougher version and explain your thinking.",
-      buttonLabel: "Try Challenge ›",
-      to: `/practice/${lessonId}?mode=challenge`,
-    };
-  }
-
-  if (flashcardCardIds.length > 0 && !flashcardProgress.completed) {
-    return {
-      title: "Flashcards",
-      description: "Review this lesson’s deck and strengthen recall.",
-      buttonLabel: "Try Flashcards ›",
-      to: `/flashcards/deck/${flashcardDeckId}`,
     };
   }
 
@@ -356,12 +309,7 @@ function LessonScreen() {
   const { lessonId } = useParams();
   const { unit, week, lesson, weekDayNumber } = getLessonById(lessonId);
   const structuredLesson = lesson as typeof lesson & LessonWithStructuredData;
-  const {
-    studentState,
-    getLessonProgress,
-    getPracticeRewardState,
-    getFlashcardDeckProgress,
-  } = useStudentProgress();
+  const { studentState, getLessonProgress } = useStudentProgress();
 
   const currentLessonId =
     lessonId ??
@@ -376,8 +324,6 @@ function LessonScreen() {
     ? { ...progress, practiceComplete: true, lessonComplete: true }
     : progress;
 
-  const flashcardDeckId = lesson.flashcards?.deckId ?? `lesson-${currentLessonId}`;
-  const flashcardCardIds = getFlashcardDeckCardIds(flashcardDeckId);
   const concept = getConceptByLessonId(currentLessonId);
   const chapter = concept ? getChapterForConcept(concept.id) : undefined;
   const gradeLabel = formatGradeLabel(unit.grade_level);
@@ -393,10 +339,6 @@ function LessonScreen() {
     lessonId: currentLessonId,
     nextLessonId,
     progress,
-    getPracticeRewardState,
-    getFlashcardDeckProgress,
-    flashcardDeckId,
-    flashcardCardIds,
   });
 
   const nextUnitPath =

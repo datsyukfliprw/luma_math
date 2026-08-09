@@ -65,7 +65,7 @@ describe("Grade 3 generator family coverage", () => {
 
     expect(unsupported).toEqual([]);
     expect(additionBacked.length).toBe(additionPracticeTypes.length);
-    expect(familyBacked).toBeGreaterThanOrEqual(13);
-    expect(defaultBacked).toBeLessThanOrEqual(131);
+    expect(familyBacked).toBeGreaterThanOrEqual(21);
+    expect(defaultBacked).toBeLessThanOrEqual(123);
   });
 });

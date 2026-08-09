@@ -5,6 +5,7 @@ import TargetDigitQuestion from "../components/warmup/TargetDigitQuestion";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { getLessonById } from "../lib/lessonLookup";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
+import { getWarmUpChoices } from "../lib/warmUpChoices";
 import type { WarmUpData, WarmUpQuestion } from "../types/warmup";
 import { getWarmUpRounds } from "../types/warmup";
 
@@ -111,6 +112,14 @@ function WarmUpScreen() {
       ? "Place Value"
       : (activeQuestion?.skill.replaceAll("_", " ") ?? currentRound?.title);
 
+  const answerChoices = useMemo(
+    () =>
+      activeQuestion
+        ? getWarmUpChoices(activeQuestion, unit.grade_level ?? 3)
+        : null,
+    [activeQuestion, unit.grade_level],
+  );
+
   function finishWarmUp() {
     updateLessonProgress(currentLessonId, {
       warmupComplete: true,
@@ -135,13 +144,15 @@ function WarmUpScreen() {
     }, 900);
   }
 
-  function checkAnswer() {
+  function submitAnswer(candidateAnswer: string) {
     if (!activeQuestion || isTransitioning) {
       return;
     }
 
+    setAnswer(candidateAnswer);
+
     const expected = activeQuestion.correct_answer;
-    const userAnswer = normalizeForQuestion(answer, expected);
+    const userAnswer = normalizeForQuestion(candidateAnswer, expected);
     const correctAnswer = normalizeForQuestion(expected, expected);
 
     if (userAnswer === correctAnswer) {
@@ -153,6 +164,10 @@ function WarmUpScreen() {
 
     setFeedback("incorrect");
     setShowHint(true);
+  }
+
+  function checkAnswer() {
+    submitAnswer(answer);
   }
 
   function backToLesson() {
@@ -270,41 +285,80 @@ function WarmUpScreen() {
                   </h1>
                 )}
 
-                <input
-                  value={answer}
-                  onChange={(event) => {
-                    setAnswer(event.target.value);
-                    setFeedback(null);
-                  }}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                      checkAnswer();
-                    }
-                  }}
-                  disabled={isTransitioning}
-                  className={`mt-10 block w-full max-w-[560px] rounded-2xl border-2 bg-white px-6 py-5 text-center text-xl font-black text-[#073B5A] outline-none transition disabled:cursor-not-allowed disabled:opacity-70 lg:text-2xl ${
-                    feedback === "incorrect"
-                      ? "border-[#F07167] focus:border-[#D85B52] focus:ring-4 focus:ring-[#F07167]/10"
-                      : feedback === "correct"
-                        ? "border-[#54C95B] focus:border-[#2F9E44] focus:ring-4 focus:ring-[#54C95B]/10"
-                        : "border-[#00AFB9] focus:border-[#0081A7] focus:ring-4 focus:ring-[#00AFB9]/10"
-                  }`}
-                  placeholder="Type your answer"
-                  autoFocus
-                />
+                {answerChoices ? (
+                  <div
+                    data-name="warm-up-answer-choices"
+                    className={`mt-10 grid w-full max-w-[680px] gap-3 ${
+                      answerChoices.length === 2 ? "grid-cols-2" : "grid-cols-3"
+                    }`}
+                  >
+                    {answerChoices.map((choice) => {
+                      const isSelected = answer === choice;
+                      const isCorrectChoice =
+                        normalizeForQuestion(choice, activeQuestion?.correct_answer ?? "") ===
+                        normalizeForQuestion(
+                          activeQuestion?.correct_answer ?? "",
+                          activeQuestion?.correct_answer ?? "",
+                        );
 
-                <button
-                  type="button"
-                  onClick={checkAnswer}
-                  disabled={answer.trim().length === 0 || isTransitioning}
-                  className={`mt-5 min-w-[220px] rounded-2xl px-9 py-4 text-base font-black shadow-sm transition lg:text-lg ${
-                    answer.trim().length === 0 || isTransitioning
-                      ? "cursor-not-allowed bg-[#DDEEEF] text-[#073B5A]/45"
-                      : "bg-[#00AFB9] text-white hover:-translate-y-0.5 hover:bg-[#009DA7]"
-                  }`}
-                >
-                  {isTransitioning ? "Great work!" : "Check Answer"}
-                </button>
+                      return (
+                        <button
+                          key={choice}
+                          type="button"
+                          onClick={() => submitAnswer(choice)}
+                          disabled={isTransitioning}
+                          className={`min-h-[82px] rounded-2xl border-2 px-5 py-4 text-2xl font-black shadow-sm transition lg:text-3xl ${
+                            isSelected && feedback === "correct"
+                              ? "border-[#54C95B] bg-[#EAF8EC] text-[#2F9E44]"
+                              : isSelected && feedback === "incorrect"
+                                ? "border-[#F07167] bg-[#FCE9E5] text-[#C84F46]"
+                                : "border-[#00AFB9]/30 bg-white text-[#073B5A] hover:-translate-y-0.5 hover:border-[#00AFB9] hover:bg-[#F7FCFD] hover:shadow-md"
+                          } ${isTransitioning && !isCorrectChoice ? "opacity-55" : ""}`}
+                        >
+                          {choice}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <>
+                    <input
+                      value={answer}
+                      onChange={(event) => {
+                        setAnswer(event.target.value);
+                        setFeedback(null);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          checkAnswer();
+                        }
+                      }}
+                      disabled={isTransitioning}
+                      className={`mt-10 block w-full max-w-[560px] rounded-2xl border-2 bg-white px-6 py-5 text-center text-xl font-black text-[#073B5A] outline-none transition disabled:cursor-not-allowed disabled:opacity-70 lg:text-2xl ${
+                        feedback === "incorrect"
+                          ? "border-[#F07167] focus:border-[#D85B52] focus:ring-4 focus:ring-[#F07167]/10"
+                          : feedback === "correct"
+                            ? "border-[#54C95B] focus:border-[#2F9E44] focus:ring-4 focus:ring-[#54C95B]/10"
+                            : "border-[#00AFB9] focus:border-[#0081A7] focus:ring-4 focus:ring-[#00AFB9]/10"
+                      }`}
+                      placeholder="Type your answer"
+                      autoFocus
+                    />
+
+                    <button
+                      type="button"
+                      onClick={checkAnswer}
+                      disabled={answer.trim().length === 0 || isTransitioning}
+                      className={`mt-5 min-w-[220px] rounded-2xl px-9 py-4 text-base font-black shadow-sm transition lg:text-lg ${
+                        answer.trim().length === 0 || isTransitioning
+                          ? "cursor-not-allowed bg-[#DDEEEF] text-[#073B5A]/45"
+                          : "bg-[#00AFB9] text-white hover:-translate-y-0.5 hover:bg-[#009DA7]"
+                      }`}
+                    >
+                      {isTransitioning ? "Great work!" : "Check Answer"}
+                    </button>
+                  </>
+                )}
 
                 {feedback && (
                   <div className="mt-2 text-sm font-black lg:text-base">

@@ -45,6 +45,19 @@ function buildEmptyProfile(studentName: string): StarProfile {
   };
 }
 
+function createStudentId(profiles: StarProfileMap): string {
+  const baseId = `student-${Date.now().toString(36)}`;
+  let studentId = baseId;
+  let suffix = 2;
+
+  while (profiles[studentId]) {
+    studentId = `${baseId}-${suffix}`;
+    suffix += 1;
+  }
+
+  return studentId;
+}
+
 function hasLegacyDefaultProgress(): boolean {
   const lessonProgress = readStorage<Record<string, Record<string, unknown>>>(
     LESSON_PROGRESS_STORAGE_KEY,
@@ -108,9 +121,9 @@ export function createLocalStudent(studentName: string): LocalStudentProfile {
     throw new Error("Student name is required.");
   }
 
-  const id = `student-${globalThis.crypto.randomUUID()}`;
-  const profile = buildEmptyProfile(cleanedName);
   const profiles = readStorage<StarProfileMap>(STAR_PROFILE_STORAGE_KEY, {});
+  const id = createStudentId(profiles);
+  const profile = buildEmptyProfile(cleanedName);
 
   writeStorage(STAR_PROFILE_STORAGE_KEY, {
     ...profiles,

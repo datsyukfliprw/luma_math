@@ -9,6 +9,7 @@ import { generateEvaluationProblems } from "./evaluation";
 import { generateFactorProductProblems } from "./factorProduct";
 import { generateFairSharingDivisionProblems } from "./fairSharingDivision";
 import { generateRepeatedAdditionProblems } from "./repeatedAddition";
+import { generateSubtractionProblems } from "./subtraction";
 import { generateValidInvalidArraysProblems } from "./validInvalidArrays";
 import { generateWeek2EvaluationProblems } from "./week2Evaluation";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
@@ -41,6 +42,15 @@ export const practiceRegistry: Record<string, PracticeGenerator> = {
   week_2_evaluation: generateWeek2EvaluationProblems,
 
   fair_sharing_division: generateFairSharingDivisionProblems,
+
+  subtraction_number_line: generateSubtractionProblems,
+  subtraction_expanded_form: generateSubtractionProblems,
+  subtraction_compensation: generateSubtractionProblems,
+  subtraction_no_regroup: generateSubtractionProblems,
+  subtraction_regroup_ones: generateSubtractionProblems,
+  subtraction_regroup_tens: generateSubtractionProblems,
+  subtract_across_zeros: generateSubtractionProblems,
+  subtraction_missing_digits: generateSubtractionProblems,
 };
 
 export type RegisteredPracticeType = keyof typeof practiceRegistry;

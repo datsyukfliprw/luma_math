@@ -21,6 +21,7 @@ const WarmupQuestionSchema = z
     target_digit_index: z.number().optional(),
     prompt: PlaceValuePrompt,
     correct_answer: z.string(),
+    choices: z.array(z.string()).optional(),
     hint: z.string(),
     skill: z.string(),
   })

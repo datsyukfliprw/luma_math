@@ -44,6 +44,7 @@ describe("local student profiles", () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   it("starts without an active student on a fresh device", () => {
@@ -65,6 +66,15 @@ describe("local student profiles", () => {
 
     setActiveStudentId(second.id);
     expect(getInitialActiveStudentId()).toBe(second.id);
+  });
+
+  it("creates a student without requiring crypto.randomUUID", () => {
+    vi.stubGlobal("crypto", {});
+
+    const profile = createLocalStudent("Ava");
+
+    expect(profile.id).toMatch(/^student-/);
+    expect(getInitialActiveStudentId()).toBe(profile.id);
   });
 
   it("migrates legacy default-student progress into a selectable profile", () => {

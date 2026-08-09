@@ -5,6 +5,7 @@ export type WarmUpQuestion = {
   target_digit_index?: number;
   prompt: string;
   correct_answer: string;
+  choices?: string[];
   hint: string;
   skill: string;
 };
