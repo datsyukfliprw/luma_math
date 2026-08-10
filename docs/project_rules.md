@@ -58,6 +58,21 @@ A contribution should not break the content contract. If curriculum content or l
 
 A contribution should be reversible. If a change can be reverted without losing data or breaking other systems, it is probably well-scoped. If reverting would cause cascading failure, the change is too entangled.
 
+## Generator-First Question Rule
+
+All repeated student-facing question flows must follow the **Generator-First Question Architecture** defined in `content_architecture.md`. Warm-Up, Quick Check, Try It, Practice, and Evaluation should consume authored Skill/template/constraint specifications and generate the actual learner-facing question instances at runtime. A finite authored question bank is not an acceptable final implementation for these flows.
+
+Question-generation contributions must preserve these invariants:
+
+- the same active attempt/session seed reproduces the same problems and does not mutate on re-render;
+- a new attempt/session can produce fresh valid problems;
+- duplicate semantic problems are prevented within a session and immediate repetition is avoided where practical;
+- prompt text, canonical mathematical values, answer choices, correct answer, explanation, and visuals are derived from the same problem model;
+- multiple-choice distractors represent plausible misconceptions or nearby mathematical errors rather than arbitrary values;
+- tests use controlled seeds so generation is deterministic and non-flaky.
+
+Temporary authored fallbacks must be documented as technical debt and must not be described as satisfying the final question architecture.
+
 ## Code Review Philosophy
 
 Reviewers evaluate more than correctness. A change that runs but weakens the architecture or contradicts the educational model is not acceptable.

@@ -23,11 +23,13 @@
 
 - Documentation maintenance and stale-document resolution
 - Alignment of the runtime with `blueprint.md` and `content_architecture.md`
+- Grade 3 migration to the Generator-First Question Architecture across Warm-Up, Quick Check, Try It, Practice, and Evaluations
 
 ## Planned
 
 ### Phase 1: Runtime Alignment
 
+- Complete generator-first question coverage so repeated learner questions are runtime-generated rather than finite authored banks
 - Refactor runtime to consume Content Contracts directly
 - Replace temporary adapters with contract-driven content loading
 - Generalize content loading from Grade 3 to a K–6 grade abstraction

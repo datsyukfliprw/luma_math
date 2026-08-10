@@ -47,6 +47,19 @@ function normalizePracticeMode(mode: string | null): PracticeMode {
   return "guided";
 }
 
+let fallbackPracticeSessionCounter = 0;
+
+function createPracticeSessionId(): string {
+  const randomUUID = globalThis.crypto?.randomUUID;
+
+  if (typeof randomUUID === "function") {
+    return randomUUID.call(globalThis.crypto);
+  }
+
+  fallbackPracticeSessionCounter += 1;
+  return `practice-${Date.now().toString(36)}-${fallbackPracticeSessionCounter.toString(36)}`;
+}
+
 // @SECTION PRACTICE_MODE_CONFIG
 const PRACTICE_MODE_CONFIG = {
   guided: {
@@ -221,7 +234,7 @@ function PracticeScreen() {
   const nextLessonPath = nextCurriculumLessonId
     ? `/lesson/${nextCurriculumLessonId}`
     : nextUnitPath;
-  const [practiceSessionId, setPracticeSessionId] = useState(() => crypto.randomUUID());
+  const [practiceSessionId, setPracticeSessionId] = useState(createPracticeSessionId);
   const practiceSessionSeed = createPracticeSessionSeed(
     currentLessonId,
     lesson.practice_type,
@@ -616,7 +629,7 @@ function PracticeScreen() {
   }
 
   function restartEvaluation() {
-    setPracticeSessionId(crypto.randomUUID());
+    setPracticeSessionId(createPracticeSessionId());
     setCurrentProblemIndex(0);
     setAnswer("");
     setFactorAAnswer("");

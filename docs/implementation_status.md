@@ -47,6 +47,8 @@ The current implementation is a single-page web application built with React 19,
 
 For a complete description of the architecture and its target state, see `blueprint.md`. In summary, the system currently combines a declarative curriculum layer with a runtime layer that adapts authored content into screen-ready experiences. `StudentProgressContext` is the single source of truth for student state.
 
+The canonical target is the Generator-First Question Architecture defined in `content_architecture.md` and ADR-006. The current Grade 3 runtime only partially satisfies it: Addition/Subtraction family generators and parts of evaluation generation are generator-driven, while fixed authored Warm-Up/Try It content and the lesson-backed default Practice fallback remain migration debt.
+
 ## Active Development
 
 The foundational documentation set is now complete and authoritative. The active effort has shifted to aligning the runtime with `blueprint.md` and `content_architecture.md` and resolving the technical debt identified in this document.
@@ -71,6 +73,7 @@ The following compromises and temporary implementations exist today:
 - **Local-only persistence**: All progress lives in `localStorage`. Multi-device sync, multiple student profiles, and parent reports require a future persistence layer.
 - **Grade 3 vertical slice**: The implementation is shaped around the first Grade 3 units. The runtime and file organization reflect this first implementation rather than the generic K–6 abstraction described in `blueprint.md`.
 - **Hybrid lesson content**: Some lesson experience data still lives in TypeScript modules while curriculum metadata is in JSON. The long-term target is full content authored through the declarative content layer.
+- **Generator-first question gap**: Warm-Up, authored Try It, some Quick Check paths, finite specialized banks, and the default Practice fallback can reuse fixed question instances or stable lesson-level outputs. These paths do not satisfy ADR-006 and must migrate toward seeded runtime generation from authored Skill/template/constraint specifications.
 - **Runtime adapters**: `lessonExperienceAdapter.ts` and similar adapter functions bridge authored content to the runtime. These are temporary stabilization points and should be replaced by direct content-contract consumption as the content layer matures.
 - **Deprecated helpers**: `lessonProgress.ts` and `practiceRewards.ts` are deprecated; `starProfile.ts` and `flashcardProgress.ts` are utility-only. These files should be removed once all references are migrated.
 

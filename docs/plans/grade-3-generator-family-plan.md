@@ -1127,7 +1127,7 @@ generator_config: z.object({
 
 ### Safe temporary fallback
 
-Until each family is implemented, the default generator remains in place. It is pedagogically aligned (it uses authored prompts) but not randomized. No gap blocks the August 20 release, but gaps become blockers if a family cannot be configured without the field.
+Until each family is implemented, the default generator may remain only as a temporary coverage fallback. Because it reuses authored prompts rather than generating fresh mathematical instances, it does **not** satisfy the canonical Generator-First Question Architecture (ADR-006). Any release use of this fallback must be treated as explicit migration debt, not as a completed generator implementation.
 
 ## 16. Release Risks
 

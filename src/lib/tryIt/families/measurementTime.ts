@@ -1,13 +1,87 @@
+import type { SeededRng } from "../../../practiceTypes/random";
 import type { TryItFamily } from "../types";
 import {
   buildNumberChoices,
   makeSinglePartTryItProblem,
+  makeTryItProblem,
   mathProblemKey,
 } from "../buildTryItProblem";
 
 const LENGTH_UNITS = ["inches", "feet", "yards"];
-const WEIGHTS = ["ounces", "pounds", "grams", "kilograms"];
-const VOLUMES = ["cups", "pints", "quarts", "gallons", "liters"];
+
+const WEIGHT_MASS_UNITS = ["ounces", "pounds", "grams", "kilograms"];
+const VOLUME_UNITS = ["cups", "pints", "quarts", "gallons", "liters", "milliliters"];
+
+type LengthScenario = {
+  object: string;
+  unit: "inches" | "feet" | "yards";
+  estimate: number;
+};
+
+const LENGTH_SCENARIOS: LengthScenario[] = [
+  { object: "pencil", unit: "inches", estimate: 6 },
+  { object: "crayon", unit: "inches", estimate: 4 },
+  { object: "book", unit: "inches", estimate: 8 },
+  { object: "marker", unit: "inches", estimate: 5 },
+  { object: "paper clip", unit: "inches", estimate: 1 },
+  { object: "phone", unit: "inches", estimate: 6 },
+  { object: "ruler", unit: "inches", estimate: 12 },
+  { object: "door", unit: "feet", estimate: 7 },
+  { object: "desk", unit: "feet", estimate: 3 },
+  { object: "window", unit: "feet", estimate: 4 },
+  { object: "shelf", unit: "feet", estimate: 6 },
+  { object: "basketball hoop", unit: "feet", estimate: 10 },
+  { object: "school bus", unit: "yards", estimate: 12 },
+  { object: "garden", unit: "yards", estimate: 5 },
+  { object: "hallway", unit: "yards", estimate: 8 },
+  { object: "playground", unit: "yards", estimate: 10 },
+];
+
+const MAX_LENGTH_ESTIMATE_BY_UNIT: Record<LengthScenario["unit"], number> = {
+  inches: 12,
+  feet: 20,
+  yards: 20,
+};
+
+type WeightMassVolumeScenario = {
+  object: string;
+  quantity: "weight" | "mass" | "liquid volume";
+  correct: string;
+};
+
+const WEIGHT_MASS_VOLUME_SCENARIOS: WeightMassVolumeScenario[] = [
+  { object: "an apple", quantity: "weight", correct: "ounces" },
+  { object: "a banana", quantity: "weight", correct: "ounces" },
+  { object: "a watermelon", quantity: "weight", correct: "pounds" },
+  { object: "a backpack", quantity: "weight", correct: "pounds" },
+  { object: "a cat", quantity: "weight", correct: "pounds" },
+  { object: "a dog", quantity: "weight", correct: "pounds" },
+  { object: "a bicycle", quantity: "weight", correct: "pounds" },
+  { object: "an elephant", quantity: "mass", correct: "kilograms" },
+  { object: "a paper clip", quantity: "mass", correct: "grams" },
+  { object: "a small medicine cup", quantity: "liquid volume", correct: "milliliters" },
+  { object: "a glass of juice", quantity: "liquid volume", correct: "cups" },
+  { object: "a water bottle", quantity: "liquid volume", correct: "liters" },
+  { object: "a soda can", quantity: "liquid volume", correct: "milliliters" },
+  { object: "a milk jug", quantity: "liquid volume", correct: "gallons" },
+  { object: "a bathtub", quantity: "liquid volume", correct: "gallons" },
+  { object: "a soup bowl", quantity: "liquid volume", correct: "cups" },
+  { object: "a spoon", quantity: "liquid volume", correct: "milliliters" },
+];
+
+const QUARTER_INCH_OBJECTS = [
+  "pencil",
+  "crayon",
+  "marker",
+  "paper clip",
+  "ribbon",
+  "stick",
+  "eraser",
+  "paintbrush",
+  "twig",
+];
+
+const QUARTER_INCH_FORMS = ["mark", "between"];
 
 function to12Hour(hour: number): { hour: number; ampm: string } {
   if (hour === 0) return { hour: 12, ampm: "AM" };
@@ -16,22 +90,67 @@ function to12Hour(hour: number): { hour: number; ampm: string } {
   return { hour, ampm: "AM" };
 }
 
-type UnitScenario = {
-  object: string;
-  quantity: "weight" | "volume" | "length";
-  correct: string;
-};
+function formatInches(whole: number, quarters: number): string {
+  if (quarters === 0) {
+    return `${whole} ${whole === 1 ? "inch" : "inches"}`;
+  }
+  if (whole === 0) {
+    const fraction = ["", "1/4", "1/2", "3/4"][quarters];
+    return `${fraction} inches`;
+  }
+  const fraction = ["", "1/4", "1/2", "3/4"][quarters];
+  return `${whole} ${fraction} inches`;
+}
 
-const UNIT_SCENARIOS: UnitScenario[] = [
-  { object: "apple", quantity: "weight", correct: "ounces" },
-  { object: "backpack", quantity: "weight", correct: "pounds" },
-  { object: "elephant", quantity: "weight", correct: "kilograms" },
-  { object: "glass of juice", quantity: "volume", correct: "cups" },
-  { object: "bathtub", quantity: "volume", correct: "gallons" },
-  { object: "soda bottle", quantity: "volume", correct: "liters" },
-  { object: "pencil", quantity: "length", correct: "inches" },
-  { object: "classroom", quantity: "length", correct: "meters" },
-];
+function buildQuarterInchPrompt(
+  object: string,
+  whole: number,
+  quarters: number,
+  form: string,
+): string {
+  if (form === "between") {
+    if (quarters === 0) {
+      return `A ${object} ends right at the ${whole} inch mark on a ruler. What is its length to the nearest quarter inch?`;
+    }
+    const next = whole + 1;
+    if (quarters === 2) {
+      return `A ${object} ends halfway between ${whole} and ${next} inches. What is its length to the nearest quarter inch?`;
+    }
+    const fractionText = ["", "one quarter", "", "three quarters"];
+    return `A ${object} ends ${fractionText[quarters]} of the way between ${whole} and ${next} inches. What is its length to the nearest quarter inch?`;
+  }
+
+  if (quarters === 0) {
+    return `A ${object} lines up exactly with the ${whole} inch mark on a ruler. What is its length to the nearest quarter inch?`;
+  }
+  const ordinal = ["", "first", "second", "third"];
+  return `A ${object} ends at the ${ordinal[quarters]} quarter-inch mark after ${whole} inches. What is its length to the nearest quarter inch?`;
+}
+
+function buildFractionalChoices(whole: number, quarters: number, rng: SeededRng): string[] {
+  const correctQuarters = whole * 4 + quarters;
+  const distractors = new Set<string>();
+  const offsets = [-3, -2, -1, 1, 2, 3, -4, 4];
+
+  for (const offset of offsets) {
+    const candidate = correctQuarters + offset;
+    if (candidate >= 1 && candidate <= 24 && candidate !== correctQuarters) {
+      distractors.add(formatInches(Math.floor(candidate / 4), candidate % 4));
+    }
+  }
+
+  let guard = 0;
+  while (distractors.size < 2 && guard < 100) {
+    guard += 1;
+    const candidate = rng.nextInt(1, 24);
+    if (candidate !== correctQuarters) {
+      distractors.add(formatInches(Math.floor(candidate / 4), candidate % 4));
+    }
+  }
+
+  const selected = rng.shuffle([...distractors]).slice(0, 2);
+  return rng.shuffle([formatInches(whole, quarters), ...selected]);
+}
 
 type ReasonableScenario = {
   statement: string;
@@ -55,50 +174,101 @@ export const measurementTimeFamily: TryItFamily = (ctx) => {
 
   while (problems.length < ctx.count && attempts < 200) {
     attempts += 1;
-    let prompt = "";
-    let correct = "";
-    let form = "";
+    let prompt: string;
+    let correct: string;
+    let form: string;
     let choices: string[] | undefined;
     let keyPartA = 0;
     let keyPartB = 0;
     let keyExtra = "";
 
     if (ctx.practiceType === "customary_length_units") {
-      const object = ctx.rng.pick(["pencil", "desk", "door"]);
-      const correctUnit = object === "pencil" ? "inches" : object === "desk" ? "feet" : "yards";
-      prompt = `Which customary unit would you use to measure the length of a ${object}?`;
-      correct = correctUnit;
-      form = "length_unit";
-      const others = LENGTH_UNITS.filter((u) => u !== correctUnit);
-      choices = ctx.rng.shuffle([correctUnit, ...others]);
-      keyPartA = object.length;
-      keyExtra = `${object}:${correctUnit}`;
-    } else if (ctx.practiceType === "quarter_inch_measurement") {
-      const quarters = ctx.rng.nextInt(2, 12) * 4;
-      prompt = `A line is ${quarters} quarter-inches long. How many inches is that?`;
-      correct = String(quarters / 4);
-      form = "quarter_inch";
-      choices = buildNumberChoices(quarters / 4, 1, 12, ctx.rng);
-      keyPartA = quarters;
+      const scenario = ctx.rng.pick(LENGTH_SCENARIOS);
+      const { object, unit, estimate } = scenario;
+      const lengthForm = ctx.rng.pick([
+        "choose_unit",
+        "estimate_length",
+        "choose_and_estimate",
+      ] as const);
+      form = lengthForm;
+      keyPartA = estimate;
       keyPartB = 0;
+      keyExtra = `${object}:${unit}:${form}`;
+
+      if (form === "choose_and_estimate") {
+        const problemKey = mathProblemKey(ctx.practiceType, keyPartA, keyPartB, form, keyExtra);
+        if (ctx.usedKeys.has(problemKey)) continue;
+        ctx.usedKeys.add(problemKey);
+
+        const max = MAX_LENGTH_ESTIMATE_BY_UNIT[unit];
+        const unitChoices = ctx.rng.shuffle([unit, ...LENGTH_UNITS.filter((u) => u !== unit)]);
+        const estimateChoices = buildNumberChoices(estimate, 1, max, ctx.rng);
+
+        prompt = `Choose the best customary unit for measuring a ${object}, then estimate its length.`;
+
+        problems.push(
+          makeTryItProblem({
+            id: `${ctx.lessonId}-measurement-${problems.length + 1}`,
+            problemKey,
+            prompt,
+            tip: ctx.lesson.objective,
+            successMessage: `Yes! A ${object} is about ${estimate} ${unit} long.`,
+            visualEmoji: "🕒",
+            parts: [
+              {
+                key: "unit",
+                label: "Unit",
+                correctAnswer: unit,
+                choices: unitChoices,
+              },
+              {
+                key: "estimate",
+                label: "Estimate",
+                correctAnswer: String(estimate),
+                choices: estimateChoices,
+              },
+            ],
+          }),
+        );
+        continue;
+      }
+
+      if (form === "choose_unit") {
+        prompt = `Which customary unit would you use to measure the length of a ${object}?`;
+        correct = unit;
+        choices = ctx.rng.shuffle([unit, ...LENGTH_UNITS.filter((u) => u !== unit)]);
+      } else {
+        const max = MAX_LENGTH_ESTIMATE_BY_UNIT[unit];
+        prompt = `About how many ${unit} long is a ${object}?`;
+        correct = String(estimate);
+        choices = buildNumberChoices(estimate, 1, max, ctx.rng);
+      }
+    } else if (ctx.practiceType === "quarter_inch_measurement") {
+      const object = ctx.rng.pick(QUARTER_INCH_OBJECTS);
+      const whole = ctx.rng.nextInt(1, 5);
+      const quarters = ctx.rng.nextInt(0, 3);
+      const qForm = ctx.rng.pick(QUARTER_INCH_FORMS);
+
+      form = `quarter_inch_${qForm}`;
+      keyPartA = whole;
+      keyPartB = quarters;
+      keyExtra = `${object}:${whole}:${quarters}:${qForm}`;
+
+      prompt = buildQuarterInchPrompt(object, whole, quarters, qForm);
+      correct = formatInches(whole, quarters);
+      choices = buildFractionalChoices(whole, quarters, ctx.rng);
     } else if (ctx.practiceType === "choose_weight_mass_volume_units") {
-      const scenario = ctx.rng.pick(UNIT_SCENARIOS);
+      const scenario = ctx.rng.pick(WEIGHT_MASS_VOLUME_SCENARIOS);
       const correctUnit = scenario.correct;
-      prompt = `Which unit would you use to measure the ${scenario.quantity} of a ${scenario.object}?`;
+      prompt = `Which unit would you use to measure the ${scenario.quantity} of ${scenario.object}?`;
       correct = correctUnit;
       form = "unit";
-      const distractors = ctx.rng
-        .shuffle([
-          ...new Set([
-            ...WEIGHTS,
-            ...VOLUMES,
-            ...["inches", "feet", "yards", "centimeters", "meters"],
-          ]),
-        ])
-        .filter((u) => u !== correctUnit)
-        .slice(0, 2);
+      const pool = scenario.quantity === "liquid volume" ? VOLUME_UNITS : WEIGHT_MASS_UNITS;
+      const distractors = ctx.rng.shuffle(pool.filter((u) => u !== correctUnit)).slice(0, 2);
       choices = ctx.rng.shuffle([correctUnit, ...distractors]);
-      keyExtra = `${scenario.object}:${correctUnit}`;
+      keyPartA = 0;
+      keyPartB = 0;
+      keyExtra = `${scenario.object}:${correctUnit}:${form}`;
     } else if (ctx.practiceType === "read_analog_clocks") {
       const hour = ctx.rng.nextInt(1, 12);
       const minute = ctx.rng.nextInt(0, 11) * 5;

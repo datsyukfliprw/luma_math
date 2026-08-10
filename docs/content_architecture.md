@@ -12,7 +12,7 @@ Curriculum authors, engineers, designers, and AI systems that need to understand
 
 The content architecture is designed to be stable across grades, independent of any runtime, and expressive enough to capture the full learning model.
 
-First, content is declarative. It describes what is taught and how it is structured, not how it is displayed or processed. Second, content is hierarchical. A Curriculum contains Units, Units contain Lessons, Lessons contain Sections, and Sections contain learning elements. Third, content is validated against a contract. The contract ensures that any content intended for a given section provides the information required to present or evaluate it. Fourth, authored and generated content are kept distinct. Authors write the curriculum. The platform generates reports, progress, recommendations, and adaptive paths.
+First, content is declarative. It describes what is taught and how it is structured, not how it is displayed or processed. Second, content is hierarchical. A Curriculum contains Units, Units contain Lessons, Lessons contain Sections, and Sections contain learning elements. Third, content is validated against a contract. The contract ensures that any content intended for a given section provides the information required to present or evaluate it. Fourth, authored instructional specifications and generated learner-facing question instances are kept distinct. Authors define the curriculum, learning intent, examples, generation templates, mathematical constraints, difficulty bounds, visual requirements, and distractor strategies. The platform generates the actual student question instances, along with reports, progress, recommendations, and adaptive paths.
 
 ## Content Hierarchy
 
@@ -54,7 +54,7 @@ A Lesson is authored to deliver one or two closely related Concepts. Its content
 
 A Lesson is divided into Sections. Each Section has a type that determines what kind of content it may contain. The instructional sections are Warm-Up, Learn, Try It, and Practice. The assessment sections are Quick Check and Evaluation. Review content may appear within Warm-Up, Practice, or as a dedicated Review section.
 
-Each Section type has a content contract. The contract specifies the required and optional elements. For example, a Warm-Up section contains questions that activate prior knowledge. A Learn section contains teaching points, examples, and vocabulary. A Try It section contains a guided problem. A Practice section contains a sequence of problems with optional challenge extensions.
+Each Section type has a content contract. The contract specifies the required and optional elements. For example, a Warm-Up section identifies prior Skills and generation rules that can produce suitable retrieval questions. A Learn section contains teaching points, worked examples, and vocabulary. A Try It section defines a scaffolded problem-generation specification. A Practice section defines the target Skills, modes, constraints, and problem forms used by the Practice generator.
 
 ## Lesson Flow
 
@@ -66,11 +66,11 @@ A Lesson may also include a Quick Check within the flow to verify understanding 
 
 Assessment content is content designed to measure or check understanding. There are two primary forms.
 
-A Quick Check is a short set of questions embedded within a Lesson. It is formative. Its content is authored alongside the Lesson and is used to decide whether the learner is ready to continue.
+A Quick Check is a short generated set of questions embedded within a Lesson. It is formative. Curriculum authors define the Skills, question forms, difficulty, and constraints that the Quick Check must assess; the runtime generates the actual question instances for the current attempt.
 
-An Evaluation is a more comprehensive set of questions at the end of a Unit or week. It is summative in context. Its content is authored separately or pulled from a pool of items that assess the Unit's Skills.
+An Evaluation is a more comprehensive generated assessment at the end of a Unit or week. It is summative in context. Curriculum authors define the Skills and review distribution that must be assessed; the runtime assembles fresh question instances from the appropriate generators.
 
-Both forms of assessment are represented as content objects with questions, correct responses, hints, and explanations. The content model does not define how the platform displays results.
+Both forms of assessment use stable generation contracts that produce prompts, canonical mathematical values, correct responses, hints or explanations where appropriate, and semantic problem identities. A single attempt must remain stable, while a new attempt should be able to produce different valid questions. The content model does not define how the platform displays results.
 
 ## Review Content
 
@@ -90,27 +90,33 @@ Practice content is the set of problems a learner works through to develop fluen
 
 Guided Practice problems include scaffolding such as hints or partial worked examples. Independent Practice problems remove scaffolding. Challenge problems combine Skills or apply them in less familiar contexts.
 
-Each practice problem is an authored content object. It has a prompt, a correct response, an explanation, and references to the Skills and Concepts it practices. The content model allows the same Skill to be practiced in many different problem forms.
+Practice problems are generated learner-facing instances, not finite authored question-bank entries. Curriculum authors define the target Skills and Concepts, supported problem forms, mathematical constraints, difficulty bounds, visual requirements, scaffolds, and misconception-aware distractor strategies. Runtime generators use those specifications to create the actual prompts, canonical values, correct responses, explanations, and semantic problem identities for a session.
 
-## Generated vs Authored Content
+## Generator-First Question Architecture
 
-Authored content is created by curriculum authors. It includes Concepts, Skills, Units, Lessons, Sections, questions, examples, and flashcard decks. It is declarative and stable.
+LumaMath uses a **Generator-First Question Architecture** for student-facing questions. Curriculum authors do not normally author a finite bank of question instances for Warm-Up, Quick Check, Try It, Practice, or Evaluations. Instead, they author the educational specification from which those questions are generated.
 
-Generated content is produced by the platform from authored content and learner data. It includes progress reports, mastery calculations, recommended next Lessons, adaptive practice sequences, and personalized Review schedules. Generated content is not authored directly. It is derived.
+Authored content includes Concepts, Skills, Units, Lessons, Sections, teaching points, worked examples, vocabulary, question templates, mathematical constraints, allowed representations, difficulty parameters, scaffolding rules, visual requirements, and distractor strategies. Authored worked examples in Learn may use fixed values because their purpose is explanation rather than repeated assessment or practice.
 
-The content architecture keeps these two categories separate so that authors can focus on educational quality while the platform handles personalization.
+Generated question content is produced at runtime from those authored specifications. Every generated question must have one canonical mathematical model from which the prompt, answer choices, correct answer, explanation, and visual representation are derived. A generator must not create visually or textually inconsistent versions of the same problem.
+
+Generation must support deterministic seeding. The same lesson and attempt seed must reproduce the same question set for testing, debugging, and stable in-session rendering. A newly started attempt should use a new session seed so that the learner receives fresh valid questions. Generators must prevent duplicate semantic problem identities within a session and should avoid immediate recent-session repetition where practical.
+
+For multiple-choice questions, distractors should represent plausible misconceptions or nearby mathematical errors rather than arbitrary values. Changing wording, object names, or answer-choice order does not make an otherwise identical mathematical problem unique.
+
+Other generated content includes progress reports, mastery calculations, recommended next Lessons, adaptive practice sequences, and personalized Review schedules. The content architecture keeps authored educational intent separate from generated learner instances so curriculum quality remains inspectable while runtime experiences remain varied and scalable.
 
 ## Content Contracts
 
 A Content Contract is the agreement between an authored content shape and the system that consumes it. It defines what a given Section type must contain, what it may contain, and what behaviors the platform can assume.
 
-For example, the contract for a Try It section requires a prompt, a correct response, and a hint. It may also include a visual model or worked example. If authored content does not satisfy the contract, it is invalid and cannot be presented.
+For example, the contract for a Try It section requires enough information to generate a scaffolded problem: target Skill, supported problem form or template, mathematical constraints, answer contract, and hint/scaffolding behavior. It may also specify a visual model. The generated Try It instance then supplies the concrete prompt, canonical values, correct response, and any choices. If an authored specification cannot safely generate a valid learner-facing instance, it is invalid and cannot be presented.
 
 Contracts are defined at the content-architecture level. They are technology-neutral. A specific runtime may implement the contract in any way it chooses.
 
 ## Content Reuse
 
-Content is authored once and referenced many times. A Concept may be referenced by many Lessons. A Skill may be referenced by many practice problems. A flashcard deck may be reused across grades.
+Content is authored once and referenced many times. A Concept may be referenced by many Lessons. A Skill may be referenced by many question-generation specifications. A flashcard deck may be reused across grades.
 
 The content model supports reuse through stable identifiers and explicit references. This prevents duplication and makes the curriculum easier to maintain as it grows.
 

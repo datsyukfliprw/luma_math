@@ -60,9 +60,11 @@ The flow of a LumaMath Lesson follows the instructional cycle defined in `learni
 
 The Warm-Up connects the child to prior knowledge relevant to the day's Mission. The Learn section introduces the new Concept through the concrete-to-abstract progression. The Try It section gives the child a first supported opportunity to apply the idea. The Practice section develops fluency and independence.
 
-The curriculum assigns specific content to each section. Warm-Up items come from prior Skills that support the new idea. Learn items introduce the Concept and vocabulary. Try It items are scaffolded application problems. Practice items are carefully sequenced problems that build in complexity.
+The curriculum assigns a specific learning purpose to each section. Warm-Up targets prior Skills that support the new idea. Learn introduces the Concept, vocabulary, and worked examples. Try It specifies scaffolded application of the new idea. Practice specifies the Skills, representations, and progression needed to build fluency and independence.
 
-The relationship between curriculum content and learning experience is governed by the Content Contract. Curriculum content declares what is taught. The Learning Model and Content Architecture describe how that content is experienced and represented.
+For student-facing questions, the curriculum defines **what must be practiced or assessed and the constraints that make a question pedagogically valid**; it does not normally define a finite bank of repeated question instances. Warm-Up, Quick Check, Try It, Practice, and Evaluation questions are generated at runtime from those authored specifications so repeated attempts can vary while remaining on-skill. The same active attempt remains stable; a new attempt should be able to produce fresh valid problems.
+
+The relationship between curriculum content and learning experience is governed by the Content Contract. Curriculum content declares what is taught and the legal bounds of generation. The Learning Model and Content Architecture describe how that content is experienced and represented.
 
 ## Mastery
 
@@ -92,9 +94,9 @@ Spiral learning also means that no single Lesson or Unit is the final word on a 
 
 Assessments in the curriculum serve two purposes. They measure mastery, and they inform future learning. LumaMath uses two primary forms of assessment.
 
-A Quick Check is a short, in-the-moment check for understanding. It helps the platform respond to the child during a Lesson. Quick Checks are formative. They do not determine final mastery, but they reveal whether the child is ready to continue.
+A Quick Check is a short, in-the-moment check for understanding. It helps the platform respond to the child during a Lesson. Quick Checks are formative. They do not determine final mastery, but they reveal whether the child is ready to continue. Quick Check question instances should be generated from the Lesson's target Skills and assessment constraints rather than reused as a fixed bank.
 
-An Evaluation is a more comprehensive assessment at the end of a Unit or week. It measures whether the child has mastered the core Skills and Concepts of that section. Evaluations are summative in their context, but they are also sources of information for the learning path.
+An Evaluation is a more comprehensive assessment at the end of a Unit or week. It measures whether the child has mastered the core Skills and Concepts of that section. Evaluations are summative in their context, but they are also sources of information for the learning path. Evaluation question instances should be generated or assembled from the same canonical Skill generators used by learning and practice flows, with balanced coverage and duplicate prevention.
 
 Both forms of assessment follow the learning model's principle of assessment without anxiety. They should feel like opportunities to show understanding, not tests to fear.
 

@@ -10,7 +10,7 @@ The architecture of LumaMath is guided by a small set of principles that keep th
 
 The educational model drives the software. The Learning Model, Curriculum, and Content Architecture define what the system must support. The Blueprint defines how software supports those definitions. If a technical choice conflicts with the educational model, the educational model wins.
 
-Content is treated as data, not code. Lessons, questions, examples, and assessments are authored as declarative content. The system consumes that content through stable contracts. This allows the curriculum to grow without rebuilding the application.
+Content is treated as data, not code. Lessons, instructional examples, and question-generation specifications are authored as declarative content. Student-facing question instances are generated at runtime through stable generator contracts. This allows the curriculum to grow without maintaining finite question banks or rebuilding the application for every new problem set.
 
 Responsibilities are separated by layer. Educational intent, content structure, domain logic, application behavior, presentation, and infrastructure each have a clear role. Layers depend downward, not upward.
 
@@ -40,10 +40,10 @@ The infrastructure layer introduces optional cloud services for account manageme
 The Educational Layer is not code. It is the set of canonical documents that define the mission, values, learning model, curriculum, and content architecture. Every layer below it exists to implement what this layer describes. The Blueprint itself is part of the higher-level documentation system, not the Educational Layer, but it is governed by it.
 
 ### Content Layer
-The Content Layer contains the authored curriculum: Concepts, Skills, Units, Missions, Lessons, Sections, questions, examples, and assessments. It is declarative, validated against Content Contracts, and independent of any runtime. This layer is described fully in `content_architecture.md`.
+The Content Layer contains the authored curriculum: Concepts, Skills, Units, Missions, Lessons, Sections, teaching examples, assessment specifications, and question-generation specifications. It declares educational intent and constraints but does not normally store the finite learner-facing question instances used in repeated Warm-Up, Quick Check, Try It, Practice, or Evaluation sessions. It is declarative and validated against Content Contracts. This layer is described fully in `content_architecture.md`.
 
 ### Domain Layer
-The Domain Layer contains the rules of the system. It knows what mastery means, how progress is calculated, how Lessons unlock, how Review is scheduled, and how recommendations are generated. It does not know how the user interface works or where data is stored.
+The Domain Layer contains the rules of the system. It knows what mastery means, how progress is calculated, how Lessons unlock, how Review is scheduled, how recommendations are generated, and how authored question specifications become valid learner-facing question instances. It owns generator rules, deterministic seeding, semantic problem identity, duplicate prevention, and canonical mathematical synchronization. It does not know how the user interface works or where data is stored.
 
 The Domain Layer is the heart of the system. It translates authored content into personalized learning experiences. It is the layer most likely to be supported by AI in the future, but its core rules should remain explicit and inspectable.
 
@@ -63,9 +63,9 @@ The system is organized around a set of core domains, each with a clear responsi
 
 **Lessons** manages the flow through a single learning session. It knows the Sections, their order, and the rules for completion and mastery within a Lesson.
 
-**Practice** manages the different modes of practice: Guided, Independent, and Challenge. It selects problems, evaluates responses, and provides feedback.
+**Practice** manages the different modes of practice: Guided, Independent, and Challenge. It generates session problems from authored specifications, evaluates responses, and provides feedback.
 
-**Assessments** manages Quick Checks and Evaluations. It records results and reports them to the progress domain.
+**Assessments** manages Quick Checks and Evaluations. It generates or assembles fresh assessment questions from the relevant Skill specifications and generator families, records results, and reports them to the progress domain.
 
 **Flashcards** manages spaced retrieval practice. It tracks which items have been mastered and schedules review.
 
@@ -80,11 +80,11 @@ The system is organized around a set of core domains, each with a clear responsi
 **Parent Experience** provides reports, controls, and insights for parents. It reads from the same progress and mastery domains but does not modify learning logic.
 
 ## Data Flow
-The data flow begins with authored content. Curriculum authors write Units, Lessons, Sections, and questions according to the Content Contracts. This content is validated and loaded into the Content Layer.
+The data flow begins with authored content. Curriculum authors write Units, Lessons, Sections, teaching examples, and question-generation specifications according to the Content Contracts. This content is validated and loaded into the Content Layer.
 
 When a learner opens the application, the Application Layer requests the appropriate content from the Content Layer and current state from the Student Progress domain. It uses the Domain Layer to determine which Lessons are available, which are locked, and which Review is due.
 
-During a Lesson, the Application Layer advances through Sections. It sends learner responses to the Practice and Assessment domains. Those domains evaluate responses, update mastery indicators, and return feedback. The Presentation Layer renders the result.
+During a Lesson, the Application Layer advances through Sections. When a student-facing question is needed, it supplies a stable attempt/session seed to the appropriate generator in the Domain Layer. That generator creates a valid question instance and keeps it stable for the active attempt. The Application Layer sends learner responses to the Practice and Assessment domains, which evaluate responses, update mastery indicators, and return feedback. A new attempt receives a new seed and therefore can produce fresh problems. The Presentation Layer renders the result.
 
 After a session, the Application Layer persists the updated state through the Infrastructure Layer. The Mastery domain may then update recommendations. The Parent Experience can read the updated state to generate reports.
 
@@ -110,11 +110,11 @@ At each step, the existing system continues to work. New capabilities are added 
 
 **Separation of concerns.** Educational intent, content, domain logic, application flow, presentation, and infrastructure each have a single responsibility. They are not mixed.
 
-**Single source of truth.** The authored content is the source of truth for what is taught. Student progress is the source of truth for what the learner has done. Mastery is derived from those two sources. Nothing else claims authority over them.
+**Single source of truth.** The authored content is the source of truth for what is taught and for the legal bounds of generated questions. Generator contracts are the source of truth for turning those specifications into learner-facing question instances. Student progress is the source of truth for what the learner has done. Mastery is derived from those sources. Nothing else claims authority over them.
 
 **Educational architecture drives software architecture.** The Learning Model, Curriculum, and Content Architecture are the primary inputs. Technical choices are made to support them.
 
-**Content contracts over hardcoding.** The system does not contain special cases for individual Lessons or question types. It enforces contracts that all content must satisfy.
+**Content contracts and generators over hardcoding.** The system does not rely on finite hard-coded question banks or special cases for individual Lessons. It enforces content and generator contracts that all student-facing questions must satisfy.
 
 **Composition over duplication.** Content is authored once and referenced many times. Domains are composed of small, focused capabilities rather than duplicated logic.
 

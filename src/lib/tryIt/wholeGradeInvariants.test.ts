@@ -1,6 +1,48 @@
 import { describe, it, expect } from "vitest";
 import { getResolvedTryItExperience } from "../tryItResolver";
 import { getAllCurricula } from "../../data/curriculum";
+import type { ResolvedTryItProblem, TryItAnswerPart } from "./types";
+import { matchesGeometryPrompt } from "./families/geometryAttributes";
+
+function parseFactFamilyReference(
+  prompt: string,
+): { a: number; b: number; product: number } | undefined {
+  const match = prompt.match(/(\d+) × (\d+) = (\d+)/);
+  if (!match) return undefined;
+  return { a: Number(match[1]), b: Number(match[2]), product: Number(match[3]) };
+}
+
+function isFactFamilyEquation(
+  ref: { a: number; b: number; product: number },
+  equation: string,
+): boolean {
+  const mulMatch = equation.match(/^(\d+) × (\d+) = (\d+)$/);
+  if (mulMatch) {
+    const x = Number(mulMatch[1]);
+    const y = Number(mulMatch[2]);
+    const z = Number(mulMatch[3]);
+    return (
+      x * y === z &&
+      z === ref.product &&
+      ((x === ref.a && y === ref.b) || (x === ref.b && y === ref.a))
+    );
+  }
+
+  const divMatch = equation.match(/^(\d+) ÷ (\d+) = (\d+)$/);
+  if (divMatch) {
+    const x = Number(divMatch[1]);
+    const y = Number(divMatch[2]);
+    const z = Number(divMatch[3]);
+    return (
+      y !== 0 &&
+      y * z === x &&
+      x === ref.product &&
+      ((y === ref.a && z === ref.b) || (y === ref.b && z === ref.a))
+    );
+  }
+
+  return false;
+}
 
 function allLessonIds(): string[] {
   const ids: string[] = [];
@@ -17,6 +59,40 @@ function allLessonIds(): string[] {
 }
 
 const lessonIds = allLessonIds();
+
+const lessonIdToPracticeType = new Map<string, string>();
+for (const unit of getAllCurricula()) {
+  for (const week of unit.weeks) {
+    for (const lesson of week.lessons) {
+      const id =
+        lesson.lesson_id ?? `g3-u${unit.unit_number}-w${week.week_number}-l${lesson.day_number}`;
+      lessonIdToPracticeType.set(id, lesson.practice_type);
+    }
+  }
+}
+
+function isCorrectChoice(
+  practiceType: string,
+  problem: ResolvedTryItProblem,
+  part: TryItAnswerPart,
+  choice: string,
+): boolean {
+  if (practiceType === "fact_families") {
+    const ref = parseFactFamilyReference(problem.prompt);
+    if (!ref) return false;
+    return isFactFamilyEquation(ref, choice);
+  }
+
+  if (
+    practiceType === "parallel_sides_quadrilaterals" ||
+    practiceType === "parallelograms_trapezoids" ||
+    practiceType === "classify_squares_rectangles_rhombuses"
+  ) {
+    return matchesGeometryPrompt(choice, problem.prompt);
+  }
+
+  return choice === part.correctAnswer;
+}
 
 describe("Grade 3 Try It whole-grade invariants", () => {
   it("never falls back to the generic family for any regular Grade 3 lesson", () => {
@@ -96,10 +172,13 @@ describe("Grade 3 Try It whole-grade invariants", () => {
         failures.push(lessonId);
         continue;
       }
+      const practiceType = lessonIdToPracticeType.get(lessonId) ?? "";
       for (const problem of experience.problems) {
         for (const part of problem.parts) {
           if (part.choices && part.choices.length > 0) {
-            const correctCount = part.choices.filter((c) => c === part.correctAnswer).length;
+            const correctCount = part.choices.filter((c) =>
+              isCorrectChoice(practiceType, problem, part, c),
+            ).length;
             if (correctCount !== 1) {
               failures.push(`${lessonId}:${problem.id}:${part.key}`);
             }
@@ -128,6 +207,51 @@ describe("Grade 3 Try It whole-grade invariants", () => {
         }
         if (inEachPart && Number(inEachPart.correctAnswer) !== problem.visualData.itemsPerGroup) {
           failures.push(`${lessonId}:${problem.id}:inEach`);
+        }
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+
+  it("rejects false exclusive attributes in geometry problemKeys", () => {
+    const geometryTypes = new Set([
+      "sides_and_vertices",
+      "parallel_sides_quadrilaterals",
+      "classify_squares_rectangles_rhombuses",
+      "parallelograms_trapezoids",
+    ]);
+    const failures: string[] = [];
+
+    for (const lessonId of lessonIds) {
+      const practiceType = lessonIdToPracticeType.get(lessonId) ?? "";
+      if (!geometryTypes.has(practiceType)) continue;
+
+      const experience = getResolvedTryItExperience(lessonId, { attemptKey: "geo-key" });
+      if (!experience) {
+        failures.push(lessonId);
+        continue;
+      }
+
+      for (const problem of experience.problems) {
+        const key = problem.problemKey ?? "";
+        const promptLower = problem.prompt.toLowerCase();
+        if (
+          key.includes("equalSides=false") &&
+          !/not four equal sides|no equal sides/.test(promptLower)
+        ) {
+          failures.push(`${lessonId}:${problem.id}:equalSides=false`);
+        }
+        if (
+          key.includes("rightAngles=false") &&
+          !/not four right angles|no right angles/.test(promptLower)
+        ) {
+          failures.push(`${lessonId}:${problem.id}:rightAngles=false`);
+        }
+        if (
+          key.includes("parallelPairs=1") &&
+          !/exactly one pair|one pair of parallel sides/.test(promptLower)
+        ) {
+          failures.push(`${lessonId}:${problem.id}:parallelPairs=1`);
         }
       }
     }

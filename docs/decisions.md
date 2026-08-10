@@ -1,7 +1,7 @@
 # LumaMath Architectural Decisions
 
 ## ADR-001: Hybrid Content Model
-**Status**: Accepted  
+**Status**: Accepted; student-question authoring aspects superseded by ADR-006  
 **Date**: 2026-07-19
 
 ### Context
@@ -128,3 +128,37 @@ After migrating to context, old localStorage helper files are no longer needed.
 - Some files contain only deprecation notices
 - Utility functions remain accessible
 - Clean removal possible in future
+
+---
+
+## ADR-006: Generator-First Question Architecture
+**Status**: Accepted  
+**Date**: 2026-08-09
+
+### Context
+LumaMath is designed for repeated learning sessions. Fixed authored question banks cause students to see the same problems across retries, encourage surface memorization, limit assessment validity, and require curriculum authors to maintain large duplicated banks. Existing Grade 3 implementation drifted into a hybrid state where some flows are truly generated while Warm-Up, Try It, fallback Practice, and some assessments reuse fixed authored questions.
+
+### Decision
+Adopt a **Generator-First Question Architecture** for repeated student-facing questions.
+
+- Curriculum content defines the Skill or Concept, instructional intent, problem templates/forms, mathematical constraints, difficulty parameters, allowed representations, scaffolding, visual requirements, and distractor strategies.
+- Runtime domain generators create the actual question instances for Warm-Up, Quick Check, Try It, Practice, and Evaluations.
+- Learn may retain fixed worked examples because they are explanatory content rather than a repeated question bank.
+- Generators use deterministic session/attempt seeds. The same seed must reproduce the same problem set; a new session seed should yield fresh valid problems.
+- Every problem has a semantic identity derived from its mathematical parameters so duplicate math cannot masquerade as unique through wording or answer-order changes.
+- Prompt, choices, correct answer, explanation, and visuals are derived from one canonical mathematical model.
+- Multiple-choice distractors are misconception-aware and mathematically plausible.
+
+### Rationale
+- Prevents the repeated-question failure observed during Grade 3 QA.
+- Measures genuine understanding instead of memorization of a small bank.
+- Scales to K–6 without hand-authoring enormous numbers of near-duplicate questions.
+- Keeps curriculum authors focused on educational intent while generators enforce mathematical validity.
+- Deterministic seeding preserves reproducible tests and debugging.
+
+### Consequences
+- Existing fixed authored Warm-Up, Try It, fallback Practice, and fixed assessment paths are migration debt rather than the target architecture.
+- Content contracts must increasingly represent generation specifications instead of concrete repeated question instances.
+- Generator families and shared generation utilities become core Domain Layer infrastructure.
+- Release-readiness tests should verify generator coverage, deterministic same-seed behavior, cross-seed variation, duplicate prevention, and canonical synchronization.
+

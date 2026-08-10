@@ -53,6 +53,9 @@ A summative assessment at the end of a unit or week, used to measure mastery bef
 **Review**
 Spaced practice of previously learned skills, often embedded in warm-ups, flashcards, or end-of-week spiral review.
 
+**Generator-First Question Architecture**
+The canonical LumaMath model for repeated student-facing questions. Curriculum authors define Skills, templates, constraints, difficulty, visuals, scaffolding, and distractor strategies; runtime generators create the actual Warm-Up, Quick Check, Try It, Practice, and Evaluation question instances using deterministic session seeds and semantic duplicate prevention.
+
 **Curriculum**
 The complete K–6 scope and sequence of units, weeks, lessons, skills, and assessments.
 
