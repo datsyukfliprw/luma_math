@@ -78,9 +78,7 @@ export const placeValueFamily: TryItFamily = (ctx) => {
       {
         const placeIndex = ctx.rng.nextInt(0, digits - 1);
         const placeName = PLACES[placeIndex];
-        const digit = Math.floor(
-          (number % PLACE_VALUES[placeIndex + 1]) / PLACE_VALUES[placeIndex],
-        );
+        const digit = Math.floor(number / PLACE_VALUES[placeIndex]) % 10;
         prompt = `In the number ${number}, what is the value of the ${placeName} digit?`;
         correct = String(digit * PLACE_VALUES[placeIndex]);
         key = mathProblemKey(ctx.practiceType, number, placeIndex, "digit_value");
@@ -92,6 +90,8 @@ export const placeValueFamily: TryItFamily = (ctx) => {
         prompt = `In the number ${digitValueProblem.number}, what is the value of the ${digitValueProblem.targetPlace} digit?`;
         correct = String(digitValueProblem.correctAnswer);
         key = digitValueProblem.problemKey;
+        if (ctx.usedKeys.has(key)) continue;
+        ctx.usedKeys.add(key);
         const distractors = ctx.rng
           .shuffle(getDigitValueDistractorCandidates(digitValueProblem))
           .slice(0, 2)
@@ -166,9 +166,7 @@ export const placeValueFamily: TryItFamily = (ctx) => {
       case "place_value_puzzles":
       default: {
         const hiddenPlace = ctx.rng.nextInt(0, digits - 1);
-        const hiddenValue = Math.floor(
-          (number % PLACE_VALUES[hiddenPlace + 1]) / PLACE_VALUES[hiddenPlace],
-        );
+        const hiddenValue = Math.floor(number / PLACE_VALUES[hiddenPlace]) % 10;
         const mask = [...String(number)];
         mask[digits - 1 - hiddenPlace] = "_";
         prompt = `What digit goes in the blank? ${mask.join("")}`;
@@ -178,7 +176,7 @@ export const placeValueFamily: TryItFamily = (ctx) => {
       }
     }
 
-    if (ctx.usedKeys.has(key)) continue;
+    if (!usesSharedDigitValue && ctx.usedKeys.has(key)) continue;
     ctx.usedKeys.add(key);
 
     problems.push(

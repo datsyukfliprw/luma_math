@@ -13,6 +13,7 @@ import { generateSubtractionProblems } from "./subtraction";
 import { generateValidInvalidArraysProblems } from "./validInvalidArrays";
 import { generateWeek2EvaluationProblems } from "./week2Evaluation";
 import { generatePlaceValueDigitsProblems } from "./placeValueDigits";
+import { generateRoundingProblems } from "./rounding";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 type PracticeGenerator = (options?: PracticeGenerationOptions) => PracticeProblem[];
@@ -54,6 +55,10 @@ export const practiceRegistry: Record<string, PracticeGenerator> = {
   subtraction_missing_digits: generateSubtractionProblems,
 
   place_value_digits: generatePlaceValueDigitsProblems,
+  round_ten: generateRoundingProblems,
+  round_hundred: generateRoundingProblems,
+  round_place_value: generateRoundingProblems,
+  estimate_reasonable: generateRoundingProblems,
 };
 
 export type RegisteredPracticeType = keyof typeof practiceRegistry;

@@ -30,6 +30,13 @@ function isPlaceValueMisconception(candidate: number, current: DigitValueProblem
     candidate as (typeof PLACE_VALUES)[number],
   );
   const isWholeNumber = candidate === current.number;
+  const isZeroFallbackMisconception =
+    candidate === 0 &&
+    current.correctAnswer !== 0 &&
+    String(current.number).includes("0") &&
+    !isBareDigit &&
+    !isPlaceUnit &&
+    !isWholeNumber;
   const isAdjacentPlaceInterpretation = PLACE_VALUES.some(
     (placeValue, index) =>
       Math.abs(index - PLACE_VALUES.indexOf(current.placeValue as (typeof PLACE_VALUES)[number])) ===
@@ -37,7 +44,13 @@ function isPlaceValueMisconception(candidate: number, current: DigitValueProblem
       candidate === current.targetDigit * placeValue,
   );
 
-  return isBareDigit || isPlaceUnit || isWholeNumber || isAdjacentPlaceInterpretation;
+  return (
+    isBareDigit ||
+    isPlaceUnit ||
+    isWholeNumber ||
+    isAdjacentPlaceInterpretation ||
+    isZeroFallbackMisconception
+  );
 }
 
 function generatedProblems(count: number): DigitValueProblem[] {
@@ -90,6 +103,22 @@ describe("getDigitValueDistractorCandidates", () => {
     expect(candidates.every((candidate) => isPlaceValueMisconception(candidate, current))).toBe(
       true,
     );
+  });
+
+  it("classifies the supported zero fallback misconception explicitly", () => {
+    const current = problem({
+      number: 10,
+      targetPlace: "tens",
+      targetDigit: 1,
+      placeValue: 10,
+      correctAnswer: 10,
+      problemKey: "digit_value:10:tens",
+    });
+
+    const candidates = getDigitValueDistractorCandidates(current);
+
+    expect(candidates).toContain(0);
+    expect(isPlaceValueMisconception(0, current)).toBe(true);
   });
 
   it("supports the ones and ten-thousands places", () => {

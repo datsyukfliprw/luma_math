@@ -5,6 +5,9 @@ import { getDigitValueDistractorCandidates } from "../placeValue/distractors";
 import { generateDigitValueProblem } from "../placeValue/generator";
 import type { DigitValueProblem } from "../placeValue/types";
 import { getResolvedTryItExperience } from "../tryItResolver";
+import { getLessonById } from "../lessonLookup";
+import { placeValueFamily } from "./families/placeValue";
+import type { TryItFamilyContext } from "./types";
 
 const PLACE_VALUES = {
   ones: 1,
@@ -14,11 +17,11 @@ const PLACE_VALUES = {
   "ten thousands": 10_000,
 } as const;
 
-function findLessonId(): string {
+function findLessonId(practiceType = "place_value_digits"): string {
   for (const unit of getAllCurricula()) {
     for (const week of unit.weeks) {
       for (const lesson of week.lessons) {
-        if (lesson.lesson_type === "lesson" && lesson.practice_type === "place_value_digits") {
+        if (lesson.lesson_type === "lesson" && lesson.practice_type === practiceType) {
           return `g3-u${unit.unit_number}-w${week.week_number}-l${lesson.day_number}`;
         }
       }
@@ -27,8 +30,8 @@ function findLessonId(): string {
   throw new Error("No place_value_digits lesson found");
 }
 
-function resolve(attemptKey: string | number) {
-  return getResolvedTryItExperience(findLessonId(), { attemptKey })!;
+function resolve(attemptKey: string | number, practiceType = "place_value_digits") {
+  return getResolvedTryItExperience(findLessonId(practiceType), { attemptKey })!;
 }
 
 describe("place_value_digits Try It semantics", () => {
@@ -109,5 +112,59 @@ describe("place_value_digits Try It semantics", () => {
     }
 
     expect(encounteredTenThousandsProblems).toBeGreaterThan(0);
+  });
+});
+
+describe("legacy place-value Try It semantics", () => {
+  it.each(["large_digit_value", "place_value_puzzles"])(
+    "calculates finite, correct answers for %s across five-digit attempts",
+    (practiceType) => {
+      let encounteredTenThousandsProblems = 0;
+
+      for (let index = 0; index < 200; index += 1) {
+        for (const problem of resolve(`legacy-five-digit-${practiceType}-${index}`, practiceType).problems) {
+          const keyParts = (problem.problemKey ?? "").split(":");
+          const number = Number(keyParts[1]);
+          const placeIndex = Number(keyParts[2]);
+          if (number < 10_000 || placeIndex !== 4) continue;
+
+          encounteredTenThousandsProblems += 1;
+          const displayedDigit = Math.floor(number / 10_000) % 10;
+          const expected =
+            practiceType === "large_digit_value" ? displayedDigit * 10_000 : displayedDigit;
+
+          expect(Number(problem.parts[0].correctAnswer)).toBe(expected);
+          expect(Number.isFinite(Number(problem.parts[0].correctAnswer))).toBe(true);
+        }
+      }
+
+      expect(encounteredTenThousandsProblems).toBeGreaterThan(0);
+    },
+  );
+
+  it("does not consume presentation RNG while rejecting a shared duplicate", () => {
+    const lessonId = findLessonId();
+    const lesson = getLessonById(lessonId).lesson;
+    const seed = "duplicate-presentation-rng";
+    const expectedRng = createSeededRng(seed);
+    const first = generateDigitValueProblem(expectedRng);
+    const second = generateDigitValueProblem(expectedRng);
+    const baseContext = (usedKeys: Set<string>, rngSeed: string): TryItFamilyContext => ({
+      lessonId,
+      lesson,
+      family: "place_value",
+      practiceType: "place_value_digits",
+      attemptKey: seed,
+      rng: createSeededRng(rngSeed),
+      usedKeys,
+      count: 1,
+    });
+
+    const afterDuplicate = placeValueFamily(
+      baseContext(new Set([first.problemKey]), seed),
+    )[0];
+    const expectedSecondKey = second.problemKey;
+
+    expect(afterDuplicate.problemKey).toBe(expectedSecondKey);
   });
 });

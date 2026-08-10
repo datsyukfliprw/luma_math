@@ -14,3 +14,25 @@ export type DigitValueProblem = {
   correctAnswer: number;
   problemKey: string;
 };
+
+export type RoundingPracticeType = "round_ten" | "round_hundred" | "round_place_value";
+
+export type RoundingProblem = {
+  form: "rounding";
+  number: number;
+  targetPlace: 10 | 100 | 1_000;
+  correctAnswer: number;
+  problemKey: string;
+};
+
+export type EstimationOperation = "addition" | "subtraction";
+
+export type EstimationProblem = {
+  form: "estimation";
+  operation: EstimationOperation;
+  left: number;
+  right: number;
+  targetPlace: 10 | 100;
+  correctAnswer: number;
+  problemKey: string;
+};
