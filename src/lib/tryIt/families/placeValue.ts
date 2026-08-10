@@ -1,4 +1,6 @@
 import type { TryItFamily } from "../types";
+import { getDigitValueDistractorCandidates } from "../../placeValue/distractors";
+import { generateDigitValueProblem } from "../../placeValue/generator";
 import {
   buildNumberChoices,
   makeSinglePartTryItProblem,
@@ -60,19 +62,20 @@ export const placeValueFamily: TryItFamily = (ctx) => {
 
   while (problems.length < ctx.count && attempts < 200) {
     attempts += 1;
-    const digits = ctx.rng.nextInt(2, 5);
-    const max = 10 ** digits - 1;
-    const min = 10 ** (digits - 1);
-    const number = ctx.rng.nextInt(min, max);
+    const usesSharedDigitValue = ctx.practiceType === "place_value_digits";
+    const digits = usesSharedDigitValue ? 0 : ctx.rng.nextInt(2, 5);
+    const max = usesSharedDigitValue ? 0 : 10 ** digits - 1;
+    const min = usesSharedDigitValue ? 0 : 10 ** (digits - 1);
+    const number = usesSharedDigitValue ? 0 : ctx.rng.nextInt(min, max);
 
-    let prompt = "";
-    let correct = "";
-    let key = "";
+    let prompt: string;
+    let correct: string;
+    let key: string;
     let choices: string[] | undefined;
 
     switch (ctx.practiceType) {
       case "large_digit_value":
-      case "place_value_digits": {
+      {
         const placeIndex = ctx.rng.nextInt(0, digits - 1);
         const placeName = PLACES[placeIndex];
         const digit = Math.floor(
@@ -82,6 +85,18 @@ export const placeValueFamily: TryItFamily = (ctx) => {
         correct = String(digit * PLACE_VALUES[placeIndex]);
         key = mathProblemKey(ctx.practiceType, number, placeIndex, "digit_value");
         choices = buildNumberChoices(Number(correct), 0, PLACE_VALUES[placeIndex] * 9, ctx.rng);
+        break;
+      }
+      case "place_value_digits": {
+        const digitValueProblem = generateDigitValueProblem(ctx.rng);
+        prompt = `In the number ${digitValueProblem.number}, what is the value of the ${digitValueProblem.targetPlace} digit?`;
+        correct = String(digitValueProblem.correctAnswer);
+        key = digitValueProblem.problemKey;
+        const distractors = ctx.rng
+          .shuffle(getDigitValueDistractorCandidates(digitValueProblem))
+          .slice(0, 2)
+          .map(String);
+        choices = ctx.rng.shuffle([correct, ...distractors]);
         break;
       }
       case "reading_large_numbers":

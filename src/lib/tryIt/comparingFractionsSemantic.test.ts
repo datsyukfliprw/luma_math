@@ -307,4 +307,32 @@ describe("comparing fractions Try It semantic correctness", () => {
       expect(answer).not.toMatch(/^\d+\/\d+$/);
     }
   });
+
+  it("places the larger fraction on the smaller whole in indeterminate different-whole problems", () => {
+    let differentWholeProblems = 0;
+
+    for (let i = 0; i < 20; i += 1) {
+      const { experience } = resolve("same_whole_fractions", `different-whole-order-${i}`);
+      for (const problem of experience.problems) {
+        const form = problem.problemKey?.split(":").slice(-2).join(":");
+        if (!form?.startsWith("same_whole_different:")) continue;
+
+        const match = problem.prompt.match(
+          /^A (small|large) \w+ has (\d+\/\d+) shaded\. A (small|large) \w+ has (\d+\/\d+) shaded\./,
+        );
+        expect(match).toBeTruthy();
+
+        const firstValue = match![2].split("/").map(Number);
+        const secondValue = match![4].split("/").map(Number);
+        const firstIsLarger = firstValue[0] * secondValue[1] > secondValue[0] * firstValue[1];
+
+        expect(match![1]).not.toBe(match![3]);
+        expect(firstIsLarger ? match![1] : match![3]).toBe("small");
+        expect(firstIsLarger ? match![3] : match![1]).toBe("large");
+        differentWholeProblems += 1;
+      }
+    }
+
+    expect(differentWholeProblems).toBeGreaterThan(0);
+  });
 });

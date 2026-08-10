@@ -1,11 +1,18 @@
 /**
  * Normalize a text answer for comparison.
  * Trims, lowercases, removes spaces, and normalizes multiplication symbols
- * (× and *) to 'x' so equations like "5 × 1 = 5" and "5x1 = 5" match.
+ * (× and *) to 'x', and division symbols (/) to '÷', so equivalent equations
+ * use the same representation.
  * Keep commas and hyphens intact for number-word answers.
  */
 export function normalizeTextAnswer(answer: string): string {
-  return answer.trim().toLowerCase().replaceAll(" ", "").replaceAll("×", "x").replaceAll("*", "x");
+  return answer
+    .trim()
+    .toLowerCase()
+    .replaceAll(" ", "")
+    .replaceAll("×", "x")
+    .replaceAll("*", "x")
+    .replaceAll("/", "÷");
 }
 
 /**

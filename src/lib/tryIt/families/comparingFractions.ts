@@ -245,7 +245,7 @@ export const comparingFractionsFamily: TryItFamily = (ctx) => {
         ];
         successMessage = `Yes! ${larger} is larger than ${smaller} because the wholes are the same size.`;
       } else {
-        const [sizeA, sizeB] = ctx.rng.shuffle(["small", "large"]);
+        const [sizeA, sizeB] = aVal > bVal ? ["small", "large"] : ["large", "small"];
         prompt = `A ${sizeA} ${singular} has ${aFrac} shaded. A ${sizeB} ${singular} has ${bFrac} shaded. Can you tell which shaded amount is larger?`;
         const cannotTell =
           "Cannot tell which shaded amount is larger because the wholes are different sizes";

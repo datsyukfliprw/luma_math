@@ -61,8 +61,8 @@ function AppContent({ activeStudentId, onSelectStudent }: AppContentProps) {
               <Route path="/lesson/:lessonId" element={<LessonScreen />} />
               <Route path="/learn" element={<LearnScreen />} />
               <Route path="/learn/:lessonId" element={<LearnScreen />} />
-              <Route path="/try-it" element={<TryItScreen key={location.pathname} />} />
-              <Route path="/try-it/:lessonId" element={<TryItScreen key={location.pathname} />} />
+              <Route path="/try-it" element={<TryItScreen key={location.key} />} />
+              <Route path="/try-it/:lessonId" element={<TryItScreen key={location.key} />} />
               <Route path="/warmup" element={<WarmUpScreen />} />
               <Route path="/warmup/:lessonId" element={<WarmUpScreen />} />
               <Route path="/flashcards" element={<FlashcardsScreen />} />
