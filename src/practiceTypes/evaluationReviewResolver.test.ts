@@ -7,12 +7,24 @@ import { EvaluationGenerationError } from "./evaluationError";
 import { practiceRegistry } from "./registry";
 import { generateLargeDigitValueProblems } from "./largeDigitValue";
 import { generateNumberWordsProblems } from "./numberWords";
+import { generateExpandedFormProblems } from "./expandedForm";
+import {
+  generateBaseTenModelsProblems,
+  generatePlaceValuePuzzlesProblems,
+} from "./placeValueComposition";
 
 describe("resolveEvaluationReviewSource", () => {
   it("routes the three place-value practice types to their approved generators", () => {
     expect(practiceRegistry.large_digit_value).toBe(generateLargeDigitValueProblems);
     expect(practiceRegistry.reading_large_numbers).toBe(generateNumberWordsProblems);
     expect(practiceRegistry.number_words).toBe(generateNumberWordsProblems);
+  });
+
+  it("routes the approved place-value practice types to their intended generators", () => {
+    expect(practiceRegistry.expanded_form).toBe(generateExpandedFormProblems);
+    expect(practiceRegistry.expanded_form_large).toBe(generateExpandedFormProblems);
+    expect(practiceRegistry.base_ten_models).toBe(generateBaseTenModelsProblems);
+    expect(practiceRegistry.place_value_puzzles).toBe(generatePlaceValuePuzzlesProblems);
   });
 
   it("resolves an exact registered review type to a specialized generator", () => {
@@ -37,6 +49,22 @@ describe("resolveEvaluationReviewSource", () => {
     ["number_words", "g3-u11-w1-eval", "g3-u11-w1-l4"],
   ])(
     "resolves newly registered review type %s through its specialized generator",
+    (reviewType, evaluationLessonId, sourceLessonId) => {
+      const source = resolveEvaluationReviewSource(evaluationLessonId, reviewType);
+      expect(source.reviewType).toBe(reviewType);
+      expect(source.generatorPracticeType).toBe(reviewType);
+      expect(source.resolution).toBe("specialized");
+      expect(source.sourceLesson.lesson_id).toBe(sourceLessonId);
+    },
+  );
+
+  it.each([
+    ["expanded_form_large", "g3-u2-w1-eval", "g3-u2-w1-l3"],
+    ["place_value_puzzles", "g3-u2-w1-eval", "g3-u2-w1-l4"],
+    ["base_ten_models", "g3-u11-w1-eval", "g3-u11-w1-l2"],
+    ["expanded_form", "g3-u11-w1-eval", "g3-u11-w1-l3"],
+  ])(
+    "resolves approved place-value review type %s through its specialized generator",
     (reviewType, evaluationLessonId, sourceLessonId) => {
       const source = resolveEvaluationReviewSource(evaluationLessonId, reviewType);
       expect(source.reviewType).toBe(reviewType);

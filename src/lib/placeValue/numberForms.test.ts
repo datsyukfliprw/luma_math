@@ -1,13 +1,104 @@
 import { describe, expect, it } from "vitest";
 import { createSeededRng } from "../../practiceTypes/random";
 import {
+  EXPANDED_FORM_RANGES,
   NUMBER_WORD_RANGES,
+  createExpandedFormProblem,
   createNumberWordProblem,
   formatNumberWords,
+  generateExpandedFormProblem,
   generateNumberWordProblem,
+  type ExpandedFormDirection,
+  type ExpandedFormPracticeType,
   type NumberWordDirection,
   type NumberWordPracticeType,
 } from "./numberForms";
+
+describe("expanded-form mathematical core", () => {
+  it("uses curriculum-backed high-to-low terms and preserves internal zeros", () => {
+    expect(createExpandedFormProblem("expanded_form", 4_159, "standard_to_expanded")).toMatchObject({
+      sourceNumber: 4_159,
+      terms: [
+        { digit: 4, placeValue: 1_000, value: 4_000 },
+        { digit: 1, placeValue: 100, value: 100 },
+        { digit: 5, placeValue: 10, value: 50 },
+        { digit: 9, placeValue: 1, value: 9 },
+      ],
+      correctAnswer: "4,000 + 100 + 50 + 9",
+      problemKey: "expanded_form:4159:standard_to_expanded",
+    });
+    expect(createExpandedFormProblem("expanded_form", 8_206, "standard_to_expanded").correctAnswer)
+      .toBe("8,000 + 200 + 6");
+    expect(createExpandedFormProblem("expanded_form_large", 90_607, "standard_to_expanded").correctAnswer)
+      .toBe("90,000 + 600 + 7");
+  });
+
+  it("supports both directions and the exact 100,000 boundary", () => {
+    const expandedToStandard = createExpandedFormProblem(
+      "expanded_form_large",
+      100_000,
+      "expanded_to_standard",
+    );
+    expect(expandedToStandard).toMatchObject({
+      terms: [{ digit: 1, placeValue: 100_000, value: 100_000 }],
+      expandedForm: "100,000",
+      correctAnswer: "100000",
+      problemKey: "expanded_form:100000:expanded_to_standard",
+    });
+
+    const directions = new Set<ExpandedFormDirection>();
+    for (let seed = 0; seed < 120; seed += 1) {
+      directions.add(
+        generateExpandedFormProblem("expanded_form_large", createSeededRng(`direction:${seed}`))
+          .direction,
+      );
+    }
+    expect(directions).toEqual(
+      new Set<ExpandedFormDirection>(["standard_to_expanded", "expanded_to_standard"]),
+    );
+  });
+
+  it("generates within each configured curriculum domain", () => {
+    const samples: Record<ExpandedFormPracticeType, number[]> = {
+      expanded_form: [],
+      expanded_form_large: [],
+    };
+    for (const practiceType of Object.keys(samples) as ExpandedFormPracticeType[]) {
+      for (let seed = 0; seed < 160; seed += 1) {
+        samples[practiceType].push(
+          generateExpandedFormProblem(practiceType, createSeededRng(`${practiceType}:${seed}`))
+            .sourceNumber,
+        );
+      }
+    }
+    expect(Math.min(...samples.expanded_form)).toBeGreaterThanOrEqual(EXPANDED_FORM_RANGES.expanded_form.min);
+    expect(Math.max(...samples.expanded_form)).toBeLessThanOrEqual(EXPANDED_FORM_RANGES.expanded_form.max);
+    expect(new Set(samples.expanded_form.map((number) => String(number).length))).toEqual(
+      new Set([2, 3, 4]),
+    );
+    expect(Math.min(...samples.expanded_form_large)).toBeGreaterThanOrEqual(
+      EXPANDED_FORM_RANGES.expanded_form_large.min,
+    );
+    expect(Math.max(...samples.expanded_form_large)).toBeLessThanOrEqual(
+      EXPANDED_FORM_RANGES.expanded_form_large.max,
+    );
+    expect(samples.expanded_form_large.some((number) => number >= 10_000)).toBe(true);
+    expect(samples.expanded_form_large).toContain(100_000);
+  });
+
+  it("reconstructs every generated number from its non-zero terms", () => {
+    for (let seed = 0; seed < 100; seed += 1) {
+      const problem = generateExpandedFormProblem(
+        "expanded_form_large",
+        createSeededRng(`reconstruct:${seed}`),
+      );
+      expect(problem.terms.reduce((sum, term) => sum + term.value, 0)).toBe(problem.sourceNumber);
+      expect(problem.terms.every((term) => term.digit !== 0)).toBe(true);
+      expect(problem.terms.every((term, index, terms) => index === 0 || terms[index - 1].value > term.value))
+        .toBe(true);
+    }
+  });
+});
 
 describe("number-word formatting", () => {
   it("follows the curriculum's whole-number conventions", () => {

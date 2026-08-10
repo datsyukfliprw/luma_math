@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { getAllCurricula } from "../../data/curriculum";
 import { createSeededRng, derivePracticeSeed } from "../../practiceTypes/random";
+import { generateExpandedFormProblem } from "../placeValue/numberForms";
+import {
+  generateBaseTenModelProblem,
+  generatePlaceValuePuzzleProblem,
+} from "../placeValue/placeValueComposition";
 import { getDigitValueDistractorCandidates } from "../placeValue/distractors";
 import { generateDigitValueProblem } from "../placeValue/generator";
 import type { DigitValueProblem } from "../placeValue/types";
@@ -305,31 +310,331 @@ describe("number-word Try It semantics", () => {
   });
 });
 
-describe("legacy place-value Try It semantics", () => {
-  it("calculates finite, correct answers for place_value_puzzles across five-digit attempts", () => {
-    let encounteredTenThousandsProblems = 0;
+function parseExpandedExpression(expression: string): number[] {
+  return expression.split("+").map((term) => {
+    const value = Number(term.trim().replaceAll(",", ""));
+    expect(Number.isInteger(value)).toBe(true);
+    return value;
+  });
+}
 
-    for (let index = 0; index < 200; index += 1) {
-      for (const problem of resolve(
-        `legacy-five-digit-place-value-puzzles-${index}`,
-        "place_value_puzzles",
-      ).problems) {
-        const keyParts = (problem.problemKey ?? "").split(":");
-        const number = Number(keyParts[1]);
-        const placeIndex = Number(keyParts[2]);
-        if (number < 10_000 || placeIndex !== 4) continue;
+describe("expanded-form Try It semantics", () => {
+  it("uses the shared canonical state for both directions in both curriculum domains", () => {
+    const encounteredDirections = {
+      expanded_form: new Set<string>(),
+      expanded_form_large: new Set<string>(),
+    };
+    const encounteredInternalZero = new Set<string>();
+    let encounteredOneHundredThousand = false;
 
-        encounteredTenThousandsProblems += 1;
-        const displayedDigit = Math.floor(number / 10_000) % 10;
+    for (const practiceType of ["expanded_form", "expanded_form_large"] as const) {
+      const min = practiceType === "expanded_form" ? 10 : 1_000;
+      const max = practiceType === "expanded_form" ? 9_999 : 100_000;
 
-        expect(Number(problem.parts[0].correctAnswer)).toBe(displayedDigit);
-        expect(Number.isFinite(Number(problem.parts[0].correctAnswer))).toBe(true);
+      for (let index = 0; index < 240; index += 1) {
+        for (const problem of resolve(`expanded-form-semantics-${practiceType}-${index}`, practiceType).problems) {
+          const keyMatch = (problem.problemKey ?? "").match(
+            /^expanded_form:(\d+):(standard_to_expanded|expanded_to_standard)$/,
+          );
+          expect(keyMatch).not.toBeNull();
+
+          const sourceNumber = Number(keyMatch![1]);
+          const direction = keyMatch![2];
+          encounteredDirections[practiceType].add(direction);
+          expect(sourceNumber).toBeGreaterThanOrEqual(min);
+          expect(sourceNumber).toBeLessThanOrEqual(max);
+          expect(problem.problemKey).toBe(`expanded_form:${sourceNumber}:${direction}`);
+
+          const part = problem.parts[0];
+          const choices = part.choices ?? [];
+          expect(choices).toHaveLength(3);
+          expect(new Set(choices).size).toBe(3);
+          expect(choices.filter((choice) => choice === part.correctAnswer)).toHaveLength(1);
+
+          if (direction === "standard_to_expanded") {
+            expect(problem.prompt).toBe(`Write ${sourceNumber.toLocaleString("en-US")} in expanded form.`);
+            const terms = parseExpandedExpression(part.correctAnswer);
+            expect(terms.every((term) => term > 0)).toBe(true);
+            expect(terms.every((term, termIndex) => termIndex === 0 || term < terms[termIndex - 1])).toBe(true);
+            expect(terms.reduce((sum, term) => sum + term, 0)).toBe(sourceNumber);
+          } else {
+            const expression = problem.prompt.match(/^What number is (.+)\?$/)?.[1];
+            expect(expression).toBeDefined();
+            expect(parseExpandedExpression(expression!).reduce((sum, term) => sum + term, 0)).toBe(sourceNumber);
+            expect(part.correctAnswer).toBe(String(sourceNumber));
+          }
+
+          if (String(sourceNumber).slice(1, -1).includes("0")) {
+            encounteredInternalZero.add(practiceType);
+          }
+          if (practiceType === "expanded_form_large" && sourceNumber === 100_000) {
+            encounteredOneHundredThousand = true;
+          }
+        }
       }
     }
 
-    expect(encounteredTenThousandsProblems).toBeGreaterThan(0);
-  });
+    for (const practiceType of ["expanded_form", "expanded_form_large"] as const) {
+      expect(encounteredDirections[practiceType]).toEqual(
+        new Set(["standard_to_expanded", "expanded_to_standard"]),
+      );
+    }
+    expect(encounteredInternalZero).toEqual(new Set(["expanded_form", "expanded_form_large"]));
+    expect(encounteredOneHundredThousand).toBe(true);
+  }, 60000);
 
+  it("is deterministic and rejects duplicate canonical keys before presentation RNG", () => {
+    for (const practiceType of ["expanded_form", "expanded_form_large"] as const) {
+      const attempt = `expanded-form-deterministic-${practiceType}`;
+      const first = resolve(attempt, practiceType);
+      expect(resolve(attempt, practiceType)).toEqual(first);
+      expect(new Set(first.problems.map((problem) => problem.problemKey)).size).toBe(
+        first.problems.length,
+      );
+    }
+
+    const lessonId = findLessonId("expanded_form");
+    const lesson = getLessonById(lessonId).lesson;
+    const seed = "expanded-form-duplicate-presentation-rng";
+    const expectedRng = createSeededRng(seed);
+    const firstCanonical = generateExpandedFormProblem("expanded_form", expectedRng);
+    const secondCanonical = generateExpandedFormProblem("expanded_form", expectedRng);
+    const afterDuplicate = placeValueFamily({
+      lessonId,
+      lesson,
+      family: "place_value",
+      practiceType: "expanded_form",
+      attemptKey: seed,
+      rng: createSeededRng(seed),
+      usedKeys: new Set([firstCanonical.problemKey]),
+      count: 1,
+    });
+    expect(afterDuplicate).toHaveLength(1);
+    expect(afterDuplicate[0].problemKey).toBe(secondCanonical.problemKey);
+  });
+});
+
+type BaseTenBlockLabel = "unit cube" | "ten rod" | "hundred flat" | "thousand cube";
+type PlaceValueClueLabel = "ones" | "tens" | "hundreds" | "thousands" | "ten-thousands";
+
+const BASE_TEN_BLOCK_VALUES: Record<BaseTenBlockLabel, number> = {
+  "unit cube": 1,
+  "ten rod": 10,
+  "hundred flat": 100,
+  "thousand cube": 1_000,
+};
+
+const PLACE_VALUE_CLUE_VALUES: Record<PlaceValueClueLabel, number> = {
+  ones: 1,
+  tens: 10,
+  hundreds: 100,
+  thousands: 1_000,
+  "ten-thousands": 10_000,
+};
+
+function parseBaseTenBlocks(prompt: string): Array<{ count: number; label: BaseTenBlockLabel }> {
+  const body = prompt.match(/^What number is shown by (.+)\?$/)?.[1];
+  expect(body).toBeDefined();
+
+  return body!.split(/, | and /).map((part) => {
+    const match = part.match(
+      /^(\d+) (unit cube|unit cubes|ten rod|ten rods|hundred flat|hundred flats|thousand cube|thousand cubes)$/,
+    );
+    expect(match).not.toBeNull();
+    const singular = match![2].replace(/s$/, "") as BaseTenBlockLabel;
+    const count = Number(match![1]);
+    expect(match![2]).toBe(count === 1 ? singular : `${singular}s`);
+    return { count, label: singular };
+  });
+}
+
+function parsePlaceValueClues(
+  prompt: string,
+): Array<{ digit: number; label: PlaceValueClueLabel }> {
+  const body = prompt.match(/^Build the number with (.+)\.$/)?.[1];
+  expect(body).toBeDefined();
+
+  return body!.split(/, | and /).map((part) => {
+    const match = part.match(
+      /^(\d+) (one|ones|ten|tens|hundred|hundreds|thousand|thousands|ten-thousand|ten-thousands)$/,
+    );
+    expect(match).not.toBeNull();
+    const label = match![2].replace(/s$/, "") as
+      | "one"
+      | "ten"
+      | "hundred"
+      | "thousand"
+      | "ten-thousand";
+    const digit = Number(match![1]);
+    expect(match![2]).toBe(digit === 1 ? label : `${label}s`);
+    const normalizedLabel: PlaceValueClueLabel =
+      label === "one"
+        ? "ones"
+        : label === "ten"
+          ? "tens"
+          : label === "hundred"
+            ? "hundreds"
+            : label === "thousand"
+              ? "thousands"
+              : "ten-thousands";
+    return { digit, label: normalizedLabel };
+  });
+}
+
+describe("base_ten_models Try It semantics", () => {
+  it("describes actual base-ten blocks and reconstructs the whole number", () => {
+    let encounteredZeroPlace = false;
+
+    for (let index = 0; index < 200; index += 1) {
+      for (const problem of resolve(`base-ten-semantics-${index}`, "base_ten_models").problems) {
+        const keyMatch = (problem.problemKey ?? "").match(/^base_ten:(\d+)$/);
+        expect(keyMatch).not.toBeNull();
+        const number = Number(keyMatch![1]);
+        expect(number).toBeGreaterThanOrEqual(10);
+        expect(number).toBeLessThanOrEqual(9_999);
+
+        const blocks = parseBaseTenBlocks(problem.prompt);
+        expect(blocks.length).toBeGreaterThanOrEqual(2);
+        const reconstructed = blocks.reduce(
+          (total, block) => total + block.count * BASE_TEN_BLOCK_VALUES[block.label],
+          0,
+        );
+        expect(reconstructed).toBe(number);
+        expect(problem.parts[0].correctAnswer).toBe(String(reconstructed));
+
+        for (const block of blocks) {
+          expect(block.count).toBeGreaterThanOrEqual(0);
+          expect(block.count).toBeLessThanOrEqual(9);
+          if (block.count === 0) encounteredZeroPlace = true;
+        }
+
+        const choices = problem.parts[0].choices ?? [];
+        expect(choices).toHaveLength(3);
+        expect(new Set(choices).size).toBe(3);
+        expect(choices.filter((choice) => choice === String(reconstructed))).toHaveLength(1);
+        for (const choice of choices) {
+          expect(Number.isFinite(Number(choice))).toBe(true);
+          expect(Number.isInteger(Number(choice))).toBe(true);
+          expect(Number(choice)).toBeGreaterThanOrEqual(10);
+          expect(Number(choice)).toBeLessThanOrEqual(9_999);
+        }
+      }
+    }
+
+    expect(encounteredZeroPlace).toBe(true);
+  }, 60000);
+
+  it("uses canonical keys, is deterministic, and rejects duplicates before presentation RNG", () => {
+    const first = resolve("base-ten-deterministic", "base_ten_models");
+    expect(resolve("base-ten-deterministic", "base_ten_models")).toEqual(first);
+    expect(new Set(first.problems.map((problem) => problem.problemKey)).size).toBe(
+      first.problems.length,
+    );
+
+    const lessonId = findLessonId("base_ten_models");
+    const lesson = getLessonById(lessonId).lesson;
+    const seed = "base-ten-duplicate-presentation-rng";
+    const expectedRng = createSeededRng(seed);
+    const firstCanonical = generateBaseTenModelProblem(expectedRng);
+    const secondCanonical = generateBaseTenModelProblem(expectedRng);
+    const afterDuplicate = placeValueFamily({
+      lessonId,
+      lesson,
+      family: "place_value",
+      practiceType: "base_ten_models",
+      attemptKey: seed,
+      rng: createSeededRng(seed),
+      usedKeys: new Set([firstCanonical.problemKey]),
+      count: 1,
+    });
+
+    expect(afterDuplicate).toHaveLength(1);
+    expect(afterDuplicate[0].problemKey).toBe(secondCanonical.problemKey);
+  });
+});
+
+describe("place_value_puzzles Try It semantics", () => {
+  it("describes all five place clues and reconstructs the whole number", () => {
+    let encounteredZeroClue = false;
+    let encounteredInternalZero = false;
+    let encounteredImplicitLeadingZero = false;
+
+    for (let index = 0; index < 240; index += 1) {
+      for (const problem of resolve(`place-value-puzzle-semantics-${index}`, "place_value_puzzles").problems) {
+        const keyMatch = (problem.problemKey ?? "").match(/^place_value_puzzle:(\d+):riddle$/);
+        expect(keyMatch).not.toBeNull();
+        const number = Number(keyMatch![1]);
+        expect(number).toBeGreaterThanOrEqual(1_000);
+        expect(number).toBeLessThanOrEqual(99_999);
+
+        const clues = parsePlaceValueClues(problem.prompt);
+        expect(clues).toHaveLength(5);
+        expect(new Set(clues.map((clue) => clue.label))).toEqual(
+          new Set(["ones", "tens", "hundreds", "thousands", "ten-thousands"]),
+        );
+        const reconstructed = clues.reduce(
+          (total, clue) => total + clue.digit * PLACE_VALUE_CLUE_VALUES[clue.label],
+          0,
+        );
+        expect(reconstructed).toBe(number);
+        expect(problem.parts[0].correctAnswer).toBe(String(reconstructed));
+
+        for (const clue of clues) {
+          expect(clue.digit).toBeGreaterThanOrEqual(0);
+          expect(clue.digit).toBeLessThanOrEqual(9);
+          if (clue.digit === 0) encounteredZeroClue = true;
+        }
+        if (String(number).length === 4) encounteredImplicitLeadingZero = true;
+        if (String(number).slice(1).includes("0")) encounteredInternalZero = true;
+
+        const choices = problem.parts[0].choices ?? [];
+        expect(choices).toHaveLength(3);
+        expect(new Set(choices).size).toBe(3);
+        expect(choices.filter((choice) => choice === String(reconstructed))).toHaveLength(1);
+        for (const choice of choices) {
+          expect(Number.isFinite(Number(choice))).toBe(true);
+          expect(Number.isInteger(Number(choice))).toBe(true);
+          expect(Number(choice)).toBeGreaterThanOrEqual(1_000);
+          expect(Number(choice)).toBeLessThanOrEqual(99_999);
+        }
+      }
+    }
+
+    expect(encounteredZeroClue).toBe(true);
+    expect(encounteredInternalZero).toBe(true);
+    expect(encounteredImplicitLeadingZero).toBe(true);
+  }, 60000);
+
+  it("uses canonical keys, is deterministic, and rejects duplicates before presentation RNG", () => {
+    const first = resolve("place-value-puzzle-deterministic", "place_value_puzzles");
+    expect(resolve("place-value-puzzle-deterministic", "place_value_puzzles")).toEqual(first);
+    expect(new Set(first.problems.map((problem) => problem.problemKey)).size).toBe(
+      first.problems.length,
+    );
+
+    const lessonId = findLessonId("place_value_puzzles");
+    const lesson = getLessonById(lessonId).lesson;
+    const seed = "place-value-puzzle-duplicate-presentation-rng";
+    const expectedRng = createSeededRng(seed);
+    const firstCanonical = generatePlaceValuePuzzleProblem(expectedRng);
+    const secondCanonical = generatePlaceValuePuzzleProblem(expectedRng);
+    const afterDuplicate = placeValueFamily({
+      lessonId,
+      lesson,
+      family: "place_value",
+      practiceType: "place_value_puzzles",
+      attemptKey: seed,
+      rng: createSeededRng(seed),
+      usedKeys: new Set([firstCanonical.problemKey]),
+      count: 1,
+    });
+
+    expect(afterDuplicate).toHaveLength(1);
+    expect(afterDuplicate[0].problemKey).toBe(secondCanonical.problemKey);
+  });
+});
+
+describe("shared place-value Try It semantics", () => {
   it("does not consume presentation RNG while rejecting a shared duplicate", () => {
     const lessonId = findLessonId();
     const lesson = getLessonById(lessonId).lesson;
@@ -348,11 +653,7 @@ describe("legacy place-value Try It semantics", () => {
       count: 1,
     });
 
-    const afterDuplicate = placeValueFamily(
-      baseContext(new Set([first.problemKey]), seed),
-    )[0];
-    const expectedSecondKey = second.problemKey;
-
-    expect(afterDuplicate.problemKey).toBe(expectedSecondKey);
+    const afterDuplicate = placeValueFamily(baseContext(new Set([first.problemKey]), seed))[0];
+    expect(afterDuplicate.problemKey).toBe(second.problemKey);
   });
 });

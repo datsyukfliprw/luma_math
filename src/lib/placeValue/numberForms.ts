@@ -1,5 +1,100 @@
 import type { SeededRng } from "../../practiceTypes/random";
 
+export type ExpandedFormPracticeType = "expanded_form" | "expanded_form_large";
+
+export type ExpandedFormDirection = "standard_to_expanded" | "expanded_to_standard";
+
+export const EXPANDED_FORM_RANGES: Record<
+  ExpandedFormPracticeType,
+  { min: number; max: number }
+> = {
+  expanded_form: { min: 10, max: 9_999 },
+  expanded_form_large: { min: 1_000, max: 100_000 },
+};
+
+export type ExpandedFormTerm = {
+  digit: number;
+  placeValue: number;
+  value: number;
+};
+
+export type ExpandedFormProblem = {
+  form: "expanded_form";
+  practiceType: ExpandedFormPracticeType;
+  sourceNumber: number;
+  direction: ExpandedFormDirection;
+  terms: ExpandedFormTerm[];
+  expandedForm: string;
+  standardForm: string;
+  correctAnswer: string;
+  problemKey: string;
+};
+
+function decomposeNonZeroTerms(number: number): ExpandedFormTerm[] {
+  const terms: ExpandedFormTerm[] = [];
+  for (let placeValue = 1; number >= placeValue; placeValue *= 10) {
+    const digit = Math.floor(number / placeValue) % 10;
+    if (digit !== 0) terms.unshift({ digit, placeValue, value: digit * placeValue });
+  }
+  return terms;
+}
+
+export function formatExpandedForm(terms: readonly ExpandedFormTerm[]): string {
+  return terms.map((term) => term.value.toLocaleString("en-US")).join(" + ");
+}
+
+function getExpandedFormSourceNumber(
+  practiceType: ExpandedFormPracticeType,
+  rng: SeededRng,
+): number {
+  if (practiceType === "expanded_form") {
+    const digitLength = rng.nextInt(2, 4);
+    return rng.nextInt(10 ** (digitLength - 1), 10 ** digitLength - 1);
+  }
+
+  if (rng.nextInt(0, 9) === 0) return 100_000;
+  const digitLength = rng.nextInt(4, 5);
+  return rng.nextInt(10 ** (digitLength - 1), 10 ** digitLength - 1);
+}
+
+export function createExpandedFormProblem(
+  practiceType: ExpandedFormPracticeType,
+  sourceNumber: number,
+  direction: ExpandedFormDirection,
+): ExpandedFormProblem {
+  const range = EXPANDED_FORM_RANGES[practiceType];
+  if (!Number.isInteger(sourceNumber) || sourceNumber < range.min || sourceNumber > range.max) {
+    throw new RangeError(
+      `${practiceType} supports whole numbers from ${range.min} through ${range.max}`,
+    );
+  }
+
+  const terms = decomposeNonZeroTerms(sourceNumber);
+  const expandedForm = formatExpandedForm(terms);
+  return {
+    form: "expanded_form",
+    practiceType,
+    sourceNumber,
+    direction,
+    terms,
+    expandedForm,
+    standardForm: String(sourceNumber),
+    correctAnswer: direction === "standard_to_expanded" ? expandedForm : String(sourceNumber),
+    problemKey: `expanded_form:${sourceNumber}:${direction}`,
+  };
+}
+
+export function generateExpandedFormProblem(
+  practiceType: ExpandedFormPracticeType,
+  rng: SeededRng,
+): ExpandedFormProblem {
+  return createExpandedFormProblem(
+    practiceType,
+    getExpandedFormSourceNumber(practiceType, rng),
+    rng.pick(["standard_to_expanded", "expanded_to_standard"] as const),
+  );
+}
+
 export type NumberWordPracticeType = "number_words" | "reading_large_numbers";
 
 export type NumberWordDirection = "number_to_words" | "words_to_number";

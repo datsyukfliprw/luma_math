@@ -8,6 +8,16 @@ import {
   type NumberWordProblem,
 } from "../../placeValue/numberForms";
 import {
+  generateExpandedFormProblem,
+  type ExpandedFormProblem,
+  type ExpandedFormTerm,
+} from "../../placeValue/numberForms";
+import {
+  generatePlaceValueCompositionProblem,
+  getPlaceValueCompositionDistractorCandidates,
+  type PlaceValueCompositionProblem,
+} from "../../placeValue/placeValueComposition";
+import {
   buildNumberChoices,
   makeSinglePartTryItProblem,
   mathProblemKey,
@@ -17,6 +27,134 @@ import type { SeededRng } from "../../../practiceTypes/random";
 const PLACE_VALUES = [1, 10, 100, 1000, 10000];
 const LARGE_NUMBER_RANGE = { min: 1_000, max: 99_999 } as const;
 const NUMBER_WORD_CHOICE_COUNT = 4;
+const EXPANDED_FORM_CHOICE_COUNT = 3;
+const PLACE_VALUE_COMPOSITION_CHOICE_COUNT = 3;
+
+function formatBlockCount(count: number, singular: string, plural: string): string {
+  return `${count} ${count === 1 ? singular : plural}`;
+}
+
+function formatBaseTenBlocks(problem: Extract<PlaceValueCompositionProblem, { form: "base_ten_models" }>): string {
+  const labels: Record<(typeof problem.blocks)[number]["place"], [string, string]> = {
+    ones: ["unit cube", "unit cubes"],
+    tens: ["ten rod", "ten rods"],
+    hundreds: ["hundred flat", "hundred flats"],
+    thousands: ["thousand cube", "thousand cubes"],
+  };
+  const lastRelevantIndex = problem.blocks.findLastIndex((block) => block.count > 0);
+  return problem.blocks
+    .slice(0, lastRelevantIndex + 1)
+    .reverse()
+    .map((block) => {
+      const [singular, plural] = labels[block.place];
+      return formatBlockCount(block.count, singular, plural);
+    })
+    .join(", ")
+    .replace(/, ([^,]+)$/, " and $1");
+}
+
+function formatPlaceValueClues(
+  problem: Extract<PlaceValueCompositionProblem, { form: "place_value_puzzles" }>,
+): string {
+  const labels: Record<(typeof problem.clues)[number]["place"], [string, string]> = {
+    ones: ["one", "ones"],
+    tens: ["ten", "tens"],
+    hundreds: ["hundred", "hundreds"],
+    thousands: ["thousand", "thousands"],
+    "ten-thousands": ["ten-thousand", "ten-thousands"],
+  };
+  return problem.clues
+    .slice()
+    .reverse()
+    .map((clue) => {
+      const [singular, plural] = labels[clue.place];
+      return formatBlockCount(clue.digit, singular, plural);
+    })
+    .join(", ")
+    .replace(/, ([^,]+)$/, " and $1");
+}
+
+function buildPlaceValueCompositionChoices(
+  problem: PlaceValueCompositionProblem,
+  rng: SeededRng,
+): string[] {
+  const distractors = rng
+    .shuffle(getPlaceValueCompositionDistractorCandidates(problem))
+    .slice(0, PLACE_VALUE_COMPOSITION_CHOICE_COUNT - 1)
+    .map(String);
+  const choices = rng.shuffle([String(problem.correctAnswer), ...distractors]);
+
+  if (
+    choices.length !== PLACE_VALUE_COMPOSITION_CHOICE_COUNT ||
+    new Set(choices).size !== PLACE_VALUE_COMPOSITION_CHOICE_COUNT
+  ) {
+    throw new Error(`Could not build three unique ${problem.form} choices`);
+  }
+  return choices;
+}
+
+function formatExpandedTerms(terms: readonly ExpandedFormTerm[]): string {
+  return [...terms]
+    .sort((left, right) => right.value - left.value)
+    .map((term) => term.value.toLocaleString("en-US"))
+    .join(" + ");
+}
+
+function expandedFormDistractors(problem: ExpandedFormProblem): string[] {
+  const candidates = new Set<string>();
+  const terms = problem.terms;
+
+  for (const [index, term] of terms.entries()) {
+    if (terms.length > 1) {
+      candidates.add(formatExpandedTerms(terms.filter((_, termIndex) => termIndex !== index)));
+    }
+
+    const changedDigit = term.digit < 9 ? term.value + term.placeValue : term.value - term.placeValue;
+    candidates.add(
+      formatExpandedTerms(
+        terms.map((current, termIndex) =>
+          termIndex === index ? { ...current, digit: changedDigit / current.placeValue, value: changedDigit } : current,
+        ),
+      ),
+    );
+    candidates.add(
+      formatExpandedTerms(
+        terms.map((current, termIndex) =>
+          termIndex === index ? { ...current, value: current.value * 10 } : current,
+        ),
+      ),
+    );
+  }
+
+  return [...candidates].filter((candidate) => candidate !== problem.expandedForm);
+}
+
+function standardFormDistractors(problem: ExpandedFormProblem): string[] {
+  const candidates = new Set<number>();
+  for (const term of problem.terms) {
+    if (problem.terms.length > 1) candidates.add(problem.sourceNumber - term.value);
+    candidates.add(problem.sourceNumber - term.value + term.value * 10);
+    candidates.add(
+      problem.sourceNumber + (term.digit < 9 ? term.placeValue : -term.placeValue),
+    );
+  }
+
+  return [...candidates]
+    .filter((candidate) => candidate !== problem.sourceNumber && candidate >= 0)
+    .map((candidate) => candidate.toLocaleString("en-US"));
+}
+
+function buildExpandedFormChoices(problem: ExpandedFormProblem, rng: SeededRng): string[] {
+  const distractors =
+    problem.direction === "standard_to_expanded"
+      ? expandedFormDistractors(problem)
+      : standardFormDistractors(problem);
+  const uniqueDistractors = [...new Set(distractors)].slice(0, EXPANDED_FORM_CHOICE_COUNT - 1);
+  if (uniqueDistractors.length !== EXPANDED_FORM_CHOICE_COUNT - 1) {
+    throw new Error("Could not build three unique expanded-form choices");
+  }
+  return rng.shuffle([problem.correctAnswer, ...uniqueDistractors]);
+}
 
 function addNumberWordCandidate(
   candidates: Set<number>,
@@ -87,7 +225,11 @@ export const placeValueFamily: TryItFamily = (ctx) => {
       ctx.practiceType === "place_value_digits" ||
       ctx.practiceType === "large_digit_value" ||
       ctx.practiceType === "reading_large_numbers" ||
-      ctx.practiceType === "number_words";
+      ctx.practiceType === "number_words" ||
+      ctx.practiceType === "expanded_form" ||
+      ctx.practiceType === "expanded_form_large" ||
+      ctx.practiceType === "base_ten_models" ||
+      ctx.practiceType === "place_value_puzzles";
     const digits = usesSharedCanonicalGenerator ? 0 : ctx.rng.nextInt(2, 5);
     const max = usesSharedCanonicalGenerator ? 0 : 10 ** digits - 1;
     const min = usesSharedCanonicalGenerator ? 0 : 10 ** (digits - 1);
@@ -150,21 +292,16 @@ export const placeValueFamily: TryItFamily = (ctx) => {
       }
       case "expanded_form":
       case "expanded_form_large": {
-        const terms: number[] = [];
-        let n = number;
-        let p = 1;
-        while (n > 0) {
-          const d = n % 10;
-          if (d > 0) terms.push(d * p);
-          n = Math.floor(n / 10);
-          p *= 10;
-        }
-        prompt = `What is the expanded form of ${number}?`;
-        correct = terms.join(" + ");
-        key = mathProblemKey(ctx.practiceType, number, 0, "expanded");
-        const wrong1 = terms.map((t, i) => (i === 0 ? t + 1 : t)).join(" + ");
-        const wrong2 = terms.map((t, i) => (i === 0 ? t - 1 : t)).join(" + ");
-        choices = ctx.rng.shuffle([correct, wrong1, wrong2]);
+        const expandedFormProblem = generateExpandedFormProblem(ctx.practiceType, ctx.rng);
+        key = expandedFormProblem.problemKey;
+        if (ctx.usedKeys.has(key)) continue;
+        ctx.usedKeys.add(key);
+        prompt =
+          expandedFormProblem.direction === "standard_to_expanded"
+            ? `Write ${expandedFormProblem.sourceNumber.toLocaleString("en-US")} in expanded form.`
+            : `What number is ${expandedFormProblem.expandedForm}?`;
+        correct = expandedFormProblem.correctAnswer;
+        choices = buildExpandedFormChoices(expandedFormProblem, ctx.rng);
         break;
       }
       case "round_ten":
@@ -184,10 +321,16 @@ export const placeValueFamily: TryItFamily = (ctx) => {
         break;
       }
       case "base_ten_models": {
-        prompt = `What number is shown by ${number} unit squares?`;
-        correct = String(number);
-        key = mathProblemKey(ctx.practiceType, number, 0, "base_ten");
-        choices = buildNumberChoices(number, number - 50, number + 50, ctx.rng);
+        const baseTenProblem = generatePlaceValueCompositionProblem(ctx.practiceType, ctx.rng);
+        if (baseTenProblem.form !== "base_ten_models") {
+          throw new Error("Generated the wrong place-value composition form");
+        }
+        key = baseTenProblem.problemKey;
+        if (ctx.usedKeys.has(key)) continue;
+        ctx.usedKeys.add(key);
+        prompt = `What number is shown by ${formatBaseTenBlocks(baseTenProblem)}?`;
+        correct = String(baseTenProblem.correctAnswer);
+        choices = buildPlaceValueCompositionChoices(baseTenProblem, ctx.rng);
         break;
       }
       case "estimate_reasonable": {
@@ -199,6 +342,19 @@ export const placeValueFamily: TryItFamily = (ctx) => {
         break;
       }
       case "place_value_puzzles":
+      {
+        const puzzleProblem = generatePlaceValueCompositionProblem(ctx.practiceType, ctx.rng);
+        if (puzzleProblem.form !== "place_value_puzzles") {
+          throw new Error("Generated the wrong place-value composition form");
+        }
+        key = puzzleProblem.problemKey;
+        if (ctx.usedKeys.has(key)) continue;
+        ctx.usedKeys.add(key);
+        prompt = `Build the number with ${formatPlaceValueClues(puzzleProblem)}.`;
+        correct = String(puzzleProblem.correctAnswer);
+        choices = buildPlaceValueCompositionChoices(puzzleProblem, ctx.rng);
+        break;
+      }
       default: {
         const hiddenPlace = ctx.rng.nextInt(0, digits - 1);
         const hiddenValue = Math.floor(number / PLACE_VALUES[hiddenPlace]) % 10;

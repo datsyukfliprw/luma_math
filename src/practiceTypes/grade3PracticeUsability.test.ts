@@ -148,8 +148,8 @@ describe("Grade 3 practice usability", () => {
       }),
     );
 
-    expect(familyBacked).toBe(29);
-    expect(fallbackBacked).toBe(115);
+    expect(familyBacked).toBe(33);
+    expect(fallbackBacked).toBe(111);
     expect(zeroProblemLessons).toEqual([]);
     expect(missingChoiceProblems).toEqual([]);
     expect(duplicateProblemLessons).toEqual([]);

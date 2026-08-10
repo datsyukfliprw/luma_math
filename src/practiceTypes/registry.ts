@@ -16,6 +16,11 @@ import { generatePlaceValueDigitsProblems } from "./placeValueDigits";
 import { generateRoundingProblems } from "./rounding";
 import { generateLargeDigitValueProblems } from "./largeDigitValue";
 import { generateNumberWordsProblems } from "./numberWords";
+import { generateExpandedFormProblems } from "./expandedForm";
+import {
+  generateBaseTenModelsProblems,
+  generatePlaceValuePuzzlesProblems,
+} from "./placeValueComposition";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
 
 type PracticeGenerator = (options?: PracticeGenerationOptions) => PracticeProblem[];
@@ -65,6 +70,10 @@ export const practiceRegistry: Record<string, PracticeGenerator> = {
   large_digit_value: generateLargeDigitValueProblems,
   reading_large_numbers: generateNumberWordsProblems,
   number_words: generateNumberWordsProblems,
+  expanded_form: generateExpandedFormProblems,
+  expanded_form_large: generateExpandedFormProblems,
+  base_ten_models: generateBaseTenModelsProblems,
+  place_value_puzzles: generatePlaceValuePuzzlesProblems,
 };
 
 export type RegisteredPracticeType = keyof typeof practiceRegistry;
