@@ -97,7 +97,7 @@ const BigIdeaSchema = z.object({
       label: z.string(),
       expression: z.string(),
       note: z.string(),
-    })
+    }),
   ),
   explanationSteps: z.array(z.string()),
   ruleCards: z.array(RuleCardSchema),
@@ -182,11 +182,32 @@ const QuickCheckSchema = z.object({
 });
 
 // Try it schema
+const TryItTemplateSchema = z.object({
+  id: z.string(),
+  visualEmoji: z.string().optional(),
+  visualEmpty: z.boolean().optional(),
+  groupNoun: z.string().optional(),
+  itemNoun: z.string().optional(),
+  questionForm: z
+    .enum(["product", "factors", "word", "equation", "zero_identity", "repeated", "objects"])
+    .optional(),
+  tip: z.string().optional(),
+  successMessage: z.string().optional(),
+});
+
+const TryItGeneratorConfigSchema = z.object({
+  family: z.string(),
+  practiceType: z.string(),
+  templates: z.array(TryItTemplateSchema).optional(),
+  overrides: z.record(z.string(), z.unknown()).optional(),
+});
+
 const TryItSchema = z.object({
   title: z.string(),
   subtitle: z.string(),
   requiredCount: z.number(),
-  problems: z.array(TryItProblemSchema),
+  problems: z.array(TryItProblemSchema).optional(),
+  generator: TryItGeneratorConfigSchema.optional(),
 });
 
 // Practice schema

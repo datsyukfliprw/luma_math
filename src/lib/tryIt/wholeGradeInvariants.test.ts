@@ -1,0 +1,136 @@
+import { describe, it, expect } from "vitest";
+import { getResolvedTryItExperience } from "../tryItResolver";
+import { getAllCurricula } from "../../data/curriculum";
+
+function allLessonIds(): string[] {
+  const ids: string[] = [];
+  for (const unit of getAllCurricula()) {
+    for (const week of unit.weeks) {
+      for (const lesson of week.lessons) {
+        ids.push(
+          lesson.lesson_id ?? `g3-u${unit.unit_number}-w${week.week_number}-l${lesson.day_number}`,
+        );
+      }
+    }
+  }
+  return ids;
+}
+
+const lessonIds = allLessonIds();
+
+describe("Grade 3 Try It whole-grade invariants", () => {
+  it("never falls back to the generic family for any regular Grade 3 lesson", () => {
+    const failures: string[] = [];
+    for (const lessonId of lessonIds) {
+      const experience = getResolvedTryItExperience(lessonId, { attemptKey: "no-generic" });
+      if (!experience || experience.family === "generic") {
+        failures.push(lessonId);
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+
+  it("resolves at least one generated Try It problem for every regular Grade 3 lesson with an attemptKey", () => {
+    const failures: string[] = [];
+    for (const lessonId of lessonIds) {
+      const experience = getResolvedTryItExperience(lessonId, { attemptKey: "whole-grade" });
+      if (!experience || experience.problems.length === 0) {
+        failures.push(lessonId);
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+
+  it("produces deterministic same-seed results for every regular Grade 3 lesson", () => {
+    const failures: string[] = [];
+    for (const lessonId of lessonIds) {
+      const first = getResolvedTryItExperience(lessonId, { attemptKey: "seed-a" });
+      const second = getResolvedTryItExperience(lessonId, { attemptKey: "seed-a" });
+      if (JSON.stringify(first) !== JSON.stringify(second)) {
+        failures.push(lessonId);
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+
+  it("produces meaningful cross-seed variation for every regular Grade 3 lesson", () => {
+    const failures: string[] = [];
+    for (const lessonId of lessonIds) {
+      const first = getResolvedTryItExperience(lessonId, { attemptKey: "seed-a" });
+      const second = getResolvedTryItExperience(lessonId, { attemptKey: "seed-b" });
+
+      const firstSignatures = new Set(first?.problems.map((p) => JSON.stringify(p)));
+      const secondSignatures = new Set(second?.problems.map((p) => JSON.stringify(p)));
+
+      if (firstSignatures.size === 0 || secondSignatures.size === 0) {
+        failures.push(lessonId);
+        continue;
+      }
+
+      const overlap = [...firstSignatures].filter((s) => secondSignatures.has(s));
+      if (overlap.length === Math.min(firstSignatures.size, secondSignatures.size)) {
+        failures.push(lessonId);
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+
+  it("has no duplicate canonical problemKey within one attempt for any regular Grade 3 lesson", () => {
+    const failures: string[] = [];
+    for (const lessonId of lessonIds) {
+      const experience = getResolvedTryItExperience(lessonId, { attemptKey: "dedup" });
+      const keys = experience?.problems.map((p) => p.problemKey ?? p.id);
+      const uniqueKeys = new Set(keys);
+      if (uniqueKeys.size !== keys?.length) {
+        failures.push(lessonId);
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+
+  it("has exactly one correct multiple-choice interpretation in each part where choices are present", () => {
+    const failures: string[] = [];
+    for (const lessonId of lessonIds) {
+      const experience = getResolvedTryItExperience(lessonId, { attemptKey: "mc-check" });
+      if (!experience) {
+        failures.push(lessonId);
+        continue;
+      }
+      for (const problem of experience.problems) {
+        for (const part of problem.parts) {
+          if (part.choices && part.choices.length > 0) {
+            const correctCount = part.choices.filter((c) => c === part.correctAnswer).length;
+            if (correctCount !== 1) {
+              failures.push(`${lessonId}:${problem.id}:${part.key}`);
+            }
+          }
+        }
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+
+  it("keeps visual data synchronized with canonical answer parts for multiplication families", () => {
+    const failures: string[] = [];
+    for (const lessonId of lessonIds) {
+      const experience = getResolvedTryItExperience(lessonId, { attemptKey: "sync" });
+      if (!experience) {
+        failures.push(lessonId);
+        continue;
+      }
+      for (const problem of experience.problems) {
+        if (!problem.visualData) continue;
+        const groupsPart = problem.parts.find((p) => p.key === "groups");
+        const inEachPart = problem.parts.find((p) => p.key === "inEach");
+
+        if (groupsPart && Number(groupsPart.correctAnswer) !== problem.visualData.groups) {
+          failures.push(`${lessonId}:${problem.id}:groups`);
+        }
+        if (inEachPart && Number(inEachPart.correctAnswer) !== problem.visualData.itemsPerGroup) {
+          failures.push(`${lessonId}:${problem.id}:inEach`);
+        }
+      }
+    }
+    expect(failures).toEqual([]);
+  }, 60000);
+});

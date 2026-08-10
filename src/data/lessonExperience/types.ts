@@ -60,6 +60,33 @@ export type TryItProblem = {
   tip: string;
 };
 
+export type TryItTemplate = {
+  id: string;
+  visualEmoji?: string;
+  visualEmpty?: boolean;
+  groupNoun?: string;
+  itemNoun?: string;
+  questionForm?:
+    "product" | "factors" | "word" | "equation" | "zero_identity" | "repeated" | "objects";
+  tip?: string;
+  successMessage?: string;
+};
+
+export type TryItGeneratorConfig = {
+  family: string;
+  practiceType: string;
+  templates?: TryItTemplate[];
+  overrides?: Record<string, unknown>;
+};
+
+export type TryItSpec = {
+  title: string;
+  subtitle: string;
+  requiredCount: number;
+  problems?: TryItProblem[];
+  generator?: TryItGeneratorConfig;
+};
+
 export type LessonExperience = {
   id: string;
   grade: number;
@@ -173,12 +200,7 @@ export type LessonExperience = {
   quickCheck: LegacyQuickCheck;
   canonicalQuickCheck?: QuickCheck;
 
-  tryIt: {
-    title: string;
-    subtitle: string;
-    requiredCount: number;
-    problems: TryItProblem[];
-  };
+  tryIt: TryItSpec;
 
   practice: {
     type: LessonPracticeType;

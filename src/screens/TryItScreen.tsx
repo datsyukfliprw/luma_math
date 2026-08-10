@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import { LessonFallbackScreen } from "../components/ui/LessonFallbackScreen";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
@@ -88,11 +88,16 @@ function getPartHelperText(
 
 function TryItScreen() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { lessonId } = useParams();
 
   const { markTryItComplete } = useStudentProgress();
 
-  const experience = useMemo(() => getResolvedTryItExperience(lessonId), [lessonId]);
+  const attemptKey = `${lessonId ?? "unknown"}:${location.key}`;
+  const experience = useMemo(
+    () => getResolvedTryItExperience(lessonId, { attemptKey }),
+    [lessonId, attemptKey],
+  );
 
   const [problemIndex, setProblemIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
