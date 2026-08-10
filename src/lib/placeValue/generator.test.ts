@@ -56,4 +56,23 @@ describe("digit-value problem generator", () => {
       expect(problem.targetDigit).toBeLessThanOrEqual(9);
     }
   });
+
+  it("supports a requested large-number range while preserving canonical semantics", () => {
+    for (let index = 0; index < 100; index += 1) {
+      const problem = generateDigitValueProblem(createSeededRng(`large-${index}`), {
+        numberRange: { min: 1_000, max: 99_999 },
+      });
+      const placeValue = PLACE_VALUES[problem.targetPlace];
+      const digit = independentlyExtractDigit(problem.number, placeValue);
+
+      expect(problem.number).toBeGreaterThanOrEqual(1_000);
+      expect(problem.number).toBeLessThanOrEqual(99_999);
+      expect(placeValue).toBeLessThanOrEqual(10 ** (String(problem.number).length - 1));
+      expect(problem.targetDigit).toBe(digit);
+      expect(problem.correctAnswer).toBe(digit * placeValue);
+      expect(problem.problemKey).toBe(
+        `digit_value:${problem.number}:${problem.targetPlace}`,
+      );
+    }
+  });
 });

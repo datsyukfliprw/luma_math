@@ -5,8 +5,16 @@ import {
 } from "./evaluationReviewResolver";
 import { EvaluationGenerationError } from "./evaluationError";
 import { practiceRegistry } from "./registry";
+import { generateLargeDigitValueProblems } from "./largeDigitValue";
+import { generateNumberWordsProblems } from "./numberWords";
 
 describe("resolveEvaluationReviewSource", () => {
+  it("routes the three place-value practice types to their approved generators", () => {
+    expect(practiceRegistry.large_digit_value).toBe(generateLargeDigitValueProblems);
+    expect(practiceRegistry.reading_large_numbers).toBe(generateNumberWordsProblems);
+    expect(practiceRegistry.number_words).toBe(generateNumberWordsProblems);
+  });
+
   it("resolves an exact registered review type to a specialized generator", () => {
     const source = resolveEvaluationReviewSource("g3-u1-w1-eval", "equal_groups");
     expect(source.reviewType).toBe("equal_groups");
@@ -23,13 +31,20 @@ describe("resolveEvaluationReviewSource", () => {
     expect(source.sourceLesson.lesson_id).toBe("g3-u9-w1-l3");
   });
 
-  it("uses the default generator when no specialized generator or alias exists", () => {
-    const source = resolveEvaluationReviewSource("g3-u2-w1-eval", "large_digit_value");
-    expect(source.reviewType).toBe("large_digit_value");
-    expect(source.generatorPracticeType).toBe("large_digit_value");
-    expect(source.resolution).toBe("default");
-    expect(source.sourceLesson.lesson_id).toBe("g3-u2-w1-l1");
-  });
+  it.each([
+    ["large_digit_value", "g3-u2-w1-eval", "g3-u2-w1-l1"],
+    ["reading_large_numbers", "g3-u2-w1-eval", "g3-u2-w1-l2"],
+    ["number_words", "g3-u11-w1-eval", "g3-u11-w1-l4"],
+  ])(
+    "resolves newly registered review type %s through its specialized generator",
+    (reviewType, evaluationLessonId, sourceLessonId) => {
+      const source = resolveEvaluationReviewSource(evaluationLessonId, reviewType);
+      expect(source.reviewType).toBe(reviewType);
+      expect(source.generatorPracticeType).toBe(reviewType);
+      expect(source.resolution).toBe("specialized");
+      expect(source.sourceLesson.lesson_id).toBe(sourceLessonId);
+    },
+  );
 
   it("finds a source lesson in the same unit even if the week differs", () => {
     const source = resolveEvaluationReviewSource(

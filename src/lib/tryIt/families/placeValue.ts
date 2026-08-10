@@ -2,58 +2,79 @@ import type { TryItFamily } from "../types";
 import { getDigitValueDistractorCandidates } from "../../placeValue/distractors";
 import { generateDigitValueProblem } from "../../placeValue/generator";
 import {
+  formatNumberWords,
+  generateNumberWordProblem,
+  NUMBER_WORD_RANGES,
+  type NumberWordProblem,
+} from "../../placeValue/numberForms";
+import {
   buildNumberChoices,
   makeSinglePartTryItProblem,
   mathProblemKey,
 } from "../buildTryItProblem";
+import type { SeededRng } from "../../../practiceTypes/random";
 
-const PLACES = ["ones", "tens", "hundreds", "thousands", "ten thousands"];
 const PLACE_VALUES = [1, 10, 100, 1000, 10000];
+const LARGE_NUMBER_RANGE = { min: 1_000, max: 99_999 } as const;
+const NUMBER_WORD_CHOICE_COUNT = 4;
 
-function numberToWords(n: number): string {
-  const ones = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
-  const teens = [
-    "ten",
-    "eleven",
-    "twelve",
-    "thirteen",
-    "fourteen",
-    "fifteen",
-    "sixteen",
-    "seventeen",
-    "eighteen",
-    "nineteen",
-  ];
-  const tens = [
-    "",
-    "",
-    "twenty",
-    "thirty",
-    "forty",
-    "fifty",
-    "sixty",
-    "seventy",
-    "eighty",
-    "ninety",
-  ];
+function addNumberWordCandidate(
+  candidates: Set<number>,
+  candidate: number,
+  correct: number,
+  min: number,
+  max: number,
+): void {
+  if (Number.isInteger(candidate) && candidate >= min && candidate <= max && candidate !== correct) {
+    candidates.add(candidate);
+  }
+}
 
-  if (n < 10) return ones[n];
-  if (n < 20) return teens[n - 10];
-  if (n < 100) {
-    const t = Math.floor(n / 10);
-    const o = n % 10;
-    return o === 0 ? tens[t] : `${tens[t]}-${ones[o]}`;
+function getNumberWordDistractorCandidates(problem: NumberWordProblem): number[] {
+  const candidates = new Set<number>();
+  const { sourceNumber } = problem;
+  const { min, max } = NUMBER_WORD_RANGES[problem.practiceType];
+
+  for (const offset of [1, -1, 10, -10, 100, -100, 1_000, -1_000, 10_000, -10_000]) {
+    addNumberWordCandidate(candidates, sourceNumber + offset, sourceNumber, min, max);
   }
-  if (n < 1000) {
-    const h = Math.floor(n / 100);
-    const rest = n % 100;
-    return rest === 0 ? `${ones[h]} hundred` : `${ones[h]} hundred ${numberToWords(rest)}`;
+
+  const digits = String(sourceNumber).split("");
+  for (let left = 0; left < digits.length; left += 1) {
+    for (let right = left + 1; right < digits.length; right += 1) {
+      const swapped = [...digits];
+      [swapped[left], swapped[right]] = [swapped[right], swapped[left]];
+      addNumberWordCandidate(candidates, Number(swapped.join("")), sourceNumber, min, max);
+    }
   }
-  const t = Math.floor(n / 1000);
-  const rest = n % 1000;
-  return rest === 0
-    ? `${numberToWords(t)} thousand`
-    : `${numberToWords(t)} thousand ${numberToWords(rest)}`;
+
+  if (digits.includes("0")) {
+    addNumberWordCandidate(
+      candidates,
+      Number(digits.join("").replace("0", "")),
+      sourceNumber,
+      min,
+      max,
+    );
+  }
+
+  for (let offset = 1; candidates.size < NUMBER_WORD_CHOICE_COUNT - 1; offset += 1) {
+    addNumberWordCandidate(candidates, sourceNumber - offset, sourceNumber, min, max);
+    addNumberWordCandidate(candidates, sourceNumber + offset, sourceNumber, min, max);
+  }
+
+  return [...candidates];
+}
+
+function buildNumberWordChoices(problem: NumberWordProblem, rng: SeededRng): string[] {
+  const distractors = rng
+    .shuffle(getNumberWordDistractorCandidates(problem))
+    .slice(0, NUMBER_WORD_CHOICE_COUNT - 1)
+    .map((number) =>
+      problem.direction === "number_to_words" ? formatNumberWords(number) : String(number),
+    );
+
+  return rng.shuffle([problem.correctAnswer, ...distractors]);
 }
 
 export const placeValueFamily: TryItFamily = (ctx) => {
@@ -62,11 +83,15 @@ export const placeValueFamily: TryItFamily = (ctx) => {
 
   while (problems.length < ctx.count && attempts < 200) {
     attempts += 1;
-    const usesSharedDigitValue = ctx.practiceType === "place_value_digits";
-    const digits = usesSharedDigitValue ? 0 : ctx.rng.nextInt(2, 5);
-    const max = usesSharedDigitValue ? 0 : 10 ** digits - 1;
-    const min = usesSharedDigitValue ? 0 : 10 ** (digits - 1);
-    const number = usesSharedDigitValue ? 0 : ctx.rng.nextInt(min, max);
+    const usesSharedCanonicalGenerator =
+      ctx.practiceType === "place_value_digits" ||
+      ctx.practiceType === "large_digit_value" ||
+      ctx.practiceType === "reading_large_numbers" ||
+      ctx.practiceType === "number_words";
+    const digits = usesSharedCanonicalGenerator ? 0 : ctx.rng.nextInt(2, 5);
+    const max = usesSharedCanonicalGenerator ? 0 : 10 ** digits - 1;
+    const min = usesSharedCanonicalGenerator ? 0 : 10 ** (digits - 1);
+    const number = usesSharedCanonicalGenerator ? 0 : ctx.rng.nextInt(min, max);
 
     let prompt: string;
     let correct: string;
@@ -76,13 +101,19 @@ export const placeValueFamily: TryItFamily = (ctx) => {
     switch (ctx.practiceType) {
       case "large_digit_value":
       {
-        const placeIndex = ctx.rng.nextInt(0, digits - 1);
-        const placeName = PLACES[placeIndex];
-        const digit = Math.floor(number / PLACE_VALUES[placeIndex]) % 10;
-        prompt = `In the number ${number}, what is the value of the ${placeName} digit?`;
-        correct = String(digit * PLACE_VALUES[placeIndex]);
-        key = mathProblemKey(ctx.practiceType, number, placeIndex, "digit_value");
-        choices = buildNumberChoices(Number(correct), 0, PLACE_VALUES[placeIndex] * 9, ctx.rng);
+        const digitValueProblem = generateDigitValueProblem(ctx.rng, {
+          numberRange: LARGE_NUMBER_RANGE,
+        });
+        prompt = `In the number ${digitValueProblem.number}, what is the value of the ${digitValueProblem.targetPlace} digit?`;
+        correct = String(digitValueProblem.correctAnswer);
+        key = digitValueProblem.problemKey;
+        if (ctx.usedKeys.has(key)) continue;
+        ctx.usedKeys.add(key);
+        choices = ctx.rng
+          .shuffle(getDigitValueDistractorCandidates(digitValueProblem))
+          .slice(0, 2)
+          .map(String);
+        choices = ctx.rng.shuffle([correct, ...choices]);
         break;
       }
       case "place_value_digits": {
@@ -101,16 +132,20 @@ export const placeValueFamily: TryItFamily = (ctx) => {
       }
       case "reading_large_numbers":
       case "number_words": {
-        prompt = `Which number is "${numberToWords(number)}"?`;
-        correct = String(number);
-        key = mathProblemKey(ctx.practiceType, number, 0, "number_words");
-        const distractors = new Set([
-          String(number + ctx.rng.nextInt(1, 10)),
-          String(number - ctx.rng.nextInt(1, 10)),
-          String(number + 100),
-        ]);
-        distractors.delete(correct);
-        choices = ctx.rng.shuffle([correct, ...distractors].slice(0, 4));
+        const numberWordPracticeType =
+          ctx.practiceType === "reading_large_numbers"
+            ? "reading_large_numbers"
+            : "number_words";
+        const numberWordProblem = generateNumberWordProblem(numberWordPracticeType, ctx.rng);
+        key = numberWordProblem.problemKey;
+        if (ctx.usedKeys.has(key)) continue;
+        ctx.usedKeys.add(key);
+        prompt =
+          numberWordProblem.direction === "number_to_words"
+            ? `Write ${numberWordProblem.sourceNumber.toLocaleString("en-US")} in words.`
+            : `What number is "${numberWordProblem.wordForm}"?`;
+        correct = numberWordProblem.correctAnswer;
+        choices = buildNumberWordChoices(numberWordProblem, ctx.rng);
         break;
       }
       case "expanded_form":
@@ -176,8 +211,8 @@ export const placeValueFamily: TryItFamily = (ctx) => {
       }
     }
 
-    if (!usesSharedDigitValue && ctx.usedKeys.has(key)) continue;
-    ctx.usedKeys.add(key);
+    if (!usesSharedCanonicalGenerator && ctx.usedKeys.has(key)) continue;
+    if (!usesSharedCanonicalGenerator) ctx.usedKeys.add(key);
 
     problems.push(
       makeSinglePartTryItProblem({
