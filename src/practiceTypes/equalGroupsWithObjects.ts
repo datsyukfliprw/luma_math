@@ -1,5 +1,6 @@
 import { takePracticeProblems } from "./practiceModeCounts";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
+import { createEqualGroupsState, equalGroupsProblemKey } from "../lib/multiplication/core";
 
 type ObjectProblemSeed = {
   groups: number;
@@ -13,18 +14,19 @@ function makeObjectGroupsProblem(
   index: number,
   mode: string,
 ): PracticeProblem {
-  const total = seed.groups * seed.itemsPerGroup;
+  const state = createEqualGroupsState(seed.groups, seed.itemsPerGroup);
 
   return {
     id: `equal-groups-objects-${mode}-${index + 1}`,
-    questionText: `You arrange ${seed.groups} piles of ${seed.pluralItem} with ${seed.itemsPerGroup} ${seed.itemsPerGroup === 1 ? seed.item : seed.pluralItem} in each pile. How many ${seed.pluralItem} are there in all?`,
-    correctAnswer: String(total),
+    questionText: `You arrange ${state.groups} piles of ${seed.pluralItem} with ${state.itemsPerGroup} ${state.itemsPerGroup === 1 ? seed.item : seed.pluralItem} in each pile. How many ${seed.pluralItem} are there in all?`,
+    correctAnswer: String(state.product),
     visualType: "equal_groups",
-    problemKey: `${seed.groups}-piles-of-${seed.itemsPerGroup}-${seed.pluralItem}`,
+    problemKey: equalGroupsProblemKey(state, "count-total"),
     visualData: {
-      groups: seed.groups,
-      itemsPerGroup: seed.itemsPerGroup,
-      equation: `${seed.groups} × ${seed.itemsPerGroup} = ${total}`,
+      groups: state.groups,
+      itemsPerGroup: state.itemsPerGroup,
+      equation: `${state.groups} × ${state.itemsPerGroup} = ${state.product}`,
+      product: state.product,
     },
   };
 }

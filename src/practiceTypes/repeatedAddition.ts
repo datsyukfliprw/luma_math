@@ -1,5 +1,6 @@
 import { takePracticeProblems } from "./practiceModeCounts";
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
+import { createEqualGroupsState, equalGroupsProblemKey } from "../lib/multiplication/core";
 
 function makeRepeatedAdditionProblem({
   id,
@@ -10,21 +11,23 @@ function makeRepeatedAdditionProblem({
   groups: number;
   addend: number;
 }): PracticeProblem {
-  const total = groups * addend;
-  const repeatedAddition = Array.from({ length: groups }, () => String(addend)).join(" + ");
+  const state = createEqualGroupsState(groups, addend);
+  const repeatedAddition = Array.from({ length: state.groups }, () => String(state.itemsPerGroup)).join(
+    " + ",
+  );
 
   return {
     id,
-    questionText: `Write the multiplication sentence for ${repeatedAddition} = ${total}.`,
-    correctAnswer: `${groups}x${addend}`,
+    questionText: `Write the multiplication sentence for ${repeatedAddition} = ${state.product}.`,
+    correctAnswer: `${state.groups}x${state.itemsPerGroup}`,
     visualType: "repeated_addition",
-    problemKey: `${groups}-groups-of-${addend}`,
+    problemKey: equalGroupsProblemKey(state, "repeated-addition"),
     visualData: {
-      repeatedAddition: `${repeatedAddition} = ${total}`,
-      equation: `${groups} × ${addend} = ${total}`,
-      groups,
-      itemsPerGroup: addend,
-      product: total,
+      repeatedAddition: `${repeatedAddition} = ${state.product}`,
+      equation: `${state.groups} × ${state.itemsPerGroup} = ${state.product}`,
+      groups: state.groups,
+      itemsPerGroup: state.itemsPerGroup,
+      product: state.product,
     },
   };
 }

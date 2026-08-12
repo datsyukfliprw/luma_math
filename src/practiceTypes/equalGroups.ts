@@ -1,4 +1,5 @@
 import type { PracticeGenerationOptions, PracticeProblem } from "./types";
+import { createEqualGroupsState, equalGroupsProblemKey } from "../lib/multiplication/core";
 
 function makeEqualGroupsProblem({
   id,
@@ -9,20 +10,20 @@ function makeEqualGroupsProblem({
   groups: number;
   itemsPerGroup: number;
 }): PracticeProblem {
-  const total = groups * itemsPerGroup;
+  const state = createEqualGroupsState(groups, itemsPerGroup);
 
   return {
     id,
-    questionText: `There are ${groups} groups with ${itemsPerGroup} ${
+    questionText: `There are ${state.groups} groups with ${state.itemsPerGroup} ${
       itemsPerGroup === 1 ? "star" : "stars"
     } in each group. How many stars are there in all?`,
-    correctAnswer: String(total),
+    correctAnswer: String(state.product),
     visualType: "equal_groups",
-    problemKey: `${groups}-groups-of-${itemsPerGroup}`,
+    problemKey: equalGroupsProblemKey(state, "count-total"),
     visualData: {
-      groups,
-      itemsPerGroup,
-      equation: `${groups} × ${itemsPerGroup} = ${total}`,
+      groups: state.groups,
+      itemsPerGroup: state.itemsPerGroup,
+      equation: `${state.groups} × ${state.itemsPerGroup} = ${state.product}`,
     },
   };
 }
@@ -70,19 +71,20 @@ function makeMistakeCheckProblem({
   shownAnswer: number;
   correctJudgment: "yes" | "no";
 }): PracticeProblem {
-  const correctTotal = groups * factor;
+  const state = createEqualGroupsState(groups, factor);
+  const correctTotal = state.product;
   const equationToCheck = `${groups} × ${factor} = ${shownAnswer}`;
   const correctReason = `${groups} groups of ${factor} makes ${correctTotal}`;
 
   const otherFactor = factor === 0 ? 1 : 0;
-  const otherTotal = groups * otherFactor;
+  const otherTotal = createEqualGroupsState(groups, otherFactor).product;
 
   return {
     id,
     questionText: `A student wrote: ${equationToCheck}`,
     correctAnswer: correctJudgment,
     visualType: "mistake_check",
-    problemKey: `mistake-${groups}x${factor}-equals-${shownAnswer}`,
+    problemKey: `${equalGroupsProblemKey(state, "zero-identity-check")}:shown=${shownAnswer}`,
     challengeData: {
       equationToCheck,
       judgmentChoices: ["yes", "no"],

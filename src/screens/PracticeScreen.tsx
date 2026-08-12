@@ -6,7 +6,7 @@ import { useStudentProgress } from "../contexts/StudentProgressContext";
 import { generateProblemsForPracticeType } from "../practiceTypes/registry";
 import { createPracticeSessionSeed } from "../practiceTypes/random";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
-import type { PracticeMode } from "../practiceTypes/types";
+import type { PracticeMode, PracticeProblem } from "../practiceTypes/types";
 import type {
   PracticeCompletionMetrics,
   PracticeCompletionRejectionReason,
@@ -163,6 +163,43 @@ function buildAnswerChoices(correctAnswer: string, groups?: number) {
   }
 
   return Array.from(new Set(["0", "1", String(correct)])).slice(0, 3);
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function getEqualGroupsAnswerChoices(
+  correctAnswer: string,
+  groups?: number,
+  suppliedChoices?: NonNullable<PracticeProblem["visualData"]>["choices"],
+) {
+  return suppliedChoices && suppliedChoices.length > 0
+    ? suppliedChoices
+    : buildAnswerChoices(correctAnswer, groups);
+}
+
+// eslint-disable-next-line react-refresh/only-export-components
+export function areFactorProductAnswersCorrect(
+  factorAAnswer: string,
+  factorBAnswer: string,
+  productAnswer: string,
+  expectedFactorA: string,
+  expectedFactorB: string,
+  expectedProduct: string,
+): boolean {
+  const studentFactors = [
+    normalizeForComparison(factorAAnswer, expectedFactorA),
+    normalizeForComparison(factorBAnswer, expectedFactorB),
+  ].sort();
+  const expectedFactors = [
+    normalizeForComparison(expectedFactorA, expectedFactorA),
+    normalizeForComparison(expectedFactorB, expectedFactorB),
+  ].sort();
+
+  return (
+    studentFactors[0] === expectedFactors[0] &&
+    studentFactors[1] === expectedFactors[1] &&
+    normalizeForComparison(productAnswer, expectedProduct) ===
+      normalizeForComparison(expectedProduct, expectedProduct)
+  );
 }
 
 function getPracticeProgressLabel(mode: PracticeMode) {
@@ -340,7 +377,7 @@ function PracticeScreen() {
     (practiceMode === "guided" || practiceMode === "independent") &&
     currentProblem?.visualType === "equal_groups";
   const answerChoices = currentProblem
-    ? buildAnswerChoices(currentProblem.correctAnswer, visualData?.groups)
+    ? getEqualGroupsAnswerChoices(currentProblem.correctAnswer, visualData?.groups, visualData?.choices)
     : [];
 
   function openPracticeResults(metrics: PracticeCompletionMetrics) {
@@ -526,24 +563,16 @@ function PracticeScreen() {
       const expectedFactorB = expected?.factorB ?? "";
       const expectedProduct = expected?.product ?? "";
 
-      const studentFactors = [
-        normalizeForComparison(factorAAnswer, expectedFactorA),
-        normalizeForComparison(factorBAnswer, expectedFactorB),
-      ].sort();
-
-      const expectedFactors = [
-        normalizeForComparison(expectedFactorA, expectedFactorA),
-        normalizeForComparison(expectedFactorB, expectedFactorB),
-      ].sort();
-
-      const factorsAreCorrect =
-        studentFactors[0] === expectedFactors[0] && studentFactors[1] === expectedFactors[1];
-
-      const productIsCorrect =
-        normalizeForComparison(productAnswer, expectedProduct) ===
-        normalizeForComparison(expectedProduct, expectedProduct);
-
-      recordFeedback(factorsAreCorrect && productIsCorrect);
+      recordFeedback(
+        areFactorProductAnswersCorrect(
+          factorAAnswer,
+          factorBAnswer,
+          productAnswer,
+          expectedFactorA,
+          expectedFactorB,
+          expectedProduct,
+        ),
+      );
       return;
     }
 
