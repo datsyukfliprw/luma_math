@@ -197,15 +197,10 @@ function shuffleChoices<T>(choices: T[], correct: T, rng: SeededRng): T[] {
 
 function buildNumericDistractors(correct: number, rng: SeededRng, count = 3): number[] {
   const distractors = new Set<number>();
+  const upperBound = Math.max(correct * 5, correct + 100, 30);
 
   const add = (n: number) => {
-    if (
-      Number.isFinite(n) &&
-      n >= 0 &&
-      n !== correct &&
-      n <= 999 &&
-      n <= Math.max(correct * 5, 30)
-    ) {
+    if (Number.isFinite(n) && n >= 0 && n !== correct && n <= upperBound) {
       distractors.add(n);
     }
   };
@@ -230,16 +225,11 @@ function buildNumericDistractors(correct: number, rng: SeededRng, count = 3): nu
 
   for (const n of candidates) add(n);
 
-  // Guaranteed fallback: adjacent whole numbers.
-  let delta = 1;
-  while (distractors.size < count && correct + delta <= 999) {
+  // Bounded fallback: nearby values preserve the scale of large-number answers
+  // without walking thousands of integers to reach an arbitrary ceiling.
+  for (let delta = 1; distractors.size < count && delta <= count * 4 + 4; delta += 1) {
     add(correct + delta);
-    delta += 1;
-  }
-  delta = 1;
-  while (distractors.size < count && correct - delta >= 0) {
     add(correct - delta);
-    delta += 1;
   }
 
   const result = rng.shuffle([...distractors]);

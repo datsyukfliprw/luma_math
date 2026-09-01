@@ -22,7 +22,7 @@ describe("getAdaptedLessonExperience", () => {
     expect(lesson!.tryIt).toBeUndefined();
   });
 
-  it("marks multiplication topic when practice_type is in the generator registry", () => {
+  it("keeps multiplication topic classification separate from generator registry coverage", () => {
     const multiplication = getAdaptedLessonExperience("g3-u9-w1-l2");
     const review = getAdaptedLessonExperience("g3-u28-w1-l1");
     expect(multiplication?.topic).toBe("multiplication");

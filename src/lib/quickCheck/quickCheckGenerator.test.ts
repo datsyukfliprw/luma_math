@@ -53,6 +53,21 @@ describe("Quick Check contract", () => {
     expect(roles.filter((r) => r === "conceptual")).toHaveLength(1);
     expect(roles.filter((r) => r === "reasoning")).toHaveLength(1);
   });
+
+  it("keeps large-number distractors near the scale of the correct answer", () => {
+    const { lesson } = getLessonById("g3-u2-w1-l4");
+    const quickCheck = generateQuickCheckForLesson(lesson)!;
+    const direct = quickCheck.questions.find((question) => question.role === "direct");
+
+    expect(direct).toBeDefined();
+    expect(direct!.interaction.type).toBe("multiple_choice");
+    if (direct!.interaction.type !== "multiple_choice") return;
+
+    const values = direct!.interaction.choices.map((choice) => Number(choice.value));
+    expect(values).toHaveLength(4);
+    expect(values).toContain(40207);
+    expect(values.every((value) => value >= 10000)).toBe(true);
+  });
 });
 
 describe("Quick Check multiple-choice invariant", () => {

@@ -1,6 +1,6 @@
 type WeekCardProps = {
   title: string;
-  status: "complete" | "current" | "locked";
+  status: "complete" | "current" | "available" | "locked";
   children: React.ReactNode;
 };
 
@@ -12,7 +12,9 @@ function WeekCard({ title, status, children }: WeekCardProps) {
           ? "border-[#00AFB9]/30 bg-[#E9F7F8]"
           : status === "current"
             ? "border-[#F07167]/40 bg-[#FED9B7]/35"
-            : "border-[#073B5A]/10 bg-[#F5F5F2] opacity-75"
+            : status === "available"
+              ? "border-[#073B5A]/10 bg-white"
+              : "border-[#073B5A]/10 bg-[#F5F5F2] opacity-75"
       }`}
     >
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -21,7 +23,7 @@ function WeekCard({ title, status, children }: WeekCardProps) {
         </div>
 
         <span className="text-2xl">
-          {status === "complete" ? "✓" : status === "current" ? "▶" : "🔒"}
+          {status === "complete" ? "✓" : status === "current" ? "▶" : status === "available" ? "○" : "🔒"}
         </span>
       </div>
 

@@ -48,7 +48,7 @@ describe("generateEvaluationProblems", () => {
     expect(visualTypes).toContain("factor_product");
   });
 
-  it("generates Unit 9 using aliases for count_equal_groups, factors_and_products, and draw_multiplication", () => {
+  it("generates Unit 9 using the exact multiplication generators", () => {
     const lesson = getEvaluationLesson("g3-u9-w1-eval");
     const problems = generateEvaluationProblems({ lesson });
 
@@ -65,9 +65,79 @@ describe("generateEvaluationProblems", () => {
     );
 
     const visualTypes = new Set(problems.map((p) => p.visualType));
-    expect(visualTypes).toContain("equal_groups"); // count_equal_groups alias
-    expect(visualTypes).toContain("factor_product"); // factors_and_products alias
-    expect(visualTypes).toContain("array_rows_columns"); // draw_multiplication alias
+    expect(visualTypes).toContain("equal_groups");
+    expect(visualTypes).toContain("factor_product");
+    expect(visualTypes).toContain("multiple_choice");
+  });
+
+  it.each([
+    [
+      "g3-u13-w1-eval",
+      ["division_sharing", "division_counting_groups", "write_division_equations", "division_with_1_and_0"],
+    ],
+    [
+      "g3-u14-w1-eval",
+      ["division_arrays", "division_number_line", "fact_families", "multiplication_for_division"],
+    ],
+    ["g3-u15-w1-eval", ["multiply_by_6", "divide_by_6", "multiply_by_7", "divide_by_7"]],
+    ["g3-u16-w1-eval", ["multiply_by_8", "divide_by_8", "multiply_by_9", "divide_by_9"]],
+    [
+      "g3-u17-w1-eval",
+      ["mixed_multiplication_facts", "missing_factors", "missing_numbers_division", "choose_strategy"],
+    ],
+    [
+      "g3-u8-w1-eval",
+      ["choose_operation", "estimate_then_solve", "one_step_word_problems", "two_step_unknowns"],
+    ],
+    [
+      "g3-u18-w1-eval",
+      ["equal_group_array_problems", "strip_models", "equations_with_unknowns", "two_step_mult_div_patterns"],
+    ],
+    [
+      "g3-u26-w1-eval",
+      ["equal_unequal_parts", "halves_thirds_fourths", "sixths_eighths", "name_unit_fractions"],
+    ],
+    [
+      "g3-u27-w1-eval",
+      ["numerator_meaning", "denominator_meaning", "fraction_bars", "area_models_and_stories"],
+    ],
+    [
+      "g3-u28-w1-eval",
+      ["zero_to_one_interval", "partition_number_lines", "locate_unit_fractions_number_line", "locate_non_unit_fractions_number_line"],
+    ],
+    [
+      "g3-u29-w1-eval",
+      ["equivalence_same_amount", "fraction_strips_equivalence", "area_models_equivalence", "generate_explain_equivalent"],
+    ],
+    [
+      "g3-u30-w1-eval",
+      ["same_location_number_line", "find_equivalents_number_line", "graph_equivalent_fractions", "connect_models_number_lines_equations"],
+    ],
+    [
+      "g3-u31-w1-eval",
+      ["compare_like_denominators_models", "compare_like_denominators_number_line", "use_comparison_symbols", "comparison_word_problems_like_denominators"],
+    ],
+    [
+      "g3-u32-w1-eval",
+      ["compare_like_numerators_models", "compare_like_numerators_number_line", "same_whole_fractions", "compare_explain_fractions"],
+    ],
+  ] as const)("balances generator-backed review in %s", (lessonId, reviewTypes) => {
+    const lesson = getEvaluationLesson(lessonId);
+    const problems = generateEvaluationProblems({ lesson, seed: `evaluation-${lessonId}` });
+
+    expect(problems).toHaveLength(8);
+    expect(new Set(problems.map((problem) => problem.problemKey)).size).toBe(8);
+
+    const counts = new Map<string, number>();
+    for (const problem of problems) {
+      const reviewType = problem.problemKey.split("-")[5];
+      counts.set(reviewType, (counts.get(reviewType) ?? 0) + 1);
+    }
+
+    expect(new Set(counts.keys())).toEqual(new Set(reviewTypes));
+    for (const reviewType of reviewTypes) {
+      expect(counts.get(reviewType)).toBe(2);
+    }
   });
 
   it("falls back to canonical lesson content for units with no specialized generator", () => {

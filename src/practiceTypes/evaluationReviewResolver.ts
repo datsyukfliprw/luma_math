@@ -10,18 +10,9 @@ export type ResolvedEvaluationReviewSource = {
   resolution: "specialized" | "alias" | "default";
 };
 
-// Aliases connect curriculum review_type labels to semantically equivalent
-// specialized generators. Each alias is justified by the curriculum content.
-export const evaluationReviewTypeAliases: Record<string, string> = {
-  count_equal_groups: "equal_groups",
-  factors_and_products: "factor_product_identification",
-  draw_multiplication: "draw_arrays",
-  build_arrays: "array_rows_columns",
-  two_equations_for_array: "commutative_property_matching",
-  commutative_multiplication: "commutative_property_matching",
-  division_sharing: "fair_sharing_division",
-  rows_columns_multiplication: "array_rows_columns",
-};
+// Aliases are reserved for curriculum review_type labels that do not yet have
+// an exact specialized generator. Exact registered types resolve before this map.
+export const evaluationReviewTypeAliases: Record<string, string> = {};
 
 function findSourceLesson(unit: Curriculum, reviewType: string): Lesson | undefined {
   for (const week of unit.weeks) {

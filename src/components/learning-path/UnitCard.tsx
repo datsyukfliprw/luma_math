@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import WeekCard from "./WeekCard";
 
-type LessonStatus = "complete" | "current" | "locked";
-type WeekStatus = "complete" | "current" | "locked";
+type LessonStatus = "complete" | "current" | "available" | "locked";
+type WeekStatus = "complete" | "current" | "available" | "locked";
 
 type UnitCardProps = {
   unitNumber: number;
@@ -18,7 +18,6 @@ type UnitCardProps = {
     status: WeekStatus;
     lessons: {
       id: string;
-      day: string;
       title: string;
       status: LessonStatus;
     }[];
@@ -92,7 +91,9 @@ function UnitCard({
                         ? "border-[#00AFB9]/35"
                         : lesson.status === "current"
                           ? "border-[#F07167]/50 shadow-sm"
-                          : "pointer-events-none border-[#073B5A]/10 opacity-70"
+                          : lesson.status === "available"
+                            ? "border-[#073B5A]/15 hover:border-[#00AFB9]/25"
+                            : "pointer-events-none border-[#073B5A]/10 opacity-70"
                     }`}
                   >
                     <div className="mb-2 flex items-center justify-end">
@@ -101,7 +102,9 @@ function UnitCard({
                           ? "✓"
                           : lesson.status === "current"
                             ? "▶"
-                            : "🔒"}
+                            : lesson.status === "available"
+                              ? "○"
+                              : "🔒"}
                       </span>
                     </div>
 

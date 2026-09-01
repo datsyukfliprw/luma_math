@@ -1,7 +1,6 @@
 import type { CurriculumLessonExperience, LessonExperience } from "../data/lessonExperience/types";
 import { findCurriculumLessonById } from "./curriculumLoader";
 import { isInstructionalLessonAvailable } from "../data/curriculum";
-import { isRegisteredPracticeType } from "../practiceTypes/registry";
 import { generateQuickCheckForLesson, toLegacyQuickCheck } from "../lib/quickCheck";
 
 // Map curriculum visual_type values to the authored BuildIt activityType union.
@@ -12,6 +11,44 @@ const BUILD_IT_ACTIVITY_MAP: Record<string, LessonExperience["buildIt"]["activit
   equal_groups: "object_equal_groups",
   week_review: "week_review_builder",
 };
+
+// `topic` is still a legacy two-state field used by the lesson experience UI.
+// Keep multiplication classification independent from generator registration: all
+// Grade 3 practice types are now registered, so registry membership no longer
+// identifies multiplication lessons.
+const MULTIPLICATION_TOPIC_PRACTICE_TYPES = new Set([
+  "equal_groups",
+  "repeated_addition_to_multiplication",
+  "factor_product_identification",
+  "equal_groups_with_objects",
+  "count_equal_groups",
+  "factors_and_products",
+  "draw_multiplication",
+  "build_arrays",
+  "two_equations_for_array",
+  "multiplication_number_line",
+  "connect_models_equations_stories",
+  "multiply_by_3",
+  "multiply_by_4",
+  "commutative_multiplication",
+  "associative_multiplication",
+  "multiply_by_6",
+  "multiply_by_7",
+  "multiply_by_8",
+  "multiply_by_9",
+  "mixed_multiplication_facts",
+  "missing_factors",
+  "choose_strategy",
+  "multiples_of_ten_basic_facts",
+  "one_digit_by_multiples_of_ten",
+  "multiples_of_ten_word_problems",
+  "place_value_patterns",
+  "rows_columns_multiplication",
+]);
+
+function isMultiplicationTopicPracticeType(practiceType: string): boolean {
+  return MULTIPLICATION_TOPIC_PRACTICE_TYPES.has(practiceType);
+}
 
 function buildBigIdea(
   lesson: NonNullable<ReturnType<typeof findCurriculumLessonById>>["lesson"],
@@ -184,7 +221,7 @@ export function getAdaptedLessonExperience(
   if (!lesson.bigIdea) return undefined;
   if (!lesson.learn) return undefined;
 
-  const isMultiplication = isRegisteredPracticeType(lesson.practice_type);
+  const isMultiplication = isMultiplicationTopicPracticeType(lesson.practice_type);
   const topic: CurriculumLessonExperience["topic"] = isMultiplication ? "multiplication" : "review";
 
   const label = lesson.lesson_type === "evaluation" ? "Evaluation" : `Lesson ${lesson.day_number}`;

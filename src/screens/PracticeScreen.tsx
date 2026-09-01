@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import PageLayout from "../components/layout/PageLayout";
 import { getLessonById } from "../lib/lessonLookup";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
+import { getNextGrade3CourseStep } from "../services/progress/grade3CourseProgression";
 import { generateProblemsForPracticeType } from "../practiceTypes/registry";
 import { createPracticeSessionSeed } from "../practiceTypes/random";
 import { normalizeNumericAnswer, normalizeTextAnswer } from "../lib/answerValidation";
@@ -228,10 +229,6 @@ function getModeLabel(mode: PracticeMode) {
   return "Challenge Yourself";
 }
 
-function getNextUnitPath(unitNumber: number) {
-  return unitNumber >= 36 ? "/learning-path" : `/lesson/g3-u${unitNumber + 1}-w1-l1`;
-}
-
 // @SECTION PRACTICE_SCREEN
 function PracticeScreen() {
   const navigate = useNavigate();
@@ -254,23 +251,11 @@ function PracticeScreen() {
     (isEvaluation
       ? `g3-u${unit.unit_number}-w${week.week_number}-eval`
       : `g3-u${unit.unit_number}-w${week.week_number}-l${weekDayNumber}`);
-  const nextUnitPath = getNextUnitPath(unit.unit_number);
-  const currentLessonIndex = week.lessons.findIndex(
-    (candidate) =>
-      candidate.lesson_type === lesson.lesson_type &&
-      candidate.day_number === lesson.day_number,
-  );
-  const nextCurriculumLesson =
-    currentLessonIndex >= 0 ? week.lessons[currentLessonIndex + 1] : undefined;
-  const nextCurriculumLessonId = nextCurriculumLesson
-    ? nextCurriculumLesson.lesson_id ??
-      (nextCurriculumLesson.lesson_type === "evaluation"
-        ? `g3-u${unit.unit_number}-w${week.week_number}-eval`
-        : `g3-u${unit.unit_number}-w${week.week_number}-l${nextCurriculumLesson.day_number}`)
-    : undefined;
-  const nextLessonPath = nextCurriculumLessonId
-    ? `/lesson/${nextCurriculumLessonId}`
-    : nextUnitPath;
+  const nextCourseStep = getNextGrade3CourseStep(currentLessonId);
+  const nextLessonPath = nextCourseStep.path;
+  const nextCurriculumLessonType =
+    nextCourseStep.kind === "lesson" ? nextCourseStep.lessonType : undefined;
+  const nextUnitPath = nextCourseStep.path;
   const [practiceSessionId, setPracticeSessionId] = useState(createPracticeSessionId);
   const practiceSessionSeed = createPracticeSessionSeed(
     currentLessonId,
@@ -1802,7 +1787,7 @@ function PracticeScreen() {
                     onClick={() => setCompletionModal(null)}
                     className="rounded-2xl bg-[#00AFB9] px-5 py-3 lg:px-7 lg:py-4 lg:text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
                   >
-                    {nextCurriculumLesson?.lesson_type === "evaluation" ? "Open Evaluation ›" : "Next Lesson ›"}
+                    {nextCurriculumLessonType === "evaluation" ? "Open Evaluation ›" : "Next Lesson ›"}
                   </Link>
                 )}
 
@@ -1821,7 +1806,7 @@ function PracticeScreen() {
                   onClick={() => setCompletionModal(null)}
                   className="mt-3 inline-flex text-sm lg:text-base font-black text-[#0081A7]"
                 >
-                  {nextCurriculumLesson?.lesson_type === "evaluation"
+                  {nextCurriculumLessonType === "evaluation"
                     ? "Continue to evaluation instead ›"
                     : "Continue to next lesson instead ›"}
                 </Link>

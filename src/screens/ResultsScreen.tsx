@@ -1,8 +1,10 @@
 import { ArrowLeft, ArrowRight, CheckCircle2, RotateCcw, Target } from "lucide-react";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import PageLayout from "../components/layout/PageLayout";
 import type { PracticeMode } from "../practiceTypes/types";
 import type { SessionResult } from "../types/sessionResults";
+import { readRecentSessionResult, saveRecentSessionResult } from "../services/progress/recentSessionResult";
 
 function getModeLabel(mode: PracticeMode) {
   if (mode === "guided") return "Guided Practice";
@@ -117,6 +119,13 @@ function PracticeResults({ result }: { result: Extract<SessionResult, { kind: "p
               <ArrowLeft size={18} strokeWidth={3} />
               Back to Lesson
             </Link>
+
+            <Link
+              to="/learning-path"
+              className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-[#073B5A]/10 bg-white px-6 text-base font-black text-[#073B5A] shadow-sm transition hover:bg-[#F8FBFB]"
+            >
+              Learning Path
+            </Link>
           </div>
         </section>
       </main>
@@ -128,6 +137,7 @@ function EvaluationResults({ result }: { result: Extract<SessionResult, { kind: 
   const accuracyPercent = Math.round(result.accuracy * 100);
   const requiredPercent = Math.round(result.requiredAccuracy * 100);
   const passed = result.status === "passed";
+  const completedGrade3 = passed && result.nextUnitPath === "/learning-path";
 
   return (
     <PageLayout>
@@ -181,7 +191,7 @@ function EvaluationResults({ result }: { result: Extract<SessionResult, { kind: 
                 to={result.nextUnitPath}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl bg-[#00AFB9] px-6 text-base font-black text-white shadow-sm transition hover:bg-[#0081A7]"
               >
-                Continue
+                {completedGrade3 ? "Finish Grade 3" : "Start Next Unit"}
                 <ArrowRight size={18} strokeWidth={3} />
               </Link>
             ) : (
@@ -202,7 +212,12 @@ function EvaluationResults({ result }: { result: Extract<SessionResult, { kind: 
 
 function ResultsScreen() {
   const location = useLocation();
-  const result = (location.state as { result?: SessionResult } | null)?.result;
+  const routeResult = (location.state as { result?: SessionResult } | null)?.result;
+  const result = routeResult ?? readRecentSessionResult();
+
+  useEffect(() => {
+    if (routeResult) saveRecentSessionResult(routeResult);
+  }, [routeResult]);
 
   if (!result) {
     return <MissingResultState />;

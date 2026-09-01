@@ -16,9 +16,9 @@ export const multDivWordProblemsFamily: TryItFamily = (ctx) => {
     const inEach = ctx.rng.nextInt(2, 9);
     const total = groups * inEach;
     const noun = ctx.rng.pick(nouns);
-    let prompt = "";
-    let correct = "";
-    let form = "";
+    let prompt: string;
+    let correct: string;
+    let form: string;
     let extra = "";
 
     if (ctx.practiceType === "strip_models") {

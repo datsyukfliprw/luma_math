@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -13,6 +14,7 @@ import { Link } from "react-router-dom";
 import { useStudentProgress } from "../contexts/StudentProgressContext";
 import type { JourneyStepStatus } from "../services/mission/dailyMissionPlanner";
 import { useDailyMission } from "../services/mission/useDailyMission";
+import { getGrade3StudentCourseNavigation } from "../services/progress/studentCourseNavigation";
 
 type QuickAction = {
   title: string;
@@ -175,11 +177,20 @@ function JourneyNode({
 
 function HomeScreen() {
   const { studentState } = useStudentProgress();
-  const { currentMission, journeySteps, progress, summary, pathway } =
-    useDailyMission();
+  const { journeySteps, progress, summary, pathway } = useDailyMission();
+  const courseNavigation = useMemo(
+    () => getGrade3StudentCourseNavigation(studentState),
+    [studentState],
+  );
 
-  const studentName =
-    studentState.starProfile.studentName || "Explorer";
+  const studentName = studentState.starProfile.studentName || "Explorer";
+  const missionTitle = courseNavigation.courseComplete
+    ? "Grade 3 complete"
+    : (courseNavigation.currentLessonTitle ?? "Continue your learning path");
+  const missionSubtitle = courseNavigation.courseComplete
+    ? "You finished the full Grade 3 course. Review your Learning Path and celebrate the progress you made."
+    : (courseNavigation.currentLessonObjective ??
+      "Continue with the next lesson on your Grade 3 Learning Path.");
 
   const lessonJourneySteps = journeySteps.filter((step) => {
     const normalizedTitle = step.title.trim().toLowerCase();
@@ -290,23 +301,22 @@ function HomeScreen() {
               </p>
 
               <h2 className="mt-6 max-w-[275px] text-[1.8rem] font-black leading-tight text-[#062E50]">
-                {currentMission?.title ?? "No mission available"}
+                {missionTitle}
               </h2>
 
               <p className="mt-4 max-w-[260px] text-sm font-bold leading-6 text-[#526D82]">
-                {currentMission?.subtitle ??
-                  "Check back soon for your next mission."}
+                {missionSubtitle}
               </p>
             </div>
 
             <div className="relative space-y-3 border-t border-white/55 bg-white/10 p-5 backdrop-blur-[2px]">
               <Link
-                to={currentMission?.to ?? "/learning-path"}
+                to={courseNavigation.lessonPath}
                 className="flex min-h-14 items-center justify-center gap-3 rounded-2xl bg-[#00AFB9] px-5 text-base font-black text-white shadow-[0_12px_24px_rgba(0,175,185,0.28)] transition hover:-translate-y-0.5 hover:bg-[#009DA7] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#00AFB9]/20"
               >
-                {currentMission
-                  ? "Continue Mission"
-                  : "Go to Learning Path"}
+                {courseNavigation.courseComplete
+                  ? "View Learning Path"
+                  : "Continue Mission"}
                 <ArrowRight className="h-5 w-5" strokeWidth={3} />
               </Link>
 
@@ -425,6 +435,17 @@ function HomeScreen() {
         >
           {quickActions.map((action) => {
             const Icon = action.icon;
+            const actionTo =
+              action.title === "Learn"
+                ? courseNavigation.lessonPath
+                : action.title === "Practice"
+                  ? courseNavigation.practicePath
+                  : action.to;
+            const actionLabel =
+              courseNavigation.courseComplete &&
+              (action.title === "Learn" || action.title === "Practice")
+                ? "View Learning Path"
+                : action.buttonLabel;
 
             return (
               <article
@@ -451,10 +472,10 @@ function HomeScreen() {
                 </p>
 
                 <Link
-                  to={action.to}
+                  to={actionTo}
                   className={`mt-auto inline-flex min-h-11 items-center justify-between rounded-xl px-1 text-sm font-black ${action.accent} transition hover:translate-x-0.5`}
                 >
-                  {action.buttonLabel}
+                  {actionLabel}
                   <ArrowRight
                     className="h-4 w-4"
                     strokeWidth={3}

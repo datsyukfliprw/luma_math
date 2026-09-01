@@ -23,8 +23,8 @@ export const multiplicationFactsFamily: TryItFamily = (ctx) => {
     const a = fixedFactor ?? ctx.rng.nextInt(2, 9);
     const b = ctx.rng.nextInt(2, 9);
     const product = a * b;
-    let prompt = "";
-    let correct = "";
+    let prompt: string;
+    let correct: string;
     let choices: string[] | undefined;
     let form = "product";
     let extra = "";

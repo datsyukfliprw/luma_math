@@ -152,6 +152,55 @@ function writeToLocalStorage<T>(key: string, value: T): void {
   window.localStorage.setItem(key, JSON.stringify(value));
 }
 
+function persistStudentState(studentId: string, studentState: StudentState): void {
+  const allLessonProgress = readFromLocalStorage<Record<string, Record<string, LessonProgress>>>(
+    STORAGE_KEYS.lessonProgress,
+    {},
+  );
+  const allFlashcardProgress = readFromLocalStorage<
+    Record<string, Record<string, FlashcardDeckProgress>>
+  >(STORAGE_KEYS.flashcardProgress, {});
+  const allPracticeRewards = readFromLocalStorage<
+    Record<string, Record<string, LessonPracticeRewardState>>
+  >(STORAGE_KEYS.practiceRewards, {});
+  const allSkillProgress = readFromLocalStorage<Record<string, Record<string, SkillProgress>>>(
+    STORAGE_KEYS.skillProgress,
+    {},
+  );
+  const allStarProfiles = readFromLocalStorage<Record<string, StarProfile>>(
+    STORAGE_KEYS.starProfile,
+    {},
+  );
+  const allEvaluationCompletions = readFromLocalStorage<
+    Record<string, Record<string, EvaluationCompletionRecord>>
+  >(STORAGE_KEYS.evaluationCompletions, {});
+
+  writeToLocalStorage(STORAGE_KEYS.lessonProgress, {
+    ...allLessonProgress,
+    [studentId]: studentState.lessonProgress,
+  });
+  writeToLocalStorage(STORAGE_KEYS.skillProgress, {
+    ...allSkillProgress,
+    [studentId]: studentState.skillProgress,
+  });
+  writeToLocalStorage(STORAGE_KEYS.flashcardProgress, {
+    ...allFlashcardProgress,
+    [studentId]: studentState.flashcardProgress,
+  });
+  writeToLocalStorage(STORAGE_KEYS.practiceRewards, {
+    ...allPracticeRewards,
+    [studentId]: studentState.practiceRewards,
+  });
+  writeToLocalStorage(STORAGE_KEYS.evaluationCompletions, {
+    ...allEvaluationCompletions,
+    [studentId]: studentState.evaluationCompletions,
+  });
+  writeToLocalStorage(STORAGE_KEYS.starProfile, {
+    ...allStarProfiles,
+    [studentId]: studentState.starProfile,
+  });
+}
+
 function unique(values: string[]): string[] {
   return Array.from(new Set(values));
 }
@@ -290,57 +339,14 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
 
   function commitStudentState(nextState: StudentState) {
     studentStateRef.current = nextState;
+    persistStudentState(studentId, nextState);
     setStudentState(nextState);
   }
 
-  // Persist state to localStorage when it changes
+  // Keep storage synchronized with React state, while transaction-style
+  // updates also persist synchronously through commitStudentState.
   useEffect(() => {
-    const allLessonProgress = readFromLocalStorage<Record<string, Record<string, LessonProgress>>>(
-      STORAGE_KEYS.lessonProgress,
-      {},
-    );
-    const allFlashcardProgress = readFromLocalStorage<
-      Record<string, Record<string, FlashcardDeckProgress>>
-    >(STORAGE_KEYS.flashcardProgress, {});
-    const allPracticeRewards = readFromLocalStorage<
-      Record<string, Record<string, LessonPracticeRewardState>>
-    >(STORAGE_KEYS.practiceRewards, {});
-    const allSkillProgress = readFromLocalStorage<Record<string, Record<string, SkillProgress>>>(
-      STORAGE_KEYS.skillProgress,
-      {},
-    );
-    const allStarProfiles = readFromLocalStorage<Record<string, StarProfile>>(
-      STORAGE_KEYS.starProfile,
-      {},
-    );
-    const allEvaluationCompletions = readFromLocalStorage<
-      Record<string, Record<string, EvaluationCompletionRecord>>
-    >(STORAGE_KEYS.evaluationCompletions, {});
-
-    writeToLocalStorage(STORAGE_KEYS.lessonProgress, {
-      ...allLessonProgress,
-      [studentId]: studentState.lessonProgress,
-    });
-    writeToLocalStorage(STORAGE_KEYS.skillProgress, {
-      ...allSkillProgress,
-      [studentId]: studentState.skillProgress,
-    });
-    writeToLocalStorage(STORAGE_KEYS.flashcardProgress, {
-      ...allFlashcardProgress,
-      [studentId]: studentState.flashcardProgress,
-    });
-    writeToLocalStorage(STORAGE_KEYS.practiceRewards, {
-      ...allPracticeRewards,
-      [studentId]: studentState.practiceRewards,
-    });
-    writeToLocalStorage(STORAGE_KEYS.evaluationCompletions, {
-      ...allEvaluationCompletions,
-      [studentId]: studentState.evaluationCompletions,
-    });
-    writeToLocalStorage(STORAGE_KEYS.starProfile, {
-      ...allStarProfiles,
-      [studentId]: studentState.starProfile,
-    });
+    persistStudentState(studentId, studentState);
   }, [studentId, studentState]);
 
   // Lesson progress functions
@@ -348,40 +354,38 @@ export function StudentProgressProvider({ studentId, children }: StudentProgress
     lessonId: string,
     updates: Partial<Omit<LessonProgress, "lessonId" | "updatedAt">>,
   ) => {
-    setStudentState((prev) => {
-      const currentProgress = prev.lessonProgress[lessonId] ?? {
-        lessonId,
-        warmupComplete: false,
-        learnComplete: false,
-        tryItComplete: false,
-        practiceComplete: false,
-        lessonComplete: false,
-        correctAnswers: 0,
-        totalQuestions: 0,
-        updatedAt: new Date().toISOString(),
-      };
+    const snapshot = studentStateRef.current;
+    const currentProgress = snapshot.lessonProgress[lessonId] ?? {
+      lessonId,
+      warmupComplete: false,
+      learnComplete: false,
+      tryItComplete: false,
+      practiceComplete: false,
+      lessonComplete: false,
+      correctAnswers: 0,
+      totalQuestions: 0,
+      updatedAt: new Date().toISOString(),
+    };
 
-      const timestamp = new Date().toISOString();
+    const timestamp = new Date().toISOString();
+    const nextProgress: LessonProgress = {
+      ...currentProgress,
+      ...updates,
+      updatedAt: timestamp,
+    };
 
-      const nextProgress: LessonProgress = {
-        ...currentProgress,
-        ...updates,
-        updatedAt: timestamp,
-      };
+    nextProgress.lessonComplete =
+      nextProgress.warmupComplete &&
+      nextProgress.learnComplete &&
+      nextProgress.tryItComplete &&
+      nextProgress.practiceComplete;
 
-      nextProgress.lessonComplete =
-        nextProgress.warmupComplete &&
-        nextProgress.learnComplete &&
-        nextProgress.tryItComplete &&
-        nextProgress.practiceComplete;
-
-      return {
-        ...prev,
-        lessonProgress: {
-          ...prev.lessonProgress,
-          [lessonId]: nextProgress,
-        },
-      };
+    commitStudentState({
+      ...snapshot,
+      lessonProgress: {
+        ...snapshot.lessonProgress,
+        [lessonId]: nextProgress,
+      },
     });
   };
 

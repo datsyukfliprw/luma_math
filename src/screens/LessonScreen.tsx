@@ -12,7 +12,7 @@ import { useStudentProgress, type LessonProgress } from "../contexts/StudentProg
 import type { WarmUpData } from "../types/warmup";
 import { getLessonExperience } from "../data/lessonExperience";
 import { getChapterForConcept, getConceptByLessonId } from "../data/curriculum/curriculumGraph";
-import type { Lesson } from "../data/curriculum";
+import { getNextGrade3CourseStep } from "../services/progress/grade3CourseProgression";
 
 type LessonWithStructuredData = {
   warmup?: WarmUpData;
@@ -33,38 +33,6 @@ function formatGradeLabel(grade: number) {
   if (grade === 2) return "2nd Grade";
   if (grade === 3) return "3rd Grade";
   return `${grade}th Grade`;
-}
-
-function getCurriculumLessonId(unitNumber: number, weekNumber: number, lesson: Lesson) {
-  if (lesson.lesson_id) return lesson.lesson_id;
-  return lesson.lesson_type === "evaluation"
-    ? `g3-u${unitNumber}-w${weekNumber}-eval`
-    : `g3-u${unitNumber}-w${weekNumber}-l${lesson.day_number}`;
-}
-
-function getNextCurriculumLessonId({
-  unitNumber,
-  weekNumber,
-  currentLesson,
-  lessons,
-}: {
-  unitNumber: number;
-  weekNumber: number;
-  currentLesson: Lesson;
-  lessons: Lesson[];
-}) {
-  const currentIndex = lessons.findIndex((candidate) => {
-    if (currentLesson.lesson_id && candidate.lesson_id) {
-      return candidate.lesson_id === currentLesson.lesson_id;
-    }
-    return (
-      candidate.lesson_type === currentLesson.lesson_type &&
-      candidate.day_number === currentLesson.day_number
-    );
-  });
-
-  if (currentIndex < 0 || currentIndex >= lessons.length - 1) return undefined;
-  return getCurriculumLessonId(unitNumber, weekNumber, lessons[currentIndex + 1]);
 }
 
 function getNextStep({
@@ -328,12 +296,8 @@ function LessonScreen() {
   const chapter = concept ? getChapterForConcept(concept.id) : undefined;
   const gradeLabel = formatGradeLabel(unit.grade_level);
 
-  const nextLessonId = getNextCurriculumLessonId({
-    unitNumber: unit.unit_number,
-    weekNumber: week.week_number,
-    currentLesson: lesson,
-    lessons: week.lessons,
-  });
+  const nextCourseStep = getNextGrade3CourseStep(currentLessonId);
+  const nextLessonId = nextCourseStep.kind === "lesson" ? nextCourseStep.lessonId : undefined;
 
   const nextStep = getNextStep({
     lessonId: currentLessonId,
@@ -341,8 +305,7 @@ function LessonScreen() {
     progress,
   });
 
-  const nextUnitPath =
-    unit.unit_number >= 36 ? "/learning-path" : `/lesson/g3-u${unit.unit_number + 1}-w1-l1`;
+  const nextUnitPath = nextCourseStep.path;
 
   return (
     <PageLayout>

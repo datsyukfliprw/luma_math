@@ -55,7 +55,26 @@ describe("ResultsScreen", () => {
     expect(html).toContain('data-name="evaluation-results-screen"');
     expect(html).toContain("Evaluation passed");
     expect(html).toContain("80%");
-    expect(html).toContain("Continue");
+    expect(html).toContain("Start Next Unit");
+  });
+
+
+  it("labels the final evaluation as Grade 3 completion", () => {
+    const html = renderResult({
+      kind: "evaluation",
+      lessonId: "g3-u36-w1-eval",
+      lessonTitle: "Unit 36 Evaluation",
+      status: "passed",
+      firstAttemptCorrectCount: 8,
+      firstAttemptTotalCount: 10,
+      accuracy: 0.8,
+      requiredAccuracy: 0.8,
+      nextUnitPath: "/learning-path",
+      lessonPath: "/lesson/g3-u36-w1-eval",
+      retryPath: "/practice/g3-u36-w1-eval",
+    });
+
+    expect(html).toContain("Finish Grade 3");
   });
 
   it("renders a retry result for a failed evaluation", () => {

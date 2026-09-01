@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   BookOpen,
   ChartNoAxesColumnIncreasing,
@@ -12,6 +13,7 @@ import {
 import { NavLink } from "react-router-dom";
 import { useDailyMission } from "../../services/mission/useDailyMission";
 import { useStudentProgress } from "../../contexts/StudentProgressContext";
+import { getGrade3StudentCourseNavigation } from "../../services/progress/studentCourseNavigation";
 
 const navItems = [
   { icon: House, label: "Home", to: "/" },
@@ -34,6 +36,19 @@ function getGradeLabel(grade: number) {
 function Sidebar() {
   const { progress, summary, pathway } = useDailyMission();
   const { studentState } = useStudentProgress();
+  const courseNavigation = useMemo(
+    () => getGrade3StudentCourseNavigation(studentState),
+    [studentState],
+  );
+  const resolvedNavItems = useMemo(
+    () =>
+      navItems.map((item) => {
+        if (item.label === "Lesson") return { ...item, to: courseNavigation.lessonPath };
+        if (item.label === "Practice") return { ...item, to: courseNavigation.practicePath };
+        return item;
+      }),
+    [courseNavigation.lessonPath, courseNavigation.practicePath],
+  );
   const studentName = studentState.starProfile.studentName || "Student";
   const gradeLabel = getGradeLabel(pathway.gradeLevel || 3);
 
@@ -59,7 +74,7 @@ function Sidebar() {
           </div>
 
           <nav data-name="sidebar-navigation" className="relative z-10 shrink-0 space-y-1.5">
-            {navItems.map((item) => {
+            {resolvedNavItems.map((item) => {
               const Icon = item.icon;
 
               return (
@@ -149,7 +164,7 @@ function Sidebar() {
         className="fixed bottom-0 left-0 right-0 z-50 rounded-t-[1.5rem] border border-[#073B5A]/10 border-b-0 bg-white/95 px-2 pb-safe pt-2 shadow-2xl backdrop-blur lg:hidden"
       >
         <div className="flex snap-x snap-mandatory overflow-x-auto scrollbar-hide">
-          {navItems.map((item) => {
+          {resolvedNavItems.map((item) => {
             const Icon = item.icon;
 
             return (
